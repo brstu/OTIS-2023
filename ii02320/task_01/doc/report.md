@@ -134,4 +134,4 @@ int main() {
     1.23827
     0.968269
     end nonlinear
-![График моделей с t = 100:]()
+![График моделей с t = 100:](linnonlingraph.png)
