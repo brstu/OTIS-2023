@@ -10,7 +10,7 @@
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
-<p align="right">Романюк А. П.</p>
+<p align="right">Волкогон Н. И.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -45,93 +45,85 @@ Task is to write program (**Julia**), which simulates this object temperature.
 Код программы:
 ```C++
 #include <iostream>
-#include <cmath>
-#include <fstream>
 
 using namespace std;
 
-void linear(double a, double b, double y, double u, double i, double t) {
-	if (i != t) {
-		ofstream file("lin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		linear(a, b, a * y + b * u, u, i + 1, t);
+double a = 0.5,
+b = 1,
+c = 0.15,
+d = 0.3,
+u = 1.2;
+
+
+void liner(double& y1)
+{
+	y1 = a * y1 + b * u;
+	cout << y1 << endl;
+}
+
+void unliner(double& y2, double& y_pr, bool& second_iteration)
+{
+	if (second_iteration)
+	{
+		y_pr = y2;
+		y2 = a * y2 + c * u + d * sin(u); 
+		cout << y2 << endl;
+		second_iteration = false;
 	}
-	else {
-		cout << "end linear\n";
+	else
+	{
+		double buf;
+		buf = a * y2 - b * pow(y_pr, 2) + c * u + d * sin(u);
+		y_pr = y2;
+		y2 = buf;
+		cout << y2 << endl;
 	}
 }
 
-void nonlinear(double a, double b, double c, double d,double y,double y1, double u, double i, double t) {
-	if (i == 1) {
-		ofstream file("nonlin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		nonlinear(a, b, c, d, a * y - b * y1 * y1 + c * 0 + d * sin(0), y, u, i + 1, t);
-	}else
-	if (i != t) {
-		ofstream file("nonlin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		nonlinear(a, b, c, d, a * y - b * y1 * y1 + c * u + d * sin(u), y, u, i + 1, t);
-	}
-	else {
-		cout << "end nonlinear"<<endl;
-	}
-}
 
-int main() {
-	ofstream file1("lin.txt");
-	ofstream file2("nonlin.txt");
-	file1.clear();
-	file2.clear();
-	double i = 1; //start time
-	double y = 0; //input temperature
-	double u = 1; //input warm
-	double t = 100; //end time
-	const double a = 0.5;
-	const double b = 0.5;
-	const double c = 0.5;
-	const double d = 0.5; //some constants
-	cout << "linear model: \n";
-	linear(a, b, y, u, i, t);
-	cout << "nonlinear model: \n";
-	nonlinear(a, b, c, d, y, y, u, i, t);
+int main()
+{
+	double y1, y2, y_pr;
+	bool second_iteration = true;
+	cout << "Input temperature: ";
+	cin >> y1;
+	y2 = y1;
+	int n = 10;
+	cout << "Liner model\n" << y1 << endl;
+	for (int i = 0; i < n; i++)
+		liner(y1);
+	cout << endl << "Unliner model\n" << y2 << endl;
+	for (int i = 0; i < n; i++)
+		unliner(y2, y_pr, second_iteration);
 }
 ```     
 
 Вывод программы:
 
-    linear model:
-    0
-    0.5
-    0.75
-    0.875
-    0.9375
-    0.96875
-    0.984375
-    0.992188
-    0.996094
-    0.998047
-    0.999023
-    0.999512
-    0.999756
-    0.999878
-    end linear
-    nonlinear model:
-    0
-    0.920735
-    1.3811
-    1.18741
-    0.560718
-    0.496123
-    1.01159
-    1.30346
-    1.06081
-    0.601629
-    0.658896
-    1.0692
-    1.23827
-    0.968269
-    end nonlinear
-![График моделей с t = 100:](linnonlingraph.png)
+   Input temperature: 0.1
+Liner model
+0.1
+1.25
+1.825
+2.1125
+2.25625
+2.32812
+2.36406
+2.38203
+2.39102
+2.39551
+2.39775
+
+Unliner model
+0.1
+0.509612
+0.704418
+0.552116
+0.239466
+0.274512
+0.539524
+0.654017
+0.495534
+0.279641
+0.353878
+![График моделей с t = 10:](picture.png)
