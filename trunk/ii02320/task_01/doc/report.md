@@ -50,53 +50,53 @@ Task is to write program (**Julia**), which simulates this object temperature.
 
 using namespace std;
 
-void linear(double a, double b, double y, double u, double i, double t) {
-	if (i != t) {
-		ofstream file("lin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		linear(a, b, a * y + b * u, u, i + 1, t);
-	}
-	else {
-		cout << "end linear\n";
-	}
-}
-
-void nonlinear(double a, double b, double c, double d,double y,double y1, double u, double i, double t) {
-	if (i == 1) {
-		ofstream file("nonlin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		nonlinear(a, b, c, d, a * y - b * y1 * y1 + c * 0 + d * sin(0), y, u, i + 1, t);
-	}else
-	if (i != t) {
-		ofstream file("nonlin.txt", ios::app);
-		file << i << " " << y << endl;
-		cout << y << endl;
-		nonlinear(a, b, c, d, a * y - b * y1 * y1 + c * u + d * sin(u), y, u, i + 1, t);
-	}
-	else {
-		cout << "end nonlinear"<<endl;
-	}
-}
-
-int main() {
-	ofstream file1("lin.txt");
-	ofstream file2("nonlin.txt");
-	file1.clear();
-	file2.clear();
+class functions {
+private:
 	double i = 1; //start time
-	double y = 0; //input temperature
 	double u = 1; //input warm
 	double t = 100; //end time
 	const double a = 0.5;
 	const double b = 0.5;
 	const double c = 0.5;
 	const double d = 0.5; //some constants
+public:
+	void linear(double y) {
+		if (i != t) {
+			ofstream file("lin.txt", ios::app);
+			file << i << " " << y << endl;
+			++i;
+			cout << y << endl;
+			linear(a * y + b * u);
+		}
+		else {
+			cout << "end linear\n";
+		}
+	}
+	void nonlinear(double y, double y1) {
+			if (i != t) {
+				ofstream file("nonlin.txt", ios::app);
+				file << i << " " << y << endl;
+				cout << y << endl;
+				++i;
+				nonlinear(a * y - b * y1 * y1 + c * u + d * sin(u), y);
+			}
+			else {
+				cout << "end nonlinear" << endl;
+			}
+	}
+};
+
+int main() {
+	double y = 0, y1 = 0;
+	ofstream file1("lin.txt");
+	ofstream file2("nonlin.txt");
+	file1.clear();
+	file2.clear();
+	functions linear, nonlinear;
 	cout << "linear model: \n";
-	linear(a, b, y, u, i, t);
+	linear.linear(0);
 	cout << "nonlinear model: \n";
-	nonlinear(a, b, c, d, y, y, u, i, t);
+	nonlinear.nonlinear(0,0);
 }
 ```     
 
