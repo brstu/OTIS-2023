@@ -9,8 +9,8 @@
 <br><br><br><br><br>
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
-<p align="right">Группы ИИ-23</p>
-<p align="right">Романюк А. П.</p>
+<p align="right">Группы ИИ-24</p>
+<p align="right">Рудецкий Е. В.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -36,7 +36,7 @@ $$\Large y_{\tau+1}=ay_{\tau}-by_{\tau-1}^2+cu_{\tau}+d\sin(u_{\tau-1})$$ (3)
 
 where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some constants.
 
-Task is to write program (**Julia**), which simulates this object temperature.
+Task is to write program (**С++**), which simulates this object temperature.
 
 ---
 
@@ -44,94 +44,112 @@ Task is to write program (**Julia**), which simulates this object temperature.
 
 Код программы:
 ```C++
-#include <iostream>
-#include <cmath>
-#include <fstream>
 
-using namespace std;
-
-class functions {
-private:
-	double i = 1; //start time
-	double u = 1; //input warm
-	double t = 100; //end time
-	const double a = 0.5;
-	const double b = 0.5;
-	const double c = 0.5;
-	const double d = 0.5; //some constants
-public:
-	void linear(double y) {
-		if (i != t) {
-			ofstream file("lin.txt", ios::app);
-			file << i << " " << y << endl;
-			++i;
-			cout << y << endl;
-			linear(a * y + b * u);
-		}
-		else {
-			cout << "end linear\n";
-		}
-	}
-	void nonlinear(double y, double y1) {
-			if (i != t) {
-				ofstream file("nonlin.txt", ios::app);
-				file << i << " " << y << endl;
-				cout << y << endl;
-				++i;
-				nonlinear(a * y - b * y1 * y1 + c * u + d * sin(u), y);
-			}
-			else {
-				cout << "end nonlinear" << endl;
-			}
-	}
-};
-
-int main() {
-	double y = 0, y1 = 0;
-	ofstream file1("lin.txt");
-	ofstream file2("nonlin.txt");
-	file1.clear();
-	file2.clear();
-	functions linear, nonlinear;
-	cout << "linear model: \n";
-	linear.linear(0);
-	cout << "nonlinear model: \n";
-	nonlinear.nonlinear(0,0);
-}
 ```     
 
 Вывод программы:
 
-    linear model:
-    0
-    0.5
-    0.75
-    0.875
-    0.9375
-    0.96875
-    0.984375
-    0.992188
-    0.996094
-    0.998047
-    0.999023
-    0.999512
-    0.999756
-    0.999878
-    end linear
-    nonlinear model:
-    0
-    0.920735
-    1.3811
-    1.18741
-    0.560718
-    0.496123
-    1.01159
-    1.30346
-    1.06081
-    0.601629
-    0.658896
-    1.0692
-    1.23827
-    0.968269
-    end nonlinear
-![График моделей с t = 100:](linnonlingraph.png)
+linear:
+0
+1.6965
+2.96888
+3.92316
+4.63887
+5.17565
+5.57824
+5.88018
+6.10663
+6.27648
+6.40386
+6.49939
+6.57104
+6.62478
+6.66509
+6.69532
+6.71799
+6.73499
+6.74774
+6.75731
+6.76448
+6.76986
+6.77389
+6.77692
+6.77919
+6.78089
+6.78217
+6.78313
+6.78384
+6.78438
+6.78479
+6.78509
+6.78532
+6.78549
+6.78562
+6.78571
+6.78578
+6.78584
+6.78588
+6.78591
+6.78593
+6.78595
+6.78596
+6.78597
+6.78598
+6.78598
+6.78599
+6.78599
+6.78599
+6.78599
+----------------------
+unlinear:
+0
+2.41539
+2.17385
+-0.427346
+0.331591
+2.30005
+2.13591
+-0.178806
+0.380326
+2.36297
+2.114
+-0.308645
+0.435202
+2.329
+2.09726
+-0.23525
+0.459591
+2.34453
+2.08589
+-0.266763
+0.48415
+2.33495
+2.07642
+-0.245654
+0.499781
+2.33826
+2.06916
+-0.251877
+0.513931
+2.33545
+2.06299
+-0.245354
+0.524759
+2.33583
+2.05789
+-0.245636
+0.534242
+2.33482
+2.05347
+-0.24307
+0.54216
+2.33459
+2.04966
+-0.24221
+0.549113
+2.33408
+2.0463
+-0.240808
+0.555173
+2.33378
+![График моделей с t = 50:](linnonlingraph.png)
