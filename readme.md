@@ -5,6 +5,9 @@
 1. Предварительное задание [#0](./tasks/task_00/readme.md).
 2. Основное задание [#1](./tasks/task_01/readme.md).
 3. Основное задание [#2](./tasks/task_02/readme.md).
+4. Основное задание [#3](./tasks/task_03/readme.md).
+5. Основное задание [#4](./tasks/task_04/readme.md).
+6. Дополнительное задание [#5](./tasks/task_05/readme.md).
 
 ## Успеваемость
 
