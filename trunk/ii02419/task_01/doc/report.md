@@ -9,8 +9,8 @@
 <br><br><br><br><br>
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
-<p align="right">Группы ИИ-23</p>
-<p align="right">Романюк А. П.</p>
+<p align="right">Группы ИИ-24</p>
+<p align="right">Сухаревич Д. С.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -45,93 +45,153 @@ Task is to write program (**Julia**), which simulates this object temperature.
 Код программы:
 ```C++
 #include <iostream>
+#include <vector>
 #include <cmath>
-#include <fstream>
 
-using namespace std;
-
-class functions {
-private:
-	double i = 1; //start time
-	double u = 1; //input warm
-	double t = 100; //end time
-	const double a = 0.5;
-	const double b = 0.5;
-	const double c = 0.5;
-	const double d = 0.5; //some constants
+class Iche {
 public:
-	void linear(double y) {
-		if (i != t) {
-			ofstream file("lin.txt", ios::app);
-			file << i << " " << y << endl;
-			++i;
-			cout << y << endl;
-			linear(a * y + b * u);
-		}
-		else {
-			cout << "end linear\n";
-		}
+	double a = 0.5, b = 0.7, c = 1.25, d = 0.1, u = 1.5;
+	int t = 50;
+	std::vector<double>y{ 1.1 };
+	std::vector<double>yy{ 1.1 };
+	void linear_f(){
+		double y_1 = a * y.back() + b * u;
+		y.push_back(y_1);
 	}
-	void nonlinear(double y, double y1) {
-			if (i != t) {
-				ofstream file("nonlin.txt", ios::app);
-				file << i << " " << y << endl;
-				cout << y << endl;
-				++i;
-				nonlinear(a * y - b * y1 * y1 + c * u + d * sin(u), y);
-			}
-			else {
-				cout << "end nonlinear" << endl;
-			}
+	void non_linear_f(){
+		double y_1 = a * yy.back() - b * pow(yy.back(), 2) + c * u + d * sin(u);
+		yy.push_back(y_1);
 	}
 };
 
-int main() {
-	double y = 0, y1 = 0;
-	ofstream file1("lin.txt");
-	ofstream file2("nonlin.txt");
-	file1.clear();
-	file2.clear();
-	functions linear, nonlinear;
-	cout << "linear model: \n";
-	linear.linear(0);
-	cout << "nonlinear model: \n";
-	nonlinear.nonlinear(0,0);
+void main() {
+	Iche linear;
+	for (int i = 0; i < linear.t; i++) {
+		linear.linear_f();
+	}
+
+	for (int i = 0; i < linear.t; i++) {
+		linear.non_linear_f();
+	}
+
+	std::cout << "linear model: " << std::endl;
+	for (int i = 0; i < linear.y.size(); i++) {
+		std::cout << linear.yy[i] << std::endl;
+	}
+
+	std::cout << std::endl << "nonlinear model: " << std::endl;
+	for (int i = 0; i < linear.y.size(); i++) {
+		std::cout << linear.yy[i] << std::endl;
+	}
 }
 ```     
 
 Вывод программы:
 
-    linear model:
-    0
-    0.5
-    0.75
-    0.875
-    0.9375
-    0.96875
-    0.984375
-    0.992188
-    0.996094
-    0.998047
-    0.999023
-    0.999512
-    0.999756
-    0.999878
-    end linear
-    nonlinear model:
-    0
-    0.920735
-    1.3811
-    1.18741
-    0.560718
-    0.496123
-    1.01159
-    1.30346
-    1.06081
-    0.601629
-    0.658896
-    1.0692
-    1.23827
-    0.968269
-    end nonlinear
-![График моделей с t = 100:](linnonlingraph.png)
+linear model:
+1.1
+1.67775
+0.843234
+1.89864
+0.400694
+2.06271
+0.0277697
+1.98809
+0.202033
+2.04719
+0.0646446
+2.00415
+0.1652
+2.03825
+0.0857601
+2.01248
+0.145934
+2.03281
+0.098536
+2.01722
+0.134934
+2.02947
+0.106357
+2.02001
+0.128447
+2.02742
+0.111148
+2.02168
+0.124566
+2.02617
+0.114077
+2.02268
+0.122229
+2.02541
+0.115864
+2.02328
+0.120816
+2.02494
+0.116952
+2.02365
+0.11996
+2.02466
+0.117614
+2.02387
+0.119442
+2.02448
+0.118017
+2.02401
+0.119127
+2.02438
+0.118262
+
+nonlinear model:
+1.1
+1.67775
+0.843234
+1.89864
+0.400694
+2.06271
+0.0277697
+1.98809
+0.202033
+2.04719
+0.0646446
+2.00415
+0.1652
+2.03825
+0.0857601
+2.01248
+0.145934
+2.03281
+0.098536
+2.01722
+0.134934
+2.02947
+0.106357
+2.02001
+0.128447
+2.02742
+0.111148
+2.02168
+0.124566
+2.02617
+0.114077
+2.02268
+0.122229
+2.02541
+0.115864
+2.02328
+0.120816
+2.02494
+0.116952
+2.02365
+0.11996
+2.02466
+0.117614
+2.02387
+0.119442
+2.02448
+0.118017
+2.02401
+0.119127
+2.02438
+0.118262
+
+![График моделей с t = 50:](linear.png)
