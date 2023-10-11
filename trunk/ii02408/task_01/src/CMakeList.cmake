@@ -17,7 +17,7 @@ set_target_properties(task_01 PROPERTIES
 # Создание цели "docs" для отображения файлов Markdown и изображений на GitHub
 add_custom_target(docs
   COMMAND ${CMAKE_COMMAND} -E echo "Dummy target for GitHub"
-  SOURCES docs/image.jpg docs/graphics.jpg docs/report.md
+  SOURCES docs/graphics.jpg docs/report.md
 )
 
 # Укажите, что вы хотите использовать git в качестве системы контроля версий
