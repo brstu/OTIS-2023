@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.5)
+project(task_01)
+
+# Add the executable target
+add_executable(task_01 src/main.cpp)
