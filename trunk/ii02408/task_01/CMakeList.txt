@@ -1,18 +1,14 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.13) # Проверка версии CMake
+project(task_01) # Создание проекта "task_01"
 
-project(task_01)
+# Добавление исходного файла main.cpp в папку src
+set(SOURCE_FILES src/main.cpp)
 
-# Добавьте источник в исполняемый файл этого проекта.
-add_executable(task_01 src/main.cpp)
-
-# Добавьте дополнительные файлы исходного кода, если необходимо.
-# add_executable(task_01 src/main.cpp src/other_file.cpp)
-
-# Добавьте папку "doc" в проект.
+# Добавление папки doc в проект
 add_subdirectory(doc)
 
-# Добавьте папку "src" в проект.
-add_subdirectory(src)
+# Создание исполняемой цели с исходными файлами, указанными в переменной SOURCE_FILES
+add_executable(task_01 ${SOURCE_FILES})
 
-
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+# Линковка с библиотеками из папки doc
+target_link_libraries(task_01 doc)
