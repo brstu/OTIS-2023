@@ -21,7 +21,7 @@
 <img src="image.jpg" alt="" width="1200" height="500">
 
 **Код программы:**
-```c++
+
     #include <iostream>
     #include <vector>
     #include <cmath>
@@ -62,7 +62,7 @@
         
         return 0;
     }
-```
+
 **График:**
 
 ![](graphics.jpg)
