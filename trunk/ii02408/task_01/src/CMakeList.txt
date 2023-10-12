@@ -1,7 +1,0 @@
-﻿cmake_minimum_required(VERSION 3.0)
-
-project(task_01)
-
-set(SOURCES main.cpp)
-add_subdirectory(/home/runner/work/OTIS-2023/OTIS-2023/trunk/ii02408/task_01/src)
-add_executable(MyExecutable ${SOURCES})
