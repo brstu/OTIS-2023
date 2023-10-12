@@ -11,12 +11,12 @@ private:
 	double d = 1.1;
 	double u = 4.1;
 public:
-	const double func2(double prev) {
+	double func2(double prev) {
 		double next = a * prev + b * u;
 		return next;
 	}
 
-	const double func3(double cur, double prev) {
+	double func3(double cur, double prev) {
 		double next = a * cur - prev * prev * b + u * c + d * sin(u);
 		return next;
 	}
