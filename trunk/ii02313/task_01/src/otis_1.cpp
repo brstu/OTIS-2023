@@ -12,8 +12,8 @@ public:
 		return next;
 	}
 
-	double func3(double prev) {
-		double next = a * prev - prev * prev * b + u * c + d * sin(u);
+	double func3(double cur, double prev) {
+		double next = a * cur - prev * prev * b + u * c + d * sin(u);
 		return next;
 	}
 };
@@ -23,15 +23,18 @@ public:
 
 int main()
 {
-	double y1 = 0.6, prev1 = y1, prev2 = y1;
+	double y1 = 0.6,
+		   cur1 = y1, cur2 = y1, prev2 = y1;
 	int t;
 	cout << "Enter t: ";
 	cin >> t;
 	Function f;
 	for (int i = 0; i < t; i++) {
-		cout << i << ";" << f.func2(prev1) << ";" << f.func3(prev2)<< endl;
-		prev1 = f.func2(prev1);
-		prev2 = f.func3(prev2);
+		cur1 = f.func2(cur1);
+		int temp = cur2;
+		cur2 = f.func3(cur2, prev2);
+		prev2 = temp;
+		cout << i << ";" << cur1 << ";" << cur2 << endl;
 	}
 	return 0;
 }
