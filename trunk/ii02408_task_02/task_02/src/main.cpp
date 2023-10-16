@@ -5,10 +5,10 @@ void mainFunction() {
     double K = 0.097;    // пропорциональная составляющая
     double T = 2.1623;   // интегральная составляющая
     double Td = 1.0;     // дифференциальная составляющая
-    double step = 1.0;     // шаг
+    double step = 1.0;   // шаг
 
-    double q0 = K * (1 + Td / step);
-    double q1 = -K * (1 + 2 * Td / step - step / T);
+    double q0 = K * (1.0 + Td / step);
+    double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
     double q2 = (K * Td) / step;
 
     // функция подсчёта линейной модели
@@ -28,13 +28,13 @@ void mainFunction() {
     double PrevU = 0.0;
     double u = 0.0;
     double du = 0.0;
-    std::vector<double> arr_e = { 0.0, 0.0, 0.0 }; // массив разности желаемого значения и текущего значения
+    std::vector<double> arr_e = {0.0, 0.0, 0.0}; // массив разности желаемого значения и текущего значения
 
     // цикл вычисления Y для линейной модели
     for (int i = 1; i <= count; i++) {
         arr_e[2] = arr_e[1];
         arr_e[1] = std::abs(point - y);
-        du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[3]; // вычисление изменения управляющего сигнала
+        du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
         PrevU = u;
         u = PrevU + du;
         y = linear_model(y, parram_a, parram_b, u); // вычисление текущего значения
