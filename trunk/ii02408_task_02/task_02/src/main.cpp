@@ -20,7 +20,7 @@ void mainFunction() {
     double param_a = 0.8;
     double param_b = 0.3;
     double y = 0.0;
-    double u = 0.0; // Moved the u declaration outside the loop
+    // double u = 0.0; - Remove this line
 
     // функция подсчёта линейной модели
     auto linear_model = [&](double y, double param_a, double param_b, double u) {
