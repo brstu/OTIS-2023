@@ -6,7 +6,7 @@ void runControlSystem() {
     const double K = 0.097;    // пропорциональная составляющая
     const double T = 2.1623;   // интегральная составляющая
     const double Td = 1.0;     // дифференциальная составляющая
-    const double step = 1.0;   // шаг
+    const double step = 0.001;   // шаг
 
     const double q0 = K * (1.0 + (step != 0 ? Td / step : 0.0));
     const double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
