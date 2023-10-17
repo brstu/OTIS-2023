@@ -23,8 +23,8 @@ void runControlSystem() {
     double u = 0.0;
 
     // функция подсчёта линейной модели
-    auto linear_model = [&](double y, double param_a, double param_b, double u) {
-        return param_a * y + param_b * u; // формула линейной модели
+    auto linear_model = [&](double y, double a, double b, double u) {
+        return a * y + b * u; // формула линейной модели
     };
 
     // цикл вычисления Y для линейной модели
@@ -33,8 +33,8 @@ void runControlSystem() {
         arr_e[2] = arr_e[1];
         arr_e[1] = std::abs(point - y);
         const double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
-        const double PrevU = u;
-        u = PrevU + du;
+        const double prevU = u;
+        u = prevU + du;
         y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
         std::cout << i << ". y = " << y << "\t| u = " << u << std::endl;
     }
