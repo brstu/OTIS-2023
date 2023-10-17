@@ -1,8 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
 
-void mainFunction() {
+void runControlSystem() {
     const double K = 0.097;    // пропорциональная составляющая
     const double T = 2.1623;   // интегральная составляющая
     const double Td = 1.0;     // дифференциальная составляющая
@@ -16,8 +15,7 @@ void mainFunction() {
     const double point = 29.0;  // желаемое значение
 
     std::cout << "START" << std::endl;
-    std::vector<double> arr_LinY;  // массив текущих значений
-    std::vector<double> arr_u;     // массив управляющих сигналов
+
     const double param_a = 0.8;
     const double param_b = 0.3;
     double y = 0.0;
@@ -30,20 +28,18 @@ void mainFunction() {
 
     // цикл вычисления Y для линейной модели
     for (int i = 1; i <= count; i++) {
-        std::vector<double> arr_e = {0.0, 0.0, 0.0}; // массив разности желаемого значения и текущего значения
+        double arr_e[3] = {0.0}; // массив разности желаемого значения и текущего значения
         arr_e[2] = arr_e[1];
         arr_e[1] = std::abs(point - y);
         const double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
         const double PrevU = u;
         u = PrevU + du;
         y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
-        arr_LinY.push_back(y);  // добавляем в массив текущее значение
-        arr_u.push_back(u);     // добавляем в массив управляющий сигнал
         std::cout << i << ". y = " << y << "\t| u = " << u << std::endl;
     }
 }
 
 int main() {
-    mainFunction();
+    runControlSystem();
     return 0;
 }
