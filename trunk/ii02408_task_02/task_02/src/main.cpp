@@ -20,6 +20,7 @@ void mainFunction() {
     double param_a = 0.8;
     double param_b = 0.3;
     double y = 0.0;
+    double u = 0.0; // Moved the u declaration outside the loop
 
     // функция подсчёта линейной модели
     auto linear_model = [&](double y, double param_a, double param_b, double u) {
@@ -33,7 +34,7 @@ void mainFunction() {
         arr_e[1] = std::abs(point - y);
         double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
         double PrevU = u;
-        double u = PrevU + du;
+        u = PrevU + du;
         y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
         arr_LinY.push_back(y);  // добавляем в массив текущее значение
         arr_u.push_back(u);     // добавляем в массив управляющий сигнал
