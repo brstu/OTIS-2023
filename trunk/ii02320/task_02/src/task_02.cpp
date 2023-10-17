@@ -17,7 +17,7 @@ vector<double> y = { 0,0,0 };
 double u[2] = { 1,1 };
 
 double sum() {
-	int sum = 0;
+	double sum = 0;
 	for (int i = 0; i < 3; i++) {
 		sum += q[i] * e[i];
 	}
