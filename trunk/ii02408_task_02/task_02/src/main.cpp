@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <array>
 
 void runControlSystem() {
     const double K = 0.097;    // пропорциональная составляющая
@@ -27,8 +28,8 @@ void runControlSystem() {
     };
 
     // цикл вычисления Y для линейной модели
+    std::array<double, 3> arr_e = {0.0}; // массив разности желаемого значения и текущего значения
     for (int i = 1; i <= count; i++) {
-        double arr_e[3] = {0.0}; // массив разности желаемого значения и текущего значения
         arr_e[2] = arr_e[1];
         arr_e[1] = std::abs(point - y);
         const double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
