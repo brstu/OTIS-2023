@@ -8,7 +8,7 @@ void runControlSystem() {
     const double Td = 1.0;     // дифференциальная составляющая
     const double step = 1.0;   // шаг
 
-    const double q0 = K * (1.0 + Td / step);
+    const double q0 = K * (1.0 + (step != 0 ? Td / step : 0.0));
     const double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
     const double q2 = (K * Td) / step;
 
