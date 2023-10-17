@@ -11,33 +11,30 @@ void mainFunction() {
     double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
     double q2 = (K * Td) / step;
 
-    // функция подсчёта линейной модели
-    auto linear_model = [](double y, double parram_a, double parram_b, double u) {
-        return parram_a * y + parram_b * u; // формула линейной модели
-    };
-
     int count = 100;      // количество итераций
     double point = 29.0;  // желаемое значение
 
     std::cout << "START" << std::endl;
     std::vector<double> arr_LinY;  // массив текущих значений
     std::vector<double> arr_u;     // массив управляющих сигналов
-    double parram_a = 0.8;
-    double parram_b = 0.3;
+    double param_a = 0.8;
+    double param_b = 0.3;
     double y = 0.0;
-    double PrevU = 0.0;
-    double u = 0.0;
-    double du = 0.0;
-    std::vector<double> arr_e = {0.0, 0.0, 0.0}; // массив разности желаемого значения и текущего значения
+
+    // функция подсчёта линейной модели
+    auto linear_model = [&](double y, double param_a, double param_b, double u) {
+        return param_a * y + param_b * u; // формула линейной модели
+    };
 
     // цикл вычисления Y для линейной модели
     for (int i = 1; i <= count; i++) {
+        std::vector<double> arr_e = {0.0, 0.0, 0.0}; // массив разности желаемого значения и текущего значения
         arr_e[2] = arr_e[1];
         arr_e[1] = std::abs(point - y);
-        du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
-        PrevU = u;
-        u = PrevU + du;
-        y = linear_model(y, parram_a, parram_b, u); // вычисление текущего значения
+        double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
+        double PrevU = u;
+        double u = PrevU + du;
+        y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
         arr_LinY.push_back(y);  // добавляем в массив текущее значение
         arr_u.push_back(u);     // добавляем в массив управляющий сигнал
         std::cout << i << ". y = " << y << "\t| u = " << u << std::endl;
