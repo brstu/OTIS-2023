@@ -23,8 +23,8 @@ void runControlSystem() {
     double u = 0.0;
 
     // функция подсчёта линейной модели
-    auto linear_model = [&](double y, double a, double b, double u) {
-        return a * y + b * u; // формула линейной модели
+    auto linear_model = [&](double y_lambda, double a_lambda, double b_lambda, double u_lambda) {
+        return a_lambda * y_lambda + b_lambda * u_lambda; // формула линейной модели
     };
 
     // цикл вычисления Y для линейной модели
