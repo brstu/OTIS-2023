@@ -92,7 +92,7 @@ void nonlinear(double y_prev, double y, double u, int t_end) {
     int t = 1;
     double y_next;
     while(t <= t_end) {
-        y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin((double)u);
+        y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin((u);
         y_prev = y;
         y = y_next;
         t++;
