@@ -46,17 +46,24 @@ Task is to write program (**Julia**), which simulates this object temperature.
 #include <iostream>
 #include <cmath>
 
+// some constants
+const double a = 1;
+const double b = 0.01;
+const double c = 1;
+const double d = 1;
+
 // linear model
-void linear(float y, float a, float b, float u, int t_end);
+void linear(double y, double u, int t_end);
 
 // nonlinear model
-void nonlinear(float y_prev, float y, float u, float a, float b, float c, float d, int t_end);
+void nonlinear(double y_prev, double y, double u, int t_end);
 
 int main() {
     int t_end;
-    float y, u, y0 = 0;
-    // some constants
-    float a = 1, b = 0.01, c = 1, d = 1;
+    double y;
+    double u;
+    double y0 = 0;
+
     std::cout << "Enter temperature: ";
     std::cin >> y;
     std::cout << "\nEnter warm: ";
@@ -64,15 +71,15 @@ int main() {
     std::cout  << "\nEnter end time: ";
     std::cin >> t_end;
     std::cout << "\nLinear:\n";
-    linear(y, a, b, u, t_end);
+    linear(y, u, t_end);
     std::cout << "\nNonlinear:\n";
-    nonlinear(y0, y, u, a, b, c, d, t_end);
+    nonlinear(y0, y, u, t_end);
     return 0;
 }
 
-void linear(float y, float a, float b, float u, int t_end) {
+void linear(double y, double u, int t_end) {
     int t = 1;
-    float y_next;
+    double y_next;
     while(t <= t_end) {
         y_next = a * y + b * u;
         y = y_next;
@@ -81,16 +88,16 @@ void linear(float y, float a, float b, float u, int t_end) {
     }
 }
 
-void nonlinear(float y_prev, float y, float u, float a, float b, float c, float d, int t_end) {
+void nonlinear(double y_prev, double y, double u, int t_end) {
     int t = 1;
-    float y_next;
+    double y_next;
     while(t <= t_end) {
         y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin((double)u);
         y_prev = y;
         y = y_next;
         t++;
         std::cout << y_next << "\n";
-    }о
+    }
 }
 ```     
 ```
