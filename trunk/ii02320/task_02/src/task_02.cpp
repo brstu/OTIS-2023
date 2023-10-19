@@ -7,14 +7,20 @@ using namespace std;
 
 class func {
 private:
-    double K = 0.0001, T = 100, T_D = 100, T_0 = 1;
+    double K = 0.0001;
+    double T = 100;
+    double T_D = 100;
+    double T_0 = 1;
+
     double q_0 = K * (1 + T_D / T_0);
     double q_1 = -K * (1 + 2 * T_D / T_0 - T_0 / T);
     double q_2 = K * T_D / T_0;
-    double q[3] = { q_0, q_1, q_2 };
-    double e[3] = { 0, 0, 0 };
+
+    vector<double> q = { q_0, q_1, q_2 };
+    vector<double> e = { 0, 0, 0 };
     vector<double> y = { 0, 0, 0 };
-    double u[2] = { 1, 1 };
+    vector<double> u = { 1, 1 };
+
 public:
     double sum() {
         double sum = 0;
