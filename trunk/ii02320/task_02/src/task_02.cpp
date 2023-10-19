@@ -41,7 +41,7 @@ public:
         }
     }
 
-    vector<double> getY() {
+   const vector<double> getY() {
         return y;
     }
 };
