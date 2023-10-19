@@ -1,4 +1,4 @@
-# Install script for directory: D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/tasks/task_01/src
+# Install script for directory: D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/trunk/ii02307/task_01/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/tasks/task_01/src/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/trunk/ii02307/task_01/src/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
