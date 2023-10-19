@@ -1,27 +1,26 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
-<p align="center">Учреждение образования</p>
-<p align="center">“Брестский Государственный технический университет”</p>
-<p align="center">Кафедра ИИТ</p>
-<br><br><br><br><br><br><br>
-<p align="center">Лабораторная работа №1</p>
-<p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
-<p align="center">Тема: “Моделирование температуры объекта”</p>
-<br><br><br><br><br>
-<p align="right">Выполнил:</p>
-<p align="right">Студент 2 курса</p>
-<p align="right">Группы ИИ-23</p>
-<p align="right">Волкогон Н.И.</p>
-<p align="right">Проверил:</p>
-<p align="right">Иванюк Д. С.</p>
-<br><br><br><br><br>
-<p align="center">Брест 2023</p>
+<p style="text-align: center;">Министерство образования Республики Беларусь</p>
+<p style="text-align: center;">Учреждение образования</p>
+<p style="text-align: center;">“Брестский Государственный технический университет”</p>
+<p style="text-align: center;">Кафедра ИИТ</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: center;">Лабораторная работа №1</p>
+<p style="text-align: center;">По дисциплине “Общая теория интеллектуальных систем”</p>
+<p style="text-align: center;">Тема: “Моделирования температуры объекта”</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: right;">Выполнил:</p>
+<p style="text-align: right;">Студент 2 курса</p>
+<p style="text-align: right;">Группы ИИ-23</p>
+<p style="text-align: right;">Волкогон Н.И.</p>
+<p style="text-align: right;">Проверил:</p>
+<p style="text-align: right;">Иванюк Д. С.</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: center;">Брест 2023</p>
 
 ---
 
 # Общее задание #
 1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента, например **ii02302**).
 2. Исходный код написанной программы разместить в каталоге: **trunk\ii0xxyy\task_01\src**.
-3. Выполнить рецензирование ([review](https://linearb.io/blog/code-review-on-github), [checklist](https://linearb.io/blog/code-review-checklist)) запросов других студентов (минимум 2-е рецензии).
 
 ## Task 1. Modeling controlled object ##
 Let's get some object to be controlled. We want to control its temperature, which can be described by this differential equation:
@@ -38,6 +37,7 @@ $$\Large y_{\tau+1}=ay_{\tau}-by_{\tau-1}^2+cu_{\tau}+d\sin(u_{\tau-1})$$ (3)
 where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some constants.
 
 Task is to write program (**С++**), which simulates this object temperature.
+
 
 ---
 # Выполнение задания #
