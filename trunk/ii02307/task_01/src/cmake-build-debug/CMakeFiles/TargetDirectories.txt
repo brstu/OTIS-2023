@@ -1,3 +1,0 @@
-D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/trunk/ii02307/task_01/src/cmake-build-debug/CMakeFiles/src.dir
-D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/trunk/ii02307/task_01/src/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/уник/ОТИС/курс 2, сем 1/1lab/OTIS-2023/trunk/ii02307/task_01/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir
