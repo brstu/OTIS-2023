@@ -44,9 +44,13 @@ Task is to write program (**C++**), which simulates this object temperature.
 
 Код программы:
 ```C++
+
+
 ﻿#include <iostream>
 
+
 using namespace std;
+
 
 double a = 0.5,
 b = 1,
