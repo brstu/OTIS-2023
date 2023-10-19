@@ -7,6 +7,8 @@ const double b = 0.01;
 const double c = 1;
 const double d = 1;
 
+double y_next;
+
 // linear model
 void linear(double y, double u, int t_end);
 
@@ -34,7 +36,6 @@ int main() {
 
 void linear(double y, double u, int t_end) {
     int t = 1;
-    double y_next;
     while(t <= t_end) {
         y_next = a * y + b * u;
         y = y_next;
@@ -45,7 +46,6 @@ void linear(double y, double u, int t_end) {
 
 void nonlinear(double y_prev, double y, double u, int t_end) {
     int t = 1;
-    double y_next;
     while(t <= t_end) {
         y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin(u);
         y_prev = y;
