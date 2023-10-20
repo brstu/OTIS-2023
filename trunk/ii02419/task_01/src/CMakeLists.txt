@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
-
+cmake_minimum_required(VERSION 3.10)
 project(OTIS_01)
 
-add_executable(OTIS_01 "OTIS_01.cpp")
+add_executable(MyExecutable OTIS_01.cpp)
