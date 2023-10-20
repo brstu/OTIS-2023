@@ -9,7 +9,7 @@ public:
 	b = 0.7;
 	c = 1.25;
 	d = 0.1;
-	u = 1.5
+	u = 1.5;
 	int t = 50;
 	std::vector<double>y{ 1.1 };
 	std::vector<double>yy{ 1.1 };
