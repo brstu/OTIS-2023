@@ -18,7 +18,7 @@ public:
 	}
 };
 
-void main() {
+int main() {
 	Iche linear;
 	for (int i = 0; i < linear.t; i++) {
 		linear.linear_f();
@@ -32,4 +32,5 @@ void main() {
 		std::cout << linear.y[i] << " ";
 		std::cout << linear.yy[i] << std::endl;
 	}
+	return 0;
 }
