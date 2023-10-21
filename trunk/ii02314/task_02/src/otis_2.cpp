@@ -32,15 +32,15 @@ private:
 	double q1 = -k * (1 + 2 * td / t0 - t0 / t);
 	double q2 = k * td / t0;
 
-	void shift(double& a, double& b, double& c, double next) const{
-		a = b;
-		b = c;
-		c = next;
+	void shift(double& x0, double& x1, double& x2, double next) const{
+		x0 = x1;
+		x1 = x2;
+		x2 = next;
 	}
 
-	void shift(double& a, double& b, double next) const{
-		a = b;
-		b = next;
+	void shift(double& x0, double& x1, double next) const{
+		x0 = x1;
+		x1 = next;
 	}
 
 public:
