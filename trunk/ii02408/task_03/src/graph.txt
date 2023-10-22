@@ -1,0 +1,11 @@
+Graph: MyGraph
+Nodes:
+- Name: A, Content: 
+- Name: B, Content: 
+- Name: C, Content: 
+- Name: D, Content: 
+Edges:
+- Source: A, Target: B, Directed: false, Color: 
+- Source: B, Target: C, Directed: false, Color: 
+- Source: C, Target: D, Directed: false, Color: 
+- Source: D, Target: A, Directed: true, Color: 
