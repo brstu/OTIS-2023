@@ -35,8 +35,8 @@ public:
     }
 
 private:
-    double k = 0.0001;
-    double t = 100;
+    double k = 0.01;
+    double t = 40;
     double td = 100;
     double t0 = 1;
 
