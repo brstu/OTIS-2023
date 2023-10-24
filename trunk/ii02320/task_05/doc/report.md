@@ -32,5 +32,6 @@
 
 # Выполнение задания #
 
-При выполнении 4 лабораторной работы столкнулся с ошибкой в проекте NIKA на странице sc-web (localhost:8000), о чем и сообщил в репозитории проекта: https://github.com/ostis-apps/nika/issues/300
+При выполнении 4 лабораторной работы столкнулся с ошибкой в проекте NIKA на странице sc-web (localhost:8000), о чем и сообщил в репозитории проекта: https://github.com/ostis-apps/nika/issues/300 и https://github.com/ostis-apps/nika/issues/301
 ![issue](1.png)
+![issue](2.png)
