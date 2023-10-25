@@ -4,11 +4,11 @@
 struct Modeling_object 
 { 
 
-double a = 0.05; 
-double b = 1.41; 
-double c = 1.15; 
-double d = 0.2;
-double u = .2; 
+const double a = 0.05; 
+const double b = 1.41;
+const double c = 1.15;
+const double d = 0.2;
+const double u = 0.2;
 };
 
 double function1(Modeling_object* model, double y_t) 
