@@ -106,6 +106,7 @@ int main()
 Enter the number of iterations :50
 Linear model :
 1; 0.287
+
 2; 0.29635
 3; 0.296817
 4; 0.296841
@@ -208,4 +209,4 @@ Unlinear model :
 49; 0.215197
 50; 0.215197
    
-![График моделей с t = 50:](graphic.png)
+![График моделей с t = 50:](grphic.png)
