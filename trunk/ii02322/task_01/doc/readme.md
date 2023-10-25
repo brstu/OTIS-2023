@@ -314,4 +314,4 @@ Linear model :
 
 
    
-![График моделей с t = 50:](grahic.jpg)
+![График моделей с t = 50:](graph.jpg)
