@@ -11,12 +11,12 @@ const double d = 0.2;
 const double u = 0.2;
 };
 
-double function1(Modeling_object* model, double y_t) 
+double function1(const Modeling_object* model, double y_t) 
 {
 	return model->a * y_t + model->b * model->u; 
 }
 
-double function2(Modeling_object* model, double y_t, double y_t_mines) 
+double function2(const Modeling_object* model, double y_t, double y_t_mines) 
 { 
 	return model->a * y_t - model->b * y_t_mines * y_t_mines + model->c * model->u + model->d * sin(model->u);
 }
