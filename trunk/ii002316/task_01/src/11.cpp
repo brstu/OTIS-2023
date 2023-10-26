@@ -26,13 +26,13 @@ void customNonlinear(double y, double y1, double u, double i, double t) {
 		ofstream outputFile("custom_nonlin.txt", ios::app);
 		outputFile << i << " " << y << endl;
 		cout << y << endl;
-		customNonlinear(alpha * y - beta2 * y1 * y1 + gamma * 0 + delta * sin(0), y, u, i + 1, t);
+		customNonlinear(alpha * y - beta2 * y1 * y1 + (double)gamma * 0.0 + delta * sin(0), y, u, i + 1, t);
 	}
 	else if (i != t) {
 		ofstream outputFile("custom_nonlin.txt", ios::app);
 		outputFile << i << " " << y << endl;
 		cout << y << endl;
-		customNonlinear(alpha * y - beta2 * y1 * y1 + gamma * u + delta * sin(u), y, u, i + 1, t);
+		customNonlinear(alpha * y - beta2 * y1 * y1 + (double)gamma * u + delta * sin(u), y, u, i + 1, t);
 	}
 	else {
 		cout << "end custom nonlinear" << endl;
