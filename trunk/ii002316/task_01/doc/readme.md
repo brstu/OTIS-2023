@@ -10,7 +10,7 @@
 <p style="text-align: right;">Выполнил:</p>
 <p style="text-align: right;">Студент 2 курса</p>
 <p style="text-align: right;">Группы ИИ-23</p>
-<p style="text-align: right;">Макаревич Н. Р.</p>
+<p style="text-align: right;">Медведь П.В.</p>
 <p style="text-align: right;">Проверил:</p>
 <p style="text-align: right;">Иванюк Д. С.</p>
 <div style="margin-bottom: 10em;"></div>
@@ -42,144 +42,263 @@ where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some con
 
 Код программы:
 ```cpp﻿#include <iostream>
+#include <iostream>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
-class Function {
-private:
-	double a = 0.6, b = 0.5, c = 0.65, d = 1.1, u = 4.1;
-public:
-	double func2(double prev) {
-		double next = a * prev + b * u;
-		return next;
+void customLinear(double alpha, double beta, double y, double u, double i, double t) {
+	if (i != t) {
+		ofstream outputFile("custom_lin.txt", ios::app);
+		outputFile << i << " " << y << endl;
+		cout << y << endl;
+		customLinear(alpha, beta, alpha * y + beta * u, u, i + 1, t);
 	}
-
-	double func3(double prev) {
-		double next = a * prev - prev * prev * b + u * c + d * sin(u);
-		return next;
+	else {
+		cout << "end custom linear\n";
 	}
-};
-
-
-
-
-int main()
-{
-	double y1 = 0.6, prev1 = y1, prev2 = y1;
-	int t;
-	cout << "Enter t: ";
-	cin >> t;
-	Function f;
-	for (int i = 0; i < t; i++) {
-		cout << i << ";" << f.func2(prev1) << ";" << f.func3(prev2)<< endl;
-		prev1 = f.func2(prev1);
-		prev2 = f.func3(prev2);
-	}
-	return 0;
 }
-    Вывод:
-    Enter t: 100
-0;2.41;1.9449
-1;3.496;1.04052
-2;4.1476;1.84786
-3;4.53856;1.16631
-4;4.77314;1.78454
-5;4.91388;1.24333
-6;4.99833;1.73796
-7;5.049;1.29742
-8;5.0794;1.7017
-9;5.09764;1.33802
-10;5.10858;1.67255
-11;5.11515;1.36971
-12;5.11909;1.64867
-13;5.12145;1.39504
-14;5.12287;1.62885
-15;5.12372;1.41563
-16;5.12423;1.61227
-17;5.12454;1.43255
-18;5.12472;1.59833
-19;5.12483;1.44657
-20;5.1249;1.58656
-21;5.12494;1.45825
-22;5.12496;1.5766
-23;5.12498;1.46802
-24;5.12499;1.56816
-25;5.12499;1.47622
-26;5.125;1.56101
-27;5.125;1.48312
-28;5.125;1.55494
-29;5.125;1.48894
-30;5.125;1.54979
-31;5.125;1.49385
-32;5.125;1.54542
-33;5.125;1.49799
-34;5.125;1.5417
-35;5.125;1.50149
-36;5.125;1.53855
-37;5.125;1.50446
-38;5.125;1.53587
-39;5.125;1.50697
-40;5.125;1.5336
-41;5.125;1.50909
-42;5.125;1.53167
-43;5.125;1.51089
-44;5.125;1.53004
-45;5.125;1.51241
-46;5.125;1.52865
-47;5.125;1.5137
-48;5.125;1.52747
-49;5.125;1.51479
-50;5.125;1.52647
-51;5.125;1.51572
-52;5.125;1.52562
-53;5.125;1.51651
-54;5.125;1.5249
-55;5.125;1.51717
-56;5.125;1.52429
-57;5.125;1.51774
-58;5.125;1.52377
-59;5.125;1.51822
-60;5.125;1.52334
-61;5.125;1.51862
-62;5.125;1.52296
-63;5.125;1.51896
-64;5.125;1.52265
-65;5.125;1.51926
-66;5.125;1.52238
-67;5.125;1.5195
-68;5.125;1.52215
-69;5.125;1.51971
-70;5.125;1.52196
-71;5.125;1.51989
-72;5.125;1.5218
-73;5.125;1.52004
-74;5.125;1.52166
-75;5.125;1.52017
-76;5.125;1.52154
-77;5.125;1.52028
-78;5.125;1.52144
-79;5.125;1.52037
-80;5.125;1.52135
-81;5.125;1.52045
-82;5.125;1.52128
-83;5.125;1.52051
-84;5.125;1.52122
-85;5.125;1.52057
-86;5.125;1.52117
-87;5.125;1.52062
-88;5.125;1.52113
-89;5.125;1.52066
-90;5.125;1.52109
-91;5.125;1.52069
-92;5.125;1.52106
-93;5.125;1.52072
-94;5.125;1.52103
-95;5.125;1.52075
-96;5.125;1.52101
-97;5.125;1.52077
-98;5.125;1.52099
-99;5.125;1.52078
+
+void customNonlinear(double alpha, double beta, double gamma, double delta, double y, double y1, double u, double i, double t) {
+	if (i == 1) {
+		ofstream outputFile("custom_nonlin.txt", ios::app);
+		outputFile << i << " " << y << endl;
+		cout << y << endl;
+		customNonlinear(alpha, beta, gamma, delta, alpha * y - beta * y1 * y1 + gamma * 0 + delta * sin(0), y, u, i + 1, t);
+	}
+	else if (i != t) {
+		ofstream outputFile("custom_nonlin.txt", ios::app);
+		outputFile << i << " " << y << endl;
+		cout << y << endl;
+		customNonlinear(alpha, beta, gamma, delta, alpha * y - beta * y1 * y1 + gamma * u + delta * sin(u), y, u, i + 1, t);
+	}
+	else {
+		cout << "end custom nonlinear" << endl;
+	}
+}
+
+int main() {
+	ofstream linearOutputFile("custom_lin.txt");
+	ofstream nonlinearOutputFile("custom_nonlin.txt");
+	linearOutputFile.clear();
+	nonlinearOutputFile.clear();
+	double i = 1; //start time
+	double y = 0; //input temperature
+	double u = 1; //input warm
+	double t = 100; //end time
+	const double alpha = 0.5;
+	const double beta = 0.5;
+	const double gamma = 0.5;
+	const double delta = 0.5; //some constants
+	cout << "custom linear model: \n";
+	customLinear(alpha, beta, y, u, i, t);
+	cout << "custom nonlinear model: \n";
+	customNonlinear(alpha, beta, gamma, delta, y, y, u, i, t);
+}
+Вывод:
+custom linear model:
+0
+0.5
+0.75
+0.875
+0.9375
+0.96875
+0.984375
+0.992188
+0.996094
+0.998047
+0.999023
+0.999512
+0.999756
+0.999878
+0.999939
+0.999969
+0.999985
+0.999992
+0.999996
+0.999998
+0.999999
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+end custom linear
+custom nonlinear model:
+0
+0
+0.920735
+1.3811
+1.18741
+0.560718
+0.496123
+1.01159
+1.30346
+1.06081
+0.601629
+0.658896
+1.0692
+1.23827
+0.968269
+0.638219
+0.771072
+1.10261
+1.17476
+0.900243
+0.680822
+0.855927
+1.11694
+1.1129
+0.853408
+0.728166
+0.920666
+1.11596
+1.0549
+0.825507
+0.777082
+0.968546
+1.10308
+1.00324
+0.81396
+0.824475
+1.00171
+1.08171
+0.959881
+0.815629
+0.867864
+1.02204
+1.05516
+0.926032
+0.827067
+0.905501
+1.03147
+1.0265
+0.902025
+0.844895
+0.936358
+1.03199
+0.998348
+0.887407
+0.86609
+0.960035
+1.0257
+0.97275
+0.881083
+0.888155
+0.976659
+1.01466
+0.951131
+0.881538
+0.909179
+0.98677
+1.00082
+0.934286
+0.887061
+0.927821
+0.991207
+0.985913
+0.922447
+0.895946
+0.943255
+0.991003
+0.971372
+0.915378
+0.906642
+0.955098
+0.987284
+0.958271
+0.912506
+0.917847
+0.963325
+0.981177
+0.947326
+0.913045
+0.928544
+0.968182
+0.97373
+0.938912
+0.916117
+0.938016
+0.970109
+0.965853
+0.933106
+0.920853
+0.945818
+end custom nonlinear
 ```
  Линейный график и нелинейный графики:
  
