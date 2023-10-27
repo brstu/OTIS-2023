@@ -6,11 +6,11 @@ using namespace std;
 
 class Function {
     private:
-        double i = 1; //start time
+        int i = 1; //start time
         double y = 0; //input temperature
         double y1 = 0;
         double u = 1; //input warm
-        double t = 100; //end time
+        int t = 100; //end time
         const double a = 0.5;
         const double b = 0.5;
         const double c = 0.5;
@@ -18,7 +18,7 @@ class Function {
 public:
     void linear() {
         ofstream file("lin.txt");
-        for (double j = i; j <= t; j++) {
+        for (int j = i; j <= t; j++) {
             file << j << " " << y << endl;
             cout << y << endl;
             y = a * y + b * u;
@@ -28,7 +28,7 @@ public:
 
     void nonlinear() {
         ofstream file("nonlin.txt");
-        for (double j = i; j <= t; j++) {
+        for (int j = i; j <= t; j++) {
             file << j << " " << y << endl;
             cout << y << endl;
             if (j == 1) {
