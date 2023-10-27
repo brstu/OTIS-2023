@@ -48,56 +48,62 @@ where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some con
 
 using namespace std;
 
-void customLinear(double alpha, double beta, double y, double u, double i, double t) {
-	if (i != t) {
-		ofstream outputFile("custom_lin.txt", ios::app);
-		outputFile << i << " " << y << endl;
-		cout << y << endl;
-		customLinear(alpha, beta, alpha * y + beta * u, u, i + 1, t);
-	}
-	else {
-		cout << "end custom linear\n";
-	}
-}
+class Function {
+    private:
+        int i = 1; //start time
+        double y = 0; //input temperature
+        double y1 = 0;
+        double u = 1; //input warm
+        int t = 100; //end time
+        const double a = 0.5;
+        const double b = 0.5;
+        const double c = 0.5;
+        const double d = 0.5; //some constants
+public:
+    void linear() {
+        ofstream file("lin.txt");
+        for (int j = i; j <= t; j++) {
+            file << j << " " << y << endl;
+            cout << y << endl;
+            y = a * y + b * u;
+        }
+        cout << "end linear\n";
+    }
 
-void customNonlinear(double alpha, double beta, double gamma, double delta, double y, double y1, double u, double i, double t) {
-	if (i == 1) {
-		ofstream outputFile("custom_nonlin.txt", ios::app);
-		outputFile << i << " " << y << endl;
-		cout << y << endl;
-		customNonlinear(alpha, beta, gamma, delta, alpha * y - beta * y1 * y1 + gamma * 0 + delta * sin(0), y, u, i + 1, t);
-	}
-	else if (i != t) {
-		ofstream outputFile("custom_nonlin.txt", ios::app);
-		outputFile << i << " " << y << endl;
-		cout << y << endl;
-		customNonlinear(alpha, beta, gamma, delta, alpha * y - beta * y1 * y1 + gamma * u + delta * sin(u), y, u, i + 1, t);
-	}
-	else {
-		cout << "end custom nonlinear" << endl;
-	}
-}
+    void nonlinear() {
+        ofstream file("nonlin.txt");
+        for (int j = i; j <= t; j++) {
+            file << j << " " << y << endl;
+            cout << y << endl;
+            if (j == 1) {
+                y = a * y - b * y1 * y1 + c * 0 + d * sin(0);
+            }
+            else {
+                y = a * y - b * y1 * y1 + c * u + d * sin(u);
+            }
+            y1 = y;
+        }
+        cout << "end nonlinear\n";
+    }
+};
+
+
 
 int main() {
-	ofstream linearOutputFile("custom_lin.txt");
-	ofstream nonlinearOutputFile("custom_nonlin.txt");
-	linearOutputFile.clear();
-	nonlinearOutputFile.clear();
-	double i = 1; //start time
-	double y = 0; //input temperature
-	double u = 1; //input warm
-	double t = 100; //end time
-	const double alpha = 0.5;
-	const double beta = 0.5;
-	const double gamma = 0.5;
-	const double delta = 0.5; //some constants
-	cout << "custom linear model: \n";
-	customLinear(alpha, beta, y, u, i, t);
-	cout << "custom nonlinear model: \n";
-	customNonlinear(alpha, beta, gamma, delta, y, y, u, i, t);
+    ofstream file1("lin.txt");
+    ofstream file2("nonlin.txt");
+    file1.clear();
+    file2.clear();
+    
+    Function func;
+    cout << "linear model: \n";
+    func.linear();
+    cout << "nonlinear model: \n";
+    func.nonlinear();
 }
+
 Вывод:
-custom linear model:
+linear model:
 0
 0.5
 0.75
@@ -197,108 +203,110 @@ custom linear model:
 1
 1
 1
-end custom linear
-custom nonlinear model:
-0
-0
-0.920735
-1.3811
-1.18741
-0.560718
-0.496123
-1.01159
-1.30346
-1.06081
-0.601629
-0.658896
-1.0692
-1.23827
-0.968269
-0.638219
-0.771072
-1.10261
-1.17476
-0.900243
-0.680822
-0.855927
-1.11694
-1.1129
-0.853408
-0.728166
-0.920666
-1.11596
-1.0549
-0.825507
-0.777082
-0.968546
-1.10308
-1.00324
-0.81396
-0.824475
-1.00171
-1.08171
-0.959881
-0.815629
-0.867864
-1.02204
-1.05516
-0.926032
-0.827067
-0.905501
-1.03147
-1.0265
-0.902025
-0.844895
-0.936358
-1.03199
-0.998348
-0.887407
-0.86609
-0.960035
-1.0257
-0.97275
-0.881083
-0.888155
-0.976659
-1.01466
-0.951131
-0.881538
-0.909179
-0.98677
-1.00082
-0.934286
-0.887061
-0.927821
-0.991207
-0.985913
-0.922447
-0.895946
-0.943255
-0.991003
-0.971372
-0.915378
-0.906642
-0.955098
-0.987284
-0.958271
-0.912506
-0.917847
-0.963325
-0.981177
-0.947326
-0.913045
-0.928544
-0.968182
-0.97373
-0.938912
-0.916117
-0.938016
-0.970109
-0.965853
-0.933106
-0.920853
+1
+end linear
+nonlinear model:
+1
+0.5
+1.04574
+0.896822
+0.967002
+0.93669
+0.950386
+0.944312
+0.947029
 0.945818
-end custom nonlinear
+0.946359
+0.946117
+0.946225
+0.946177
+0.946199
+0.946189
+0.946193
+0.946191
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+0.946192
+end nonlinear
 ```
  Линейный график и нелинейный графики:
  
