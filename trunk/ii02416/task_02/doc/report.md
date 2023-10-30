@@ -1,202 +1,132 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
+<p align="center">Министерство образования Республики Беларусь</p>
 <p align="center">Учреждение образования</p>
-<p align="center">“Брестский Государственный технический университет”</p>
+<p align="center">"Брестский Государственный технический университет"</p>
 <p align="center">Кафедра ИИТ</p>
-<br><br><br><br><br><br><br>
-<p align="center">Лабораторная работа №1</p>
-<p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
-<p align="center">Тема: “Моделирования температуры объекта”</p>
-<br><br><br><br><br>
-<p align="right">Выполнил:</p>
-<p align="right">Студент 2 курса</p>
-<p align="right">Группы ИИ-24</p>
-<p align="right">Рудецкий Е. В.</p>
-<p align="right">Проверил:</p>
-<p align="right">Иванюк Д. С.</p>
-<br><br><br><br><br>
+<br>
+<br>
+<p align="center">Лабораторная работа №2</p>
+<p align="center">По дисциплине: "Общая теория интеллектуальных систем"</p>
+<p align="center">Тема: "ПИД-регуляторы"</p>
+<br>
+<br>
+<p align="right">Выполнил:<br>Студент 2 курса<br>Группы ИИ-24<br>Рудецкий Е.В.</p>
+<p align="right">Проверил:<br>Иванюк Д. С.</p>
+<br>
 <p align="center">Брест 2023</p>
 
 ---
 
 # Общее задание #
-1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента, например **ii02102**).
-2. Исходный код написанной программы разместить в каталоге: **trunk\ii0xxyy\task_01\src**.
-
-## Task 1. Modeling controlled object ##
-Let's get some object to be controlled. We want to control its temperature, which can be described by this differential equation:
-
-$$\Large\frac{dy(\tau)}{d\tau}=\frac{u(\tau)}{C}+\frac{Y_0-y(\tau)}{RC} $$ (1)
-
-where $\tau$ – time; $y(\tau)$ – input temperature; $u(\tau)$ – input warm; $Y_0$ – room temperature; $C,RC$ – some constants.
-
-After transformation we get these linear (2) and nonlinear (3) models:
-
-$$\Large y_{\tau+1}=ay_{\tau}+bu_{\tau}$$ (2)
-$$\Large y_{\tau+1}=ay_{\tau}-by_{\tau-1}^2+cu_{\tau}+d\sin(u_{\tau-1})$$ (3)
-
-where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some constants.
-
-Task is to write program (**С++**), which simulates this object temperature.
-
+1. Написать отчет по выполненной лабораторной работе №2 в .md формате (*readme.md*) и с помощью **pull request** разместить его в следующем каталоге: **trunk\ii0xxyy\task_02\doc**.
+2. Исходный код написанной программы разместить в каталоге: **trunk\ii00xxyy\task_02\src**.
 ---
 
 # Выполнение задания #
 
 Код программы:
 ```C++
-  #include<iostream>
+
+#include<iostream>
 #include<vector>
-#include<cmath>
 using namespace std;
 
-int t=50;
-float a1=0.75,b1=0.87,a2=-0.1,b2=0.45,c2=0.64,d2=-0.5,u=1.95,u2=3.5;
-vector<float>y(t),y2(t);
 
-void linfunc(float a, float b, int i)
+class pid
 {
-   if(i<=0)
-      y[i]=0;
-   else
-      y[i]=a*y[i-1]+b*u;
-}
-
-void unlinfunc(float a, float b, float c, float d, int i)
-{
-   if(i<=0)
-      y2[i]=0;
-   else
-      y2[i]=a*y2[i-1]-b*powf(y2[i-2],2)+c*u2+d*sin(u2);
-}
+private:
+   vector<float>a2;
+   float i=0,p_err=0;
+public:
+   float pid_c (float k_p,float k_i,float k_d,float val,float c_val,float dt)
+   {
+      float err = val - c_val;
+      float p = err;
+      i = i + err*dt; 
+      float d = (err - p_err) / dt;
+      float c_sig= p * k_p + i * k_i + d * k_d;
+      p_err = err;
+      float buff=c_sig-c_val;
+      a2.push_back(buff);
+      return c_sig;
+   }
+   
+   void lin(float y_c, float u, float t, float dt, float setting)
+   {
+      float a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006;
+      vector<float>a1,a3(t,setting);
+      a1.push_back(y_c);
+      for(float i=1;i<=t;i++)
+      {
+         if (((int)i)%((int)dt)==0)
+         {
+            float y=pid_c(k_p,k_i,k_d, setting, y_c, dt);
+            float y_next = a * y  + b * u;
+            a1.push_back(y_next);
+            y_c = y_next;
+         }
+         else
+         {
+            float y_next = a * y_next + b * u;
+            a1.push_back(y_next);
+            y_c = y_next;
+         }
+      }
+      cout<<"value:\n";
+      for(int i=0;i<a1.size();i++)
+      {
+         cout<<a1[i]<<",";
+      }
+      cout<<"\n\nsignal:\n";
+      for(int i = 0; i < a1.size()-a2.size(); i++){
+         a2.push_back(a2.back());
+      }
+      for(int i=0;i<a2.size();i++)
+      {
+         cout<<a2[i]<<",";
+      }
+      cout<<"\n\nsetting:\n";
+      for(int i=0;i<a3.size();i++)
+      {
+         cout<<a3[i]<<",";
+      }
+   }
+};
 
 int main() {
-   
-   for(int i=0;i<t;i++)
-   {
-      linfunc(a1,b1,i);
-   }
-   
-   for(int i=0;i<t;i++)
-   {
-      unlinfunc(a2,b2,c2,d2,i);
-   }
-   
-   cout<<"linear:\n";
-   for(int i = 0; i < t; i++){
-      cout<<y[i]<<endl;
-   }
-   cout<<"----------------------\nunlinear:\n";
-   for(int i = 0; i < t; i++){
-      cout<<y2[i]<<endl;
-   }
-   cout<<endl;
+   pid T;
+   cout<<"setting:\n";
+   float setting;       
+   cin>>setting;
+   cout<<"duration:\n";
+   float duration;
+   cin>>duration;
+   cout<<"discretization value:\n";
+   float dis_time;
+   cin>>dis_time;
+   T.lin(0, 0, duration, dis_time, setting);
    return 0;
 }
-```     
+
+```
+Ввод программы:
+```
+setting:
+150
+duration:
+50
+discretization value:
+21
+```
 
 Вывод программы:
+```
+value:
+0,132.929,154.043,189.844,214.052,234.267,250.13,262.796,272.861,280.868,287.237,292.303,296.333,
 
-    linear:
-    0
-    1.6965
-    2.96888
-    3.92316
-    4.63887
-    5.17565
-    5.57824
-    5.88018
-    6.10663
-    6.27648
-    6.40386
-    6.49939
-    6.57104
-    6.62478
-    6.66509
-    6.69532
-    6.71799
-    6.73499
-    6.74774
-    6.75731
-    6.76448
-    6.76986
-    6.77389
-    6.77692
-    6.77919
-    6.78089
-    6.78217
-    6.78313
-    6.78384
-    6.78438
-    6.78479
-    6.78509
-    6.78532
-    6.78549
-    6.78562
-    6.78571
-    6.78578
-    6.78584
-    6.78588
-    6.78591
-    6.78593
-    6.78595
-    6.78596
-    6.78597
-    6.78598
-    6.78598
-    6.78599
-    6.78599
-    6.78599
-    6.78599
-    ----------------------
-    unlinear:
-    0
-    2.41539
-    2.17385
-    -0.427346
-    0.331591
-    2.30005
-    2.13591
-    -0.178806
-    0.380326
-    2.36297
-    2.114
-    -0.308645
-    0.435202
-    2.329
-    2.09726
-    -0.23525
-    0.459591
-    2.34453
-    2.08589
-    -0.266763
-    0.48415
-    2.33495
-    2.07642
-    -0.245654
-    0.499781
-    2.33826
-    2.06916
-    -0.251877
-    0.513931
-    2.33545
-    2.06299
-    -0.245354
-    0.524759
-    2.33583
-    2.05789
-    -0.245636
-    0.534242
-    2.33482
-    2.05347
-    -0.24307
-    0.54216
-    2.33459
-    2.04966
-    -0.24221
-    0.549113
-    2.33408
-    2.0463
-    -0.240808
-    0.555173
-    2.33378
-![График моделей с t = 50:](Figure_1.png)
+signal:
+143.707,33.6037,51.1938,41.5638,39.2089,36.1443,33.9742,32.1881,30.7808,29.6584,28.7663,28.0566,28.0566,
+
+setting:
+312,312,312,312,312,312,312,312,312,312,312,312,
+```
+![График](Figure_1.png)
