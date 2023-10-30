@@ -2,6 +2,6 @@
 
 project(OTIS_01)
 
-set(SOURCES lab1.cpp)
+set(SOURCES lab2.cpp)
 
 add_executable(MyExecutable ${SOURCES})
