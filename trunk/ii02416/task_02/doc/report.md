@@ -111,11 +111,11 @@ int main() {
 Ввод программы:
 ```
 setting:
-312
+150
 duration:
-12
+50
 discretization value:
-1
+21
 ```
 
 Вывод программы:
