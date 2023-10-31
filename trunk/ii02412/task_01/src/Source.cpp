@@ -35,11 +35,13 @@ private:
     double U;
     double Y;
     double Y_pre;
-    double U_pre;
+    const double U_pre = 1.0;
 
 public:
-    NonlinearModel(double a, double b, double c, double d, double u, double y, double y_pre, double u_pre)
-        : A(a), B(b), C(c), D(d), U(u), Y(y), Y_pre(y_pre), U_pre(u_pre) {}
+    NonlinearModel(double a, double b, double c, double d, double u, double y, double y_pre)
+        : A(a), B(b), C(c), D(d), U(u), Y(y), Y_pre(y_pre) {
+
+    }
 
     double computeNextValue() {
         double nextY;
@@ -50,7 +52,6 @@ public:
             nextY = A * Y - B * pow(Y_pre, 2) + C * U + D * sin(U_pre);
         }
         Y_pre = Y;
-        U_pre = U;
         Y = nextY;
         return Y;
     }
@@ -81,11 +82,10 @@ int main() {
     const double U_nonlinear = 1.0;
     const double Y_nonlinear = 0.0;
     const double Y_pre_nonlinear = 0.0;
-    const double U_pre_nonlinear = 1.0;
     const int T_nonlinear = 20;
 
     NonlinearModel nonlinearModel(A_nonlinear, B_nonlinear, C_nonlinear, D_nonlinear, U_nonlinear, Y_nonlinear,
-        Y_pre_nonlinear, U_pre_nonlinear);
+        Y_pre_nonlinear);
     nonlinearModel.printOutput(T_nonlinear);
 
     return 0;
