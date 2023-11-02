@@ -1,4 +1,4 @@
-﻿# CMakeList.txt: проект CMake для cmakeOTISLAB1; включите исходный код и определения,
+﻿# CMakeList.txt: проект CMake для cmakeOTIS1LAB; включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -9,13 +9,13 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("cmakeOTISLAB1")
+project ("cmakeOTIS1LAB")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (cmakeOTISLAB1 "cmakeOTISLAB1.cpp" "cmakeOTISLAB1.h")
+add_executable (cmakeOTIS1LAB "cmakeOTIS1LAB.cpp" "cmakeOTIS1LAB.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET cmakeOTISLAB1 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET cmakeOTIS1LAB PROPERTY CXX_STANDARD 20)
 endif()
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
