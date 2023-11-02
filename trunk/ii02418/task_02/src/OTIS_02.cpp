@@ -2,7 +2,18 @@
 #include <vector>
 #include <cmath>
 
-void pid_regulator(double A, double B, double C, double D, double K, double T0, double TD, double T, double W, double YS) {
+double A = 0.5;
+double B = 0.6;
+double C = 0.6;
+double D = 0.6;
+double K = 0.8;
+double T0 = 1.1;
+double TD = 1.0;
+double T = 1.1;
+double YS = 2.0;
+double W = 20;
+
+void pid_regulator() {
 	double q0 = K * (1 + (TD / T0));
 	double q1 = -K * (1 + 2 * (TD / T0) - (T0 / T));
 	double q2 = K * (TD / T0);
@@ -25,16 +36,7 @@ void pid_regulator(double A, double B, double C, double D, double K, double T0, 
 }
 
 int main() {
-	double A = 0.5;
-	double B = 0.6;
-	double C = 0.6;
-	double D = 0.6;
-	double K = 0.8;
-	double T0 = 1.1;
-	double TD = 1.0;
-	double T = 1.1;
-	double YS = 2.0;
-	double W = 20;
-	pid_regulator(A, B, C, D, K, T0, TD, T, W, YS);
+
+	pid_regulator();
 	return 0;
 }
