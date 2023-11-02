@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
+project(OTIS_01)
 
-project(OTS_1)
+set(PROJECT OTIS_01.cpp)
 
-set(SOURCES OTIS_01.cpp)
-
-add_executable(MyExecutable ${SOURCES})
+add_executable(MyExecutable ${PROJECT})
