@@ -5,32 +5,32 @@ using namespace std;
 class pid
 {
 private:
-   vector<float>a2;
-   float i=0,p_err=0;
+   vector<double>a2;
+   double i=0,p_err=0;
 public:
-   float pid_c (float k_p,float k_i,float k_d,float val,float c_val,float dt)
+   double pid_c (double k_p,double k_i,double k_d,double val,double c_val,double dt)
    {
-      float err = val - c_val;
-      float p = err;
+      double err = val - c_val;
+      double p = err;
       i = i + err*dt; 
-      float d = (err - p_err) / dt;
-      float c_sig= p * k_p + i * k_i + d * k_d;
+      double d = (err - p_err) / dt;
+      double c_sig= p * k_p + i * k_i + d * k_d;
       p_err = err;
-      float buff=c_sig-c_val;
+      double buff=c_sig-c_val;
       a2.push_back(buff);
       return c_sig;
    }
    
-   void lin(float y_c, float u, float t, float dt, float setting)
+   void lin(double y_c, double u, double t, double dt, double setting)
    {
-      float a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006, y_next;
-      vector<float>a1,a3(t,setting);
+      double a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006, y_next=0;
+      vector<double>a1,a3(t,setting);
       a1.push_back(y_c);
       for(int i=1;i<=(int)t;i++)
       {
          if (i%(int)dt==0)
          {
-            float y=pid_c(k_p,k_i,k_d, setting, y_c, dt);
+            double y=pid_c(k_p,k_i,k_d, setting, y_c, dt);
             y_next = a * y  + b * u;
             a1.push_back(y_next);
             y_c = y_next;
@@ -66,13 +66,13 @@ public:
 int main() {
    pid T;
    cout<<"setting:\n";
-   float setting;       
+   double setting;       
    cin>>setting;
    cout<<"duration:\n";
-   float duration;
+   double duration;
    cin>>duration;
    cout<<"discretization value:\n";
-   float dis_time;
+   double dis_time;
    cin>>dis_time;
    T.lin(0, 0, duration, dis_time, setting);
    return 0;
