@@ -3,14 +3,11 @@
 
 class pid
 {
-private:
-   std::vector<double> a2;
-   double i, p_err;
-
 public:
-   pid() : i(0), p_err(0) {}
-
-   double pid_c(double k_p, double k_i, double k_d, double val, double c_val, double dt)
+      std::vector<double> a2;
+   double i = 0;
+   double p_err = 0;
+   double pid_c(double k_p, double k_i, double k_d, double val, double c_val,double dt)
    {
       double err = val - c_val;
       double p = err;
@@ -25,8 +22,14 @@ public:
 
    void lin(double y_c, double u, double t, double dt, double setting)
    {
-      double a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006, y_next = 0;
-      std::vector<double> a1, a3(t, setting);
+      double a = 0.925;
+      double b = 0.75;
+      double k_p = 0.19;
+      double k_i = 0.27;
+      double k_d = 0.0006;
+      double y_next = 0;
+      std::vector<double> a1;
+      std::vector<double> a3(static_cast<size_t>(t), setting);
       a1.push_back(y_c);
       for (int i = 1; i <= static_cast<int>(t); i++)
       {
@@ -59,7 +62,7 @@ public:
          std::cout << a2[i] << ",";
       }
       std::cout << "\n\nsetting:\n";
-      for (int i = 0; i < a3.size(); i++)
+      for (size_t i = 0; i < a3.size(); i++) // Use 'size_t' for the loop variable
       {
          std::cout << a3[i] << ",";
       }
@@ -78,6 +81,6 @@ int main()
    std::cout << "discretization value:\n";
    double dis_time;
    std::cin >> dis_time;
-   T.lin(0, 0, duration, dis_time, setting);
+   T.lin(0, 0, duration, dis_time, static_cast<size_t>(setting));
    return 0;
 }
