@@ -10,5 +10,5 @@ project ("lab2")
 add_executable (lab2 "lab2.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET lan1 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET lab2 PROPERTY CXX_STANDARD 20)
 endif()
