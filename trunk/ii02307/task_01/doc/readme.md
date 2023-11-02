@@ -53,16 +53,17 @@ const double c = 1;
 const double d = 1;
 
 // linear model
-void linear(double y, double u, int t_end);
+void linear(double y, double u, int t_end, double y_next);
 
 // nonlinear model
-void nonlinear(double y_prev, double y, double u, int t_end);
+void nonlinear(double y_prev, double y, double u, int t_end, double y_next);
 
 int main() {
     int t_end;
     double y;
     double u;
     double y0 = 0;
+    double y_next;
 
     std::cout << "Enter temperature: ";
     std::cin >> y;
@@ -71,15 +72,14 @@ int main() {
     std::cout  << "\nEnter end time: ";
     std::cin >> t_end;
     std::cout << "\nLinear:\n";
-    linear(y, u, t_end);
+    linear(y, u, t_end, y_next);
     std::cout << "\nNonlinear:\n";
-    nonlinear(y0, y, u, t_end);
+    nonlinear(y0, y, u, t_end, y_next);
     return 0;
 }
 
-void linear(double y, double u, int t_end) {
+void linear(double y, double u, int t_end, double y_next) {
     int t = 1;
-    double y_next;
     while(t <= t_end) {
         y_next = a * y + b * u;
         y = y_next;
@@ -88,11 +88,10 @@ void linear(double y, double u, int t_end) {
     }
 }
 
-void nonlinear(double y_prev, double y, double u, int t_end) {
+void nonlinear(double y_prev, double y, double u, int t_end, double y_next) {
     int t = 1;
-    double y_next;
     while(t <= t_end) {
-        y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin((double)u);
+        y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin(u);
         y_prev = y;
         y = y_next;
         t++;
