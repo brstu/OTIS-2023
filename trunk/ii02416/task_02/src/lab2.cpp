@@ -32,7 +32,7 @@ public:
       std::vector<double> a1;
       std::vector<double> a3(setting, t); 
       a1.push_back(y_c);
-      for (double ii = 1; ii <= t; ii++) 
+      for (size_t ii = 1; ii <= static_cast<size_t>(t); ii++) 
       {
          if (ii % static_cast<size_t>(dt) == 0) 
          {
@@ -49,7 +49,7 @@ public:
          }
       }
       std::cout << "value:\n";
-      for (double val : a1) // Range for-loop
+      for (double val : a1) 
       {
          std::cout << val << ",";
       }
