@@ -20,7 +20,7 @@
 
 # Общее задание #
 1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента, например **ii02102**).
-2. Исходный код написанной программы разместить в каталоге: **trunk\ii02320\task_01\src**.
+2. Исходный код написанной программы разместить в каталоге: **trunk\ii0xxyy\task_01\src**.
 
 ## Task 1. Modeling controlled object ##
 Let's get some object to be controlled. We want to control its temperature, which can be described by this differential equation:
