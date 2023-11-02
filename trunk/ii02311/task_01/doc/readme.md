@@ -84,7 +84,7 @@ int main() {
     return 0;
 }
 ```вывод
- linear model
+linear model
 	0
 	0.5
 	0.75
@@ -288,4 +288,5 @@ int main() {
 	0.945818
 	0.969659
 	0.958279
-![График моделей с t = 100:](picture.png)
+```
+![График:](picture.png)
