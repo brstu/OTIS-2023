@@ -84,7 +84,7 @@ int main() {
     return 0;
 }
 ```вывод
- linear model
+linear model
 	0
 	0.5
 	0.75
