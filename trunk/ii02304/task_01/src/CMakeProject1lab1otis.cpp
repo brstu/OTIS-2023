@@ -13,36 +13,38 @@ const double d = 0.999;
 const int t = 10;
 
 // Linear model function
-void linmodel(float a, float b, float ylin, float ulin) {
+void linmodel(float a_param, float b_param, float ylin, float ulin) {
     vector<float> ylinmodel(t + 1);
     ylinmodel[0] = ylin;
     cout << "Linear model:" << endl;
     for (int i = 0; i <= t; i++) {
-        ylinmodel[i + 1] = a * ylinmodel[i] + b * ulin;
+        ylinmodel[i + 1] = a_param * ylinmodel[i] + b_param * ulin;
         cout << ylinmodel[i + 1] << endl;
     }
 }
 
 // Nonlinear model function
-void nonlinear(float a, float b, double c, double d, float ulin) {
-    vector<float> ynonlinmodel(t + 1);
-    float y_prev = 0;
-    float y = 0;
+void nonlinear(float a_param, float b_param, double c_param, double d_param, float ulin) {
+    vector<double> ynonlinmodel(t + 1); // Changed from vector<float> to vector<double>
+    double y_prev = 0; // Changed from float to double
+    double y = 0; // Changed from float to double
     cout << endl << "Nonlinear model:" << endl;
     for (int i = 0; i <= t; i++) {
         if (i == 1) {
             y = 1.2;
             y_prev = y;
-            y = a * y + c * ulin + d * sin(ulin);
+            y = a_param * y + c_param * ulin + d_param * sin(ulin);
         }
         if (i <= t) {
-            ynonlinmodel[i + 1] = a * y - b * pow(y_prev, 2) + c * ulin + d * sin(ulin);
+            ynonlinmodel[i + 1] = a_param * y - b_param * pow(y_prev, 2) + c_param * ulin + d_param * sin(ulin);
             y_prev = y;
             y = ynonlinmodel[i + 1];
             cout << ynonlinmodel[i + 1] << endl;
         }
     }
 }
+
+
 
 int main() {
     setlocale(LC_ALL, "Russian");
