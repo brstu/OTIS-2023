@@ -4,7 +4,7 @@
 class pid
 {
 public:
-      std::vector<double> a2;
+   std::vector<double> a2;
    double i = 0;
    double p_err = 0;
    double pid_c(double k_p, double k_i, double k_d, double val, double c_val,double dt)
@@ -31,9 +31,9 @@ public:
       std::vector<double> a1;
       std::vector<double> a3(static_cast<size_t>(t), setting);
       a1.push_back(y_c);
-      for (int i = 1; i <= static_cast<int>(t); i++)
+      for (int ii = 1; ii <= static_cast<int>(t); ii++)
       {
-         if (i % static_cast<int>(dt) == 0)
+         if (ii % static_cast<int>(dt) == 0)
          {
             double y = pid_c(k_p, k_i, k_d, setting, y_c, dt);
             y_next = a * y + b * u;
@@ -48,23 +48,23 @@ public:
          }
       }
       std::cout << "value:\n";
-      for (int i = 0; i < a1.size(); i++)
+      for (int ii = 0; ii < a1.size(); ii++)
       {
-         std::cout << a1[i] << ",";
+         std::cout << a1[ii] << ",";
       }
       std::cout << "\n\nsignal:\n";
-      for (int i = 0; i < a1.size() - a2.size(); i++)
+      for (int ii = 0; ii < a1.size() - a2.size(); ii++)
       {
          a2.push_back(a2.back());
       }
-      for (int i = 0; i < a2.size(); i++)
+      for (int ii = 0; ii < a2.size(); ii++)
       {
-         std::cout << a2[i] << ",";
+         std::cout << a2[ii] << ",";
       }
       std::cout << "\n\nsetting:\n";
-      for (size_t i = 0; i < a3.size(); i++) // Use 'size_t' for the loop variable
+      for (size_t ii = 0; ii < a3.size(); ii++) // Use 'size_t' for the loop variable
       {
-         std::cout << a3[i] << ",";
+         std::cout << a3[ii] << ",";
       }
    }
 };
