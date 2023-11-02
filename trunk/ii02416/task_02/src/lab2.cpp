@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm> // Include the <algorithm> header for std::ranges::for_each
 
 class pid
 {
@@ -7,7 +8,7 @@ public:
    std::vector<double> a2;
    double i = 0;
    double p_err = 0;
-   double pid_c(double k_p, double k_i, double k_d, double val, double c_val,double dt)
+   double pid_c(double k_p, double k_i, double k_d, double val, double c_val, double dt)
    {
       double err = val - c_val;
       double p = err;
@@ -31,9 +32,9 @@ public:
       std::vector<double> a1;
       std::vector<double> a3(static_cast<size_t>(t), setting);
       a1.push_back(y_c);
-      for (int ii = 1; ii <= static_cast<int>(t); ii++)
+      for (int i = 1; i <= static_cast<int>(t); i++)
       {
-         if (ii % static_cast<int>(dt) == 0)
+         if (i % static_cast<int>(dt) == 0)
          {
             double y = pid_c(k_p, k_i, k_d, setting, y_c, dt);
             y_next = a * y + b * u;
@@ -48,24 +49,24 @@ public:
          }
       }
       std::cout << "value:\n";
-      for (int ii = 0; ii < a1.size(); ii++)
+      for (double val : a1) 
       {
-         std::cout << a1[ii] << ",";
+         std::cout << val << ",";
       }
       std::cout << "\n\nsignal:\n";
-      for (int ii = 0; ii < a1.size() - a2.size(); ii++)
+      for (int i = 0; i < a1.size() - a2.size(); i++)
       {
          a2.push_back(a2.back());
       }
-      for (int ii = 0; ii < a2.size(); ii++)
+      for (double val : a2) 
       {
-         std::cout << a2[ii] << ",";
+         std::cout << val << ",";
       }
       std::cout << "\n\nsetting:\n";
-      for (size_t ii = 0; ii < a3.size(); ii++) // Use 'size_t' for the loop variable
-      {
-         std::cout << a3[ii] << ",";
-      }
+      for (double val : a3) 
+      { 
+	std::cout << val << ","; 
+      } 
    }
 };
 
