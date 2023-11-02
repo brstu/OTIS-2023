@@ -1,6 +1,6 @@
-﻿cmake_minimum_required (VERSION 3.6.0)
+﻿cmake_minimum_required(VERSION 3.6)
 
-project(OTIS_1)
+project(OTIS_01)
 
 set(SOURCES laba1.cpp)
 
