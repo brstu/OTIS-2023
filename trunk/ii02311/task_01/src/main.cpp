@@ -27,7 +27,7 @@ int main() {
     double u = 1;
     double y = 0.0;
 
-    int t = 12;
+    int t = 100;
     cout << "linear model" << endl;
     linearmod(t, y, u);
 
