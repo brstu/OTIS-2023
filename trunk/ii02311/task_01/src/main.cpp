@@ -1,14 +1,12 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-double a = 0.5;
-double b = 0.5;
-double c = 0.5;
-double d = 0.5;
-double u = 1;
-double y = 0.0;
-
-void linearmod(int t, double y) {
+const double a = 0.5;
+const double b = 0.5;
+const double c = 0.5;
+const double d = 0.5;
+ 
+void linearmod(int t, double y, double u) {
     for (int n = 0; n <= t; n++) {
         cout << y << endl;
         y = a * y + b * u;
@@ -26,9 +24,12 @@ void unlinearmodel(double y, double yprev, double u, double uprev, int t) {
 }
 
 int main() {
+    double u = 1;
+    double y = 0.0;
+
     int t = 12;
     cout << "linear model" << endl;
-    linearmod(t, y);
+    linearmod(t, y, u);
 
     cout << "________________________" << endl;
 
