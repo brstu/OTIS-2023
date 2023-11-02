@@ -1,7 +1,11 @@
 ﻿#include <cmath>
 #include <iostream>
 
-double a = 0.5, b = 0.5, c = 0.66, d = 0.8, u = 4.0;
+const double a = 0.5;
+const double b = 0.5;
+const double c = 0.66;
+const double d = 0.8;
+const double u = 4.0;
 
 double func2(double prev, double a, double b, double u) {
 	double next = a * prev + b * u;
