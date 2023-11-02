@@ -2,7 +2,6 @@
 #include<vector>
 using namespace std;
 
-
 class pid
 {
 private:
@@ -24,21 +23,21 @@ public:
    
    void lin(float y_c, float u, float t, float dt, float setting)
    {
-      float a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006;
+      float a = 0.925, b = 0.75, k_p = 0.19, k_i = 0.27, k_d = 0.0006, y_next;
       vector<float>a1,a3(t,setting);
       a1.push_back(y_c);
-      for(float i=1;i<=t;i++)
+      for(int i=1;i<=(int)t;i++)
       {
-         if (((int)i)%((int)dt)==0)
+         if (i%(int)dt==0)
          {
             float y=pid_c(k_p,k_i,k_d, setting, y_c, dt);
-            float y_next = a * y  + b * u;
+            y_next = a * y  + b * u;
             a1.push_back(y_next);
             y_c = y_next;
          }
          else
          {
-            float y_next = a * y_next + b * u;
+            y_next = a * y_next + b * u;
             a1.push_back(y_next);
             y_c = y_next;
          }
