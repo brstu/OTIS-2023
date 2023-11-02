@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(OTIS_01)
+project(OTS_1)
 
 set(SOURCES OTIS_01.cpp)
 
