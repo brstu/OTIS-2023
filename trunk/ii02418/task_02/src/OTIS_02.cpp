@@ -24,17 +24,17 @@ void pid_regulator(double A, double B, double C, double D, double K, double T0, 
 
 }
 
-void main() {
-	double A, B, C, D, K, T0, TD, T, W, YS;
-	A = 0.5;
-	B = 0.6;
-	C = 0.6;
-	D = 0.6;
-	K = 0.8;
-	T0 = 1.1;
-	TD = 1.0;
-	T = 1.1;
-	YS = 2.0;
-	W = 20;
+int main() {
+	double A = 0.5;
+	double B = 0.6;
+	double C = 0.6;
+	double D = 0.6;
+	double K = 0.8;
+	double T0 = 1.1;
+	double TD = 1.0;
+	double T = 1.1;
+	double YS = 2.0;
+	double W = 20;
 	pid_regulator(A, B, C, D, K, T0, TD, T, W, YS);
+	return 0;
 }
