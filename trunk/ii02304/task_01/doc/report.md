@@ -67,53 +67,57 @@ Task is to write program (**Julia**), which simulates this object temperature.
 ```c++
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include <fstream>
 
 using namespace std;
 
-float a = 1.0, b = 0.5, c = 0.001, d = 0.999, ylin = 0, ylin1, ulin = 1.0, n = 0, y, y_prev;
-int t = 10;
+// Constants
+const float a = 1.0;
+const float b = 0.5;
+const double c = 0.001;
+const double d = 0.999;
+const int t = 10;
 
-void linmodel(float a, float b, float c, float d, float ylin, float ylin1, float ulin) {
-	float ylinmodel[1000];
-	ylin1 = a * ylin + b * ulin;
-	ylinmodel[0] = ylin;
-	cout << "Linear model:" << endl;
-	cout << ylinmodel[0] << endl;
-	for (int i = 0; i <= t; i++) {
-		ylinmodel[i + 1] = a * ylinmodel[i] + b * ulin;
-		cout << ylinmodel[i + 1] << endl;
-	}
-};
-
-void nonlinear(float a, float b, float c, float d, float ulin, float y, float y_prev) {
-	float ynonlinmodel[1000];
-	cout << endl << "Nonlinear model:" << endl;
-	ynonlinmodel[0] = 0;
-	cout << ynonlinmodel[0] << endl;
-	for (int i = 0; i <= t; i++) {
-		if (i == 1) {
-			y = 1.2;
-			y_prev = y;
-			y = a * y + c * ulin + d * sin(ulin);
-		}
-		if (i <= t) {
-			ynonlinmodel[i + 1] = a * y - b * pow(y_prev, 2) + c * ulin + d * sin(ulin);
-			y_prev = y;
-			y = ynonlinmodel[i + 1];
-			cout << ynonlinmodel[i + 1] << endl;
-		}
-	}
-};
-
-int main()
-{
-	setlocale(LC_ALL, "Russian");
-	float ylinmodel[1000], ynonlinmodel[1000];
-	linmodel(a, b, c, d, ylin, ylin1, ulin);
-	nonlinear(a, b, c, d, ulin, y, y_prev);
-	return 0;
+// Linear model function
+void linmodel(float a_param, float b_param, float ylin, float ulin) {
+    vector<float> ylinmodel(t + 1);
+    ylinmodel[0] = ylin;
+    cout << "Linear model:" << endl;
+    for (int i = 0; i <= t; i++) {
+        ylinmodel[i + 1] = a_param * ylinmodel[i] + b_param * ulin;
+        cout << ylinmodel[i + 1] << endl;
+    }
 }
+
+// Nonlinear model function
+void nonlinear(float a_param, float b_param, double c_param, double d_param, float ulin) {
+    vector<double> ynonlinmodel(t + 1); // Changed from vector<float> to vector<double>
+    double y_prev = 0; // Changed from float to double
+    double y = 0; // Changed from float to double
+    cout << endl << "Nonlinear model:" << endl;
+    for (int i = 0; i <= t; i++) {
+        if (i == 1) {
+            y = 1.2;
+            y_prev = y;
+            y = a_param * y + c_param * ulin + d_param * sin(ulin);
+        }
+        if (i <= t) {
+            ynonlinmodel[i + 1] = a_param * y - b_param * pow(y_prev, 2) + c_param * ulin + d_param * sin(ulin);
+            y_prev = y;
+            y = ynonlinmodel[i + 1];
+            cout << ynonlinmodel[i + 1] << endl;
+        }
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    linmodel(a, b, 0.0, 1.0);
+    nonlinear(a, b, c, d, 1.0);
+    return 0;
+}
+
 ```
 Вывод программы:
 ```
@@ -133,7 +137,7 @@ Linear model:
 
 Nonlinear model:
 0
-0.84163
+0.841629
 2.16326
 0.920763
 -0.577452
@@ -143,7 +147,7 @@ Nonlinear model:
 2.05298
 1.99137
 0.72564
--0.415505
+-0.415504
 ```
 
 ![График][def]
