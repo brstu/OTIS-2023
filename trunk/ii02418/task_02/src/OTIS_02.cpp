@@ -2,16 +2,16 @@
 #include <vector>
 #include <cmath>
 
-double A = 0.5;
-double B = 0.6;
-double C = 0.6;
-double D = 0.6;
-double K = 0.8;
-double T0 = 1.1;
-double TD = 1.0;
-double T = 1.1;
-double YS = 2.0;
-double W = 20;
+const double A = 0.5;
+const double B = 0.6;
+const double C = 0.6;
+const double D = 0.6;
+const double K = 0.8;
+const double T0 = 1.1;
+const double TD = 1.0;
+const double T = 1.1;
+const double YS = 2.0;
+const double W = 20;
 
 void pid_regulator() {
 	double q0 = K * (1 + (TD / T0));
