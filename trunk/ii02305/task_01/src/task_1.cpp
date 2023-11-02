@@ -1,5 +1,4 @@
-﻿#include "task_1.h"
-#include <cmath>
+﻿#include <cmath>
 #include <iostream>
 
 double a = 0.5, b = 0.5, c = 0.66, d = 0.8, u = 4.0;
