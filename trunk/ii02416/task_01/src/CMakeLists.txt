@@ -1,7 +1,7 @@
-﻿	cmake_minimum_required(VERSION 3.0)
+﻿cmake_minimum_required (VERSION 3.0.0)
 
-project(OTIS_01)
+project(OTIS_1)
 
-set(SOURCES lab1.cpp)
+set(SOURCES laba1.cpp)
 
 add_executable(MyExecutable ${SOURCES})
