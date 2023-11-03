@@ -24,13 +24,8 @@ private:
 public:
     Model(double a, double b, double c, double d)
         : A(a), B(b), C(c), D(d), p_0(A * (1 + C / D)),
-          p_1(-A * (1 + 2 * C / D - D / B)), p_2(A * C / D)
-    {
-        p = { p_0, p_1, p_2 };
-        r = { 0, 0, 0 };
-        z = { 0, 0, 0 };
-        v = { 1, 1 };
-    }
+          p_1(-A * (1 + 2 * C / D - D / B)), p_2(A * C / D),
+          p({p_0, p_1, p_2}), r({0, 0, 0}), z({0, 0, 0}), v({1, 1}) {}
 
     double total()
     {
