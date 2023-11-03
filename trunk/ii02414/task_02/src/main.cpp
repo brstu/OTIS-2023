@@ -43,7 +43,7 @@ public:
             u[1] = u[0];
         }
     }
-    std::vector<double> getParameterY() {
+    [[nodiscard]] std::vector<double> getParameterY() const {
         return  y;
     }
 };
