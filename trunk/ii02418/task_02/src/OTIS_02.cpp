@@ -2,18 +2,21 @@
 #include <vector>
 #include <cmath>
 
-const double A = 0.5;
-const double B = 0.6;
-const double C = 0.6;
-const double D = 0.6;
-const double K = 0.8;
-const double T0 = 1.1;
-const double TD = 1.0;
-const double T = 1.1;
-const double YS = 2.0;
-const double W = 20;
 
-void pid_regulator() {
+int main() {
+	
+	const double A = 0.5;
+	const double B = 0.6;
+	const double C = 0.6;
+	const double D = 0.6;
+	const double K = 0.8;
+	const double T0 = 1.1;
+	const double TD = 1.0;
+	const double T = 1.1;
+	const double YS = 2.0;
+	const double W = 20;
+
+
 	double q0 = K * (1 + (TD / T0));
 	double q1 = -K * (1 + 2 * (TD / T0) - (T0 / T));
 	double q2 = K * (TD / T0);
@@ -33,10 +36,5 @@ void pid_regulator() {
 		std::cout << i+1 << ";" << y[i] << ";" << E[i] << ";" << um[i] << std::endl;
 	}
 
-}
-
-int main() {
-
-	pid_regulator();
 	return 0;
 }
