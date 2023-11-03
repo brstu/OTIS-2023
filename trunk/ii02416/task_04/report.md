@@ -3,9 +3,9 @@
 <p style="text-align: center;">“Брестский Государственный технический университет”</p>
 <p style="text-align: center;">Кафедра ИИТ</p>
 <div style="margin-bottom: 10em;"></div>
-<p style="text-align: center;">Лабораторная работа №1</p>
+<p style="text-align: center;">Лабораторная работа №4</p>
 <p style="text-align: center;">По дисциплине “Общая теория интеллектуальных систем”</p>
-<p style="text-align: center;">Тема: “Моделирования температуры объекта”</p>
+<p style="text-align: center;">Тема: “Работа с проектом "NIKA"”</p>
 <div style="margin-bottom: 10em;"></div>
 <p style="text-align: right;">Выполнил:</p>
 <p style="text-align: right;">Студент 2 курса</p>
