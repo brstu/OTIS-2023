@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 
+// LAB_02
 class Regulator {
 private:
     const double a = 0.722;
