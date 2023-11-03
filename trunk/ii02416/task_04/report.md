@@ -1,21 +1,20 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
-<p align="center">Учреждение образования</p>
-<p align="center">“Брестский Государственный технический университет”</p>
-<p align="center">Кафедра ИИТ</p>
-<br><br><br><br><br><br><br>
-<p align="center">Лабораторная работа №4</p>
-<p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
-<p align="center">Тема: “Работа с проектом "NIKA" (Intelligent Knowledge-driven Assistant)”</p>
-<br><br><br><br><br>
-<p align="right">Выполнил:</p>
-<p align="right">Студент 2 курса</p>
-<p align="right">Группы ИИ-24</p>
-<p align="right">Рудецкий Е.В.</p>
-<p align="right">Проверил:</p>
-<p align="right">Иванюк Д. С.</p>
-<br><br><br><br><br>
-<p align="center">Брест 2023</p>
-
+<p style="text-align: center;">Министерство образования Республики Беларусь</p>
+<p style="text-align: center;">Учреждение образования</p>
+<p style="text-align: center;">“Брестский Государственный технический университет”</p>
+<p style="text-align: center;">Кафедра ИИТ</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: center;">Лабораторная работа №1</p>
+<p style="text-align: center;">По дисциплине “Общая теория интеллектуальных систем”</p>
+<p style="text-align: center;">Тема: “Моделирования температуры объекта”</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: right;">Выполнил:</p>
+<p style="text-align: right;">Студент 2 курса</p>
+<p style="text-align: right;">Группы ИИ-24</p>
+<p style="text-align: right;">Рудецкий Е.В.</p>
+<p style="text-align: right;">Проверил:</p>
+<p style="text-align: right;">Иванюк Д. С.</p>
+<div style="margin-bottom: 10em;"></div>
+<p style="text-align: center;">Брест 2023</p>
 ---
 
 # Общее задание #
