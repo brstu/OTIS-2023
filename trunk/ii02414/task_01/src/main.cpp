@@ -3,28 +3,28 @@
 
 class Models {
 private:
-    const float a = 0.722;
-    const float b = 0.421;
-    const float c = 0.587;
-    const float d = 0.035;
+    const double a = 0.722;
+    const double b = 0.421;
+    const double c = 0.587;
+    const double d = 0.035;
 public:
-    [[nodiscard]] float linearModel(float f, float u) const {
-        float result = a * f + b * u;
+    [[nodiscard]] double linearModel(double f, double u) const {
+        double result = a * f + b * u;
         std::cout << result << std::endl;
         return result;
     }
 
-    [[nodiscard]] float notLinearModel(float f, float prevF, float u) const {
-        float result = a * f - b * prevF * prevF + c * u + d * sin(u);
+    [[nodiscard]] double notLinearModel(double f, double prevF, double u) const {
+        double result = a * f - b * prevF * prevF + c * u + d * sin(u);
         std::cout << result << std::endl;
         return result;
     }
 };
 
 int main() {
-    float f = 0.0;
-    float u = 1.0;
-    float n = 100;
+    double f = 0.0;
+    double u = 1.0;
+    int n = 100;
     Models model;
 
     std::cout << "Linear modeling\n";
@@ -37,10 +37,10 @@ int main() {
 
     std::cout << "Not Linear modeling\n";
 
-    float fn = 0;
+    double fn = 0;
     f = 0;
     for (int i = 0; i < n; i++) {
-        float prevF = f;
+        double prevF = f;
         f = fn;
         fn = model.notLinearModel(f, prevF, u);
     }
