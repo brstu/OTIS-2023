@@ -11,7 +11,7 @@ int main() {
 	const double D = 0.6;
 	const double K = 0.8;
 	const double T0 = 1.1;
-	const double TD = 1.0;
+	const double TD = 0.99;
 	const double T = 1.1;
 	const double YS = 2.0;
 	const double W = 20;
