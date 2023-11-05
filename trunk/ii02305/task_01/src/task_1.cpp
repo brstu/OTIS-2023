@@ -8,18 +8,20 @@ const double d = 0.8;
 const double u = 4.0;
 
 double func2(double prev) {
-	double next = a * prev + b * u;
+	const double next = a * prev + b * u;
 	return next;
 }
 
 double func3(double prev) {
-	double next = a * prev - prev * prev * b + u * c + d * sin(u);
+	const double next = a * prev - prev * prev * b + u * c + d * sin(u);
 	return next;
 }
 
 int main()
 {
-	double y1 = 0.6, prev1 = y1, prev2 = y1;
+	double y1 = 0.6;
+	double prev1 = y1;
+	double prev2 = y1;
 	int t;
 	std::cout << "Enter t: ";
 	std::cin >> t;
