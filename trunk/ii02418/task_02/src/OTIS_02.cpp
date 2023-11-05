@@ -18,7 +18,7 @@ int main() {
 
 	double buf = TD / T0;
 	double q0 = K * (1 + buf);
-	double q1 = -K * (1 + 2 * buf - (T0 / T));
+	double q1 = -K * (1 + 2 * buf - T0 / T);
 	double q2 = K * buf;
 	std::vector<double> y = { YS, YS };
 	double U = 1.0;
