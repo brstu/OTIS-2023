@@ -10,18 +10,18 @@ double const K = 0.0001;
 int const T = 100;
 int const T_D = 100;
 int const T_0 = 1;
-double w;
 
-double q_0 = K * (1 + T_D / T_0);
-double q_1 = -K * (1 + 2 * T_D / T_0 - T_0 / T);
-double q_2 = K * T_D / T_0;
+double const q_0 = K * (1 + T_D / T_0);
+double const q_1 = -K * (1 + 2 * T_D / T_0 - T_0 / T);
+double const q_2 = K * T_D / T_0;
 
-vector<double> q = { q_0, q_1, q_2 };
-vector<double> e = { 0.0, 0.0, 0.0 };
-vector<double> y = { 0.0, 0.0, 0.0 };
-vector<double> u = { 1.0, 1.0 };
+const vector<double> q = { q_0, q_1, q_2 };
 
-void nonlinear_model(int time, double a = 0.5, double b = 0.3, double c = 0.9, double d = 0.7) {
+vector<double> nonlinear_model(double w, int time, double a = 0.5, double b = 0.3, double c = 0.9, double d = 0.7) {
+    vector<double> e = { 0.0, 0.0, 0.0 };
+    vector<double> y = { 0.0, 0.0, 0.0 };
+    vector<double> u = { 1.0, 1.0 };
+
     int i = 0;
     while (i < time) {
         e[0] = w - y.back();
@@ -33,14 +33,16 @@ void nonlinear_model(int time, double a = 0.5, double b = 0.3, double c = 0.9, d
 
         i += 1;
     }
+    return y;
 }
 
 int main() {
     setlocale(LC_ALL, "Russian");
+    double w;
     cin >> w;
-    nonlinear_model(100);
+    vector<double> y = nonlinear_model(w, 100);
     for (auto el : y) {
-    cout << el * w / y.back() << endl;
+        cout << el * w / y.back() << endl;
     }
     return 0;
 }
