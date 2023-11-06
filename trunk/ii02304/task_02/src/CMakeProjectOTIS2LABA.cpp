@@ -41,7 +41,7 @@ int main() {
     double w;
     cin >> w;
     vector<double> y = nonlinear_model(w, 100);
-    for (auto el : y) {
+    for (auto el :  y = nonlinear_model(w, 100)) {
         cout << el * w / y.back() << endl;
     }
     return 0;
