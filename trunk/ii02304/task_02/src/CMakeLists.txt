@@ -12,7 +12,7 @@ endif()
 project ("CMakeProjectOTIS2LABA")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (CMakeProjectOTIS2LABA "CMakeProjectOTIS2LABA.cpp")
+add_executable (CMakeProjectOTIS2LABA "CMakeProjectOTISLABA2.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeProjectOTIS2LABA PROPERTY CXX_STANDARD 20)
