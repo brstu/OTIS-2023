@@ -92,9 +92,8 @@ int main() {
     setlocale(LC_ALL, "Russian");
     double w;
     cin >> w;
-    vector<double> y = nonlinear_model(w, 100);
-    for (auto el : y) {
-        cout << el * w / y.back() << endl;
+    for (auto el : nonlinear_model(w, 100)) {
+        cout << el * w / nonlinear_model(w, 100).back() << endl;
     }
     return 0;
 }
