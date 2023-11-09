@@ -5,10 +5,10 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("lab2")
+project ("lab2otis")
 
-add_executable (lab2 "Source.cpp" )
+add_executable (lab2otis "Source.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET lab2 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET lab2otis PROPERTY CXX_STANDARD 20)
 endif()
