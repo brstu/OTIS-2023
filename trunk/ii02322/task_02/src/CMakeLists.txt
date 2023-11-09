@@ -1,5 +1,5 @@
-﻿# CMakeList.txt: проект CMake для lab2; включите исходный код и определения,
-# укажите здесь логику для конкретного проекта.
+﻿# CMakeList.txt : CMake project for task_02, include source and define
+# project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
 
@@ -9,13 +9,13 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("lab2_otis")
+project ("task_02")
 
-# Добавьте источник в исполняемый файл этого проекта.
-add_executable (lab2_otis "lab2_tl.cpp" )
+# Add source to this project's executable.
+add_executable (task_02 "lab2_tl.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET otis_1 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET task_02 PROPERTY CXX_STANDARD 20)
 endif()
 
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+# TODO: Add tests and install targets if needed.
