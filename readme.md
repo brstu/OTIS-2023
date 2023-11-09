@@ -8,6 +8,8 @@
 4. Основное задание [#3](./tasks/task_03/readme.md).
 5. Основное задание [#4](./tasks/task_04/readme.md).
 6. Дополнительное задание [#5](./tasks/task_05/readme.md)*.
+7. Основное задание [#5.1](https://github.com/brstu/OTIS-2023/issues/72).
+
 
 ## Успеваемость
 
