@@ -34,7 +34,7 @@ struct PID {
 	double T ;
 	double TD;
 	double T0;
-	double funk0(double K, double TD, double T0) const 
+	double funk0(double& K, double& TD, double& T0) const 
 	{
 		 K = 0.9;
 		 TD = 1.01;
@@ -44,23 +44,23 @@ struct PID {
 
 	}
 
-	double funk1(double val_K, double val_TD, double val_T0,double val_T) const
+	double funk1(double& K, double& TD, double& T0,double& T) const
 	{
-		 val_K = 0.9;
-		 val_T = 1.1;
-		 val_TD = 1.01;
-		 val_T0 = 1.34;
+		 K = 0.9;
+		 T = 1.1;
+		 TD = 1.01;
+		 T0 = 1.34;
 		 double q1 = -K * (1 + 2 * TD / T0 - T0 / T);		
 		return q1;
 
 	}
 
-	double funk2(double val_K, double val_TD, double val_T0) const
+	double funk2(double& K, double& TD, double& T0) const
 	{
 
-		val_K = 0.9;
-		val_TD = 1.01;
-		val_T0 = 1.34;
+		K = 0.9;
+		TD = 1.01;
+		T0 = 1.34;
 		double q2 = K * TD / T0;
 		return q2;
 	}	
