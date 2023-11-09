@@ -4,4 +4,4 @@ project(lab1otis)
 
 set(SOURCES main.cpp)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(Exeed ${SOURCES})
