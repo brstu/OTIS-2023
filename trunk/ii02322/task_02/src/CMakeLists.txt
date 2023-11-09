@@ -9,10 +9,10 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("source_lab_tl")
+project ("lab2_otis")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (source_lab_tl "Source.cpp" )
+add_executable (lab2_otis "lab2_tl.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET otis_1 PROPERTY CXX_STANDARD 20)
