@@ -17,13 +17,13 @@ struct PID {
 	double u0;
 	double u1;
 
-	void const next_val(double& x0, double& x1, double next) 
+	void next_val(double& x0, double& x1, double next) const
 	{
 		x0 = x1;
 		x1 = next;
 	}
 
-	void const next_val1(double& x0, double& x1, double& x2, double next) 
+	void next_val1(double& x0, double& x1, double& x2, double next) const
 	{
 		x0 = x1;
 		x1 = x2;
