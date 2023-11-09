@@ -34,33 +34,33 @@ struct PID {
 	double T ;
 	double TD;
 	double T0;
-	double funk0(double& K, double& TD, double& T0) const 
+	double calculate_q0() const 
 	{
-		 K = 0.9;
-		 TD = 1.01;
-		 T0 = 1.34;
+		 double K = 0.9;
+		 double TD = 1.01;
+		 double T0 = 1.34;
 		double q0 = K * (1 + TD / T0);
 		return q0;
 
 	}
 
-	double funk1(double& K, double& TD, double& T0,double& T) const
+	double calculate_q1() const
 	{
-		 K = 0.9;
-		 T = 1.1;
-		 TD = 1.01;
-		 T0 = 1.34;
-		 double q1 = -K * (1 + 2 * TD / T0 - T0 / T);		
+		double K = 0.9;
+		double T = 1.1;
+		double TD = 1.01;
+		double T0 = 1.34;
+		double q1 = -K * (1 + 2 * TD / T0 - T0 / T);
 		return q1;
-
 	}
 
-	double funk2(double& K, double& TD, double& T0) const
+
+	double calculate_q2() const
 	{
 
-		K = 0.9;
-		TD = 1.01;
-		T0 = 1.34;
+		double K = 0.9;
+		double TD = 1.01;
+		double T0 = 1.34;
 		double q2 = K * TD / T0;
 		return q2;
 	}	
@@ -95,7 +95,7 @@ struct PID {
 			printf("%.4f", e2);
 			cout << setw(20);
 			next_val1(e0, e1, e2, W - y1);
-			U = u1 + funk0(K, TD, T0) * e2 + funk1(K, TD, T0, T) * e1 + funk2(K, TD, T0) * e0;
+			U = u1 + calculate_q0() * e2 + calculate_q1() * e1 + calculate_q2() * e0;
 			double next = A * y1 - B * y0 + C * U + D * sin(u1);
 			cout << i << " ";
 			printf("%.4f", y1);
