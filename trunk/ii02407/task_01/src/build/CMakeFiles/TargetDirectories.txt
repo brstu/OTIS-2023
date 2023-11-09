@@ -1,0 +1,3 @@
+D:/Новая папка/OneDrive/Рабочий стол/OTIS/OTIS-2023/trunk/ii02407/task_01/src/build/CMakeFiles/krupich.dir
+D:/Новая папка/OneDrive/Рабочий стол/OTIS/OTIS-2023/trunk/ii02407/task_01/src/build/CMakeFiles/ALL_BUILD.dir
+D:/Новая папка/OneDrive/Рабочий стол/OTIS/OTIS-2023/trunk/ii02407/task_01/src/build/CMakeFiles/ZERO_CHECK.dir
