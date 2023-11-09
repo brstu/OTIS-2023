@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.6)
 
-project(OTIS_01)
+project(OTISA_01)
 
 set(SOURCES OTIS1.1.cpp)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(Danik ${SOURCES})
