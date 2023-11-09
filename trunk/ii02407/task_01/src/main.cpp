@@ -41,4 +41,4 @@ int main() {
     nonlinearModel();
 
     return 0;
-}﻿
+}
