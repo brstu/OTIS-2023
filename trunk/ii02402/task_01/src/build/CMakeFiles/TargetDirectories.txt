@@ -1,0 +1,3 @@
+C:/Users/vit/Desktop/Otis/OTIS-2023/trunk/ii02402/task_01/src/build/CMakeFiles/MyExecutable.dir
+C:/Users/vit/Desktop/Otis/OTIS-2023/trunk/ii02402/task_01/src/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/vit/Desktop/Otis/OTIS-2023/trunk/ii02402/task_01/src/build/CMakeFiles/ZERO_CHECK.dir
