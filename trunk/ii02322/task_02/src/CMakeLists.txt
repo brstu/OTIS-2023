@@ -12,7 +12,7 @@ endif()
 project ("lab_02_otis2")
 
 # Add source to this project's executable.
-add_executable (lab_02_otis "lab2_tl.cpp" )
+add_executable (lab_02_otis "Lab2_tl.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET task_02 PROPERTY CXX_STANDARD 20)
