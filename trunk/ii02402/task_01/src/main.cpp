@@ -4,16 +4,22 @@
 using namespace std;
 
 class Simulation {
-protected:
-    double p1, p2, p3, p4, input;
+private:
+    double p1;
+    double p2;
+    double p3;
+    double p4;
+    double input;
 public:
     Simulation(double p1, double p2, double p3, double p4, double input) : p1(p1), p2(p2), p3(p3), p4(p4), input(input) {}
+    virtual ~Simulation() {}
     virtual void compute(double& temperature) = 0;
 };
 
 class LinearSimulation : public Simulation {
 public:
-    LinearSimulation(double p1, double p2, double p3, double p4, double input) : Simulation(p1, p2, p3, p4, input) {}
+    using Simulation::Simulation;
+    virtual ~LinearSimulation() {}
     void compute(double& temperature) override {
         temperature = p1 * temperature + p2 * input;
         cout << temperature << endl;
@@ -23,9 +29,10 @@ public:
 class NonlinearSimulation : public Simulation {
 private:
     double previousTemperature;
-    bool isFirstRun;
+    bool isFirstRun = true;
 public:
-    NonlinearSimulation(double p1, double p2, double p3, double p4, double input) : Simulation(p1, p2, p3, p4, input), isFirstRun(true) {}
+    using Simulation::Simulation;
+    virtual ~NonlinearSimulation() {}
     void compute(double& temperature) override {
         if (isFirstRun)
         {
@@ -64,4 +71,6 @@ int main()
     cout << endl << "Результаты нелинейной симуляции\n" << initialTempNonlinear << endl;
     for (int i = 0; i < numIterations; i++)
         nonlinear.compute(initialTempNonlinear);
+
+    return 0;
 }
