@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : CMake project for task_02, include source and define
+﻿# CMakeList.txt : CMake project for lab_02_otis, include source and define
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -9,10 +9,10 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("task_02")
+project ("lab_02_otis2")
 
 # Add source to this project's executable.
-add_executable (task_02 "lab2_tl.cpp" )
+add_executable (lab_02_otis "lab2_tl.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET task_02 PROPERTY CXX_STANDARD 20)
