@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
-project(OTISA_01)
+project(krupich_01)
 
-set(SOURCES OTIS1.1.cpp)
+set(SOURCES main.cpp)
 
-add_executable(Danik ${SOURCES})
+add_executable(krupich ${SOURCES})
