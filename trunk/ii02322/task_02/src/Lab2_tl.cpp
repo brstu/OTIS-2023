@@ -30,10 +30,6 @@ struct PID {
 		x2 = next;
 	}
 
-	double K ;
-	double T ;
-	double TD;
-	double T0;
 	double calculate_q0() const 
 	{
 		 double K = 0.9;
