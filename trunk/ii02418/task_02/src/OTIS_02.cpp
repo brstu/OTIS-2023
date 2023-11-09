@@ -10,7 +10,7 @@ int main() {
 	const double C = 0.6;
 	const double D = 0.6;
 	const double K = 0.8;
-	const double T0 = 1.1;
+	const double T0 = 1.14;
 	const double TD = 0.99;
 	const double T = 1.1;
 	const double YS = 2.0;
