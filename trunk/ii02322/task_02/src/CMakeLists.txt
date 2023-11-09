@@ -8,7 +8,7 @@ endif()
 
 project ("otis_lab2")
 
-add_executable ("Source.cpp" )
+add_executable (otis_lab2 "Source.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET otis_2 PROPERTY CXX_STANDARD 20)
