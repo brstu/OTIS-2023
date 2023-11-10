@@ -32,10 +32,10 @@ public:
     }
 
 private:
-    const double a = 4.0;
-    const double b = 2.0;
-    const double c = 3.0;
-    const double d = 6.0;
+    static constexpr double a = 4.0;
+    static constexpr double b = 2.0;
+    static constexpr double c = 3.0;
+    static constexpr double d = 6.0;
 };
 
 int main() {
