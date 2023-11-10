@@ -97,7 +97,7 @@ int main()
 {
     cout << "Linear model" << endl;
     linear_model(10, 0);
-    cout << "\n---------------\n" << endl;
+    cout << "\n----------------\n" << endl;
     cout << "Nonlinear model" << endl;
     unlinear_model(10);
     return 0;
