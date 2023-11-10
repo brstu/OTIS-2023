@@ -44,7 +44,7 @@ where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some con
 ```cpp
 #include <iostream>
 #include <vector>
-
+#include <cmath>
 class Models {
 private:
     double a = 0.41;

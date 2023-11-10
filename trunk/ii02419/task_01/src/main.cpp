@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include <cmath>
 class Models {
 private:
     double a = 0.41;
