@@ -10,7 +10,7 @@
     int time = 15;
     double a = 1.2;
     double b = 0.7;
-    double arrayLinearY[15];
+    double arrayLinearY[15]{};
 
     for (int i = 0; i < time; i++) {
         yT = a * yT + b * uT;
@@ -29,7 +29,7 @@
      double b = 0.7;
      double c = -0.32;
      double d = 0.53;
-     double arrayNonLinearY[15];
+     double arrayNonLinearY[15]{};
 
      for (int i = 0; i < time; i++) {
          yT = a * yT - b * pow(prevYT, 2) + c * uT + d * sin(uT);
