@@ -24,7 +24,7 @@ public:
         const int time = 10;
         double arrNoLine[time];
         for (int i = 0; i < time; i++) {
-            Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
+            Yt = a * Yt - b * pow(Prev_Yt, 2) + c * Ut + d * sin(Ut);
             arrNoLine[i] = Yt;
             std::cout << Yt << std::endl;
         }
