@@ -9,7 +9,6 @@ public:
         double Yt = 3.0;
         double Ut = 0.85;
         const int time = 10;
-        std::vector<double> arrLine(time);
         for (int i = 0; i < time; i++) {
             Yt = a * Yt + b * Ut;
             std::cout << Yt << std::endl;
@@ -22,7 +21,6 @@ public:
         double Ut = 0.45;
         double Prev_Yt = 1.0;
         const int time = 10;
-        std::vector<double> arrNoLine(time);
         for (int i = 0; i < time; i++) {
             Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
             std::cout << Yt << std::endl;
