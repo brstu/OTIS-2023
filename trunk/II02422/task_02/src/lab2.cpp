@@ -18,7 +18,7 @@ int main() {
 
     vector<double> y = { start_y, start_y };
 
-    double uk = 0.0, uk1 = 0.0;
+    double uk1 = 0.0;
 
     cout << "Enter desired temperature: ";
     double w;
@@ -32,7 +32,7 @@ int main() {
         e.push_back(w - y.back());
 
         double delu = q1 * e.back() + q2 * e[e.size() - 2] + q3 * e[e.size() - 3];
-        uk = uk1 + delu;
+        double uk = uk1 + delu;
 
         y.push_back(A * y.back() - B * y[y.size() - 2] + C * uk + D * sin(uk1));
         uk1 = uk;
