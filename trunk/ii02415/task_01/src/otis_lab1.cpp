@@ -4,7 +4,7 @@
 
 class Perem {
 public:
-    void arry1() {
+    void arry1() const {
         std::cout << "LineModel" << std::endl;
         double Yt = 3.0;
         double Ut = 0.85;
@@ -17,7 +17,7 @@ public:
         }
     }
 
-    void arry2() {
+    void arry2() const {
         std::cout << "NoLineModel" << std::endl;
         double Yt = 2.0;
         double Ut = 0.45;
@@ -39,7 +39,7 @@ private:
 };
 
 int main() {
-    Perem MClass;
+    const Perem MClass;
     MClass.arry1();
     MClass.arry2();
 
