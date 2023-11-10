@@ -26,9 +26,9 @@ void executeMainFunction() {
     double alpha = 0.8;
     double beta = 0.3;
     double y = 0.0;
-    double previousControlInput = 0;
+    double previousControlInput;
     double controlInput = 0.0;
-    double deltaControlInput = 0;
+    double deltaControlInput;
     vector<double> errorVector = { 0.0, 0.0, 0.0 };
 
     for (int i = 1; i <= totalIterations; i++) {
