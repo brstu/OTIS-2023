@@ -3,12 +3,12 @@
 
 class Perem {
 public:
-    void arry1() {
+    void arry1() const {
         std::cout << "LineModel" << std::endl;
-        float Yt = 3.0;
-        float Ut = 0.85;
+        double Yt = 3.0;
+        double Ut = 0.85;
         const int time = 10;
-        float arrLine[time];
+        double arrLine[time];
         for (int i = 0; i < time; i++) {
             Yt = a * Yt + b * Ut;
             arrLine[i] = Yt;
@@ -18,11 +18,11 @@ public:
 
     void arry2() {
         std::cout << "NoLineModel" << std::endl;
-        float Yt = 2.0;
-        float Ut = 0.45;
-        float Prev_Yt = 1;
+        double Yt = 2.0;
+        double Ut = 0.45;
+        double Prev_Yt = 1;
         const int time = 10;
-        float arrNoLine[time];
+        double arrNoLine[time];
         for (int i = 0; i < time; i++) {
             Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
             arrNoLine[i] = Yt;
@@ -31,14 +31,14 @@ public:
     }
 
 private:
-    const float a = 4.0;
-    const float b = 2.0;
-    const float c = 3.0;
-    const float d = 6.0;
+    const double a = 4.0;
+    const double b = 2.0;
+    const double c = 3.0;
+    const double d = 6.0;
 };
 
 int main() {
-    Perem MClass;
+    const Perem MClass;
     MClass.arry1();
     MClass.arry2();
 
