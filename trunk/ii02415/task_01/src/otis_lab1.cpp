@@ -17,7 +17,7 @@ public:
         }
     }
 
-    void NoLineModel() {
+    void NoLineModelFunc() {
         std::cout << "NoLineModel" << std::endl;
         double Yt = 2.0;
         double Ut = 0.45;
@@ -41,7 +41,7 @@ private:
 int main() {
     const Perem MClass;
     MClass.LineModel();
-    MClass.NoLineModel();
+    MClass.NoLineModelFunc();
 
     return 0;
 }
