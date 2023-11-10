@@ -1,15 +1,14 @@
 ﻿#include <iostream>
 #include <cmath>
-#include <vector>
 
 class Perem {
 public:
-    void LineModel() const {
+    void arry1() {
         std::cout << "LineModel" << std::endl;
         double Yt = 3.0;
         double Ut = 0.85;
         const int time = 10;
-        std::vector<double> arrLine(time);
+        double arrLine[time];
         for (int i = 0; i < time; i++) {
             Yt = a * Yt + b * Ut;
             arrLine[i] = Yt;
@@ -17,13 +16,13 @@ public:
         }
     }
 
-    void NoLineModelFunc() {
+    void arry2() {
         std::cout << "NoLineModel" << std::endl;
         double Yt = 2.0;
         double Ut = 0.45;
-        double Prev_Yt = 1.0;
+        double Prev_Yt = 1;
         const int time = 10;
-        std::vector<double> arrNoLine(time);
+        double arrNoLine[time];
         for (int i = 0; i < time; i++) {
             Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
             arrNoLine[i] = Yt;
@@ -32,16 +31,16 @@ public:
     }
 
 private:
-    static constexpr double a = 4.0;
-    static constexpr double b = 2.0;
-    static constexpr double c = 3.0;
-    static constexpr double d = 6.0;
+    const double a = 4.0;
+    const double b = 2.0;
+    const double c = 3.0;
+    const double d = 6.0;
 };
 
 int main() {
-    const Perem MClass;
-    MClass.LineModel();
-    MClass.NoLineModelFunc();
+    Perem MClass;
+    MClass.arry1();
+    MClass.arry2();
 
     return 0;
 }
