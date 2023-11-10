@@ -26,7 +26,7 @@ int main() {
     double u = 1.0;
     double n = 100;
     Models model;
-    
+
     std::cout << "LinearModeling\n";
 
     for (int i = 0; i < n; i++) {

@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.23)
-project(laba1otis)
+cmake_minimum_required(VERSION 3.26)
+project(lab01kolya)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(laba1otis main.cpp)
+add_executable(lab01kolya main.cpp)
