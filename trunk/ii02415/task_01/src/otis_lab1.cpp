@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <cmath>
+#include <vector>
 
 class Perem {
 public:
@@ -8,7 +9,7 @@ public:
         double Yt = 3.0;
         double Ut = 0.85;
         const int time = 10;
-        double arrLine[time];
+        std::vector<double> arrLine(time);
         for (int i = 0; i < time; i++) {
             Yt = a * Yt + b * Ut;
             arrLine[i] = Yt;
@@ -20,11 +21,11 @@ public:
         std::cout << "NoLineModel" << std::endl;
         double Yt = 2.0;
         double Ut = 0.45;
-        double Prev_Yt = 1;
+        double Prev_Yt = 1.0;
         const int time = 10;
-        double arrNoLine[time];
+        std::vector<double> arrNoLine(time);
         for (int i = 0; i < time; i++) {
-            Yt = a * Yt - b * pow(Prev_Yt, 2) + c * Ut + d * sin(Ut);
+            Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
             arrNoLine[i] = Yt;
             std::cout << Yt << std::endl;
         }
@@ -39,8 +40,8 @@ private:
 
 int main() {
     const Perem MClass;
-    MClass.arry1();
-    MClass.arry2();
+    MClass.LineModel();
+    MClass.NoLineModel();
 
     return 0;
 }
