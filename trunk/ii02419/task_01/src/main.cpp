@@ -8,13 +8,13 @@ private:
     double c = 0.5;
     double d = 0.3;
 public:
-    double linearModel(double f, double u) {
+    double linearModel(double f, double u) const {
         double result = a * f + b * u;
         std::cout << result << std::endl;
         return result;
     }
 
-    double nonLinearModel(double f, double prevF, double u) {
+    double nonLinearModel(double f, double prevF, double u) const {
         double result = a * f - b * prevF * prevF + c * u + d * sin(u);
         std::cout << result << std::endl;
         return result;
@@ -38,7 +38,7 @@ int main() {
     std::cout << "NonLinearModeling\n";
 
 
-    float fn = 0;
+    double fn = 0;
     f = 0;
     for (int i = 0; i < n; i++) {
         double prevF = f;
