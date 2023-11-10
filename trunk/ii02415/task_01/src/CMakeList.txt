@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.22) 
+
+project(OTIS1)  
+ 
+set(SOURCES otis_lab1.cpp)
+ 
+add_executable(ExecutableName ${SOURCES})  
