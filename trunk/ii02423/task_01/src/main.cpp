@@ -15,21 +15,19 @@ public:
     friend double unlinear_model(int t);
 };
 
-const ModelParameters params;
-
-double linear_model(int t, int n)
+double linear_model(int t, int n, ModelParameters &params)
 {
     if (n < t)
     {
         double result = params.a * params.y + params.b * params.u;
         params.y = result;
         cout << params.y << endl;
-        return linear_model(t, n + 1);
+        return linear_model(t, n + 1, params);
     }
     return params.y;
 }
 
-double unlinear_model(int t)
+double unlinear_model(int t, ModelParameters &params)
 {
     int i = 1;
     while (i <= t)
@@ -46,11 +44,12 @@ double unlinear_model(int t)
 
 int main()
 {
+    ModelParameters params;
     cout << "Linear model" << endl;
-    linear_model(10, 0);
+    linear_model(10, 0, params);
     cout << "\n----------------\n"
          << endl;
     cout << "Nonlinear model" << endl;
-    unlinear_model(10);
+    unlinear_model(10, params);
     return 0;
 }
