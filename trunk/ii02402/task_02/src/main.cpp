@@ -2,22 +2,22 @@
 #include <vector>
 using namespace std;
 
-double PropComp = 0.097;    // Proportional component
-double IntComp = 2.1623;    // Integral component
-double DiffComp = 1.0;      // Differential component
-double timeInterval = 1.0;  // Interval
+const double PropComp = 0.097;    // Proportional component
+const double IntComp = 2.1623;    // Integral component
+const double DiffComp = 1.0;      // Differential component
+const double timeInterval = 1.0;  // Interval
 
-double q1 = PropComp * (1 + DiffComp / timeInterval);
-double q2 = -PropComp * (1 + 2 * DiffComp / timeInterval - timeInterval / IntComp);
-double q3 = (PropComp * DiffComp) / timeInterval;
+const double q1 = PropComp * (1 + DiffComp / timeInterval);
+const double q2 = -PropComp * (1 + 2 * DiffComp / timeInterval - timeInterval / IntComp);
+const double q3 = (PropComp * DiffComp) / timeInterval;
 
 double calculate_linear_model(double y_current, double alpha, double beta, double controlInput) {
     y_current = alpha * y_current + beta * controlInput;
     return y_current;
 }
 
-int totalIterations = 100;      // Number of iterations
-double desiredValue = 29.0;  // Desired value
+const int totalIterations = 100;      // Number of iterations
+const double desiredValue = 29.0;  // Desired value
 
 void executeMainFunction() {
     cout << "EXECUTION BEGINS" << endl;
