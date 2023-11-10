@@ -25,7 +25,7 @@ class ModelParameters
 class ControlSystem
 {
 public:
-    ControlSystem(const ModelParameters &params) : parameters(params) {}
+    explicit ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0) {}
 
     void run()
     {
@@ -33,7 +33,6 @@ public:
         cin >> start_temperature;
         temperature = {start_temperature, start_temperature};
 
-        double u_k = 0.0;
         double u_k_minus_1 = 0.0;
 
         cout << "Enter desired temperature: ";
@@ -50,10 +49,8 @@ public:
             error.push_back(desired_temperature - temperature.back());
 
             double delta_u = parameters.q1 * error.back() + parameters.q2 * error[error.size() - 2] + parameters.q3 * error[error.size() - 3];
-            u_k = u_k_minus_1 + delta_u;
 
-            temperature.push_back(parameters.A * temperature.back() - parameters.B * temperature[temperature.size() - 2] + parameters.C * u_k + parameters.D * sin(u_k_minus_1));
-            u_k_minus_1 = u_k;
+            temperature.push_back(parameters.A * temperature.back() - parameters.B * temperature[temperature.size() - 2] + parameters.C + parameters.D * sin(u_k_minus_1));
 
             cout << "Current temperature: " << temperature.back() << endl;
 
