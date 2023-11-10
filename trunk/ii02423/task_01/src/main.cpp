@@ -15,7 +15,7 @@ public:
     friend double unlinear_model(int t);
 };
 
-ModelParameters params;
+const ModelParameters params;
 
 double linear_model(int t, int n)
 {
