@@ -39,3 +39,4 @@ docker compose up --no-build
 # Работа
 ![](pic2.png)
 ![](pic3.png)
+![](pic4.png)
