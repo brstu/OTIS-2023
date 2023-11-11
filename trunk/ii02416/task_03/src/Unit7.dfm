@@ -1,0 +1,110 @@
+object Form7: TForm7
+  Left = 0
+  Top = 0
+  Caption = 'Form7'
+  ClientHeight = 167
+  ClientWidth = 185
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 91
+    Height = 28
+    Caption = #1054#1090#1082#1091#1076#1072':'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -24
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 48
+    Width = 65
+    Height = 28
+    Caption = #1050#1091#1076#1072':'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -24
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 82
+    Width = 78
+    Height = 28
+    Caption = #1054#1090#1074#1077#1090':'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -24
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Edit1: TEdit
+    Left = 97
+    Top = 6
+    Width = 82
+    Height = 32
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ImeName = 'US'
+    ParentFont = False
+    TabOrder = 0
+  end
+  object Edit2: TEdit
+    Left = 97
+    Top = 44
+    Width = 81
+    Height = 32
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ImeName = 'Edit2'
+    ParentFont = False
+    TabOrder = 1
+  end
+  object Button1: TButton
+    Left = 8
+    Top = 120
+    Width = 169
+    Height = 39
+    Caption = #1054#1050
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -32
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = Button1Click
+  end
+  object Edit3: TEdit
+    Left = 97
+    Top = 82
+    Width = 81
+    Height = 32
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ImeName = 'Edit2'
+    ParentFont = False
+    TabOrder = 3
+  end
+end
