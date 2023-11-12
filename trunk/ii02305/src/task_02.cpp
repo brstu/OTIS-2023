@@ -6,7 +6,7 @@ using namespace std;
 
 class Unliner {
 public:
-    Unliner(double w) : w(w) {}
+    explicit Unliner(double w) : w(w) {}
 
     void calculate() {
         const short int y_start = 2;
