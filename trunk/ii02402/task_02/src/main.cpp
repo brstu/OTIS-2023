@@ -26,12 +26,12 @@ void executeMainFunction() {
     double alpha = 0.8;
     double beta = 0.3;
     double y = 0.0;
-    double previousControlInput;
     double controlInput = 0.0;
-    double deltaControlInput;
     vector<double> errorVector = { 0.0, 0.0, 0.0 };
 
     for (int i = 1; i <= totalIterations; i++) {
+        double previousControlInput;
+        double deltaControlInput;
         errorVector[2] = errorVector[1];
         errorVector[1] = abs(desiredValue - y);
         deltaControlInput = q1 * errorVector[1] + q2 * errorVector[2] + q3 * errorVector[0];
