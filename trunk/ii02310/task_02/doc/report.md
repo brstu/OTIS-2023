@@ -10,7 +10,7 @@
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
-<p align="right">Ежевский Е. Р.</p>
+<p align="right">Лапин В. А.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -35,189 +35,161 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include <fstream>
 
-class Function
-{
-public:
-    double summary()
-    {
-        double sum = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            sum += q[i] * e[i];
-        }
-        return sum;
+using namespace std;
+
+const double A = 0.5;
+const double B = 0.5;
+const double C = 0.5;
+const double D = 0.5;
+const double K = 0.001;
+const double T = 50;
+const double TD = 100;
+const double To = 1;
+void unlinear(double value) {
+
+    int t = 100;
+
+    double q0 = K * (1 + TD / To);
+
+    double q1 = -K * (1 + 2 * TD / To - To / T);
+
+    double q2 = K * TD / To;
+
+    vector<double> y = { 0, 0, 0 };
+    vector<double> u = { 1, 1 };
+
+    for (int i = 0; i < t; i++) {
+        double e0 = value - y[y.size() - 1];
+        double e1 = value - y[y.size() - 2];
+        double e2 = value - y[y.size() - 3];
+        double sum = q0 * e0 + q1 * e1 + q2 * e2;
+        u[0] = u[1] + sum;
+        u[1] = u[0];
+        y.push_back(A * y[y.size() - 1] - B * y[y.size() - 2] * y[y.size() - 2] + C * u[0] + D * sin(u[1]));
     }
 
-    void nonlinear(int time, double goal, double a = 0.5, double b = 0.3, double c = 0.9, double d = 0.7)
-    {
-        for (int i = 0; i < time; i++)
-        {
-            e[0] = goal - y[y.size() - 3];
-            e[1] = goal - y[y.size() - 2];
-            e[2] = goal - y[y.size() - 1];
-            u[0] = u[1] + summary();
-            y.push_back(a * y[y.size() - 1] - b * y[y.size() - 2] * y[y.size() - 2] + c * u[0] + d * sin(u[1]));
-            u[1] = u[0];
-        }
+    for (int i = 0; i < y.size(); i++) {
+        double res = y[i] * value / y[y.size() - 1];
+        cout << res << endl;
     }
+}
 
-    std::vector<double> getY() const
-    {
-        return y;
-    }
+int main() {
+    setlocale(LC_ALL, "RU");
+    double value;
+    cout << "Желаемое значение: ";
+    cin >> value;
 
-private:
-    double k = 0.01;
-    double t = 40;
-    double td = 100;
-    double t0 = 1;
-
-    double q0 = k * (1 + td / t0);
-    double q1 = -k * (1 + 2 * td / t0 - t0 / t);
-    double q2 = k * td / t0;
-
-    std::vector<double> q = { q0, q1, q2 };
-    std::vector<double> e = { 0, 0, 0 };
-    std::vector<double> y = { 0, 0, 0 };
-    std::vector<double> u = { 1, 1 };
-};
-
-int main()
-{
-    double goal;
-    std::ofstream out("output.txt");
-    Function f;
-
-    if (out.is_open())
-    {
-        std::cout << "Enter the goal: ";
-        std::cin >> goal;
-        f.nonlinear(100, goal);
-
-        std::vector<double> y_values = f.getY();
-
-        for (size_t i = 0; i < y_values.size(); i++)
-        {
-            double ans = y_values[i] * goal / y_values[y_values.size() - 1];
-            std::cout << i << " " << ans << std::endl;
-            out << i << " " << ans << std::endl;
-        }
-
-        out.close();
-    }
-    else
-    {
-        std::cerr << "Error: Cannot open the output file." << std::endl;
-    }
+    unlinear(value);
 
     return 0;
 }
 ```     
 
-Вывод программы:
+Результат программы:
 
-        0 0
-        1 0
-        2 0
-        3 7.04439
-        4 4.23871
-        5 4.28645
-        6 8.58628
-        7 6.38138
-        8 5.22722
-        9 8.72787
-        10 6.99746
-        11 5.54519
-        12 8.61962
-        13 7.19329
-        14 5.80772
-        15 8.4976
-        16 7.30534
-        17 6.06692
-        18 8.37614
-        19 7.39313
-        20 6.3202
-        21 8.25514
-        22 7.46557
-        23 6.56116
-        24 8.13752
-        25 7.52399
-        26 6.78299
-        27 8.02798
-        28 7.56913
-        29 6.97966
-        30 7.93149
-        31 7.60259
-        32 7.1473
-        33 7.85196
-        34 7.62688
-        35 7.28503
-        36 7.79127
-        37 7.64489
-        38 7.39489
-        39 7.74911
-        40 7.65931
-        41 7.48086
-        42 7.72336
-        43 7.6722
-        44 7.54771
-        45 7.71097
-        46 7.6849
-        47 7.60004
-        48 7.70872
-        49 7.69813
-        50 7.64177
-        51 7.71374
-        52 7.71221
-        53 7.67595
-        54 7.72375
-        55 7.72717
-        56 7.7049
-        57 7.73702
-        58 7.74293
-        59 7.73025
-        60 7.75237
-        61 7.75936
-        62 7.75316
-        63 7.76899
-        64 7.77629
-        65 7.77443
-        66 7.78634
-        67 7.7936
-        68 7.79459
-        69 7.80411
-        70 7.81116
-        71 7.81401
-        72 7.82207
-        73 7.82889
-        74 7.83292
-        75 7.8401
-        76 7.8467
-        77 7.85148
-        78 7.85814
-        79 7.86455
-        80 7.86979
-        81 7.87614
-        82 7.8824
-        83 7.88792
-        84 7.89407
-        85 7.90022
-        86 7.9059
-        87 7.91193
-        88 7.91799
-        89 7.92375
-        90 7.92971
-        91 7.9357
-        92 7.9415
-        93 7.94741
-        94 7.95334
-        95 7.95915
-        96 7.96502
-        97 7.97091
-        98 7.97672
-        99 7.98255
-        100 7.9884
-        101 7.99419
-        102 8
+    0
+    0
+    0
+    6.7672
+    9.61219
+    8.23009
+    4.69772
+    4.77521
+    7.64718
+    8.81416
+    7.10335
+    5.1641
+    6.06675
+    7.91872
+    8.0804
+    6.5307
+    5.71277
+    6.78984
+    7.8636
+    7.48439
+    6.33736
+    6.22013
+    7.16209
+    7.65145
+    7.0738
+    6.37495
+    6.61475
+    7.30253
+    7.40007
+    6.84373
+    6.51929
+    6.87939
+    7.30217
+    7.18083
+    6.75488
+    6.68586
+    7.02856
+    7.23176
+    7.02487
+    6.75663
+    6.82878
+    7.09087
+    7.14109
+    6.93493
+    6.80376
+    6.93063
+    7.09745
+    7.05978
+    6.89816
+    6.86395
+    6.99126
+    7.07513
+    7.001
+    6.89655
+    6.9184
+    7.01906
+    7.04341
+    6.96666
+    6.91348
+    6.95898
+    7.02501
+    7.01415
+    6.95248
+    6.93665
+    6.98451
+    7.01916
+    6.99282
+    6.95202
+    6.95856
+    6.99758
+    7.00907
+    6.98054
+    6.9591
+    6.97569
+    7.00207
+    6.99944
+    6.97595
+    6.96901
+    6.98729
+    7.00175
+    6.99259
+    6.97674
+    6.97875
+    6.99412
+    6.99955
+    6.98909
+    6.98059
+    6.98684
+    6.99759
+    6.99735
+    6.98853
+    6.98569
+    6.99289
+    6.9991
+    6.9961
+    6.99009
+    6.99085
+    6.99711
+    6.99978
+    6.9961
+    6.99289
+    6.99544
+    7
+ ![График моделей с желаемым значением: 7](grafik1.png)
