@@ -22,7 +22,7 @@ int main() {
     double l2 = 0;
     double en = 0;
 
-    std::cout << "Íåëèíåéíàÿ ìîäåëü: \n" << std::endl;
+    std::cout << "ÃÃ¥Ã«Ã¨Ã­Ã¥Ã©Ã­Ã Ã¿ Ã¬Ã®Ã¤Ã¥Ã«Ã¼: \n" << std::endl;
 
     for (double k = K0; k <= time; k++) {
         double q0 = Q * (1 + TD / k);
@@ -40,9 +40,6 @@ int main() {
         en = j - y_nonlin3;
 
         double t_nonlin_n = t_nonLin1 + q0 * en + q1 * l2 + q2 * l1;
-
-        l1 = l2;
-        l2 = en;
 
         t_nonLin0 = t_nonLin1;
         t_nonLin1 = t_nonlin_n;
