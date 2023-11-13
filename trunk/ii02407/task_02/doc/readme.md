@@ -68,9 +68,6 @@ int main() {
 
         double t_nonlin_n = t_nonLin1 + q0 * en + q1 * l2 + q2 * l1;
 
-        l1 = l2;
-        l2 = en;
-
         t_nonLin0 = t_nonLin1;
         t_nonLin1 = t_nonlin_n;
 
