@@ -7,10 +7,10 @@ using namespace std;
 int main() {
     double A = 0.5, B = 0.5, C = 0.5, D = 0.5;
     double K = 1, To = 1, Td = 1, T = 1;
-
-    double q1 = K * (Td / To + 1);
+    double m = Td/To
+    double q1 = K * (m + 1);
     double q2 = -K * (-To / T + 1 + 2 * Td / To);
-    double q3 = K * (Td / To);
+    double q3 = K * m;
 
     cout << "Enter start temperature: ";
     double start_y;
