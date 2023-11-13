@@ -48,7 +48,7 @@ int main() {
     file2.clear();
     functions linear, nonlinear;
     cout << "linear model: \n";
-    linear.linear(0);
+    linear.linear(y);
     cout << "nonlinear model: \n";
-    nonlinear.nonlinear(0, 0);
+    nonlinear.nonlinear(y, y1);
 }
