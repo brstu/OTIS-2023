@@ -10,5 +10,5 @@ project ("Lab1Otis")
 add_executable (Lab1Otis "Lab1Otis.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET OTIS_01 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET Lab1Otis PROPERTY CXX_STANDARD 20)
 endif()
