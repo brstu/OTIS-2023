@@ -37,14 +37,14 @@ void unlinear(double value) {
 
     for (int i = 0; i < y.size(); i++) {
         double res = y[i] * value / y[y.size() - 1];
-        cout << " " << i << ": " << res << endl;
+        cout << res << endl;
     }
 }
 
 int main() {
     setlocale(LC_ALL, "RU");
     double value;
-    cout << "Æåëàåìîå çíà÷åíèå: ";
+    cout << "Ð–ÐµÐ»Ð°ÐµÐ¼Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: ";
     cin >> value;
 
     unlinear(value);
