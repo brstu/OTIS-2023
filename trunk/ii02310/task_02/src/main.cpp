@@ -25,7 +25,7 @@ void unlinear(double value) {
     vector<double> y = { 0, 0, 0 };
     vector<double> u = { 1, 1 };
 
-    for (int i = 0; i < t; i++) {
+    for(int i = 0; i < t; i++) {
         double e0 = value - y[y.size() - 1];
         double e1 = value - y[y.size() - 2];
         double e2 = value - y[y.size() - 3];
