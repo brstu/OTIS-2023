@@ -35,8 +35,8 @@ void unlinear(double value) {
         y.push_back(A * y[y.size() - 1] - B * y[y.size() - 2] * y[y.size() - 2] + C * u[0] + D * sin(u[1]));
     }
 
-    for(int i = 0; i < y.size(); i++) {
-        double res = y[i] * value / y[y.size() - 1];
+     for (double i : y) {
+        double res = i * value / y[y.size() - 1];
         cout << res << endl;
     }
 }
