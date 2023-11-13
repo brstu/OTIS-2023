@@ -3,7 +3,7 @@
 
 int main() {
     setlocale(LC_ALL, "ru");
-    double K0 = 1;
+    int K0 = 1;
     double time = 10;
     double alpha = 0.002;
     double beta = 0.005;
