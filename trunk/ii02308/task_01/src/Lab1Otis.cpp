@@ -41,12 +41,14 @@ public:
 };
 
 int main() {
-    double y = 0, y1 = 0;
+    double y = 0;
+    double y1 = 0;
     ofstream file1("lin.txt");
     ofstream file2("nonlin.txt");
     file1.clear();
     file2.clear();
-    functions linear, nonlinear;
+    functions linear;
+    functions nonlinear;
     cout << "linear model: \n";
     linear.linear(y);
     cout << "nonlinear model: \n";
