@@ -24,7 +24,7 @@ public:
         for (int i = 0; i < time; i++) {
             Yt = a * Yt - b * std::pow(Prev_Yt, 2) + c * Ut + d * std::sin(Ut);
             std::cout << Yt << std::endl;
-        }
+        } 
     }
 
 private:
