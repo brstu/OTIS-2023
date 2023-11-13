@@ -51,7 +51,7 @@ int main() {
 
     std::cout << "Нелинейная модель: \n" << std::endl;
 
-    for (double k = K0; k <= time; k++) {
+    for (int k = K0; k <= time; k++) {
         double q0 = Q * (1 + TD / k);
         double q1 = -Q * (1 + 2 * TD / k - k / P);
         double q2 = Q * TD / k;
