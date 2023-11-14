@@ -41,7 +41,6 @@ void calculateNonLinearModel(const NonLinearModelParams& params) {
 }
 
 int main() {
-<<<<<<< HEAD
     double a = 0.5;
     double b = 0.6;
     double c = 0.7;
@@ -79,7 +78,6 @@ int main() {
         std::cout << Yt[i] << std::endl;
     }
 
-=======
     setlocale(LC_ALL, "ru");
     std::cout << std::endl;
     NonLinearModelParams params;
@@ -98,6 +96,5 @@ int main() {
     params.TD = 1.7;
     params.j = 1.5;
     calculateNonLinearModel(params);
->>>>>>> 5d8c68b508037b9c41eae395373f690d0df72125
     return 0;
 }
