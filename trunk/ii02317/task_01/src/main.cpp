@@ -15,7 +15,7 @@ private:
     int t = 100;
     int u = 1;
 public:
-    void line(double y) {
+    void line(double y) const {
         ofstream file("line.txt",ios::out);
         cout << "line "<<endl ;
         for (int l = i; l <= t; l++) {
@@ -24,7 +24,7 @@ public:
             y = a * y + b * u;
         }
     }
-    void nonline (double y, double y1) {
+    void nonline (double y, double y1) const {
         ofstream file1("nonline.txt", ios::out);
         cout << "nonline "<<endl ;
         for (int l = i; l <= t; l++) {
