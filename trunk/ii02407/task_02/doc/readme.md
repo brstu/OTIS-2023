@@ -27,54 +27,44 @@
 ```C++
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 int main() {
-    setlocale(LC_ALL, "ru");
-    double K0 = 1;
-    double time = 10;
-    double alpha = 0.002;
-    double beta = 0.005;
-    double gamma = 0.45;
-    double delta = 0.007;
-    double y_nonLin1 = 0.2;
-    double y_nonLin2 = 0.04;
-    double t_nonLin1 = 0.1;
-    double t_nonLin0 = 0.0025;
-    double Q = 0.04;
-    double P = 0.01;
-    double TD = 1.7;
-    double j = 1.5;
+    double a = 0.5;
+    double b = 0.6;
+    double c = 0.7;
+    double d = 0.5;
 
-    double l1 = 0;
-    double l2 = 0;
-    double en = 0;
+    double K_val = 0.9;
+    double T0 = 1.3;
+    double TD = 1.2;
+    double TValue = 1;
 
-    std::cout << "Нелинейная модель: \n" << std::endl;
+    double Q0 = K_val * (TD / T0 + 1);
+    double Q1 = -K_val * (-T0 / TValue + 1 + 2 * TD / T0);
+    double Q2 = K_val * (TD / T0);
 
-    for (double k = K0; k <= time; k++) {
-        double q0 = Q * (1 + TD / k);
-        double q1 = -Q * (1 + 2 * TD / k - k / P);
-        double q2 = Q * TD / k;
+    double Y = 10.0;
+    std::vector<double> Yt = { Y, Y };
 
-        l1 = j - y_nonLin1;
-        l2 = j - y_nonLin2;
+    double u2 = 1.0;
+    double u1 = 1.0;
 
-        double y_nonlin3 = alpha * y_nonLin2 - beta * pow(std::abs(y_nonLin1), 2) + gamma * t_nonLin1 + delta * sin(t_nonLin0);
+    double Wt = 40;
 
-        y_nonLin1 = y_nonLin2;
-        y_nonLin2 = y_nonlin3;
+    std::vector<double> E = { Wt - Y, Wt - Y };
 
-        en = j - y_nonlin3;
+    int temp = 2;
+    while (std::abs(Yt.back() - Wt) > 0.1) {
+        temp++;
+        E.push_back(Wt - Yt.back());
+        u2 = u1 + Q0 * E.back() + Q1 * E[E.size() - 2] + Q2 * E[E.size() - 3];
+        Yt.push_back(a * Yt.back() - b * Yt[Yt.size() - 2] + c * u2 + d * std::sin(u1));
+        u1 = u2;
+    }
 
-        double t_nonlin_n = t_nonLin1 + q0 * en + q1 * l2 + q2 * l1;
-
-        l1 = l2;
-        l2 = en;
-
-        t_nonLin0 = t_nonLin1;
-        t_nonLin1 = t_nonlin_n;
-
-        std::cout << k << "\t" << y_nonlin3 << "\t:\t" << en << std::endl;
+    for (int i = 0; i < Yt.size(); i++) {
+        std::cout << Yt[i] << std::endl;
     }
 
     return 0;
@@ -82,17 +72,15 @@ int main() {
 ```
 Вывод программы:
 ```
-Нелинейная модель:
+10
+10
+24.6907
+37.8872
+41.7522
+40.1757
+39.5636
+40.3139
+39.9656
 
-1       0.0448975       :       1.4551
-2       2.66865 :       -1.16865
-3       7.82184 :       -6.32184
-4       1.36276 :       0.137242
-5       -44.2252        :       45.7252
-6       -41.7234        :       43.2234
-7       442.059 :       -440.559
-8       977.892 :       -976.392
-9       -6343.31        :       6344.81
-10      -25821.3        :       25822.8
 ```
 ![](picture.png)
