@@ -19,7 +19,7 @@ int main() {
     double l1 = 0;
     double l2 = 0;
     double en = 0;
-    std::cout << "Нелинейная модель": \n" << std::endl;
+    std::cout << "Нелинейная модель: \n" << std::endl;
     for (int k = K0; k <= time; k++) {
         double q0 = Q * (1 + TD / k);
         double q1 = -Q * (1 + 2 * TD / k - k / P);
