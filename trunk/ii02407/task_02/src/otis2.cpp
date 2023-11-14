@@ -3,7 +3,6 @@
 
 int main() {
     // pid setups
-    double kp = 10;
     double ki = 1;
     double kd = 2;
     double t = 0;
