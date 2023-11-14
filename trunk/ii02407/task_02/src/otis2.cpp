@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cmath>
 
@@ -30,8 +29,6 @@ void calculateNonLinearModelParams(double k, const NonLinearModelParams& params)
     double t_nonlin_n = params.t_nonLin1 + q0 * en + q1 * l2 + q2 * l1;
     l1 = l2;
     l2 = en;
-    params.t_nonLin0 = params.t_nonLin1;
-    params.t_nonLin1 = t_nonlin_n;
     std::cout << k << "\t" << y_nonlin3 << "\t:\t" << en << std::endl;
 }
 
