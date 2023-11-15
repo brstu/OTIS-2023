@@ -27,7 +27,7 @@ void nonLinearFunction(int t, double a, double b, double c, double d, double u){
     double list[t];
 
     for(int i = 0; i<t; i++) {
-        if (i > 0) {
+        if (i > 1) {
             list[i] = a * list[i - 1] - b * pow(list[i - 2], 2) + c * u + d * sin(u);
         } else {
             list[i] = a * 0 - b * pow(0, 2) + c * u + d * sin(u);
