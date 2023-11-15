@@ -50,7 +50,7 @@ Task is to write program (**С++**), which simulates this object temperature.
 
 const std::array<double, 2> lin = {0.34, 2};
 const std::array<double, 4> nonLin = {0.56, 0.91, 0.3, -0.1};
-const double u = 2.05;
+const double auf = 2.05;
 const int t = 50;
 
 void linearFunction(double a, double b, double u){
@@ -92,10 +92,10 @@ void nonLinearFunction(double a, double b, double c, double d, double u){
 int main() {
     for(int i = 0; i < 2; i++){
         if(i == 0){
-            linearFunction(lin[0], lin[1], u);
+            linearFunction(lin[0], lin[1], auf);
         }
         if(i == 1){
-            nonLinearFunction(nonLin[0], nonLin[1], nonLin[2], nonLin[3], u);
+            nonLinearFunction(nonLin[0], nonLin[1], nonLin[2], nonLin[3], auf);
         }
     }
 
