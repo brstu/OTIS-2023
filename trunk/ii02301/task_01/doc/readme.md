@@ -10,7 +10,7 @@
 <p style="text-align: right;">Выполнил:</p>
 <p style="text-align: right;">Студент 2 курса</p>
 <p style="text-align: right;">Группы ИИ-23</p>
-<p style="text-align: right;">Волкогон Н.И.</p>
+<p style="text-align: right;"><Бусень А.Д.</p>
 <p style="text-align: right;">Проверил:</p>
 <p style="text-align: right;">Иванюк Д. С.</p>
 <div style="margin-bottom: 10em;"></div>
@@ -19,7 +19,7 @@
 ---
 
 # Общее задание #
-1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента, например **ii02302**).
+1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: trunk\ii0xxyy\task_01\doc (где xx - номер группы, yy - номер студента, например **ii02301**).
 2. Исходный код написанной программы разместить в каталоге: **trunk\ii0xxyy\task_01\src**.
 
 ## Task 1. Modeling controlled object ##
@@ -36,93 +36,182 @@ $$\Large y_{\tau+1}=ay_{\tau}-by_{\tau-1}^2+cu_{\tau}+d\sin(u_{\tau-1})$$ (3)
 
 where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some constants.
 
-Task is to write program (**С++**), which simulates this object temperature.
-
+Task is to write program (**C++**), which simulates this object temperature.
 
 ---
+
 # Выполнение задания #
-```C++
+
 Код программы:
-﻿#include <iostream>
+```C++
+#include <iostream>
+#include <fstream>
+#include <cmath>
 
 using namespace std;
 
-double a = 0.5,
-b = 1,
-c = 0.15,
-d = 0.3,
-u = 1.2;
+class functions {
+private:
+    double t1 = 1; //начальное время
+    double u = 1; //кол-во теплоты
+    double t2 = 50; //конечное время
+    const double a = 0.2;
+    const double b = 0.3;
+    const double c = 0.45;
+    const double d = 0.7; //исходные данные по номеру варианта
+public:
+    void nelineynaya(double y, double y1) {
+        if (t1 != t2) {
+            ofstream file("nonlineyn.txt", ios::app);
+            file << t1 << " " << y << endl;
+            cout << y << endl;
+            ++t1;
+            nelineynaya(a * y - b * y1 * y1 + c * u + d * sin(u), y);
+        }
+        else {
+            cout << "end nelineynaya model" << endl;
+        }
+    }
+    void lineynaya(double y) {
+        if (t1 != t2) {
+            ofstream file("lineyn.txt", ios::app);
+            file << t1 << " " << y << endl;
+            ++t1;
+            cout << y << endl;
+            lineynaya(a * y + b * u);
+        }
+        else {
+            cout << "end lineynaya model\n";
+        }
+    }
+};
 
-
-void liner(double& y1)
-{
-	y1 = a * y1 + b * u;
-	cout << y1 << endl;
+int main() {
+    double y = 0;
+    double y1 = 0;
+    ofstream file1("lin.txt");
+    ofstream file2("nonlin.txt");
+    file1.clear();
+    file2.clear();
+    functions linear;
+    functions nonlinear;
+    cout << "lineynaya model: \n";
+    linear.lineynaya(y);
+    cout << "nelineynaya model: \n";
+    nonlinear.nelineynaya(y, y1);
 }
 
-void unliner(double& y2, double& y_pr, bool& second_iteration)
-{
-	if (second_iteration)
-	{
-		y_pr = y2;
-		y2 = a * y2 + c * u + d * sin(u); 
-		cout << y2 << endl;
-		second_iteration = false;
-	}
-	else
-	{
-		double buf;
-		buf = a * y2 - b * pow(y_pr, 2) + c * u + d * sin(u);
-		y_pr = y2;
-		y2 = buf;
-		cout << y2 << endl;
-	}
-}
 
-
-int main()
-{
-	double y1, y2, y_pr;
-	bool second_iteration = true;
-	cout << "Input temperature: ";
-	cin >> y1;
-	y2 = y1;
-	int n = 10;
-	cout << "Liner model\n" << y1 << endl;
-	for (int i = 0; i < n; i++)
-		liner(y1);
-	cout << endl << "Unliner model\n" << y2 << endl;
-	for (int i = 0; i < n; i++)
-		unliner(y2, y_pr, second_iteration);
-}
-```     
-
-Вывод программы:
-
-   		Input temperature: 0.1
-		Liner model
-		0.1
-		1.25
-		1.825
-		2.1125
-		2.25625
-		2.32812
-		2.36406
-		2.38203
-		2.39102
-		2.39551
-		2.39775
-		
-		Unliner model
-		0.1
-		0.509612
-		0.704418
-		0.552116
-		0.239466
-		0.274512
-		0.539524
-		0.654017
-		0.495534
-		0.279641
-		0.353878
-![График моделей с t = 10:](picture.png)
+    Вывод:
+    lineynaya model:
+0
+0.3
+0.36
+0.372
+0.3744
+0.37488
+0.374976
+0.374995
+0.374999
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+0.375
+end lineynaya model
+nelineynaya model:
+0
+1.03903
+1.24684
+0.964522
+0.765554
+0.91305
+1.04582
+0.998095
+0.910528
+0.922277
+0.974767
+0.978804
+0.94974
+0.94156
+0.95674
+0.964417
+0.957308
+0.951461
+0.954391
+0.958324
+0.957436
+0.955001
+0.955025
+0.956426
+0.956693
+0.955943
+0.95564
+0.95601
+0.956257
+0.956095
+0.95592
+0.955978
+0.95609
+0.956079
+0.956013
+0.956006
+0.956043
+0.956054
+0.956035
+0.956025
+0.956034
+0.956041
+0.956038
+0.956033
+0.956034
+0.956037
+0.956037
+0.956035
+0.956035
+end nelineynaya model
+```
+ Графики:
+ 
+ линейный график :
+ 
+ ![линейный график](image.png)
+ 
+ нелинейный график:
+ 
+ ![нелинейный график](image1.png)
