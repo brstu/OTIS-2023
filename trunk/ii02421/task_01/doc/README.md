@@ -45,54 +45,59 @@ Task is to write program (**С++**), which simulates this object temperature.
 Код программы:
 ```C++
 #include <iostream>
-#include <vector>
 #include <cmath>
+#include <array>
 
-using namespace std;
-
-const double lin[2] = {0.34, 2};
-const double nonLin[4] = {0.56, 0.91, 0.3, -0.1};
+const std::array<double, 2> lin = {0.34, 2};
+const std::array<double, 4> nonLin = {0.56, 0.91, 0.3, -0.1};
 const double u = 2.05;
 const int t = 50;
 
-void linearFunction(int t, double a, double b, double u){
-    vector <double> y(t);
+void linearFunction(double a, double b, double u){
+    std::array<double, t> list;
 
     for(int i = 0; i < t; i++) {
         if (i <= 0) {
-            y[i] = 0;
+            list[i] = a * 0 + b * u;
         } else {
-            y[i] = a * y[i - 1] + b * u;
+            list[i] = a * list[i - 1] + b * u;
         }
     }
 
-    cout << "Linear:\n";
+    std::cout << "Linear:\n" << std::endl;
 
     for(int i = 0; i < t; i++)
-        cout << y[i] << endl;
+        std::cout << list[i] << std::endl;
 }
 
-void nonLinearFunction(int t, double a, double b, double c, double d, double u){
-    vector <double> y(t);
+void nonLinearFunction(double a, double b, double c, double d, double u){
+    std::array<double, t> list;
 
     for(int i = 0; i<t; i++) {
-        if (i <= 0) {
-            y[i] = a * 0 - b * pow(0, 2) + c * u + d * sin(u);
+        if (i > 1) {
+            list[i] = a * list[i - 1] - b * pow(list[i - 2], 2) + c * u + d * sin(u);
         } else {
-            y[i] = a * y[i - 1] - b * pow(y[i - 2], 2) + c * u + d * sin(u);
+            list[i] = a * 0 - b * pow(0, 2) + c * u + d * sin(u);
         }
     }
 
-    cout << "\nNon Linear:\n" << endl;
+    std::cout << "\nNon Linear:\n" << std::endl;
 
-    for(int i = 0; i < t; i++)
-        cout << y[i] << endl;
-    cout << endl;
+    for(int i = 0; i < t; i++) {
+        std::cout << list[i] << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 int main() {
-    linearFunction(t, lin[0], lin[1], u);
-    nonLinearFunction(t, nonLin[0], nonLin[1], nonLin[2], nonLin[3], u);
+    for(int i = 0; i < 2; i++){
+        if(i == 0){
+            linearFunction(lin[0], lin[1], u);
+        }
+        if(i == 1){
+            nonLinearFunction(nonLin[0], nonLin[1], nonLin[2], nonLin[3], u);
+        }
+    }
 
     return 0;
 }
@@ -101,7 +106,7 @@ int main() {
 Вывод программы:
 
     Linear:
-    0
+
     4.1
     5.494
     5.96796
@@ -151,58 +156,59 @@ int main() {
     6.21212
     6.21212
     6.21212
+    6.21212
 
     Non Linear:
 
     0.526264
-    0.820971
-    0.73398
-    0.323958
-    0.217439
-    0.552526
-    0.792654
-    0.69234
-    0.342221
-    0.281713
-    0.577448
-    0.777415
-    0.65818
-    0.344864
-    0.325174
-    0.600134
-    0.766117
-    0.627543
-    0.343577
-    0.3603
-    0.620611
-    0.755673
-    0.598948
-    0.342026
-    0.391347
-    0.638964
-    0.744715
-    0.571774
-    0.34177
-    0.420153
-    0.655255
-    0.732566
-    0.545783
-    0.343549
-    0.447581
-    0.669506
-    0.718888
-    0.520945
-    0.347705
-    0.47402
-    0.681697
-    0.703542
-    0.49736
-    0.354362
-    0.499602
-    0.69177
-    0.686517
-    0.475237
-    0.363508
-    0.524305
+    0.526264
+    0.568944
+    0.592845
+    0.563692
+    0.522099
+    0.529487
+    0.574722
+    0.592984
+    0.557756
+    0.518624
+    0.5336
+    0.580316
+    0.592138
+    0.551403
+    0.515979
+    0.53853
+    0.585567
+    0.590268
+    0.544785
+    0.514284
+    0.544184
+    0.590322
+    0.58736
+    0.538068
+    0.513639
+    0.550441
+    0.59443
+    0.583428
+    0.531438
+    0.514116
+    0.557161
+    0.597747
+    0.578513
+    0.525087
+    0.515756
+    0.564186
+    0.600144
+    0.572686
+    0.519211
+    0.51857
+    0.571345
+    0.601505
+    0.56605
+    0.514007
+    0.522532
+    0.578457
+    0.601734
+    0.558738
+    0.509661
 
 ![График моделей с t = 50:](Figure_1.png)
