@@ -65,6 +65,7 @@ Task is to write program (**Julia**), which simulates this object temperature.
 # Выполнение задания #
 Код программы:
 ```c++
+
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -96,13 +97,13 @@ void nonlinear(float a_param, float b_param, double c_param, double d_param, flo
     double y_prev = 0; // Changed from float to double
     double y = 0; // Changed from float to double
     cout << endl << "Nonlinear model:" << endl;
-    for (int i = 0; i <= t; i++) {
+    for (int i = 0; i < t; i++) { // Changed condition to i < t
         if (i == 1) {
             y = 1.2;
             y_prev = y;
             y = a_param * y + c_param * ulin + d_param * sin(ulin);
         }
-        if (i <= t) {
+        if (i < t) { // Changed condition to i < t
             ynonlinmodel[i + 1] = a_param * y - b_param * pow(y_prev, 2) + c_param * ulin + d_param * sin(ulin);
             y_prev = y;
             y = ynonlinmodel[i + 1];
