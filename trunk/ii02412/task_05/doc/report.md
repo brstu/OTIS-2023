@@ -34,6 +34,8 @@
 
 
 Предложил изменения в открытом проекте The OSTIS Technology project:
+https://github.com/ostis-ai/tex2scs-translator/issues/19
 ![](picture1.png)
 Предложил изменения в открытом проекте The OSTIS Applications:
+https://github.com/ostis-apps/dockerized-ostis/issues/44
 ![](picture2.png)
