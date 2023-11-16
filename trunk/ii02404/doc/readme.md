@@ -98,5 +98,8 @@ int main() {
 
     return 0;
 }
+**График:**
+
+![](Models.jpg)
 
 
