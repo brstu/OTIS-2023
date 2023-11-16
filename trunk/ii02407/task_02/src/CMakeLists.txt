@@ -5,9 +5,9 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("OTIS2LAB")
+project ("OTIS2lab2023")
 
-add_executable (OTIS2LAB "otis2.cpp" )
+add_executable (OTIS2lab2023 "otis2.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET lab2otis PROPERTY CXX_STANDARD 20)
