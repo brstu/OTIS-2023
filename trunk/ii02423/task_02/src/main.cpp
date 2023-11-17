@@ -22,18 +22,23 @@ public:
 class ControlSystem
 {
 public:
-    ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0) {}
+    explicit ControlSystem(const ModelParameters &params) : parameters(params) {}
 
     void run()
     {
         cout << "Enter start temperature: ";
         cin >> start_temperature;
+
         temperature.push_back(start_temperature);
         error.push_back(desired_temperature - start_temperature);
+
         double u_k_minus_1 = 0.0;
+
         cout << "Enter desired temperature: ";
         cin >> desired_temperature;
+
         cout << "Current temperature: " << temperature.back() << endl;
+
         int iterations = 0;
         while (abs(desired_temperature - temperature.at(temperature.size() - 1)) > tolerance && iterations < max_iterations)
         {
@@ -42,6 +47,7 @@ public:
             cout << "Current temperature: " << temperature.back() << endl;
             iterations++;
         }
+
         if (iterations >= max_iterations)
         {
             cout << "Maximum number of iterations reached. Consider adjusting the parameters." << endl;
@@ -54,7 +60,7 @@ public:
 
 private:
     const ModelParameters &parameters;
-    double start_temperature = 0.0; // Инициализация переменной здесь
+    double start_temperature = 0.0;
     double desired_temperature = 0.0;
     vector<double> temperature;
     vector<double> error;
