@@ -14,7 +14,6 @@ public:
     double T0 = 1;
     double TD = 1;
     double T = 1;
-
     double q1 = K * (TD / T0 + 1);
     double q2 = -K * (-T0 / T + 1 + 2 * TD / T0);
     double q3 = K * (TD / T0);
@@ -23,23 +22,18 @@ public:
 class ControlSystem
 {
 public:
-    explicit ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0), desired_temperature(0.0) {}
+    explicit ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0) {}
 
     void run()
     {
         cout << "Enter start temperature: ";
         cin >> start_temperature;
-
         temperature.push_back(start_temperature);
         error.push_back(desired_temperature - start_temperature);
-
         double u_k_minus_1 = 0.0;
-
         cout << "Enter desired temperature: ";
         cin >> desired_temperature;
-
         cout << "Current temperature: " << temperature.back() << endl;
-
         int iterations = 0;
         while (abs(desired_temperature - temperature.at(temperature.size() - 1)) > tolerance && iterations < max_iterations)
         {
@@ -48,7 +42,6 @@ public:
             cout << "Current temperature: " << temperature.back() << endl;
             iterations++;
         }
-
         if (iterations >= max_iterations)
         {
             cout << "Maximum number of iterations reached. Consider adjusting the parameters." << endl;
@@ -62,7 +55,7 @@ public:
 private:
     const ModelParameters &parameters;
     double start_temperature;
-    double desired_temperature;
+    double desired_temperature = 0.0; // Инициализация переменной здесь
     vector<double> temperature;
     vector<double> error;
     const double tolerance = 0.1;
