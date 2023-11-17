@@ -29,33 +29,16 @@
 
 ---
 # Выполнение задания
-# Установка #
 
-```
-git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
-cd nika
-git submodule update --init --recursive
-docker compose pull
-```
-В ходе установки возникла ошибка ``` error: unable to create file ... (file too long)```
-
-Решение:
-```
-cd nika
-git config --global core.longpaths true
-```
-Также в ходе выполнения задания требовалось дополнительно установить [Docker](https://docs.docker.com/)(c плагином Compose)
-# Результат #
-
-sc-web - ```localhost:8000```:
-![Результат:](1.png)
+```localhost:8000```:
+![Выполнение:](1.png)
 
 
-dialogue web UI - ```localhost:3033```:
-![Результат:](2.png)
-![Результат:](3.png)
+```localhost:3033```:
+![Выполнение:](2.png)
+![Выполнение:](3.png)
 
 
 Docker Desktop:
-![Результат:](4.png)
+![Выполнение:](4.png)
 ---
