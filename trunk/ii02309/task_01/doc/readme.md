@@ -10,7 +10,7 @@
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
-<p align="right">Колеснев А. В.</p>
+<p align="right">Кононов А.М.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -46,269 +46,161 @@ Task is to write program (**Julia**), which simulates this object temperature.
 #include <iostream>
 #include <cmath>
 
-// some constants
-const double a = 1;
-const double b = 0.01;
-const double c = 1;
-const double d = 1;
+const double A = 1;
+const double B = 0.01;
+const double C = 1;
+const double D = 1;
 
-// linear model
-void linear(double y, double u, int t_end, double y_next);
+void linear(double y, double u, int t_end) {
+    for (int t = 1; t <= t_end; ++t) {
+        double y_next = A * y + B * u;
+        y = y_next;
+        std::cout << y_next << "\n";
+    }
+}
+void nonlinear(double y_prev, double y, double u, int t_end) {
+    for (int t = 1; t <= t_end; ++t) {
+        double y_next = A * y - B * pow(y_prev, 2) + C * u + D * sin(u);
+        y_prev = y;
+        y = y_next;
+        std::cout << y_next << "\n";
+    }
+}
 
-// nonlinear model
-void nonlinear(double y_prev, double y, double u, int t_end, double y_next);
 
 int main() {
-    int t_end;
-    double y;
-    double u;
-    double y0 = 0;
-    double y_next;
+    double initialTemperature;
+    double warming;
+    int endTime;
 
-    std::cout << "Enter temperature: ";
-    std::cin >> y;
-    std::cout << "\nEnter warm: ";
-    std::cin >> u;
-    std::cout  << "\nEnter end time: ";
-    std::cin >> t_end;
-    std::cout << "\nLinear:\n";
-    linear(y, u, t_end, y_next);
-    std::cout << "\nNonlinear:\n";
-    nonlinear(y0, y, u, t_end, y_next);
+    std::cout << "Введите начальную температуру: ";
+    std::cin >> initialTemperature;
+
+    std::cout << "Введите потепление: ";
+    std::cin >> warming;
+
+    std::cout << "Введите время окончания: ";
+    std::cin >> endTime;
+
+    std::cout << "\nLinear Model:\n";
+    linear(initialTemperature, warming, endTime);
+
+    std::cout << "\nNonlinear Model:\n";
+    nonlinear(0, initialTemperature, warming, endTime);
+
     return 0;
 }
 
-void linear(double y, double u, int t_end, double y_next) {
-    int t = 1;
-    while(t <= t_end) {
-        y_next = a * y + b * u;
-        y = y_next;
-        std::cout << y_next << "\n";
-        t++;
-    }
-}
 
-void nonlinear(double y_prev, double y, double u, int t_end, double y_next) {
-    int t = 1;
-    while(t <= t_end) {
-        y_next = a * y - b * pow(y_prev, 2) + c * u + d * sin(u);
-        y_prev = y;
-        y = y_next;
-        t++;
-        std::cout << y_next << "\n";
-    }
-}
 ```     
 ```
-Вывод программы:
-Enter temperature: 12
+Введите начальную температуру: 35
+Введите потепление: 2
+Введите время окончания: 50
 
-Enter warm: 1
+Linear Model:
+35.02
+35.04
+35.06
+35.08
+35.1
+35.12
+35.14
+35.16
+35.18
+35.2
+35.22
+35.24
+35.26
+35.28
+35.3
+35.32
+35.34
+35.36
+35.38
+35.4
+35.42
+35.44
+35.46
+35.48
+35.5
+35.52
+35.54
+35.56
+35.58
+35.6
+35.62
+35.64
+35.66
+35.68
+35.7
+35.72
+35.74
+35.76
+35.78
+35.8
+35.82
+35.84
+35.86
+35.88
+35.9
+35.92
+35.94
+35.96
+35.98
+36
 
-Enter end time: 100
-
-Linear:
-12.01
-12.02
-12.03
-12.04
-12.05
-12.06
-12.07
-12.08
-12.09
-12.1
-12.11
-12.12
-12.13
-12.14
-12.15
-12.16
-12.17
-12.18
-12.19
-12.2
-12.21
-12.22
-12.23
-12.24
-12.25
-12.26
-12.27
-12.28
-12.29
-12.3
-12.31
-12.32
-12.33
-12.34
-12.35
-12.36
-12.37
-12.38
-12.39
-12.4
-12.41
-12.42
-12.43
-12.44
-12.45
-12.46
-12.47
-12.48
-12.49
-12.5
-12.51
-12.52
-12.53
-12.54
-12.55
-12.56
-12.57
-12.58
-12.59
-12.6
-12.61
-12.62
-12.63
-12.64
-12.65
-12.66
-12.67
-12.68
-12.69
-12.7
-12.71
-12.72
-12.73
-12.74
-12.75
-12.76
-12.77
-12.78
-12.79
-12.8
-12.81
-12.82
-12.83
-12.84
-12.85
-12.86
-12.87
-12.88
-12.89
-12.9
-12.91
-12.92
-12.93
-12.94
-12.95
-12.96
-12.97
-12.98
-12.99
-13
-
-Nonlinear:
-13.8415
-14.2429
-14.1685
-13.9814
-13.8154
-13.7021
-13.6349
-13.5989
-13.5813
-13.5734
-13.5704
-13.5695
-13.5694
-13.5696
-13.5697
-13.5699
-13.57
-13.57
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
-13.5701
+Nonlinear Model:
+37.9093
+28.5686
+17.1067
+11.8544
+11.8373
+13.3413
+14.8494
+15.9788
+16.683
+17.0391
+17.1652
+17.1712
+17.134
+17.0948
+17.0684
+17.0553
+17.0513
+17.0518
+17.0536
+17.0553
+17.0563
+17.0568
+17.0569
+17.0569
+17.0568
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
+17.0567
 ```
-![График](./graphics.png)
+
+![graph](../doc/graph.png)
