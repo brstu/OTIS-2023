@@ -52,8 +52,8 @@ public:
 
     void printGraph() // Вывод графика
     {
-        for (int i = 0; i < Yt.size(); i++) {
-            std::cout << Yt[i] << std::endl;
+        for (const auto& value : Yt) {
+            std::cout << value << std::endl;
         }
     }
 };
