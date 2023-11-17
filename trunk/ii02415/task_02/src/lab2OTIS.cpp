@@ -50,7 +50,7 @@ public:
         }
     }
 
-    void printGraph() // Вывод графика
+    void printGraph () const // Вывод графика
     {
         for (const auto& value : Yt) {
             std::cout << value << std::endl;
