@@ -31,16 +31,16 @@
 # Выполнение задания
 
 ```localhost:8000```:
-![Выполнение:](screen2.png)
+![Выполнение:](screen2.jpg)
 
 
 ```localhost:3033```:
-![Выполнение:](screen1.png)
+![Выполнение:](screen1.jpg)
 
 
 
 Docker Desktop:
-![Выполнение:](screen3.png)
+![Выполнение:](screen3.jpg)
 
 ---
 # Вывод 
