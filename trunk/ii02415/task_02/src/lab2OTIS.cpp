@@ -4,14 +4,26 @@
 
 class PIDController {
 private:
-    float a, b, c, d, e, f0, fD, g, u, u1, w;
-    float q0, q1, q2;
-    std::vector<float> Yt; //выходная переменная
-    std::vector<float> E;  //ошибка
+    double a = 0.5;
+    double b = 0.6;
+    double c = 0.6; 
+    double d = 0.4; 
+    double e = 0.9; 
+    double f0 = 1.2; 
+    double fD = 1.1;
+    double g = 1.1;
+    double u = 1.0;
+    double u1 = 1.0;
+    double w;
+    double q0;
+    double q1;
+    double q2;
+    std::vector<float> Yt; // выходная переменная
+    std::vector<float> E;  // ошибка
 
 public:
-    PIDController(float start, float target)
-        : a(0.5), b(0.6), c(0.6), d(0.4), e(0.9), f0(1.2), fD(1.1), g(1.1), u(1.0), u1(1.0), w(target)
+    PIDController(double start, double target)
+        : w(target)
     {
         Yt.push_back(start);
         Yt.push_back(start);
@@ -28,10 +40,10 @@ public:
 
         // Вычисление значений
         int temp = 2;
-        while (std::abs(Yt.back() - w) > 0.1) {//пока ошибка меньше 0.1
+        while (std::abs(Yt.back() - w) > 0.1) { // пока ошибка меньше 0.1
             temp++;
             E.push_back(w - Yt.back());
-            u = u1 + q0 * E.back() + q1 * E[E.size() - 2] + q2 * E[E.size() - 3]; //алгоритм работы ПИД-регулятора 
+            u = u1 + q0 * E.back() + q1 * E[E.size() - 2] + q2 * E[E.size() - 3]; // алгоритм работы ПИД-регулятора 
 
             Yt.push_back(a * Yt.back() - b * Yt[Yt.size() - 2] + c * u + d * sin(u1));
             u1 = u;
@@ -48,8 +60,8 @@ public:
 
 int main()
 {
-    float start = 10.0;
-    float target = 60.0;
+    double start = 10.0;
+    double target = 60.0;
 
     PIDController pidController(start, target);
     pidController.calculate();
