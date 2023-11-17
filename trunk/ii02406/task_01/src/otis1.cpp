@@ -2,17 +2,20 @@
 #include <cmath>
 
 double computeNextLinearValue(double coeffA, double coeffB, double inputU, double& outputY) {
-    outputY = coeffA * outputY + coeffB * inputU;
-    return outputY;
+    return coeffA * outputY + coeffB * inputU;
 }
 
-void printLinearOutput(double coeffA, double coeffB, double inputU, double& outputY, int iterations) {
+void updateLinearOutput(double& outputY, double nextY) {
+    outputY = nextY;
+}
+
+void printLinearOutput(double& outputY, double coeffA, double coeffB, double inputU, int iterations) {
     std::cout << "Linear model" << std::endl;
     for (int i = 0; i < iterations; ++i) {
         std::cout << outputY << std::endl;
-        computeNextLinearValue(coeffA, coeffB, inputU, outputY);
+        double nextY = computeNextLinearValue(coeffA, coeffB, inputU, outputY);
+        updateLinearOutput(outputY, nextY);
     }
-    std::cout << std::endl;
 }
 
 double computeNextNonlinearValue(double coeffA, double coeffB, double coeffC, double coeffD, double inputU, double& outputY, double& prevY) {
@@ -23,16 +26,21 @@ double computeNextNonlinearValue(double coeffA, double coeffB, double coeffC, do
     else {
         nextY = coeffA * outputY - coeffB * pow(prevY, 2) + coeffC * inputU + coeffD * sin(inputU);
     }
-    prevY = outputY;
-    outputY = nextY;
-    return outputY;
+    return nextY;
 }
 
-void printNonlinearOutput(double coeffA, double coeffB, double coeffC, double coeffD, double inputU, double& outputY, double& prevY, int iterations) {
+void updateNonlinearOutput(double& outputY, double& prevY, double nextY) {
+    prevY = outputY;
+    outputY = nextY;
+}
+
+void printNonlinearOutput(double& outputY, double coeffA, double coeffB, double coeffC, double coeffD, double inputU, int iterations) {
     std::cout << "Nonlinear model" << std::endl;
+    double prevY = 0.0;
     for (int i = 0; i < iterations; ++i) {
         std::cout << outputY << std::endl;
-        computeNextNonlinearValue(coeffA, coeffB, coeffC, coeffD, inputU, outputY, prevY);
+        double nextY = computeNextNonlinearValue(coeffA, coeffB, coeffC, coeffD, inputU, outputY, prevY);
+        updateNonlinearOutput(outputY, prevY, nextY);
     }
 }
 
@@ -43,7 +51,7 @@ int main() {
     double linearOutputY = 0.0;
     const int linearIterations = 20;
 
-    printLinearOutput(linearCoeffA, linearCoeffB, linearInputU, linearOutputY, linearIterations);
+    printLinearOutput(linearOutputY, linearCoeffA, linearCoeffB, linearInputU, linearIterations);
 
     const double nonlinearCoeffA = 0.3;
     const double nonlinearCoeffB = 0.3;
@@ -51,10 +59,9 @@ int main() {
     const double nonlinearCoeffD = 0.4;
     const double nonlinearInputU = 1.0;
     double nonlinearOutputY = 0.0;
-    double nonlinearPrevY = 0.0;
     const int nonlinearIterations = 20;
 
-    printNonlinearOutput(nonlinearCoeffA, nonlinearCoeffB, nonlinearCoeffC, nonlinearCoeffD, nonlinearInputU, nonlinearOutputY, nonlinearPrevY, nonlinearIterations);
+    printNonlinearOutput(nonlinearOutputY, nonlinearCoeffA, nonlinearCoeffB, nonlinearCoeffC, nonlinearCoeffD, nonlinearInputU, nonlinearIterations);
 
     return 0;
 }
