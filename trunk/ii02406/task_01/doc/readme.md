@@ -45,62 +45,65 @@ Task is to write program (**C++**), which simulates this object temperature.
 Код программы:
 ```C++
 #include <iostream>
-#include <fstream>
 #include <cmath>
 
-using namespace std;
-
-class functions {
-private:
-    double t1 = 1; //начальное время
-    double u = 1; //кол-во теплоты
-    double t2 = 50; //конечное время
-    const double a = 0.2;
-    const double b = 0.3;
-    const double c = 0.45;
-    const double d = 0.7; //исходные данные по номеру варианта
-public:
-    void nelineynaya(double y, double y1) {
-        if (t1 != t2) {
-            ofstream file("nonlineyn.txt", ios::app);
-            file << t1 << " " << y << endl;
-            cout << y << endl;
-            ++t1;
-            nelineynaya(a * y - b * y1 * y1 + c * u + d * sin(u), y);
-        }
-        else {
-            cout << "end nelineynaya model" << endl;
-        }
-    }
-    void lineynaya(double y) {
-        if (t1 != t2) {
-            ofstream file("lineyn.txt", ios::app);
-            file << t1 << " " << y << endl;
-            ++t1;
-            cout << y << endl;
-            lineynaya(a * y + b * u);
-        }
-        else {
-            cout << "end lineynaya model\n";
-        }
-    }
-};
-
-int main() {
-    double y = 0;
-    double y1 = 0;
-    ofstream file1("lin.txt");
-    ofstream file2("nonlin.txt");
-    file1.clear();
-    file2.clear();
-    functions linear;
-    functions nonlinear;
-    cout << "lineynaya model: \n";
-    linear.lineynaya(y);
-    cout << "nelineynaya model: \n";
-    nonlinear.nelineynaya(y, y1);
+double computeNextLinearValue(double coeffA, double coeffB, double inputU, double& outputY) {
+    outputY = coeffA * outputY + coeffB * inputU;
+    return outputY;
 }
 
+void printLinearOutput(double coeffA, double coeffB, double inputU, double& outputY, int iterations) {
+    std::cout << "Linear model" << std::endl;
+    for (int i = 0; i < iterations; ++i) {
+        std::cout << outputY << std::endl;
+        computeNextLinearValue(coeffA, coeffB, inputU, outputY);
+    }
+    std::cout << std::endl;
+}
+
+double computeNextNonlinearValue(double coeffA, double coeffB, double coeffC, double coeffD, double inputU, double& outputY, double& prevY) {
+    double nextY;
+    if (prevY == 0) {
+        nextY = coeffA * outputY - coeffB * pow(prevY, 2) + coeffC * 1 + coeffD * sin(1);
+    }
+    else {
+        nextY = coeffA * outputY - coeffB * pow(prevY, 2) + coeffC * inputU + coeffD * sin(inputU);
+    }
+    prevY = outputY;
+    outputY = nextY;
+    return outputY;
+}
+
+void printNonlinearOutput(double coeffA, double coeffB, double coeffC, double coeffD, double inputU, double& outputY, double& prevY, int iterations) {
+    std::cout << "Nonlinear model" << std::endl;
+    for (int i = 0; i < iterations; ++i) {
+        std::cout << outputY << std::endl;
+        computeNextNonlinearValue(coeffA, coeffB, coeffC, coeffD, inputU, outputY, prevY);
+    }
+}
+
+int main() {
+    const double linearCoeffA = 0.3;
+    const double linearCoeffB = 0.3;
+    const double linearInputU = 1.0;
+    double linearOutputY = 0.0;
+    const int linearIterations = 20;
+
+    printLinearOutput(linearCoeffA, linearCoeffB, linearInputU, linearOutputY, linearIterations);
+
+    const double nonlinearCoeffA = 0.3;
+    const double nonlinearCoeffB = 0.3;
+    const double nonlinearCoeffC = 0.2;
+    const double nonlinearCoeffD = 0.4;
+    const double nonlinearInputU = 1.0;
+    double nonlinearOutputY = 0.0;
+    double nonlinearPrevY = 0.0;
+    const int nonlinearIterations = 20;
+
+    printNonlinearOutput(nonlinearCoeffA, nonlinearCoeffB, nonlinearCoeffC, nonlinearCoeffD, nonlinearInputU, nonlinearOutputY, nonlinearPrevY, nonlinearIterations);
+
+    return 0;
+}
 
     Вывод:
     lineynaya model:
