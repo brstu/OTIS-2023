@@ -18,17 +18,17 @@ private:
     double q0;
     double q1;
     double q2;
-    std::vector<float> Yt; // выходная переменная
-    std::vector<float> E;  // ошибка
+    std::vector<double> Yt; // выходная переменная
+    std::vector<double> E;  // ошибка
 
 public:
     PIDController(double start, double target)
         : w(target)
     {
-        Yt.push_back(start);
-        Yt.push_back(start);
-        E.push_back(w - start);
-        E.push_back(w - start);
+        Yt.push_back(static_cast<float>(start));
+        Yt.push_back(static_cast<float>(start));
+        E.push_back(static_cast<float>(w - start));
+        E.push_back(static_cast<float>(w - start));
     }
 
     void calculate()
