@@ -8,8 +8,9 @@ endif()
 
 project ("lab2OTIS")
 
-add_executable (lab2OTIS "lab2OTIS" )
+# Добавьте источник в исполняемый файл этого проекта.
+add_executable (lab2OTIS "lab2OTIS.cpp" )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET otis_2 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET lab2OTIS PROPERTY CXX_STANDARD 20)
 endif()
