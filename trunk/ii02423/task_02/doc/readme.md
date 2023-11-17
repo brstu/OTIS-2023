@@ -51,7 +51,7 @@ public:
 
 class ControlSystem {
 public:
-    explicit ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0) {}
+    ControlSystem(const ModelParameters &params) : parameters(params), start_temperature(0.0) {}
 
     void run() {
         cout << "Enter start temperature: ";
@@ -78,8 +78,8 @@ public:
 
 private:
     const ModelParameters &parameters;
-    double start_temperature;
-    double desired_temperature = 0.0; // Инициализация переменной здесь
+    double start_temperature = 0.0; // Инициализация переменной здесь
+    double desired_temperature = 0.0;
     vector<double> temperature;
     vector<double> error;
     const double tolerance = 0.1;
