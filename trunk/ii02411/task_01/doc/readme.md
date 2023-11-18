@@ -10,7 +10,7 @@
 <p style="text-align: right;">Выполнил:</p>
 <p style="text-align: right;">Студент 2 курса</p>
 <p style="text-align: right;">Группы ИИ-24</p>
-<p style="text-align: right;">Крейдич А. И.</p>
+<p style="text-align: right;">Максимович А. И.</p>
 <p style="text-align: right;">Проверил:</p>
 <p style="text-align: right;">Иванюк Д. С.</p>
 <div style="margin-bottom: 10em;"></div>
