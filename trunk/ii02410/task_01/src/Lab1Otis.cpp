@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 struct NonlinearParameters {
     double coefficientA;
@@ -18,7 +19,7 @@ double CalculateNonlinear(double y, const NonlinearParameters& params, double in
 
 int main() {
     const int quantity = 50;
-    double linearY[quantity];
+    std::vector<double> linearY(quantity);
     double coefficientA = 0.8;
     double coefficientB = 1.5;
     double y = 0.0;
@@ -36,7 +37,7 @@ int main() {
     std::cout << "\n";
 
     // Nonlinear model
-    double nonlinearY[quantity];
+    std::vector<double> nonlinearY(quantity);
     NonlinearParameters params = { 0.75, 0.1, 2.2, 8.5, 0.0, input };
     y = 0.0;
 
