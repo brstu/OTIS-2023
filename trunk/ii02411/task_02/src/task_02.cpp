@@ -12,7 +12,7 @@ public:
     TemperatureController(double a, double b, double roomTemp, double targetTemp)
         : modelA_(a), modelB_(b), roomTemperature_(roomTemp), targetTemperature_(targetTemp) {}
 
-    double calculateOutput(double currentOutput) {
+    double calculateOutput(double currentOutput) const {
         return std::round((modelA_ * currentOutput + modelB_ * roomTemperature_) * 10) / 10;
     }
 
