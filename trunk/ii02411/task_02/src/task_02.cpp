@@ -20,7 +20,7 @@ public:
         std::cout << "t = " << t << "\ty: " << currentOutput << "\tu: " << currentInput << "\te: " << error << std::endl;
     }
 
-    void runController(int time) {
+    void runController(int time) const{
         double pidK = 1.0;
         double pidT = 1.0;
         double pidTD = 0.55;
