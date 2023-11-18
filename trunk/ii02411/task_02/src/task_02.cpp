@@ -16,7 +16,7 @@ public:
         return std::round((modelA_ * currentOutput + modelB_ * roomTemperature_) * 10) / 10;
     }
 
-    void printOutput(int t, double currentOutput, double currentInput, double error) {
+    void printOutput(int t, double currentOutput, double currentInput, double error) const {
         std::cout << "t = " << t << "\ty: " << currentOutput << "\tu: " << currentInput << "\te: " << error << std::endl;
     }
 
