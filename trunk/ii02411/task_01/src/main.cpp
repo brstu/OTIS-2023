@@ -1,39 +1,50 @@
 ﻿#include <iostream>
 #include <cmath>
+#include <array>
+
+// Parameters for the nonlinear model
+struct NonlinearModelParams {
+    double coefficientA;
+    double coefficientB;
+    double coefficientC;
+    double coefficientD;
+};
 
 // Calculation of linear model
-double CalculateLinear(double y, double koef_A, double koef_B, double u) {
-    y = koef_A * y + koef_B * u;
+double CalculateLinear(double y, double coefficientA, double coefficientB, double u) {
+    y = coefficientA * y + coefficientB * u;
     return y;
 }
 
 // Calculation of nonlinear model
-double CalculateNonlinear(double y, double koef_A, double koef_B, double YPrev, double koef_C, double u, double koef_D, double UPrev) {
-    y = koef_A * y - koef_B * pow(YPrev, 2) + koef_C * u + koef_D * sin(UPrev);
+double CalculateNonlinear(double y, const NonlinearModelParams& params, double YPrev, double u, double UPrev) {
+    y = params.coefficientA * y - params.coefficientB * pow(YPrev, 2) + params.coefficientC * u + params.coefficientD * sin(UPrev);
     return y;
 }
 
 int main() {
     const int quantity = 50;
-    double linY[quantity];
-    double koef_A = 0.8;
-    double koef_B = 1.5;
+    std::array<double, quantity> linY;
+    double coefficientA = 0.8;
+    double coefficientB = 1.5;
     double y = 0.0;
     double u = 3.3;
 
     // Linear model
     for (int i = 0; i < quantity; i++) {
         linY[i] = y;
-        y = CalculateLinear(y, koef_A, koef_B, u);
+        y = CalculateLinear(y, coefficientA, coefficientB, u);
         std::cout << i + 1 << " " << linY[i] << "\n";
     }
 
     // Nonlinear model
-    double unLinY[quantity];
-    koef_A = 0.75;
-    koef_B = 0.1;
-    double koef_C = 2.2;
-    double koef_D = 8.5;
+    NonlinearModelParams nonlinearParams;
+    nonlinearParams.coefficientA = 0.75;
+    nonlinearParams.coefficientB = 0.1;
+    nonlinearParams.coefficientC = 2.2;
+    nonlinearParams.coefficientD = 8.5;
+
+    std::array<double, quantity> unLinY;
     y = 0.0;
     u = 0.3;
     double Ynext = 0.0;
@@ -42,7 +53,7 @@ int main() {
     for (int i = 0; i < quantity; i++) {
         Yprev = y;
         y = Ynext;
-        Ynext = CalculateNonlinear(y, koef_A, koef_B, Yprev, koef_C, u, koef_D, u);
+        Ynext = CalculateNonlinear(y, nonlinearParams, Yprev, u, u);
         unLinY[i] = Ynext;
         std::cout << i + 1 << " " << unLinY[i] << "\n";
     }
