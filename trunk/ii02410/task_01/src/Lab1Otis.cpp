@@ -1,15 +1,18 @@
 #include <iostream>
 #include <cmath>
 
-// Calculation of linear model
-double CalculateLinear(double y, double coefficientA, double coefficientB, double input) {
-    y = coefficientA * y + coefficientB * input;
-    return y;
-}
+struct NonlinearParameters {
+    double coefficientA;
+    double coefficientB;
+    double coefficientC;
+    double coefficientD;
+    double previousY;
+    double previousInput;
+};
 
 // Calculation of nonlinear model
-double CalculateNonlinear(double y, double coefficientA, double coefficientB, double previousY, double coefficientC, double input, double coefficientD, double previousInput) {
-    y = coefficientA * y - coefficientB * pow(previousY, 2) + coefficientC * input + coefficientD * sin(previousInput);
+double CalculateNonlinear(double y, const NonlinearParameters& params, double input) {
+    y = params.coefficientA * y - params.coefficientB * pow(params.previousY, 2) + params.coefficientC * input + params.coefficientD * sin(params.previousInput);
     return y;
 }
 
@@ -26,7 +29,7 @@ int main() {
     std::cout << "----------------\n";
     for (int i = 0; i < quantity; i++) {
         linearY[i] = y;
-        y = CalculateLinear(y, coefficientA, coefficientB, input);
+        y = coefficientA * y + coefficientB * input;
         std::cout << "Step " << i + 1 << ": " << linearY[i] << "\n";
     }
 
@@ -34,22 +37,15 @@ int main() {
 
     // Nonlinear model
     double nonlinearY[quantity];
-    coefficientA = 0.75;
-    coefficientB = 0.1;
-    double coefficientC = 2.2;
-    double coefficientD = 8.5;
+    NonlinearParameters params = { 0.75, 0.1, 2.2, 8.5, 0.0, input };
     y = 0.0;
-    input = 0.3;
-    double nextY = 0.0;
-    double previousY = 0.0;
 
     std::cout << "Nonlinear Model:\n";
     std::cout << "-------------------\n";
     for (int i = 0; i < quantity; i++) {
-        previousY = y;
-        y = nextY;
-        nextY = CalculateNonlinear(y, coefficientA, coefficientB, previousY, coefficientC, input, coefficientD, input);
-        nonlinearY[i] = nextY;
+        params.previousY = y;
+        y = CalculateNonlinear(y, params, input);
+        nonlinearY[i] = y;
         std::cout << "Step " << i + 1 << ": " << nonlinearY[i] << "\n";
     }
 
