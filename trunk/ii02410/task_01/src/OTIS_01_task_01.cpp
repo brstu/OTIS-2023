@@ -1,16 +1,16 @@
 #include <iostream>
 #include <cmath>
 
-class TemperatureController { // 8класс
+class TemperatureController {
 public:
     TemperatureController(double a, double b, double roomTemp, double targetTemp)
         : modelA(a), modelB(b), roomTemperature(roomTemp), targetTemperature(targetTemp) {}
 
-    double calculateOutput(double currentOutput) {
+    double calculateOutput(double currentOutput) const {
         return std::round((modelA * currentOutput + modelB * roomTemperature) * 10) / 10;
     }
 
-    void printOutput(int t, double currentOutput, double currentInput, double error) {
+    void printOutput(int t, double currentOutput, double currentInput, double error) const {
         std::cout << "t = " << t << "\ty: " << currentOutput << "\tu: " << currentInput << "\te: " << error << std::endl;
     }
 
