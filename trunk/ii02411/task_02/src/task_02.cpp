@@ -20,7 +20,7 @@ public:
         std::cout << "t = " << t << "\ty: " << currentOutput << "\tu: " << currentInput << "\te: " << error << std::endl;
     }
 
-    void runController(int time) const{
+    void runController(int time) const {
         double pidK = 1.0;
         double pidT = 1.0;
         double pidTD = 0.55;
@@ -28,16 +28,11 @@ public:
         double pidQ0 = pidK * (1 + pidTD / pidT0);
         double pidQ1 = -pidK * (1 + 2 * pidTD / pidT0 - pidT0 / pidT);
         double pidQ2 = pidK * pidTD / pidT0;
-        double error1 = 0.0;
-        double error2 = 0.0;
-        double error3 = 0.0;
-        double previousInput = 0.0;
         double currentInput = 0.0;
         double currentOutput = 0.0;
 
         for (int i = 1; i < time - 1; i++) {
             double error = targetTemperature_ - currentOutput;
-            error1 = error;
 
             if (i < 4) {
                 currentInput = 1.0;
@@ -45,12 +40,10 @@ public:
                 printOutput(i, currentOutput, currentInput, error);
             }
             else {
-                double input = previousInput + (pidQ0 * error1) + (pidQ1 * error2) + (pidQ2 * error3);
-                previousInput = input;
+                double input = currentInput + (pidQ0 * error) + (pidQ1 * error) + (pidQ2 * error);
+                currentInput = input;
                 currentOutput = calculateOutput(currentOutput);
                 printOutput(i, currentOutput, input, error);
-                error3 = error2;
-                error2 = error1;
             }
         }
     }
