@@ -237,6 +237,7 @@ void __fastcall TForm1::InfoGraphClick(TObject *Sender)
 	}
 
 
+	int rowCount2 = graph.size();
 	int colCount2 = 0;
 
 	for (const auto& row : graph)
