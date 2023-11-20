@@ -22,12 +22,12 @@ public:
     void output(ofstream& outFile);
 };
 
-double Solution::func1(double y, double u) const {
-    return a * y + b * u;
+double Solution::func1(double y, double u_param) const {
+    return a * y + b * u_param;
 }
 
-double Solution::func2(double y, double u, double y1) const {
-    return a * y - b * pow(y1, 2) + c * u + d * sin(u);
+double Solution::func2(double y, double u_param, double y1_param) const {
+    return a * y - b * pow(y1_param, 2) + c * u_param + d * sin(u_param);
 }
 
 void Solution::input() {
