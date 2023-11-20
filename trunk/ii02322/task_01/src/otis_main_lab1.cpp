@@ -13,7 +13,7 @@ private:
     double b = 0.5;
     double c = 0.62;
     double d = 1.1;
-    mutable int i = 0; 
+    mutable int counter = 0;
 
 public:
     double func1(double y, double u) const;
@@ -35,14 +35,14 @@ void Solution::input() {
 }
 
 void Solution::output(ofstream& outFile) {
-    outFile << i << " " << y1 << " " << y1 << endl;
+    outFile << counter << " " << y1 << " " << y1 << endl;
     double tempY1 = func1(y1, u);
 
     y2 = func2(tempY1, u, y1);
 
-    i++;
+    counter++;
 
-    outFile << i << " " << tempY1 << " " << y2 << endl;
+    outFile << counter << " " << tempY1 << " " << y2 << endl;
 
     for (int j = 2; j < 100; j++) {
         tempY1 = func1(tempY1, u);
