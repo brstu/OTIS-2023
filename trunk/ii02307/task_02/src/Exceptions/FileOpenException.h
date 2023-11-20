@@ -7,10 +7,9 @@
 
 class FileOpenException : public std::runtime_error {
 public:
-    FileOpenException(const std::string& filename);
+    explicit FileOpenException(const std::string& filename);
 
-    const char* what() const noexcept override;
-    const std::string& getFilename() const noexcept;
+    [[nodiscard]] const std::string& getFilename() const noexcept;
 
 private:
     std::string filename;
