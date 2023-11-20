@@ -16,17 +16,17 @@ private:
     mutable int count = 0;  // In-class initializer for count to avoid shadowing 'i'
 
 public:
-    double func1(double y, double u) const;
-    double func2(double y, double u, double y1) const;
+    double func1(double y, double u);
+    double func2(double y, double u, double y1);
     void input();
     void output(ofstream& outFile);
 };
 
-double Solution::func1(double y, double u) const {
+double Solution::func1(double y, double u) {
     return a * y + b * u;
 }
 
-double Solution::func2(double y, double u, double y1) const {
+double Solution::func2(double y, double u, double y1) {
     return a * y - b * pow(y1, 2) + c * u + d * sin(u);
 }
 
