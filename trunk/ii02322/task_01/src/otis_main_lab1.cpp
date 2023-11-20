@@ -7,13 +7,13 @@ using namespace std;
 class Solution {
 private:
     double y1;
-    mutable double y2;
+    mutable double y2;  // Make y2 mutable
     double u;
-    double a = 0.6;
+    double a = 0.6;  // In-class initializer for a
     double b = 0.5;
-    double c = 0.62;
-    double d = 1.1;
-    mutable int counter = 0;
+    double c = 0.62;  // In-class initializer for c
+    double d = 1.1;   // In-class initializer for d
+    mutable int count = 0;  // In-class initializer for count to avoid shadowing 'i'
 
 public:
     double func1(double y, double u) const;
@@ -35,14 +35,14 @@ void Solution::input() {
 }
 
 void Solution::output(ofstream& outFile) {
-    outFile << counter << " " << y1 << " " << y1 << endl;
+    outFile << count << " " << y1 << " " << y1 << endl;
     double tempY1 = func1(y1, u);
 
     y2 = func2(tempY1, u, y1);
 
-    counter++;
+    count++;
 
-    outFile << counter << " " << tempY1 << " " << y2 << endl;
+    outFile << count << " " << tempY1 << " " << y2 << endl;
 
     for (int j = 2; j < 100; j++) {
         tempY1 = func1(tempY1, u);
