@@ -9,18 +9,18 @@ public:
     [[nodiscard]] std::vector<double> getY() const;
 
 private:
-    double k;
-    double t;
-    double t_d;
-    double t_0;
+    double k = 0.0001;
+    double t = 100;
+    double t_d = 100;
+    double t_0 = 1;
 
     double q_0;
     double q_1;
     double q_2;
 
     std::vector<double> q;
-    std::vector<double> e;
-    std::vector<double> y;
-    std::vector<double> u;
+    std::vector<double> e = {0, 0, 0};
+    std::vector<double> y = {0, 0, 0};
+    std::vector<double> u = {1, 1};
 };
 

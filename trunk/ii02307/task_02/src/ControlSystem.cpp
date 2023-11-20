@@ -1,9 +1,9 @@
 #include "ControlSystem.h"
 #include <vector>
-#include "math.h"
+#include <cmath>
 
-ControlSystem::ControlSystem() : k(0.0001), t(100), t_d(100), t_0(1), q_0(k * (1 + t_d / t_0)), q_1(-k * (1 + 2 * t_d / t_0 - t_0 / t)),
-                                 q_2(k * t_d / t_0), q({q_0, q_1, q_2}), e({0, 0, 0}), y({0, 0, 0}), u({1, 1}) {}
+ControlSystem::ControlSystem() : q_0(k * (1 + t_d / t_0)), q_1(-k * (1 + 2 * t_d / t_0 - t_0 / t)),
+                                 q_2(k * t_d / t_0), q({q_0, q_1, q_2}) {}
 
 double ControlSystem::sum() {
     double sum = 0;
