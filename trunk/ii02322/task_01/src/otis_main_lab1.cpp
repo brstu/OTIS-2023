@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <cmath> 
+#include <cmath>
 
 using namespace std;
 
@@ -9,15 +9,13 @@ private:
     double y1;
     mutable double y2;
     double u;
-    double a;
-    double b;
-    double c;
-    double d;
-    mutable int i; 
+    double a = 0.6;
+    double b = 0.5;
+    double c = 0.62;
+    double d = 1.1;
+    mutable int i = 0; 
 
 public:
-    Solution() : a(0.6), b(0.5), c(0.62), d(1.1), i(0) {}
-
     double func1(double y, double u) const;
     double func2(double y, double u, double y1) const;
     void input();
