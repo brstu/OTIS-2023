@@ -7,26 +7,26 @@ using namespace std;
 class Solution {
 private:
     double y1;
-    mutable double y2;  // Make y2 mutable
+    mutable double y2;
     double u;
-    double a = 0.6;  // In-class initializer for a
+    double a = 0.6;
     double b = 0.5;
-    double c = 0.62;  // In-class initializer for c
-    double d = 1.1;   // In-class initializer for d
-    mutable int count = 0;  // In-class initializer for count to avoid shadowing 'i'
+    double c = 0.62;
+    double d = 1.1;
+    mutable int count = 0;
 
 public:
-    double func1(double y, double u);
-    double func2(double y, double u, double y1);
+    double func1(double y, double u) const;
+    double func2(double y_param, double u_param, double y1_param) const;
     void input();
     void output(ofstream& outFile);
 };
 
-double Solution::func1(double y, double u) {
+double Solution::func1(double y, double u) const {
     return a * y + b * u;
 }
 
-double Solution::func2(double y, double u, double y1) {
+double Solution::func2(double y, double u, double y1) const {
     return a * y - b * pow(y1, 2) + c * u + d * sin(u);
 }
 
