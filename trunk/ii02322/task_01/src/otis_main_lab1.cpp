@@ -7,23 +7,21 @@ using namespace std;
 class Solution {
 private:
     double y1;
-    double y2;
+    mutable double y2;
     double u;
     double a;
     double b;
     double c;
     double d;
-    int i;
+    mutable int i; 
 
 public:
-    // Constructor with initializer list
-    Solution()
-        : y1(0.0), y2(0.0), u(0.0), a(0.6), b(0.5), c(0.62), d(1.1), i(0) {}
+    Solution() : a(0.6), b(0.5), c(0.62), d(1.1), i(0) {}
 
     double func1(double y, double u) const;
     double func2(double y, double u, double y1) const;
     void input();
-    void output(ofstream& outFile) const;
+    void output(ofstream& outFile);
 };
 
 double Solution::func1(double y, double u) const {
@@ -38,7 +36,7 @@ void Solution::input() {
     cin >> y1 >> u;
 }
 
-void Solution::output(ofstream& outFile) const {
+void Solution::output(ofstream& outFile) {
     outFile << i << " " << y1 << " " << y1 << endl;
     double tempY1 = func1(y1, u);
 
@@ -50,7 +48,9 @@ void Solution::output(ofstream& outFile) const {
 
     for (int j = 2; j < 100; j++) {
         tempY1 = func1(tempY1, u);
+
         y2 = func2(y2, u, tempY1);
+
         outFile << j << " " << tempY1 << " " << y2 << endl;
     }
 }
