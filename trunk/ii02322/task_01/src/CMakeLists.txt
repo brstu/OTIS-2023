@@ -4,7 +4,7 @@ project(otis_lab1)
 
 add_executable(otis_lab1 otis_main_lab1.cpp)
 
-set_target_properties(laba1 PROPERTIES
+set_target_properties(otis_lab1 PROPERTIES
     CXX_STANDARD 20
 )
 
