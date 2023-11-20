@@ -34,20 +34,25 @@
 ```C++
 // main.cpp
 #include <iostream>
-#include "ControlSystem.h"
 #include "fstream"
+#include "ControlSystem.h"
+#include "Exceptions/FileOpenException.h"
 
 int main() {
-    double setValue;
-    std::string fileNameOut = "output.txt";
-    std::ofstream out(fileNameOut);
-    ControlSystem controlSystem;
-    
-    if (out.is_open()) {
+    try {
+        double setValue;
+        std::string fileNameOut = "output.txt";
+        std::ofstream out(fileNameOut);
+        ControlSystem controlSystem;
+        
+        if (!out.is_open()) {
+            throw FileOpenException(fileNameOut);
+        }
+        
         std::cout << "Enter the set value: ";
         std::cin >> setValue;
         controlSystem.nonlinear(100, setValue);
-        std::vector<double> yValues =  controlSystem.getY();
+        std::vector<double> yValues = controlSystem.getY();
         
         std::size_t size = yValues.size();
         for (int i = 0; i < size; i++) {
@@ -56,13 +61,13 @@ int main() {
         }
         
         out.close();
-    } else {
-        throw std::runtime_error("Cannot open the output.txt file.");
+    } catch (const std::exception& e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
     }
+    
     
     return 0;
 }
-
 ```     
 ```C++
 // ControlSystem.h
@@ -125,6 +130,46 @@ std::vector<double> ControlSystem::getY() const {
     return y;
 }
 ```
+
+```C++
+// Exceptions/FileOpenException.h
+#ifndef SRC_FILEOPENEXCEPTION_H
+#define SRC_FILEOPENEXCEPTION_H
+
+
+#include <stdexcept>
+#include <string>
+
+class FileOpenException : public std::runtime_error {
+public:
+    FileOpenException(const std::string& filename);
+    
+    const char* what() const noexcept override;
+    const std::string& getFilename() const noexcept;
+
+private:
+    std::string filename;
+};
+
+
+#endif
+```
+
+```C++
+// Exceptions/FileOpenException.cpp
+#include "FileOpenException.h"
+FileOpenException::FileOpenException(const std::string& filename)
+: runtime_error("Cannot open the " + filename + " file."), filename(filename) {}
+
+const char* FileOpenException::what() const noexcept {
+    return runtime_error::what();
+}
+
+const std::string& FileOpenException::getFilename() const noexcept {
+    return filename;
+}
+```
+
 Вывод программы:
 ```
     0 0
