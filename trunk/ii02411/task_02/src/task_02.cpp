@@ -1,63 +1,46 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
+#include <array>
 
-class TemperatureController {
-private:
-    double modelA_;
-    double modelB_;
-    double roomTemperature_;
-    double targetTemperature_;
+void runControlSystem() {
+    const double K = 0.097;    // пропорциональная составляющая
+    const double T = 2.1623;   // интегральная составляющая
+    const double Td = 1.0;     // дифференциальная составляющая
+    const double step = 0.001; // шаг
 
-public:
-    TemperatureController(double a, double b, double roomTemp, double targetTemp)
-        : modelA_(a), modelB_(b), roomTemperature_(roomTemp), targetTemperature_(targetTemp) {}
+    const double q0 = K * (1.0 + (step != 0 ? Td / step : 0.0));
+    const double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
+    const double q2 = K * Td / step;
 
-    double calculateOutput(double currentOutput) const {
-        return std::round((modelA_ * currentOutput + modelB_ * roomTemperature_) * 10) / 10;
+    const int count = 100;      // количество итераций
+    const double point = 29.0;  // желаемое значение
+
+    std::cout << "START" << std::endl;
+
+    const double param_a = 0.8;
+    const double param_b = 0.3;
+    double y = 0.0;
+    double u = 0.0;
+
+    // функция подсчёта линейной модели
+    auto linear_model = [&](double y_lambda, double a_lambda, double b_lambda, double u_lambda) {
+        return a_lambda * y_lambda + b_lambda * u_lambda; // формула линейной модели
+    };
+
+    // цикл вычисления Y для линейной модели
+    std::array<double, 3> arr_e = {0.0}; // массив разности желаемого значения и текущего значения
+    for (int i = 1; i <= count; i++) {
+        arr_e[2] = arr_e[1];
+        arr_e[1] = std::abs(point - y);
+        const double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
+        const double prevU = u;
+        u = prevU + du;
+        y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
+        std::cout << i << ". y = " << y << "\t| u = " << u << std::endl;
     }
-
-    void printOutput(int t, double currentOutput, double currentInput, double error) const {
-        std::cout << "t = " << t << "\ty: " << currentOutput << "\tu: " << currentInput << "\te: " << error << std::endl;
-    }
-
-    void runController(int time) const {
-        double pidK = 1.0;
-        double pidT = 1.0;
-        double pidTD = 0.55;
-        double pidT0 = 1.0;
-        double pidQ0 = pidK * (1 + pidTD / pidT0);
-        double pidQ1 = -pidK * (1 + 2 * pidTD / pidT0 - pidT0 / pidT);
-        double pidQ2 = pidK * pidTD / pidT0;
-        double currentInput = 0.0;
-        double currentOutput = 0.0;
-
-        for (int i = 1; i < time - 1; i++) {
-            double error = targetTemperature_ - currentOutput;
-
-            if (i < 4) {
-                currentInput = 1.0;
-                currentOutput = calculateOutput(currentOutput);
-                printOutput(i, currentOutput, currentInput, error);
-            }
-            else {
-                double input = currentInput + (pidQ0 * error) + (pidQ1 * error) + (pidQ2 * error);
-                currentInput = input;
-                currentOutput = calculateOutput(currentOutput);
-                printOutput(i, currentOutput, input, error);
-            }
-        }
-    }
-};
+}
 
 int main() {
-    int time = 50;
-    double targetTemperature = 20.0;
-    double modelA = 0.982;
-    double modelB = 0.252;
-    double roomTemperature = 12.0;
-
-    TemperatureController controller(modelA, modelB, roomTemperature, targetTemperature);
-    controller.runController(time);
-
+    runControlSystem();
     return 0;
 }
