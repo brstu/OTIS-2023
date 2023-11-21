@@ -30,31 +30,27 @@
 
 # Task #
  
-Установив Docker, и установив по руководству проект NIKA, а затем и запустив, я приобрел некоторый опыт работы с этим проектом. Вот несколько кадров, снятые во время экспериментов в процессе работы с этим проектом.
+Установка
 
-```
-git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
-cd nika
-git submodule update --init --recursive
-docker compose pull
-```
+![](picture5.png)
+
 # Запуск (Результат) #
 
 ```
 docker compose up --no-build
 ```
-Эта команда запуcкает 2 веб-интерфейса:
+команда запуcкает 2 веб-интерфейса:
 
-sc-веб: ```localhost:8000```
+sc-web: ```localhost:8000```
 
 Веб-диалог пользовательского интерфейса: ```localhost:3033```
 
-sc-веб:
+sc-web:
 
-![Вывод:](1.png)
-![Вывод:](2.png)
+![result:](1.png)
+![result:](2.png)
 
-Веб-диалог пользовательского интерфейса: 
+Веб-диалог: 
 
-![Вывод:](3.png)
-![Вывод:](4.png)
+![result:](3.png)
+![result:](4.png)
