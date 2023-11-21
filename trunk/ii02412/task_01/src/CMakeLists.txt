@@ -4,4 +4,4 @@ project(OTISS_01)
 
 set(SOURCES Source.cpp)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(MExecutable ${SOURCES})
