@@ -1,4 +1,4 @@
-﻿# CMakeList.txt: проект CMake для CMakeProject2; включите исходный код и определения,
+﻿# CMakeList.txt: проект CMake для CMakeTask_02; включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
@@ -9,13 +9,13 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("CMakeProject2")
+project ("CMakeTask_02")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (CMakeProject2 "CMakeProject2.cpp" "CMakeProject2.h")
+add_executable (CMakeTask_02 "CMakeTask_02.cpp" "CMakeTask_02.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET CMakeProject2 PROPERTY CXX_STANDARD 20)
+  set_property(TARGET CMakeTask_02 PROPERTY CXX_STANDARD 20)
 endif()
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
