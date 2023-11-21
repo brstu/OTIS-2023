@@ -9,7 +9,11 @@ double CalculateLinear(double y, double koef_A, double koef_B, double u) {
 }
 
 // Calculation of nonlinear model
-double CalculateNonlinear(double y, double koef_A, double koef_B, double YPrev, double koef_C, double u, double koef_D, double UPrev) {
+double CalculateNonlinear(double y, double YPrev, double u, double UPrev) {
+    double koef_A = 0.75;
+    double koef_B = 0.1;
+    double koef_C = 2.2;
+    double koef_D = 8.5;
     y = koef_A * y - koef_B * pow(YPrev, 2) + koef_C * u + koef_D * sin(UPrev);
     return y;
 }
@@ -31,21 +35,18 @@ int main() {
     }
 
     // Nonlinear model
-    double unLinY[quantity];
-    koef_A = 0.75;
-    koef_B = 0.1;
-    double koef_C = 2.2;
-    double koef_D = 8.5;
+    std::array<double, quantity> unLinY;
     y = 0.0;
     u = 0.3;
-    double Ynext = 0.0;
     double Yprev = 0.0;
+    double Uprev = 0.0;
 
     for (int i = 0; i < quantity; i++) {
-        Yprev = y;
-        y = Ynext;
-        Ynext = CalculateNonlinear(y, koef_A, koef_B, Yprev, koef_C, u, koef_D, u);
+        double Ynext = CalculateNonlinear(y, Yprev, u, Uprev);
         unLinY[i] = Ynext;
+        Yprev = y;
+        Uprev = u;
+        y = Ynext;
         std::cout << i + 1 << " " << unLinY[i] << "\n";
     }
 
