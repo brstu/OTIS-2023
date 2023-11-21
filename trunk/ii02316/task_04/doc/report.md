@@ -43,13 +43,13 @@ docker compose pull
 cd nika
 git config --local core.longpaths true
 ```
-Также требовалось дополнительно установить [Docker](https://docs.docker.com/)(c плагином Compose)
+Также мне потребовалось дополнительно установить [Docker](https://docs.docker.com/)(вместе c плагином Compose)
  
 # Запуск #
 ```
 docker compose up --no-build
 ```
-Эта команда запустит два веб-интерфейса:
+Эта команда запустит 2 веб-интерфейса:
 
 sc-web - ```localhost:8000```
 
