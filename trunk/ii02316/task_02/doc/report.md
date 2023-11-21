@@ -46,45 +46,51 @@ const double K = 0.001;
 const double T = 50;
 const double TD = 100;
 const double To = 1;
-void unlinear(double value) {
 
-    int t = 100;
+void simulateSystem(double desiredValue) {
+    int timeSteps = 100;
 
     double q0 = K * (1 + TD / To);
-
     double q1 = -K * (1 + 2 * TD / To - To / T);
-
     double q2 = K * TD / To;
 
-    vector<double> y = { 0, 0, 0 };
-    vector<double> u = { 1, 1 };
+    vector<double> outputValues = { 0, 0, 0 };
+    vector<double> controlInputs = { 1, 1 };
 
-    for (int i = 0; i < t; i++) {
-        double e0 = value - y[y.size() - 1];
-        double e1 = value - y[y.size() - 2];
-        double e2 = value - y[y.size() - 3];
-        double sum = q0 * e0 + q1 * e1 + q2 * e2;
-        u[0] = u[1] + sum;
-        u[1] = u[0];
-        y.push_back(A * y[y.size() - 1] - B * y[y.size() - 2] * y[y.size() - 2] + C * u[0] + D * sin(u[1]));
+    for (int i = 0; i < timeSteps; i++) {
+        double error0 = desiredValue - outputValues[outputValues.size() - 1];
+        double error1 = desiredValue - outputValues[outputValues.size() - 2];
+        double error2 = desiredValue - outputValues[outputValues.size() - 3];
+
+        double controlSignal = q0 * error0 + q1 * error1 + q2 * error2;
+        controlInputs[0] = controlInputs[1] + controlSignal;
+        controlInputs[1] = controlInputs[0];
+
+        double systemOutput = A * outputValues[outputValues.size() - 1] -
+            B * outputValues[outputValues.size() - 2] * outputValues[outputValues.size() - 2] +
+            C * controlInputs[0] + D * sin(controlInputs[1]);
+
+        outputValues.push_back(systemOutput);
     }
 
-    for (int i = 0; i < y.size(); i++) {
-        double res = y[i] * value / y[y.size() - 1];
-        cout << res << endl;
+    // Output the scaled results
+    for (double output : outputValues) {
+        double scaledOutput = output * desiredValue / outputValues[outputValues.size() - 1];
+        cout << scaledOutput << endl;
     }
 }
 
 int main() {
-    setlocale(LC_ALL, "RU");
-    double value;
-    cout << "Желаемое значение: ";
-    cin >> value;
+    setlocale(LC_ALL, "EN");
+    double desiredValue;
+    cout << "Desired value: ";
+    cin >> desiredValue;
 
-    unlinear(value);
+    simulateSystem(desiredValue);
 
     return 0;
 }
+
 ```     
 
 Результат программы:
