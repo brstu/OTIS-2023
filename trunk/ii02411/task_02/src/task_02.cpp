@@ -3,40 +3,38 @@
 #include <array>
 
 void runControlSystem() {
-    const double K = 0.097;    // пропорциональная составляющая
-    const double T = 2.1623;   // интегральная составляющая
-    const double Td = 1.0;     // дифференциальная составляющая
-    const double step = 0.001; // шаг
+    const double proportionalGain = 0.097;
+    const double integralTime = 2.1623;
+    const double derivativeTime = 1.0;
+    const double timeStep = 0.001;
 
-    const double q0 = K * (1.0 + (step != 0 ? Td / step : 0.0));
-    const double q1 = -K * (1.0 + 2.0 * Td / step - step / T);
-    const double q2 = K * Td / step;
+    const double gainCoefficient = proportionalGain * (1.0 + (timeStep != 0 ? derivativeTime / timeStep : 0.0));
+    const double coefficient1 = -proportionalGain * (1.0 + 2.0 * derivativeTime / timeStep - timeStep / integralTime);
+    const double coefficient2 = (proportionalGain * derivativeTime) / timeStep;
 
-    const int count = 100;      // количество итераций
-    const double point = 29.0;  // желаемое значение
+    const int iterations = 100;
+    const double setPoint = 29.0;
 
     std::cout << "START" << std::endl;
 
-    const double param_a = 0.8;
-    const double param_b = 0.3;
-    double y = 0.0;
-    double u = 0.0;
+    const double modelParamA = 0.8;
+    const double modelParamB = 0.3;
+    double output = 0.0;
+    double input = 0.0;
 
-    // функция подсчёта линейной модели
-    auto linear_model = [&](double y_lambda, double a_lambda, double b_lambda, double u_lambda) {
-        return a_lambda * y_lambda + b_lambda * u_lambda; // формула линейной модели
+    auto linearModel = [&](double outputLambda, double paramALambda, double paramBLambda, double inputLambda) {
+        return paramALambda * outputLambda + paramBLambda * inputLambda;
     };
 
-    // цикл вычисления Y для линейной модели
-    std::array<double, 3> arr_e = {0.0}; // массив разности желаемого значения и текущего значения
-    for (int i = 1; i <= count; i++) {
-        arr_e[2] = arr_e[1];
-        arr_e[1] = std::abs(point - y);
-        const double du = q0 * arr_e[1] + q1 * arr_e[2] + q2 * arr_e[0]; // вычисление изменения управляющего сигнала
-        const double prevU = u;
-        u = prevU + du;
-        y = linear_model(y, param_a, param_b, u); // вычисление текущего значения
-        std::cout << i << ". y = " << y << "\t| u = " << u << std::endl;
+    std::array<double, 3> errorArray = {0.0};
+    for (int i = 1; i <= iterations; i++) {
+        errorArray[2] = errorArray[1];
+        errorArray[1] = std::abs(setPoint - output);
+        const double deltaInput = gainCoefficient * errorArray[1] + coefficient1 * errorArray[2] + coefficient2 * errorArray[0];
+        const double previousInput = input;
+        input = previousInput + deltaInput;
+        output = linearModel(output, modelParamA, modelParamB, input);
+        std::cout << i << ". output = " << output << "\t| input = " << input << std::endl;
     }
 }
 
