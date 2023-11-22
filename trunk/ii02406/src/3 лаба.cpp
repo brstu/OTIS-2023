@@ -151,28 +151,23 @@ public:
 
     Graph constructSpanningTree() {
         Graph spanningTree;
-        std::vector<bool> visited(vertices.size(), false);
-        std::vector<int> stack;
+        spanningTree.nodes = nodes;
 
-        // Начнем с первой вершины
-        stack.push_back(0);
+        std::vector<bool> visited(nodes.size(), false);
+        std::vector<int> queue;
 
-        while (!stack.empty()) {
-            int currentVertex = stack.back();
-            stack.pop_back();
+        visited[0] = true;
+        queue.push_back(0);
 
-            if (visited[currentVertex]) {
-                continue;
-            }
+        while (!queue.empty()) {
+            int currentNode = queue.front();
+            queue.erase(queue.begin());
 
-            visited[currentVertex] = true;
-            spanningTree.addVertex(currentVertex);
-
-            for (int neighbor : vertices[currentVertex].neighbors) {
+            for (int neighbor : nodes[currentNode].neighbors) {
                 if (!visited[neighbor]) {
-                    spanningTree.addVertex(neighbor);
-                    spanningTree.addEdge(currentVertex, neighbor);
-                    stack.push_back(neighbor);
+                    spanningTree.addEdge(currentNode, neighbor);
+                    visited[neighbor] = true;
+                    queue.push_back(neighbor);
                 }
             }
         }
@@ -182,57 +177,52 @@ public:
 };
 
 int main() {
+    // Создание графа
     Graph graph;
 
     // Добавление вершин
-    graph.addVertex(0);
-    graph.addVertex(1);
-    graph.addVertex(2);
-    graph.addVertex(3);
+    graph.addNode(0);
+    graph.addNode(1);
+    graph.addNode(2);
+    graph.addNode(3);
+    graph.addNode(4);
 
     // Добавление ребер
     graph.addEdge(0, 1);
     graph.addEdge(1, 2);
     graph.addEdge(2, 3);
-    graph.addEdge(3, 0);
+    graph.addEdge(3, 4);
+    graph.addEdge(4, 0);
 
     // Визуализация графа
     graph.visualize();
 
-    // Проверка, является ли граф эйлеровым
-    if (graph.isEulerian()) {
-        std::cout << "Граф является эйлеровым." << std::endl;
-
-        // Поиск эйлерова цикла
-        std::vector<int> eulerCycle = graph.findEulerianCycle();
-        if (!eulerCycle.empty()) {
-            std::cout << "Эйлеров цикл: ";
-            for (int vertex : eulerCycle) {
-                std::cout << vertex << " ";
-            }
-            std::cout << std::endl;
-        } else {
-            std::cout << "В графе нет эйлерова цикла." << std::endl;
-        }
-    } else {
-        std::cout << "Граф не является эйлеровым." << std::endl;
-    }
-
-    // Поиск гамильтонова цикла
-    std::vector<int> hamiltonCycle = graph.findHamiltonianCycle();
-    if (!hamiltonCycle.empty()) {
-        std::cout << "Гамильтонов цикл: ";
-        for (int vertex : hamiltonCycle) {
+    // Поиск Эйлерова цикла
+    std::vector<int> eulerianCycle = graph.findEulerianCycle();
+    if (!eulerianCycle.empty()) {
+        std::cout << "Эйлеров цикл: ";
+        for (int vertex : eulerianCycle) {
             std::cout << vertex << " ";
         }
         std::cout << std::endl;
     } else {
-        std::cout << "В графе нет гамильтонова цикла." << std::endl;
+        std::cout << "Граф не содержит Эйлерова цикла." << std::endl;
     }
 
-    // Построение остовного дерева графа
+    // Поиск Гамильтонова цикла
+    std::vector<int> hamiltonianCycle = graph.findHamiltonianCycle();
+    if (!hamiltonianCycle.empty()) {
+        std::cout << "Гамильтонов цикл: ";
+        for (int vertex : hamiltonianCycle) {
+            std::cout << vertex << " ";
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "Граф не содержит Гамильтонова цикла." << std::endl;
+    }
+
+    // Построение остовного дерева
     Graph spanningTree = graph.constructSpanningTree();
-    std::cout << "Остовное дерево графа:" << std::endl;
     spanningTree.visualize();
 
     return 0;
