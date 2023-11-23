@@ -48,7 +48,7 @@ sc-web: ```localhost:8000```
 sc-web:
 
 ![result:](1.png)
-![result:](2.jpg)
+![result:](2.png)
 =======
 
 ![result:](2.png)
@@ -57,8 +57,8 @@ sc-web:
 
 Веб-диалог: 
 
-![result:](3.jpg)
-![result:](4.jpg)
+![result:](3.png)
+![result:](4.png)
 =======
 ![result:](3.png)
 
