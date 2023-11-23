@@ -41,6 +41,7 @@ https://github.com/ostis-apps/nika/issues/303
 ![issue](1.png)
 ![issue](2.png)
 
+
 Гайд не полностью отражает все аспекты работы с проектом и имеет ряд недостатков:
 
 https://github.com/ostis-apps/nika/issues/304
