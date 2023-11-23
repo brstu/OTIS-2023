@@ -32,7 +32,7 @@
  
 Установка
 
-![install](picture5.jpg)
+![install](picture5.png)
 
 # Запуск (Результат) #
 
@@ -48,22 +48,18 @@ sc-web: ```localhost:8000```
 sc-web:
 
 ![result:](1.png)
-<<<<<<< HEAD
 ![result:](2.jpg)
 =======
 
 ![result:](2.png)
->>>>>>> 6da38e9c882d612e118d2943b91bbdf791688925
 
 ![result:](3.png)
 
 Веб-диалог: 
 
-<<<<<<< HEAD
 ![result:](3.jpg)
 ![result:](4.jpg)
 =======
 ![result:](3.png)
 
 ![result:](4.png)
->>>>>>> 6da38e9c882d612e118d2943b91bbdf791688925
