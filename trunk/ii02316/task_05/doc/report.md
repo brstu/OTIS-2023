@@ -36,7 +36,7 @@
 
 Избыточная кнопка в интерфейсе:
 
-https://github.com/ostis-apps/nika/issues/30
+https://github.com/ostis-apps/nika/issues/303
 
 ![issue](1.png)
 ![issue](2.png)
