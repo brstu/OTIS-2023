@@ -32,7 +32,7 @@
  
 Установка
 
-![install](picture5.png)
+![install](picture5.jpg)
 
 # Запуск (Результат) #
 
