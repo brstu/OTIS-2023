@@ -1,13 +1,7 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.6)
 
-project(main)
+project(OTIS_03)
 
-add_library(your_extension_module MODULE your_extension_source.cpp)
+set(SOURCES main.py)
 
-target_include_directories(your_extension_module PRIVATE ${Python3_INCLUDE_DIRS} ${NumPy_INCLUDE_DIRS})
-target_link_libraries(your_extension_module PRIVATE ${Python3_LIBRARIES})
-
-set_target_properties(your_extension_module PROPERTIES PREFIX "")
-
-# Указать, где установить расширение Python
-install(TARGETS your_extension_module DESTINATION main)
+add_executable(MyPython_ii02423 ${SOURCES})
