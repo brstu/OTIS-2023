@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-task3(GraphicalApplication)
+main(GraphicalApplication)
 
 find_package(Tkinter)
 
