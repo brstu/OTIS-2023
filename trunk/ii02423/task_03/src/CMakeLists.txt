@@ -1,9 +1,17 @@
 cmake_minimum_required(VERSION 3.0)
 
-main(GraphicalApplication)
+project(main)
 
-find_package(Tkinter)
+find_package(Python3 REQUIRED COMPONENTS Development)
 
-add_executable(graphical_app your_script.py)
+find_package(NumPy REQUIRED)
 
-target_link_libraries(graphical_app PRIVATE Tkinter::Tkinter)
+add_library(your_extension_module MODULE your_extension_source.cpp)
+
+target_include_directories(your_extension_module PRIVATE ${Python3_INCLUDE_DIRS} ${NumPy_INCLUDE_DIRS})
+target_link_libraries(your_extension_module PRIVATE ${Python3_LIBRARIES})
+
+set_target_properties(your_extension_module PROPERTIES PREFIX "")
+
+# Указать, где установить расширение Python
+install(TARGETS your_extension_module DESTINATION main)
