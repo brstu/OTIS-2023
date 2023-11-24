@@ -84,7 +84,7 @@
 
 # Код программы: #
 
-#подключение библиотек
+
 from tkinter import messagebox,Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
 from numpy.random import randint
@@ -98,7 +98,7 @@ def line_intersect_circle(x1, y1, x2, y2):
     dx = (main_gipotenusa - 20) * main_dx / main_gipotenusa
     dy = (main_gipotenusa - 20) * main_dy / main_gipotenusa
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
-#класс создания вершин
+
 class Node:
     def __init__(self, name):
         self.name = name
@@ -145,7 +145,7 @@ class Node:
         graph.remove_node(self.name)
 def create_circle(x, y, r, **kwargs):
     return canvas.create_oval(x-r, y-r, x+r, y+r, **kwargs)
-#класс ребер
+
 class Edge:
     def __init__(self, node1, node2, weight: int):
         self.weight = weight
@@ -182,19 +182,19 @@ class Edge:
         canvas.delete(self.line)
         canvas.delete(self.text)
         graph.remove_edge(self.node1.name, self.node2.name)
-#рисуем вершину
+
 def create_vertex(entry_name, window):
     name = entry_name.get()
     nodes.append(Node(name))
     window.destroy()
-#выбор цвета
+
 def chose_color(color_lable):
     global color_vertex
     rgb, hx= askcolor()
     print(rgb)
     color_vertex = hx
     color_lable.config(bg=color_vertex)
-#меню добавления вершин
+
 def menu_add_vertex():
     global color_vertex
     add_window = Tk()
@@ -213,7 +213,7 @@ def menu_add_vertex():
     color_button.grid(row=3, column=0, sticky="ewns")
     color_lable.grid(row = 1,column=1)
     add_window.mainloop()
-# создание ребра
+
 def create_edge(entry_weight, entry_node1, entry_node2, window):
     try:
         weight = int(entry_weight.get())
@@ -229,7 +229,7 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
                 node2 = vertex
         edges.append(Edge(node1, node2, weight))
         window.destroy()
-#меню добавления ребер
+
 def menu_add_edge():
     add_window = Tk()
     add_window.title("Добавление ребра")
@@ -352,7 +352,7 @@ root.geometry("800x600+500+150")
 root.resizable(False, False)
 canvas = Canvas(root, width=795, height=596, bg="grey")
 canvas.place(x=0, y=0)
-#главное меню
+
 main_menu = Menu()
 file_menu = Menu()
 file_menu1 = Menu()
