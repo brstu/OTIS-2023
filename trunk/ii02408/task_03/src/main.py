@@ -223,26 +223,38 @@ def delete(event):
 
 def shortest_path():
     enter = []
-    win = Tk()
-    win.title("Chose of vertices")
-    win.geometry("200x120+1050+250")
-    win.resizable(False, False)
-    label = Label(win, text="Chose first vertex")
-    label.grid(row=0, column=0, sticky="ew")
-    entry1 = Entry(win)
-    entry1.grid(row=1, column=0, sticky="ewns")
-    label2 = Label(win, text="Chose second vertex")
-    label2.grid(row=2, column=0, sticky="ew")
-    entry2 = Entry(win)
-    entry2.grid(row=3, column=0, sticky="ewns")
-    button = Button(win, text="Chose", command=lambda: func(enter, win))
-    button.grid(row=4, column=0, sticky="ewns")
 
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
         display_props("Shortest path", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+
+    def display_props(title, path):
+        # Add your implementation to display the properties or do something with the path
+        pass
+
+    win = Tk()
+    win.title("Choose vertices")
+    win.geometry("200x120+1050+250")
+    win.resizable(False, False)
+
+    label = Label(win, text="Choose first vertex")
+    label.grid(row=0, column=0, sticky="ew")
+    entry1 = Entry(win)
+    entry1.grid(row=1, column=0, sticky="ewns")
+    label2 = Label(win, text="Choose second vertex")
+    label2.grid(row=2, column=0, sticky="ew")
+    entry2 = Entry(win)
+    entry2.grid(row=3, column=0, sticky="ewns")
+    button = Button(win, text="Choose", command=lambda: func(enter, win))
+    button.grid(row=4, column=0, sticky="ewns")
+
     win.mainloop()
+
+    if len(enter) < 2:
+        messagebox.showerror("Error", "Not enough vertices chosen")
+        return None, None
+
     return enter[0], enter[1]
 def display_props(title, props):
     string = ''
