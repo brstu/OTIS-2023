@@ -116,7 +116,7 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
-    global window_siz
+    global window_size
     add_window = Tk()
     add_window.title("Add vertex")
     add_window.geometry(window_size)
