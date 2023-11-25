@@ -1,9 +1,9 @@
 #подключение библиотек
 from tkinter import messagebox,Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
-from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
+import numpy
 
 
 def line_intersect_circle(x1, y1, x2, y2):
@@ -18,8 +18,8 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 636)
-        self.y = randint(0, 596)
+        self.x = numpy.random.randint(0, 636)
+        self.y = numpy.random.randint(0, 596)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -33,9 +33,10 @@ class Node:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
     def change(self):
+        window_size = "190x120+1050+250"
         win = Tk()
         win.title("Name edition")
-        win.geometry("190x120+1050+250")
+        win.geometry(window_size)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Enter new name")
