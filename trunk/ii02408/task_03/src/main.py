@@ -15,10 +15,11 @@ def line_intersect_circle(x1, y1, x2, y2):
 
 # класс создания вершин
 class Node:
-    def __init__(self, name):
+    def __init__(self, name, seed=None):
         self.name = name
-        self.x = random.default_rng().integers(0, 636)
-        self.y = random.default_rng().integers(0, 596)
+        rng = random.default_rng(seed)
+        self.x = rng.integers(0, 636)
+        self.y = rng.integers(0, 596)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -32,7 +33,7 @@ class Node:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
     def change(self):
-        window_size = "190x120+1050+250"
+        global window_size
         win = Tk()
         win.title("Name edition")
         win.geometry(window_size)
@@ -71,10 +72,10 @@ class Edge:
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
-        window_size2 = "190x120+1050+250"
+        global window_size
         win = Tk()
         win.title("Editing weight")
-        win.geometry(window_size2)
+        win.geometry(window_size)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Enter new weight")
@@ -113,11 +114,11 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
-    global color_vertex
-    window_size3 = "190x120+1050+250"
+    color_vertex
+    global window_size
     add_window = Tk()
     add_window.title("Add vertex")
-    add_window.geometry(window_size3)
+    add_window.geometry(window_size)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Enter vertex name")
@@ -274,6 +275,7 @@ def eulerian_cycle():
 
 nodes = []# Список имен вершин
 edges = []# Список ребер
+window_size = "190x120+1050+250"
 color_vertex = "#fff"
 graph = nx.Graph()  # Граф
 root = Tk()
