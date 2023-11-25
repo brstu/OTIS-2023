@@ -1,10 +1,8 @@
 #подключение библиотек
-from tkinter import messagebox,Canvas, Label, Entry, Button, Tk, Menu
+from tkinter import messagebox, Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
-from numpy import sqrt
+from numpy import sqrt, random
 import networkx as nx
-import numpy
-
 
 def line_intersect_circle(x1, y1, x2, y2):
     '''Returns the coordinates of the intersection points of a line and two circles'''
@@ -14,12 +12,13 @@ def line_intersect_circle(x1, y1, x2, y2):
     dx = (main_gipotenusa - 20) * main_dx / main_gipotenusa
     dy = (main_gipotenusa - 20) * main_dy / main_gipotenusa
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
-#класс создания вершин
+
+# класс создания вершин
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = numpy.random.randint(0, 636)
-        self.y = numpy.random.randint(0, 596)
+        self.x = random.default_rng().integers(0, 636)
+        self.y = random.default_rng().integers(0, 596)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -72,9 +71,10 @@ class Edge:
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
+        window_size2 = "190x120+1050+250"
         win = Tk()
         win.title("Editing weight")
-        win.geometry("190x120+1050+250")
+        win.geometry(window_size2)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Enter new weight")
@@ -114,9 +114,10 @@ def chose_color(color_lable):
 #меню добавления вершин
 def menu_add_vertex():
     global color_vertex
+    window_size3 = "190x120+1050+250"
     add_window = Tk()
     add_window.title("Add vertex")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry(window_size3)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Enter vertex name")
