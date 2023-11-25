@@ -35,7 +35,6 @@ class Node:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
     def change(self):
-        global window_size
         win = Tk()
         win.title("Name edition")
         win.geometry(window_size)
