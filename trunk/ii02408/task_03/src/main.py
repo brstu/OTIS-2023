@@ -73,7 +73,6 @@ class Edge:
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
-        global window_size
         win = Tk()
         win.title("Editing weight")
         win.geometry(window_size)
@@ -115,7 +114,6 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
-    global window_size
     add_window = Tk()
     add_window.title("Add vertex")
     add_window.geometry(window_size)
