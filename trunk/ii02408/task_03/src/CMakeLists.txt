@@ -1,15 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
-project(python_project PYTHON)
+project(OTIS_03)
 
-find_package(PythonLibs 3.6 REQUIRED)
+set(SOURCES main.py)
 
-set(CMAKE_PYTHON_COMPILER "/usr/bin/python3")
-
-set(SOURCES 
-  main.py
-)
-
-add_executable(main ${SOURCES})
-
-target_link_libraries(main PYTHON::Python)
+add_executable(MyPython_ii02408 ${SOURCES})
