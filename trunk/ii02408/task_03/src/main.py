@@ -4,6 +4,8 @@ from tkinter.colorchooser import askcolor
 from numpy import sqrt, random
 import networkx as nx
 
+window_size = "190x120+1050+250"
+
 def line_intersect_circle(x1, y1, x2, y2):
     '''Returns the coordinates of the intersection points of a line and two circles'''
     main_gipotenusa = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -34,7 +36,6 @@ class Node:
                 edge.move()
     def change(self):
         global window_size
-        window_size = "190x120+1050+250"
         win = Tk()
         win.title("Name edition")
         win.geometry(window_size)
@@ -74,7 +75,6 @@ class Edge:
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
         global window_size
-        window_size = "190x120+1050+250"
         win = Tk()
         win.title("Editing weight")
         win.geometry(window_size)
@@ -116,8 +116,7 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
-    global window_size
-    window_size = "190x120+1050+250"
+    global window_siz
     add_window = Tk()
     add_window.title("Add vertex")
     add_window.geometry(window_size)
@@ -277,7 +276,6 @@ def eulerian_cycle():
 
 nodes = []# Список имен вершин
 edges = []# Список ребер
-window_size = "190x120+1050+250"
 color_vertex = "#fff"
 graph = nx.Graph()  # Граф
 root = Tk()
