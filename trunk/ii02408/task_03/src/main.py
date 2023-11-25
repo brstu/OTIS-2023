@@ -34,6 +34,7 @@ class Node:
                 edge.move()
     def change(self):
         global window_size
+        window_size = "190x120+1050+250"
         win = Tk()
         win.title("Name edition")
         win.geometry(window_size)
@@ -73,6 +74,7 @@ class Edge:
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
         global window_size
+        window_size = "190x120+1050+250"
         win = Tk()
         win.title("Editing weight")
         win.geometry(window_size)
@@ -115,6 +117,7 @@ def chose_color(color_lable):
 #меню добавления вершин
 def menu_add_vertex():
     global window_size
+    window_size = "190x120+1050+250"
     add_window = Tk()
     add_window.title("Add vertex")
     add_window.geometry(window_size)
