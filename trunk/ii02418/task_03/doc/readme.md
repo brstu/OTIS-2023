@@ -81,22 +81,25 @@
 6. Исходный код разработанной программы разместить в каталоге: **trunk\ii0xxyy\task_03\src**.
 ---
 # Описание работы программы: #
-## Окно программы
-
+## Окнa программы
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/windows.png)
 ## Добавление вершин
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/add_vertex.png)
+## Добавление цвета
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/add_color.png)
 ## Cоединение вершин ребрами
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/add_edge.png)
 ## Перемещение вершин
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/move.png)
 ## Изменяем вес ребер
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/change_weight.png)
 ## Изменяем название вершин
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/change_name.png)
 ## Изменяем цвета вершин, ребер
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/change_color.png)
 ## Удаление ребер и вершин
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/delete.png)
 ## Кратчайший путь
-
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/Shortest_Path.png)
 ## Эйлеров цикл
+![image](https://github.com/SukharevichDmitry/OTIS-2023/blob/task_03/trunk/ii02418/task_03/doc/images/euler_path.png)
