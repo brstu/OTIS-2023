@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 3.6)
-project(OTIS_03)
+project(MyPythonProject)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++13")
+# Настройка переменных
+set(SOURCES main.py)  # Список исходных файлов Python
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)  # Путь для сохранения скомпилированных библиотек
+
+# Поиск и подключение библиотек Python
 find_package(PythonLibs REQUIRED)
-
-add_library(OTIS_03 SHARED ${SOURCE_FILES})
 include_directories(${PYTHON_INCLUDE_DIRS})
-target_link_libraries(OTIS_03 ${PYTHON_LIBRARIES})
+
+# Создание цели исполняемого файла
+add_executable(MyPythonApp ${SOURCES})
+
+# Линковка с библиотеками Python
+target_link_libraries(MyPythonApp ${PYTHON_LIBRARIES})
