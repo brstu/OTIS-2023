@@ -39,8 +39,8 @@ class Node:
         
         seed_value = 42
 
-# Create a random generator with the seed
-rng = np.random.default_rng(seed_value)
+        # Create a random generator with the seed
+        rng = np.random.default_rng(seed_value)
 
         # Генерируем случайные координаты с помощью генератора
         self.x = rng.integers(0, 700)
@@ -97,10 +97,8 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
-                                       width=2, fill="black")
-        self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
-                                       text=self.weight, font="Arial 20", fill="white")
+        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
+        self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center', text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
 
     def change(self):
@@ -199,8 +197,7 @@ def menu_add_edge():
     label3 = Label(add_window, text="Вес ребра")
     entry_weight = Entry(add_window)
     add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить ребро",
-                          command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
+    color_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
     color_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_weight.grid(row=1, column=0, sticky="n")
@@ -225,8 +222,7 @@ def change_name_or_weight(event):
     x, y = event.x, event.y
     for edge in edges:
         print(2)
-        legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
-            (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+        legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
         gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
         if legs_sum <= gipotenusa:
             edge.change()
@@ -246,8 +242,7 @@ def change_color(event):
             break
     else:
         for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
-                (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
             if legs_sum <= gipotenusa:
                 edge.change_color(askcolor()[1])
@@ -265,8 +260,7 @@ def delete(event):
     else:
         for edge in edges:
             print(2)
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
-                (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
             if legs_sum <= gipotenusa:
                 edge.delete()
@@ -333,10 +327,8 @@ canvas.place(x=600, y=0)
 # главное меню
 button1 = Button(root, text="Новая вершина", anchor="w", command=menu_add_vertex, font=("Courier", 12), bg="thistle2")
 button2 = Button(root, text="Создать ребро", anchor="w", command=menu_add_edge, font=("Courier", 12), bg="light cyan")
-button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=e_cycle, font=("Courier", 12),
-                 bg="light blue")
-button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=shortest_path, font=("Courier", 12),
-                 bg="MistyRose2")
+button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=e_cycle, font=("Courier", 12), bg="light blue")
+button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=shortest_path, font=("Courier", 12), bg="MistyRose2")
 button1.grid(row=0, column=0, stick="ew")
 button2.grid(row=1, column=0, stick="ew")
 button3.grid(row=2, column=0, stick="ew")
