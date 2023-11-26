@@ -5,6 +5,9 @@ import tkinter.colorchooser as colorchooser
 
 click_num = 0
 id_of_edge = 0
+NUM_OF_VERTEX = 'num of vertex'
+ID_TEXT = 'id text'
+TEXT_ON_VERTEX = 'text on vertex'
 
 BUTTON_1 = "<Button-1>"
 # функция для рисования вершины
@@ -75,10 +78,10 @@ def delete_canvas(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])  # удаление текста
             ovals.remove(x)  # удаление вершины из массива
             # удаление информации о вершине из словаря
-            cord['num of vertex'].remove(cord['num of vertex'][cord['id'].index(x)])
-            canvas.delete(cord['id text'][cord['id'].index(x)])
+            cord[NUM_OF_VERTEX].remove(cord[NUM_OF_VERTEX][cord['id'].index(x)])
+            canvas.delete(cord[ID_TEXT][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
-            cord['id text'].remove(cord['id text'][cord['id'].index(x)])
+            cord[ID_TEXT].remove(cord[ID_TEXT][cord['id'].index(x)])
             cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
             cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
@@ -269,9 +272,6 @@ def bfs():
                 temp = val
                 temp += 1
 
-        # for u in range(len(ovals)):
-        #    if matrix[vert][u] == 1 and not visited[u]:
-        #        bfs_rec(u)
 
     matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
     for index, value in enumerate(cord_edge['id_vertex1']):
