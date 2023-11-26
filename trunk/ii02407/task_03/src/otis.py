@@ -3,8 +3,8 @@ from tkinter.colorchooser import askcolor
 import numpy as np
 from numpy import sqrt
 import networkx as nx
-
-
+WINDOW_GEOMETRY = "190x120+1050+250"
+FONT_ARIALS_BOLD = "Arial Bold"
 # Эйлеров цикл
 def e_cycle():
     display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
@@ -37,9 +37,11 @@ class Node:
     def __init__(self, name):
         self.name = name
         
-        # Создаем генератор случайных чисел
-        rng = np.random.default_rng()
-        
+       seed_value = 42
+
+# Create a random generator with the seed
+rng = np.random.default_rng(seed_value)
+
         # Генерируем случайные координаты с помощью генератора
         self.x = rng.integers(0, 700)
         self.y = rng.integers(0, 600)
@@ -60,7 +62,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Редактирование имени")
-        win.geometry("190x120+1050+240")
+        win.geometry(WINDOW_GEOMETRY)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -104,7 +106,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Редактирование веса ребра")
-        win.geometry("190x120+1050+240")
+        win.geometry(WINDOW_GEOMETRY)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -149,7 +151,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+240")
+    add_win.geometry(WINDOW_GEOMETRY)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
@@ -319,9 +321,9 @@ color_vertex = "azure2"
 graph = nx.Graph()  # Граф
 root = Tk()
 root.title("Графовый редактор")
-lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=("Arials Bold", 10))
-lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=("Arials Bold", 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("Arials Bold", 10))
+lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(FONT_ARIALS_BOLD, 10))
+lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(FONT_ARIALS_BOLD, 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(FONT_ARIALS_BOLD, 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
