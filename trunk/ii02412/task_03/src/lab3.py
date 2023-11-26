@@ -201,7 +201,6 @@ def adjacency_matrix():
     adj_matrix = tk.Tk()
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("150x150")
-    global edges
     matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for i2 in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
@@ -218,7 +217,7 @@ def incidence_matrix():
     inc_matrix = tk.Tk()
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("150x150")
-    global ovals, edges
+    global edges
     matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
     for index in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
@@ -234,7 +233,7 @@ def incidence_matrix():
 
 
 def dfs():
-    global cord_edge2, ovals, edges
+    global ovals, edges
     visited = [False] * len(ovals)
 
     def dfs_rec(vert):
@@ -258,7 +257,7 @@ def dfs():
         messagebox.showinfo("DFS", "Graph is not connected")
 
 def bfs():
-    global cord_edge, cord_edge2, ovals, edges
+    global cord_edge2, ovals, edges
     visited = [False] * len(ovals)
 
     def bfs_rec(vert):
