@@ -236,25 +236,23 @@ def shortest_path():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
-    button = Button(win, text="Выбрать", command=lambda: func(enter, win))
-    button.grid(row=4, column=0, sticky="ewns")
 
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+
+    button = Button(win, text="Выбрать", command=lambda: func(enter, win))
+    button.grid(row=4, column=0, sticky="ewns")
     win.mainloop()
     return enter[0], enter[1]
+
 def display_props(title, props):
-    string = ''
-    for prop in props:
-        string += str(prop) + ' '
     win = Tk()
     win.title(title)
     win.geometry("500x500")
-    label = Label(win, text=string)
+    label = Label(win, text=' '.join(map(str, props)))
     label.pack()
-    win.mainloop()
 def eulerian_cycle():
     display_props("Эйлеров цикл", nx.algorithms.eulerian_path(graph))
 
