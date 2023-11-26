@@ -279,7 +279,7 @@ def bfs():
     else:
         messagebox.showinfo("BFS", "Graph is not connected")
 
-root = tk.Tk() 
+root  =  tk.Tk()
 root.title("Graph")
 main_label = tk.Label(root, text="Выберите действие")
 main_label.pack(side=tk.BOTTOM)
