@@ -5,6 +5,8 @@ from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
 
+WIN_GEOMETRY = "190x120+1050+250"
+
 # Функция для нахождения точек пересечения линии и кругов
 def line_intersect_circle(x1, y1, x2, y2):
     main_gipotenusa = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -17,9 +19,9 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 636)
-        self.y = randint(0, 596)
-
+        generator = np.random.default_rng()
+        self.x = generator.integers(0, 636)
+        self.y = generator.integers(0, 596)
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
@@ -34,7 +36,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Изменение имени")
-        win.geometry("190x120+1050+250")
+        win.geometry(WIN_GEOMETRY)  # Использование константы
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
