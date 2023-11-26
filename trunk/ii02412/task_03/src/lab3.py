@@ -270,7 +270,7 @@ def bfs():
   
 
 
-    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for index, value in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
