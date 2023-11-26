@@ -1,11 +1,12 @@
-#подключение библиотек
-from tkinter import messagebox,Canvas, Label, Entry, Button, Tk, Menu
+# Подключение библиотек
+from tkinter import messagebox, Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
 from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
+
+# Функция для нахождения точек пересечения линии и кругов
 def line_intersect_circle(x1, y1, x2, y2):
-    '''Returns the coordinates of the intersection points of a line and two circles'''
     main_gipotenusa = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
     main_dy = y2 - y1
@@ -256,27 +257,31 @@ def eulerian_cycle():
     display_props("Эйлеров цикл", nx.algorithms.eulerian_path(graph))
 
 
-nodes = []# Список имен вершин
-edges = []# Список ребер
+nodes = []  # Список имен вершин
+edges = []  # Список ребер
 color_vertex = "#fff"
 graph = nx.Graph()  # Граф
+
 root = Tk()
 root.title("Работа с графами")
 root.geometry("800x600+500+150")
 root.resizable(False, False)
+
 canvas = Canvas(root, width=795, height=596, bg="grey")
 canvas.place(x=0, y=0)
-#главное меню
+
+# Главное меню
 main_menu = Menu()
 file_menu = Menu()
 file_menu1 = Menu()
 main_menu.add_cascade(label="Работа с вершинами", menu=file_menu)
-file_menu.add_command(label="Добавление вершин",command= menu_add_vertex)
-file_menu.add_command(label="Добавление ребра",command=menu_add_edge)
+file_menu.add_command(label="Добавление вершин", command=menu_add_vertex)
+file_menu.add_command(label="Добавление ребра", command=menu_add_edge)
 main_menu.add_cascade(label="Алгоритмы", menu=file_menu1)
-file_menu1.add_command(label="Эйлеров цикл",command=eulerian_cycle)
-file_menu1.add_command(label="Кратчайший путь",command=shortest_path)
+file_menu1.add_command(label="Эйлеров цикл", command=eulerian_cycle)
+file_menu1.add_command(label="Кратчайший путь", command=shortest_path)
 root.config(menu=main_menu)
+
 canvas.bind('<B1-Motion>', move_node)
 canvas.bind('<Button-2>', change_name_or_weight)
 canvas.bind('<Button-3>', change_color)
