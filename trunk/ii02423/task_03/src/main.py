@@ -116,12 +116,12 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry(WIN_GEOMETRY)  # Используйте здесь константу
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
     entry_name = Entry(add_window)
-    add_button = Button(add_window, text = "Выбрать цвет",command = lambda: chose_color(color_lable))
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
     color_button = Button(add_window, text = "Добавить вершину",command = lambda: create_vertex(entry_name,add_window))
     color_lable = Label(add_window,width=2,bg = "white")
     label.grid(row=0, column=0, sticky="ew")
