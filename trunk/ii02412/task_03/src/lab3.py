@@ -202,7 +202,7 @@ def adjacency_matrix():
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("150x150")
     global cord_edge, cord_edge2, ovals, edges
-    matrix = [[0 for i1 in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for i2 in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
