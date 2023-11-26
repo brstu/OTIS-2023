@@ -1,6 +1,6 @@
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
 from tkinter.colorchooser import askcolor
-from numpy.random import randint
+import numpy as np
 from numpy import sqrt
 import networkx as nx
 
@@ -16,7 +16,7 @@ def create_circle(x, y, r, **kwargs):
 
 
 # Связывающая
-def сonnecting_line(x1, y1, x2, y2):
+def connecting_line(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -36,8 +36,13 @@ def create_vertex(entry_name, window):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 700)
-        self.y = randint(0, 600)
+        
+        # Создаем генератор случайных чисел
+        rng = np.random.default_rng()
+        
+        # Генерируем случайные координаты с помощью генератора
+        self.x = rng.integers(0, 700)
+        self.y = rng.integers(0, 600)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -55,7 +60,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Редактирование имени")
-        win.geometry("190x120+1050+250")
+        win.geometry("190x120+1050+240")
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -99,7 +104,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Редактирование веса ребра")
-        win.geometry("190x120+1050+250")
+        win.geometry("190x120+1050+240")
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -144,7 +149,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry("190x120+1050+240")
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
@@ -182,7 +187,7 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
 def menu_add_edge():
     add_window = Tk()
     add_window.title("Добавление ребра")
-    add_window.geometry("220x220+1050+250")
+    add_window.geometry("220x220+1050+240")
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Стартовая вершина")
@@ -271,7 +276,7 @@ def shortest_path():
     enter = []
     win = Tk()
     win.title("Выбор вершин")
-    win.geometry("200x120+1050+250")
+    win.geometry("200x120+1050+240")
     win.resizable(False, False)
     label = Label(win, text="Выберите первую вершину")
     label.grid(row=0, column=0, sticky="ew")
@@ -314,9 +319,9 @@ color_vertex = "azure2"
 graph = nx.Graph()  # Граф
 root = Tk()
 root.title("Графовый редактор")
-lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=("Arial Bold", 10))
-lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=("Arial Bold", 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("Arial Bold", 10))
+lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=("Arials Bold", 10))
+lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=("Arials Bold", 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("Arials Bold", 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
