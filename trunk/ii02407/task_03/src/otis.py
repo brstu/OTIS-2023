@@ -36,7 +36,7 @@ def create_vertex(entry_name, window):
 class Node:
     def __init__(self, name):
         self.name = name
-        
+
         seed_value = 42
 
         # Create a random generator with the seed
@@ -97,7 +97,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
+        self.line = canvas.create_line(connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center', text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
 
@@ -126,7 +126,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
@@ -149,7 +149,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_win.geometry(WINDOW_GEOMETRY)
+    add_window.geometry(WINDOW_GEOMETRY)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
