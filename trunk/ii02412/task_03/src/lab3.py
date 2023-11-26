@@ -84,7 +84,7 @@ def delete_canvas(event):
             cord[ID_TEXT].remove(cord[ID_TEXT][cord['id'].index(x)])
             cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
-            cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
+            cord[TEXT_ON_VERTEX].remove(cord[TEXT_ON_VERTEX][cord['id'].index(x)])
             cord['id'].remove(x)
             break
     # удаление ребра
@@ -111,7 +111,7 @@ def draw_canvas1(event):
     texttag = 'text' + str(id_text)
     # добавление инфы о вершине в словарь
     cord["num of vertex"].append(id_text)
-    cord['id text'].append(tag)
+    cord[ID_TEXT].append(tag)
     cord["coordinatesX"].append(x)
     cord["coordinatesY"].append(y)
     oval_id = canvas.create_oval(x - 15, y - 15, x + 15, y + 15, fill='red', tags=tag)  # создание вершины
@@ -119,7 +119,7 @@ def draw_canvas1(event):
     cord['id'].append(oval_id)
     canvas.create_text(x, y, text=itext, font="Arial 13", tags=texttag)  # создание текста
     cord['textID'].append(texttag)
-    cord['text on vertex'].append(itext)
+    cord[TEXT_ON_VERTEX].append(itext)
 
 
 # функция для рисования ребра
@@ -160,7 +160,7 @@ def rename(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
-            cord['text on vertex'][cord['id'].index(x)] = new_name
+            cord[TEXT_ON_VERTEX][cord['id'].index(x)] = new_name
             # canvas.itemconfig(cord['id text'][cord['id'].index(x)], text=new_name)
             break
 
@@ -309,7 +309,7 @@ x1, y1, x2, y2 = 0, 0, 0, 0
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
 # ребро(но с id ребра)
-cord = {'id': [], 'id text': [], 'text on vertex': [], 'textID': [], 'num of vertex': [], 'coordinatesX': [],
+cord = {'id': [], ID_TEXT: [], TEXT_ON_VERTEX: [], 'textID': [], 'num of vertex': [], 'coordinatesX': [],
         'coordinatesY': []}  # для хранения инфы о вершинах
 tk.Tk.geometry(root, "800x600")
 canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
