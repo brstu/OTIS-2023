@@ -219,7 +219,7 @@ def incidence_matrix():
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("150x150")
     global cord, cord_edge, cord_edge2, ovals, edges
-    matrix = [[0 for idex in range(len(edges))] for jdex in range(len(ovals))]
+    matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
     for index in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
             edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
@@ -243,7 +243,7 @@ def dfs():
             if matrix[vert][u] == 1 and not visited[u]:
                 dfs_rec(u)
 
-    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for ii in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][ii])][cord['id'].index(cord_edge['id_vertex2'][ii])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][ii])][cord['id'].index(cord_edge['id_vertex1'][ii])] = 1
@@ -259,27 +259,23 @@ def dfs():
 
 
 def bfs():
-    temp = 0
     global cord, cord_edge, cord_edge2, ovals, edges
     visited = [False] * len(ovals)
-    temp += 1
 
     def bfs_rec(vert):
         visited[vert] = True
         for u, val in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec(u)
-                temp = val
-                temp += 1
+  
 
 
     matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
     for index, value in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
-        temp = value
+ 
 
-    temp += 1
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
