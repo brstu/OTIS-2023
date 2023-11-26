@@ -217,7 +217,6 @@ def incidence_matrix():
     inc_matrix = tk.Tk()
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("150x150")
-    global edges
     matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
     for index in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
@@ -233,7 +232,7 @@ def incidence_matrix():
 
 
 def dfs():
-    global ovals, edges
+    global edges
     visited = [False] * len(ovals)
 
     def dfs_rec(vert):
@@ -257,7 +256,7 @@ def dfs():
         messagebox.showinfo("DFS", "Graph is not connected")
 
 def bfs():
-    global cord_edge2, ovals, edges
+    global ovals, edges
     visited = [False] * len(ovals)
 
     def bfs_rec(vert):
@@ -280,9 +279,7 @@ def bfs():
     else:
         messagebox.showinfo("BFS", "Graph is not connected")
 
-root = tk.Tk()
-
-
+root = tk.Tk() 
 root.title("Graph")
 main_label = tk.Label(root, text="Выберите действие")
 main_label.pack(side=tk.BOTTOM)
