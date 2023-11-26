@@ -6,10 +6,7 @@ tk = Tk()  # Создание окна
 tk.title("Graph")  # Заголовок окна
 tk.geometry("890x860+410+10")  # Размер окна и его расположение
 tk.resizable(False, False)  # Запрет на изменение размера окна
-# tk.state('zoomed') #Развернуть окно на весь экран
-# tk.overrideredirect(True)  # убирает рамку окна и запрещает его изменять размер
 tk.wm_attributes('-topmost', 1)  # Окно всегда сверху
-# tk.update()
 
 canvas = Canvas(tk, bg="#888", width=886, height=726)  # Создание холста
 
@@ -92,7 +89,6 @@ def on_wasd(event):
     y_click = event.y
 
 
-# function create matrix adjacency from list of edges and print it in new window tkinter
 def create_matrix_adjacency():
     global vert_name, edges
     matrix_adjacency = [[0 for i in range(vert_name.__len__())] for i in range(vert_name.__len__())]
@@ -110,7 +106,6 @@ def create_matrix_adjacency():
     window.mainloop()
 
 
-# function create matrix incendence from list of edges and print it in new window tkinter
 def create_matrix_incidence_window():
     global vert_name, edges
     matrix = [[0 for i in range(len(edges))] for i in range(len(vert_name))]
@@ -160,7 +155,6 @@ def move_vertex2():
     canvas.bind("<Button-1>", select_vertex)
 
 
-# function select vertex with mouse click
 def select_vertex(event):
     global x_click, y_click, sel_vert
     x_click = event.x
