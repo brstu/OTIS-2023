@@ -289,8 +289,11 @@ def shortest_path():
         win.destroy()
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
-    win.mainloop()
-    return enter[0], enter[1]
+    if len(enter) >= 2:
+        return enter[0], enter[1]
+    else:
+        # Создаем исключение, обращаемся к ошибочному случаю или возвращаем специальное значение
+        return None, None
 
 
 def display_props(title, props):
