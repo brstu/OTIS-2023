@@ -5,18 +5,18 @@ from numpy import sqrt
 import networkx as nx
 
 
-# Ýéëåðîâ öèêë
+# Эйлеров цикл
 def e_cycle():
-    display_props("Íàõîæäåíèå ýéëåðîâà öèêëà", nx.algorithms.eulerian_path(graph))
+    display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
 
 
-# ñîçäàíèå öèêëà
+# создание цикла
 def create_circle(x, y, r, **kwargs):
     return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
 
 
-# Ñâÿçûâàþùàÿ
-def ñonnecting_line(x1, y1, x2, y2):
+# Связывающая
+def сonnecting_line(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -25,14 +25,14 @@ def ñonnecting_line(x1, y1, x2, y2):
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
 
-# ñîçäàíèå âåðøèíû
+# создание вершины
 def create_vertex(entry_name, window):
     name = entry_name.get()
     nodes.append(Node(name))
     window.destroy()
 
 
-# Êëàññ ïàðàìåòðîâ âåðøèíû
+# Класс параметров вершины
 class Node:
     def __init__(self, name):
         self.name = name
@@ -54,15 +54,15 @@ class Node:
 
     def change(self):
         win = Tk()
-        win.title("Ðåäàêòèðîâàíèå èìåíè")
+        win.title("Редактирование имени")
         win.geometry("190x120+1050+250")
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
-        label = Label(win, text="Ââåäèòå íîâîå èìÿ")
+        label = Label(win, text="Введите новое имя")
         label.place(x=10, y=10)
         entry = Entry(win, width=10)
         entry.place(x=10, y=40)
-        button = Button(win, text="Èçìåíèòü", command=lambda: self.change_name(entry.get()))
+        button = Button(win, text="Изменить", command=lambda: self.change_name(entry.get()))
         button.place(x=10, y=70)
         win.mainloop()
 
@@ -84,13 +84,13 @@ class Node:
         graph.remove_node(self.name)
 
 
-# Êëàññ ïàðàìåòðîâ ð¸áåð
+# Класс параметров рёбер
 class Edge:
     def __init__(self, node1, node2, weight: int):
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(ñonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
@@ -98,16 +98,16 @@ class Edge:
 
     def change(self):
         win = Tk()
-        win.title("Ðåäàêòèðîâàíèå âåñà ðåáðà")
+        win.title("Редактирование веса ребра")
         win.geometry("190x120+1050+250")
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
-        label = Label(win, text="Ââåäèòå íîâûé âåñ")
+        label = Label(win, text="Введите новый вес")
         label.place(x=10, y=10)
         entry = Entry(win, width=10)
         entry.place(x=10, y=40)
         print(5)
-        button = Button(win, text="Èçìåíèòü", command=lambda: self.change_weight(entry.get()))
+        button = Button(win, text="Изменить", command=lambda: self.change_weight(entry.get()))
         button.place(x=10, y=70)
         win.mainloop()
 
@@ -121,7 +121,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, ñonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
@@ -130,7 +130,7 @@ class Edge:
         graph.remove_edge(self.node1.name, self.node2.name)
 
 
-# èçìåíåíèå öâåòà
+# изменение цвета
 def chose_color(color_lable):
     global color_vertex
     rgb, hx = askcolor()
@@ -139,18 +139,18 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 
 
-# äîáàâëåíèÿ âåðøèí
+# добавления вершин
 def menu_add_vertex():
     global color_vertex
     add_window = Tk()
-    add_window.title("Äîáàâëåíèå âåðøèíû")
+    add_window.title("Добавление вершины")
     add_window.geometry("190x120+1050+250")
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
-    label = Label(add_window, text="Ââåäèòå èìÿ âåðøèíû")
+    label = Label(add_window, text="Введите имя вершины")
     entry_name = Entry(add_window)
-    add_button = Button(add_window, text="Âûáðàòü öâåò", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Äîáàâèòü âåðøèíó", command=lambda: create_vertex(entry_name, add_window))
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
+    color_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_name, add_window))
     color_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_name.grid(row=1, column=0, sticky="ewns")
@@ -160,12 +160,12 @@ def menu_add_vertex():
     add_window.mainloop()
 
 
-# ñîçäàíèå ðåáðà
+# создание ребра
 def create_edge(entry_weight, entry_node1, entry_node2, window):
     try:
         weight = int(entry_weight.get())
     except ValueError:
-        messagebox.showerror("Îøèáêà", "Âåñ ðåáðà äîëæåí áûòü ÷èñëîì")
+        messagebox.showerror("Ошибка", "Вес ребра должен быть числом")
     else:
         node1 = entry_node1.get()
         node2 = entry_node2.get()
@@ -178,21 +178,21 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
         window.destroy()
 
 
-# ìåíþ äîáàâëåíèÿ ðåáåð
+# меню добавления ребер
 def menu_add_edge():
     add_window = Tk()
-    add_window.title("Äîáàâëåíèå ðåáðà")
+    add_window.title("Добавление ребра")
     add_window.geometry("220x220+1050+250")
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
-    label = Label(add_window, text="Ñòàðòîâàÿ âåðøèíà")
-    entry_node1 = Entry(add_window, text="Ñòàðòîâàÿ âåðøèíà")
-    label2 = Label(add_window, text="Êîíå÷íàÿ âåðøèíà")
-    entry_node2 = Entry(add_window, text="Êîíå÷íàÿ âåðøèíà")
-    label3 = Label(add_window, text="Âåñ ðåáðà")
+    label = Label(add_window, text="Стартовая вершина")
+    entry_node1 = Entry(add_window, text="Стартовая вершина")
+    label2 = Label(add_window, text="Конечная вершина")
+    entry_node2 = Entry(add_window, text="Конечная вершина")
+    label3 = Label(add_window, text="Вес ребра")
     entry_weight = Entry(add_window)
-    add_button = Button(add_window, text="Âûáðàòü öâåò", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Äîáàâèòü ðåáðî",
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
+    color_button = Button(add_window, text="Добавить ребро",
                           command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
     color_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
@@ -270,24 +270,24 @@ def delete(event):
 def shortest_path():
     enter = []
     win = Tk()
-    win.title("Âûáîð âåðøèí")
+    win.title("Выбор вершин")
     win.geometry("200x120+1050+250")
     win.resizable(False, False)
-    label = Label(win, text="Âûáåðèòå ïåðâóþ âåðøèíó")
+    label = Label(win, text="Выберите первую вершину")
     label.grid(row=0, column=0, sticky="ew")
     entry1 = Entry(win)
     entry1.grid(row=1, column=0, sticky="ewns")
-    label2 = Label(win, text="Âûáåðèòå âòîðóþ âåðøèíó")
+    label2 = Label(win, text="Выберите вторую вершину")
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
-    button = Button(win, text="Âûáðàòü", command=lambda: func(enter, win))
+    button = Button(win, text="Выбрать", command=lambda: func(enter, win))
     button.grid(row=4, column=0, sticky="ewns")
 
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
-        display_props("Êðàò÷àéøèé ïóòü", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     win.mainloop()
     return enter[0], enter[1]
@@ -305,27 +305,27 @@ def display_props(title, props):
     win.mainloop()
 
 
-nodes = []  # Ñïèñîê âåðøèí
-edges = []  # Ñïèñîê ðåáåð
+nodes = []  # Список вершин
+edges = []  # Список ребер
 color_vertex = "azure2"
-graph = nx.Graph()  # Ãðàô
+graph = nx.Graph()  # Граф
 root = Tk()
-root.title("Ãðàôîâûé ðåäàêòîð")
-lbl1 = Label(root, text="Äëÿ óäàëåíèÿ ýëåìåíòà êëèêíèòå äâàæäû", font=("Arial Bold", 10))
-lbl2 = Label(root, text="Äëÿ èçìåíåíèÿ ïàðàìåòðîâ ýëåìåíòà êëèêíèòå ëåâîé êíîïêîé ìûøè", font=("Arial Bold", 10))
-lbl3 = Label(root, text="Äëÿ èçìåíåíèÿ öâåòà êëèêíèòå ïðàâîé êíîïêîé ìûøè", font=("Arial Bold", 10))
+root.title("Графовый редактор")
+lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=("Arial Bold", 10))
+lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=("Arial Bold", 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("Arial Bold", 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
 root.geometry("900x900")
 canvas = Canvas(root, width=700, height=900, bg="lavender")
 canvas.place(x=600, y=0)
-# ãëàâíîå ìåíþ
-button1 = Button(root, text="Íîâàÿ âåðøèíà", anchor="w", command=menu_add_vertex, font=("Courier", 12), bg="thistle2")
-button2 = Button(root, text="Ñîçäàòü ðåáðî", anchor="w", command=menu_add_edge, font=("Courier", 12), bg="light cyan")
-button3 = Button(root, text="Íàõîæäåíèå êðàò÷àéøèé ïóòü", anchor="w", command=e_cycle, font=("Courier", 12),
+# главное меню
+button1 = Button(root, text="Новая вершина", anchor="w", command=menu_add_vertex, font=("Courier", 12), bg="thistle2")
+button2 = Button(root, text="Создать ребро", anchor="w", command=menu_add_edge, font=("Courier", 12), bg="light cyan")
+button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=e_cycle, font=("Courier", 12),
                  bg="light blue")
-button4 = Button(root, text="Ïîñòðîåíèå ýéëåðîâà öèêë", anchor="w", command=shortest_path, font=("Courier", 12),
+button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=shortest_path, font=("Courier", 12),
                  bg="MistyRose2")
 button1.grid(row=0, column=0, stick="ew")
 button2.grid(row=1, column=0, stick="ew")
