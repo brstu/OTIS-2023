@@ -37,7 +37,7 @@ class Node:
     def __init__(self, name):
         self.name = name
         
-       seed_value = 42
+        seed_value = 42
 
 # Create a random generator with the seed
 rng = np.random.default_rng(seed_value)
