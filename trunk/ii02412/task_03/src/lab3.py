@@ -66,10 +66,6 @@ def change_edge_color():
     canvas.bind("<Button-1>", edge_colour)
 
 
-# def check_edge():
-#    canvas.unbind("<Button-1>")
-#    canvas.bind("<Button-1>", check_edge_canvas)
-
 
 # функция для удаления вершин или ребер
 def delete_canvas(event):
@@ -212,10 +208,6 @@ def adjacency_matrix():
         adj_matrix_label.grid(row=k, column=0)
         i3 += 1
         print(i3)
-    # for i3 in range(len(matrix)):
-    #    adj_matrix_label = tk.Label(adj_matrix, text=str(matrix[i3]))
-    #    adj_matrix_label.grid(row=k, column=0)
-    #    k += 1
 
 
 def incidence_matrix():
@@ -286,10 +278,7 @@ def bfs():
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
         temp = value
-    # for index in range(len(cord_edge['id_vertex1'])):
-    #    matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
-    #    matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].
-    #    index(cord_edge['id_vertex1'][index])] = 1
+
     temp += 1
     count = 0
     for v in range(len(ovals)):
@@ -302,7 +291,7 @@ def bfs():
         messagebox.showinfo("BFS", "Graph is not connected")
 
 
-# main
+
 root = tk.Tk()
 root.title("Graph")
 main_label = tk.Label(root, text="Выберите действие")
@@ -350,9 +339,6 @@ algmenu.add_command(label="Вывести матрицу инцидентнос�
 algmenu.add_command(label="Поиск в глубину", command=dfs)
 algmenu.add_command(label="Поиск в ширину", command=bfs)
 
-# testmenu = Menu(menubar, tearoff=0)
-# menubar.add_cascade(label="Тест", menu=testmenu)
-# testmenu.add_command(label="Проверить массив", command=edge_click)
 
 
 root.mainloop()
