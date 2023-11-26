@@ -141,7 +141,6 @@ def chose_color(color_lable):
 
 # добавления вершин
 def menu_add_vertex():
-    global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry("190x120+1050+250")
