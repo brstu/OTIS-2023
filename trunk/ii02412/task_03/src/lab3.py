@@ -6,33 +6,33 @@ import tkinter.colorchooser as colorchooser
 click_num = 0
 id_of_edge = 0
 
-
+BUTTON_1 = "<Button-1>"
 # функция для рисования вершины
 def draw_vertex():
     main_label.configure(text="Вы выбрали рисование вершин, нажмите на свободное место для рисования вершины")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas1)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, draw_canvas1)
 
 
 # функция для рисования ребра
 def draw_edge():
     main_label.configure(text="Вы выбрали рисование ребер, нажмите на вершину для рисования ребра")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas2)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, draw_canvas2)
 
 
 # функция для удаления вершины
 def delete_vertex():
     main_label.configure(text="Вы выбрали удаление вершины или ребра, нажмите на вершину или ребро для удаления")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", delete_canvas)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, delete_canvas)
 
 
 # функция для переименования вершины
 def rename_vertex():
     main_label.configure(text="Вы выбрали переименование вершины, нажмите на вершину для переименования")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", rename)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, rename)
 
 
 # функция для проверки массива
@@ -48,22 +48,22 @@ def edge_click():
 # функция для изменения цвета вершины
 def change_color():
     main_label.configure(text="Вы выбрали изменение цвета вершины, нажмите на вершину для изменения её цвета")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", colour)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, colour)
 
 
 # функция для изменения цвета текста
 def change_text_color():
     main_label.configure(text="Вы выбрали изменение цвета текста, нажмите на вершину для изменения цвета её текста")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", text_colour)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, text_colour)
 
 
 # функция для изменения цвета ребер
 def change_edge_color():
     main_label.configure(text="Вы выбрали изменение цвета ребер, нажмите на ребро для изменения его цвета")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", edge_colour)
+    canvas.unbind(BUTTON_1)
+    canvas.bind(BUTTON_1, edge_colour)
 
 
 
