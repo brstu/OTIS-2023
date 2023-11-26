@@ -236,7 +236,6 @@ def shortest_path():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
-    return enter[0] if len(enter) > 0 else None, enter[1] if len(enter) > 1 else None
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
@@ -245,7 +244,7 @@ def shortest_path():
     button = Button(win, text="Выбрать", command=lambda: func(enter, win))
     button.grid(row=4, column=0, sticky="ewns")
     win.mainloop()
-    return enter[0], enter[1]
+    return enter[0] if len(enter) > 0 else None, enter[1] if len(enter) > 1 else None
 
 def display_props(title, props):
     win = Tk()
