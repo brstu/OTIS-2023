@@ -65,6 +65,7 @@ def create_circle(x, y, r, **kwargs):
     return canvas.create_oval(x-r, y-r, x+r, y+r, **kwargs)
 #класс ребер
 class Edge:
+    color_vertex = "#FFFFFF"
     def __init__(self, node1, node2, weight: int):
         self.weight = weight
         self.node1 = node1
@@ -112,7 +113,7 @@ def chose_color(color_lable):
     print(rgb)
     color_vertex = hx
     color_lable.config(bg=color_vertex)
-    color_vertex = "#123456"
+
 #меню добавления вершин
 def menu_add_vertex():
     global color_vertex
