@@ -1,20 +1,20 @@
-//---------------------------------------------------------------------------
+
 #include <vcl.h>
 #pragma hdrstop
 #include <vector>
 #include "Unit6.h"
 #include "Unit3.h"
 #include "Unit1.h"
-//---------------------------------------------------------------------------
+
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm6 *Form6;
-//---------------------------------------------------------------------------
+
 __fastcall TForm6::TForm6(TComponent* Owner)
 	: TForm(Owner)
 {
 }
-//---------------------------------------------------------------------------
+
 void __fastcall TForm6::OK_V_Button1Click(TObject *Sender)
 {
 	int red = StrToInt(Form6->Vertex_Red_Edit2->Text);
@@ -50,5 +50,5 @@ void __fastcall TForm6::OK_V_Button1Click(TObject *Sender)
 	Vertex_Blue_Edit4->Text = "0";
 	Hide();
 }
-//---------------------------------------------------------------------------
+
 

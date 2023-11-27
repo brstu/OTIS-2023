@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 480
-  ClientWidth = 573
+  ClientHeight = 479
+  ClientWidth = 579
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object Form1: TForm1
   object PaintBox1: TPaintBox
     Left = 0
     Top = 105
-    Width = 573
-    Height = 375
+    Width = 579
+    Height = 374
     Align = alClient
     Color = clBtnFace
     ParentColor = False
@@ -28,10 +28,11 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 573
+    Width = 579
     Height = 105
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 565
     object DeleteEdge: TButton
       Left = 6
       Top = 57

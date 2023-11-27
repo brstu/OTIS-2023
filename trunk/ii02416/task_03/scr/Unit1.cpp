@@ -22,10 +22,6 @@ TForm1 *Form1;
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
-//	Constraints->MaxHeight = 700;
-//	Constraints->MinHeight = 700;
-//	Constraints->MaxWidth = 700;
-//	Constraints->MinWidth = 700;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::PaintBox1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
@@ -235,7 +231,6 @@ void __fastcall TForm1::InfoGraphClick(TObject *Sender)
 	for (int row = 0; row < Form4->StringGrid1->RowCount; row++) {
 		Form4->StringGrid1->RowHeights[row] = rowHeight;
 	}
-
 
 	int colCount2 = 0;
 
