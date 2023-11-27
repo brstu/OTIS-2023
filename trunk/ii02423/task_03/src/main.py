@@ -5,7 +5,6 @@ from numpy import sqrt
 import networkx as nx
 import numpy as np
 
-color_vertex = "#ffffff"
 WIN_GEOMETRY = "190x120+1050+250"
 
 # Функция для нахождения точек пересечения линии и кругов
@@ -19,8 +18,9 @@ def line_intersect_circle(x1, y1, x2, y2):
 #класс создания вершин
 class Node:
     def __init__(self, name):
+        seed_value = 42
         self.name = name
-        generator = np.random.default_rng()
+        generator = np.random.default_rng(seed=seed_value)
         self.x = generator.integers(0, 636)
         self.y = generator.integers(0, 596)
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
@@ -114,6 +114,7 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
+    color_vertex = "#ffffff"
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
