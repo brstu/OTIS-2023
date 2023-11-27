@@ -4,7 +4,7 @@ from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
 
-
+n = "190x120+1050+250"
 # Эйлеров цикл
 def e_cycle():
     display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
@@ -55,7 +55,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Редактирование имени")
-        win.geometry("190x120+1050+250")
+        win.geometry(n)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -99,7 +99,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Редактирование веса ребра")
-        win.geometry("190x120+1050+250")
+        win.geometry(n)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -144,7 +144,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry(n)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
@@ -290,7 +290,7 @@ def shortest_path():
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     win.mainloop()
-    return enter[0], enter[1]
+    return enter[1], enter[2]
 
 
 def display_props(title, props):
@@ -304,16 +304,16 @@ def display_props(title, props):
     label.pack()
     win.mainloop()
 
-
+m = "Arial Bold"
 nodes = []  # Список вершин
 edges = []  # Список ребер
 color_vertex = "azure2"
 graph = nx.Graph()  # Граф
 root = Tk()
 root.title("Графовый редактор")
-lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=("Arial Bold", 10))
-lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=("Arial Bold", 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("Arial Bold", 10))
+lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(m, 10))
+lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(m, 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(m, 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
