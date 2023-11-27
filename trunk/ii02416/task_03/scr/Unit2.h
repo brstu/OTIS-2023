@@ -10,15 +10,14 @@
 //---------------------------------------------------------------------------
 class TForm2 : public TForm
 {
-__published:	// IDE-managed Components
+__published:
 	TLabel *To;
 	TEdit *To_Edit1;
 	TButton *OK1;
 	TLabel *Weight;
 	TEdit *Weight_Edit2;
 	void __fastcall OK1Click(TObject *Sender);
-private:	// User declarations
-public:		// User declarations
+public:
 	__fastcall TForm2(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
