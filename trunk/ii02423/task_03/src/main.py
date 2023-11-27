@@ -3,7 +3,9 @@ from tkinter import messagebox, Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
 from numpy import sqrt
 import networkx as nx
+import numpy as np
 
+color_vertex = "#ffffff"
 WIN_GEOMETRY = "190x120+1050+250"
 
 # Функция для нахождения точек пересечения линии и кругов
@@ -235,6 +237,7 @@ def shortest_path():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
+
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
