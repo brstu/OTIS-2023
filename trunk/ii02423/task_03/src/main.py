@@ -1,7 +1,6 @@
 # Подключение библиотек
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk, Menu
 from tkinter.colorchooser import askcolor
-from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
 
@@ -113,7 +112,7 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 #меню добавления вершин
 def menu_add_vertex():
-    global color_vertex
+    color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(WIN_GEOMETRY)  # Используйте здесь константу
