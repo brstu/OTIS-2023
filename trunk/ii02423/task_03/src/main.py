@@ -112,9 +112,9 @@ def chose_color(color_lable):
     print(rgb)
     color_vertex = hx
     color_lable.config(bg=color_vertex)
+    color_vertex = "#123456"
 #меню добавления вершин
 def menu_add_vertex():
-    color_vertex = "#ffffff"
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
