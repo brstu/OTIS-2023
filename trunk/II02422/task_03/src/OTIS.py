@@ -1,6 +1,6 @@
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
 from tkinter.colorchooser import askcolor
-from numpy.random import randint
+import numpy
 from numpy import sqrt
 import networkx as nx
 
@@ -16,7 +16,7 @@ def create_circle(x, y, r, **kwargs):
 
 
 # Связывающая
-def сonnecting_line(x1, y1, x2, y2):
+def сonnectline(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -36,8 +36,8 @@ def create_vertex(entry_name, window):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 700)
-        self.y = randint(0, 600)
+        self.x = numpy.random.Generator(0, 700)
+        self.y = numpy.random.Generator(0, 600)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -90,7 +90,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(сonnectline(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
@@ -121,7 +121,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, сonnectline(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
