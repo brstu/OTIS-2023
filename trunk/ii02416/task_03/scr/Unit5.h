@@ -1,17 +1,16 @@
+//---------------------------------------------------------------------------
+
 #ifndef Unit5H
 #define Unit5H
-
+//---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
-
+//---------------------------------------------------------------------------
 class TForm5 : public TForm
 {
-public:
-	__fastcall TForm5(TComponent* Owner);
-private:
-__published:
+__published:	// IDE-managed Components
 	TLabel *Weight_E;
 	TEdit *Weight_E_Edit1;
 	TLabel *Red_E_Label2;
@@ -22,7 +21,11 @@ __published:
 	TEdit *Blue_E_Edit4;
 	TButton *OK_E;
 	void __fastcall OK_EClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TForm5(TComponent* Owner);
 };
-
+//---------------------------------------------------------------------------
 extern PACKAGE TForm5 *Form5;
+//---------------------------------------------------------------------------
 #endif
