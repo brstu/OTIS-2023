@@ -16,7 +16,7 @@ def create_circle(x, y, r, **kwargs):
 
 
 # Связывающая
-def сonnectline(x1, y1, x2, y2):
+def line_connect(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -90,7 +90,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnectline(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(line_connect(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
@@ -121,7 +121,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, сonnectline(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, line_connect(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
