@@ -6,11 +6,11 @@
 <p align="center">Лабораторная работа №1</p>
 <p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
 <p align="center">Тема: “Моделирования температуры объекта”</p>
-<br><br><br><br><br>
+<br><br><br><br><br><br>
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
-<p align="right">Швороб В.А.</p>
+<p align="right">Швороб В. А.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
