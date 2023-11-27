@@ -232,7 +232,6 @@ def incidence_matrix():
 
 
 def dfs():
-    global edges
     visited = [False] * len(ovals)
 
     def dfs_rec(vert):
@@ -256,7 +255,6 @@ def dfs():
         messagebox.showinfo("DFS", "Graph is not connected")
 
 def bfs():
-    global ovals, edges
     visited = [False] * len(ovals)
 
     def bfs_rec(vert):
@@ -280,6 +278,8 @@ def bfs():
         messagebox.showinfo("BFS", "Graph is not connected")
 
 root  =  tk.Tk()
+
+
 root.title("Graph")
 main_label = tk.Label(root, text="Выберите действие")
 main_label.pack(side=tk.BOTTOM)
