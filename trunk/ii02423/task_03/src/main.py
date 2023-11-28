@@ -261,8 +261,7 @@ def eulerian_cycle():
 
 
 nodes = []  # Список имен вершин
-edges = []  # Список ребер
-global color_vertex
+edges = []  # Список ребер !!!
 graph = nx.Graph()  # Граф
 
 root = Tk()
