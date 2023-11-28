@@ -108,7 +108,7 @@ def create_vertex(entry_name, window):
     window.destroy()
 #выбор цвета
 def chose_color(color_lable):
-    global color_vertex
+    color_vertex
     rgb, hx= askcolor()
     print(rgb)
     color_vertex = hx
@@ -116,7 +116,7 @@ def chose_color(color_lable):
 
 #меню добавления вершин
 def menu_add_vertex():
-    global color_vertex
+    color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(WIN_GEOMETRY)  # Используйте здесь константу
