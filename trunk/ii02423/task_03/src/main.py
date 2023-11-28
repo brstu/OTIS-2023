@@ -6,7 +6,6 @@ import networkx as nx
 import numpy as np
 
 WIN_GEOMETRY = "190x120+1050+250"
-color_vertex = hx
 
 # Функция для нахождения точек пересечения линии и кругов
 def line_intersect_circle(x1, y1, x2, y2):
@@ -111,7 +110,7 @@ def chose_color(color_lable):
     global color_vertex
     rgb, hx= askcolor()
     print(rgb)
-
+    color_vertex = hx
     color_lable.config(bg=color_vertex)
 
 #меню добавления вершин
