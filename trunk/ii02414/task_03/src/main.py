@@ -5,34 +5,38 @@ import tkinter.colorchooser as colorchooser
 
 click_num = 0
 id_of_edge = 0
+button1 = "<Button-1>"
+numVertex = numVertex
+idText = "id text"
+textVertex = "text on vertex"
 
 
 # функция для рисования вершины
 def draw_vertex():
     main_label.configure(text="You have chosen to draw vertices, click on the free space to draw the vertex")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas1)
+    canvas.unbind(button1)
+    canvas.bind(button1, draw_canvas1)
 
 
 # функция для рисования ребра
 def draw_edge():
     main_label.configure(text="You have chosen to draw edges, click on the vertex to draw the edge")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas2)
+    canvas.unbind(button1)
+    canvas.bind(button1, draw_canvas2)
 
 
 # функция для удаления вершины
 def delete_vertex():
     main_label.configure(text="You have chosen to delete a vertex or edge, click on the vertex or edge to delete")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", delete_canvas)
+    canvas.unbind(button1)
+    canvas.bind(button1, delete_canvas)
 
 
 # функция для переименования вершины
 def rename_vertex():
     main_label.configure(text="You have chosen to rename a vertex, click on the vertex to rename it")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", rename)
+    canvas.unbind(button1)
+    canvas.bind(button1, rename)
 
 
 # функция для проверки массива
@@ -48,22 +52,22 @@ def edge_click():
 # функция для изменения цвета вершины
 def change_color():
     main_label.configure(text="You have chosen to change the color of the vertex, click on the vertex to change its color")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", colour)
+    canvas.unbind(button1)
+    canvas.bind(button1, colour)
 
 
 # функция для изменения цвета текста
 def change_text_color():
     main_label.configure(text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", text_colour)
+    canvas.unbind(button1)
+    canvas.bind(button1, text_colour)
 
 
 # функция для изменения цвета ребер
 def change_edge_color():
     main_label.configure(text="You have chosen to change the color of the edges, click on the edge to change its color")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", edge_colour)
+    canvas.unbind(button1)
+    canvas.bind(button1, edge_colour)
 
 # функция для удаления вершин или ребер
 def delete_canvas(event):
@@ -73,13 +77,13 @@ def delete_canvas(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])  # удаление текста
             ovals.remove(x)  # удаление вершины из массива
             # удаление информации о вершине из словаря
-            cord['num of vertex'].remove(cord['num of vertex'][cord['id'].index(x)])
-            canvas.delete(cord['id text'][cord['id'].index(x)])
+            cord[numVertex].remove(cord[numVertex][cord['id'].index(x)])
+            canvas.delete(cord[idText][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
-            cord['id text'].remove(cord['id text'][cord['id'].index(x)])
+            cord[idText].remove(cord[idText][cord['id'].index(x)])
             cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
-            cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
+            cord[textVertex].remove(cord[textVertex][cord['id'].index(x)])
             cord['id'].remove(x)
             break
     # удаление ребра
@@ -105,8 +109,8 @@ def draw_canvas1(event):
     tag = 'oval' + str(id_text)
     texttag = 'text' + str(id_text)
     # добавление инфы о вершине в словарь
-    cord["num of vertex"].append(id_text)
-    cord['id text'].append(tag)
+    cord[numVertex].append(id_text)
+    cord[idText].append(tag)
     cord["coordinatesX"].append(x)
     cord["coordinatesY"].append(y)
     oval_id = canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill='green', tags=tag)  # создание вершины
@@ -156,7 +160,6 @@ def rename(event):
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
             cord['text on vertex'][cord['id'].index(x)] = new_name
-            # canvas.itemconfig(cord['id text'][cord['id'].index(x)], text=new_name)
             break
 
 
@@ -301,7 +304,7 @@ x1, y1, x2, y2 = 0, 0, 0, 0
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
 # ребро(но с id ребра)
-cord = {'id': [], 'id text': [], 'text on vertex': [], 'textID': [], 'num of vertex': [], 'coordinatesX': [],
+cord = {'id': [], idText: [], 'text on vertex': [], 'textID': [], numVertex: [], 'coordinatesX': [],
         'coordinatesY': []}  # для хранения инфы о вершинах
 tk.Tk.geometry(root, "800x600")
 canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
