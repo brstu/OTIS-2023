@@ -6,6 +6,7 @@ import networkx as nx
 import numpy as np
 
 WIN_GEOMETRY = "190x120+1050+250"
+color_vertex = "#FFFFFF"
 
 # Функция для нахождения точек пересечения линии и кругов
 def line_intersect_circle(x1, y1, x2, y2):
@@ -65,7 +66,6 @@ def create_circle(x, y, r, **kwargs):
     return canvas.create_oval(x-r, y-r, x+r, y+r, **kwargs)
 #класс ребер
 class Edge:
-    color_vertex = "#FFFFFF"
     def __init__(self, node1, node2, weight: int):
         self.weight = weight
         self.node1 = node1
