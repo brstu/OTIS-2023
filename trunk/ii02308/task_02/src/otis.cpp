@@ -12,13 +12,13 @@ struct PID {
 
     double u0 = 0;
     double u1 = 0;
-
-    void next_val(double& x0, double& x1, double next) {
+    
+    const void next_val(double& x0, double& x1, double next) {
         x0 = x1;
         x1 = next;
     }
 
-    void next_val1(double& x0, double& x1, double& x2, double next) {
+    const void next_val1(double& x0, double& x1, double& x2, double next) {
         x0 = x1;
         x1 = x2;
         x2 = next;
@@ -29,20 +29,25 @@ struct PID {
     double TD = 1.01;
     double T0 = 1.34;
 
-    double funk0() {
+    const double funk0() {
         return K * (1 + TD / T0);
     }
 
-    double funk1() {
+    const double funk1() {
         return -K * (1 + 2 * TD / T0 - T0 / T);
     }
 
-    double funk2() {
+    const double funk2() {
         return K * TD / T0;
     }
 
     void function_cout(double val_y1, double val_y0) {
-        double A = 0.5, B = 0.5, C = 0.35, D = 1.1, U = 4.1, W = 30;
+        double A = 0.5;
+        double B = 0.5;
+        double C = 0.35;
+        double D = 1.1;
+        double U = 4.1;
+        double W = 30;
         int i = 0;
         y0 = val_y0;
         y1 = val_y1;
