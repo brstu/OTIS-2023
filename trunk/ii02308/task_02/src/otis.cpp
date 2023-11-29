@@ -46,7 +46,6 @@ struct PID {
         double B = 0.5;
         double C = 0.35;
         double D = 1.1;
-        double U;
         double W = 30;
         int i = 0;
         y0 = val_y0;
@@ -62,7 +61,7 @@ struct PID {
         while (std::abs(W - y1) > 0.01) {
             std::cout << i << " " << std::fixed << std::setprecision(4) << e2 << std::setw(20);
             next_val1(e0, e1, e2, W - y1);
-            U = u1 + funk0() * e2 + funk1() * e1 + funk2() * e0;
+            double U = u1 + funk0() * e2 + funk1() * e1 + funk2() * e0;
             double next = A * y1 - B * y0 + C * U + D * std::sin(u1);
             std::cout << i << " " << next << std::setw(20);
             next_val(y0, y1, next);
