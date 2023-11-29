@@ -31,9 +31,10 @@ class Node:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
     def change(self):
+        MY_CONSTANT = "190x120+1050+250"
         win = Tk()
         win.title("Изменение имени")
-        win.geometry("190x120+1050+250")
+        win.geometry(MY_CONSTANT)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -70,7 +71,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Изменение веса")
-        win.geometry("190x120+1050+250")
+        win.geometry(MY_CONSTANT)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -112,7 +113,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry(MY_CONSTANT)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
