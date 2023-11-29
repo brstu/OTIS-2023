@@ -3,11 +3,11 @@
 
 using namespace std;
 
-double a = 0.5;
-double b = 1;
-double c = 0.15;
-double d = 0.3;
-double u = 1.2;
+const double a = 0.5;
+const double b = 1;
+const double c = 0.15;
+const double d = 0.3;
+const double u = 1.2;
 
 void liner(double& y1) {
   y1 = a * y1 + b * u;
@@ -30,7 +30,9 @@ void unliner(double& y2, double& y_prev, bool& second_iteration) {
 }
 
 int main() {
-  double y1, y2, y_prev;
+  double y1;
+  double y2;
+  double y_prev;
   bool second_iteration = true;
   cout << "Введите температуру: ";
   cin >> y1;
