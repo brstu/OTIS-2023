@@ -46,6 +46,7 @@ struct PID {
         double B = 0.5;
         double C = 0.35;
         double D = 1.1;
+        double U = 4.1;
         double W = 30;
         int i = 0;
         y0 = val_y0;
