@@ -5,6 +5,7 @@ from numpy import sqrt
 import networkx as nx
 
 n = "190x120+1050+250"
+m = "Arial Bold"
 # Эйлеров цикл
 def e_cycle():
     display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
@@ -141,7 +142,6 @@ def chose_color(color_lable):
 
 # добавления вершин
 def menu_add_vertex():
-    global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(n)
@@ -304,7 +304,6 @@ def display_props(title, props):
     label.pack()
     win.mainloop()
 
-m = "Arial Bold"
 nodes = []  # Список вершин
 edges = []  # Список ребер
 color_vertex = "azure2"
