@@ -12,7 +12,7 @@ struct PID {
 
     double u0 = 0;
     double u1 = 0;
-    
+
     void next_val(double& x0, double& x1, double next) const {
         x0 = x1;
         x1 = next;
@@ -37,7 +37,7 @@ struct PID {
         return -K * (1 + 2 * TD / T0 - T0 / T);
     }
 
-    double funk2() const  {
+    double funk2() const {
         return K * TD / T0;
     }
 
@@ -46,7 +46,7 @@ struct PID {
         double B = 0.5;
         double C = 0.35;
         double D = 1.1;
-        double U = 4.1;
+        double U;
         double W = 30;
         int i = 0;
         y0 = val_y0;
