@@ -26,7 +26,7 @@
 4. Написать отчет по выполненной работе в .md формате (readme.md) и с помощью pull request разместить его в следующем каталоге: trunk\ii0xxyy\task_06\doc.
 
 
-# ЗАПРОС НА ВНЕСЕНИЕ БЗ: https://github.com/savushkin-r-d/T1-PLCnext-Demo-OSTIS/issues/1
+# ЗАПРОС НА ВНЕСЕНИЕ БЗ: https://github.com/savushkin-r-d/T1-PLCnext-Demo-OSTIS/pull/2
 # БАЗА ЗНАНИЙ ДЛЯ "САВУШКИЙ ПРОДУКТ":
 
 1. Определение фактов:
