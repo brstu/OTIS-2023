@@ -1,9 +1,0 @@
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/OTIS333.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/OTIS333_autogen_timestamp_deps.dir
-C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/OTIS333_autogen.dir
