@@ -239,9 +239,16 @@ def shortest_path():
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
-        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+
+        if len(arr) >= 2:
+            display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+        else:
+
+    # Handle the case where 'enter' doesn't have enough elements
+    # You can raise an error, display a message, or handle it in another way
+
     win.mainloop()
-    return enter[0], enter[1]
+    return 2
 def display_props(title, props):
     string = ''
     for prop in props:
