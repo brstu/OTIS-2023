@@ -58,9 +58,9 @@ dialogue web UI - ```localhost:3033```
 # Результат #
 
 sc-web:
-![Результат:](ert.png)
+![Результат:](ert.jpg)
 
 
 dialogue web:
-![Результат:](qwe.png)
-![Результат:](rwert.png)
+![Результат:](qwe.jpg)
+![Результат:](rwert.jpg)
