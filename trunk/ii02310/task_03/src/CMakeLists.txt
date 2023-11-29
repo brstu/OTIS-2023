@@ -8,8 +8,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(QT_DIR "C:/Qt/6.6.0/mingw_64/lib/cmake/Qt6")
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+set(QT6_DIR "C:/Qt/6.6.0/mingw_64/lib/cmake/Qt6")
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
