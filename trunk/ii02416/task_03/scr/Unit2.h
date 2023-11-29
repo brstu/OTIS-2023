@@ -1,6 +1,5 @@
 #ifndef Unit2H
 #define Unit2H
-
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
@@ -15,7 +14,7 @@ __published:
 	TLabel *Weight;
 	TEdit *Weight_Edit2;
 	void __fastcall OK1Click(TObject *Sender);
-private:
+//private:
 public:
 	__fastcall TForm2(TComponent* Owner);
 };

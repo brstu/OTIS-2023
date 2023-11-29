@@ -1,8 +1,8 @@
-//---------------------------------------------------------------------------
+ 
 
 #ifndef Unit1H
 #define Unit1H
-//---------------------------------------------------------------------------
+ 
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
@@ -11,10 +11,13 @@
 #include <Vcl.Menus.hpp>
 #include <Vcl.Dialogs.hpp>
 #include <Vcl.ExtDlgs.hpp>
-//---------------------------------------------------------------------------
+ 
 class TForm1 : public TForm
 {
-__published:	// IDE-managed Components
+private:	
+public:		
+	__fastcall TForm1(TComponent* Owner);
+__published:	
 	TPaintBox *PaintBox1;
 	TPanel *Panel1;
 	TButton *AddEdge;
@@ -38,11 +41,8 @@ __published:	// IDE-managed Components
 	void __fastcall DistanceClick(TObject *Sender);
 	void __fastcall ImportClick(TObject *Sender);
 	void __fastcall ExportClick(TObject *Sender);
-private:	// User declarations
-public:		// User declarations
-	__fastcall TForm1(TComponent* Owner);
 };
-//---------------------------------------------------------------------------
+ 
 extern PACKAGE TForm1 *Form1;
-//---------------------------------------------------------------------------
+ 
 #endif

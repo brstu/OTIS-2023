@@ -1,4 +1,3 @@
-//---------------------------------------------------------------------------
 #include <vcl.h>
 #pragma hdrstop
 #include "Unit1.h"
@@ -14,16 +13,16 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-//---------------------------------------------------------------------------
+ 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
-//---------------------------------------------------------------------------
+ 
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
 }
-//---------------------------------------------------------------------------
+ 
 void __fastcall TForm1::PaintBox1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
 		  int X, int Y)
 {
@@ -167,31 +166,31 @@ void __fastcall TForm1::PaintBox1MouseDown(TObject *Sender, TMouseButton Button,
 
 }
 
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::AddEdgeClick(TObject *Sender)
 {
 	status = 1;
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::DeleteEdgeClick(TObject *Sender)
 {
 	status = 2;
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::EditVertexClick(TObject *Sender)
 {
 	status = 3;
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::EditEdgeClick(TObject *Sender)
 {
 	status = 4;
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::InfoGraphClick(TObject *Sender)
 {
@@ -315,13 +314,13 @@ void __fastcall TForm1::InfoGraphClick(TObject *Sender)
 	Form4->Full_Edit4->Text = full;
 	Form4->Show();
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::DistanceClick(TObject *Sender)
 {
    Form7->Show();
 }
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::ImportClick(TObject *Sender)
 {
@@ -389,7 +388,7 @@ void __fastcall TForm1::ImportClick(TObject *Sender)
 	}
 }
 
-//---------------------------------------------------------------------------
+ 
 
 void __fastcall TForm1::ExportClick(TObject *Sender)
 {
