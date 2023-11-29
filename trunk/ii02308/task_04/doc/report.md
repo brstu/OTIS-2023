@@ -1,4 +1,4 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
+ <p align="center"> Министерство образования Республики Беларусь</p>
 <p align="center">Учреждение образования</p>
 <p align="center">“Брестский Государственный технический университет”</p>
 <p align="center">Кафедра ИИТ</p>
@@ -58,13 +58,13 @@ dialogue web UI - ```localhost:3033```
 # Результат #
 
 sc-web - ```localhost:8000```:
-![Результат:](ert.png)
+![Результат:](ert.jpg)
 
 
 dialogue web UI - ```localhost:3033```:
-![Результат:](qwe.png)
-![Результат:](rwert.png)
+![Результат:](qwe.jpg)
+![Результат:](rwert.jpg)
 
 
 Docker Desktop:
-![Результат:](last.png)
+![Результат:](last.jpg)
