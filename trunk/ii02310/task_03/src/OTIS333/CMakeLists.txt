@@ -8,10 +8,6 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-<<<<<<< HEAD:trunk/ii02310/task_03/src/OTIS333/CMakeLists.txt
-=======
-set(CMAKE_PREFIX_PATH "C:/Qt/6.6.0/mingw_64")
->>>>>>> bf5fe57edfe5d92d12b56d69e77d05a7424d5b36:trunk/ii02310/task_03/src/CMakeLists.txt
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
@@ -76,10 +72,6 @@ install(TARGETS OTIS333
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(OTIS333)
 endif()
-<<<<<<< HEAD:trunk/ii02310/task_03/src/OTIS333/CMakeLists.txt
-=======
-
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(OTIS333)
 endif()
->>>>>>> bf5fe57edfe5d92d12b56d69e77d05a7424d5b36:trunk/ii02310/task_03/src/CMakeLists.txt
