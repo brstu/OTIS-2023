@@ -10,9 +10,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(commonOpts CONFIG COMPONENTS Core Widgets)
+set(commonOpts CONFIG COMPONENTS Core Widgets)
 find_package(Qt6 ${commonOpts})
 if(NOT Qt6_FOUND)
     find_package(Qt5 REQUIRED ${commonOpts})
+endif()
 
 
 set(PROJECT_SOURCES
