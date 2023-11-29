@@ -73,3 +73,7 @@ install(TARGETS OTIS333
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(OTIS333)
 endif()
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(OTIS333)
+endif()
