@@ -1,0 +1,17 @@
+# ninja log v5
+1290	6131	7229025055369992	CMakeFiles/OTIS333.dir/mainwindow.cpp.obj	7931e23e8923e93a
+5	161	7229029493122639	OTIS333_autogen/timestamp	3c4bb20ae3a2b829
+5	161	7229029493122639	OTIS333_autogen/mocs_compilation.cpp	3c4bb20ae3a2b829
+5	161	7229029493122639	C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/OTIS333_autogen/timestamp	3c4bb20ae3a2b829
+195	301	7229027792864966	CMakeFiles/OTIS333.dir/OTIS333_autogen/mocs_compilation.cpp.obj	b978069746c10162
+5	161	7229029493122639	C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/OTIS333_autogen/mocs_compilation.cpp	3c4bb20ae3a2b829
+1400	5413	7229025967815803	CMakeFiles/OTIS333.dir/main.cpp.obj	83d6f26666477e53
+6248	6661	7229011902454999	OTIS333.exe	d4f109a73cd9ddf6
+7	882	7229982087205673	OTIS333_autogen/timestamp	3c4bb20ae3a2b829
+7	882	7229982087205673	OTIS333_autogen/mocs_compilation.cpp	3c4bb20ae3a2b829
+7	882	7229982087205673	C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/OTIS333_autogen/timestamp	3c4bb20ae3a2b829
+7	882	7229982087205673	C:/build-OTIS333-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/OTIS333_autogen/mocs_compilation.cpp	3c4bb20ae3a2b829
+889	3043	7229982110588151	CMakeFiles/OTIS333.dir/OTIS333_autogen/mocs_compilation.cpp.obj	d43da37c38367aeb
+896	3386	7229982114038166	CMakeFiles/OTIS333.dir/main.cpp.obj	c0654a146f0565eb
+903	4832	7229982128478163	CMakeFiles/OTIS333.dir/mainwindow.cpp.obj	183f62d35abe852c
+4833	5429	7229982134389176	OTIS333.exe	d4f109a73cd9ddf6
