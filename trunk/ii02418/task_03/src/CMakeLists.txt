@@ -1,5 +1,5 @@
 project(otis3_1)
 
-set(SOURCES task.cpp)
+set(SOURCES_TASK_03 task.cpp)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(MyExecutable ${SOURCES_TASK_03})
