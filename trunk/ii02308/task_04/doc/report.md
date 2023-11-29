@@ -57,14 +57,10 @@ dialogue web UI - ```localhost:3033```
 
 # Результат #
 
-sc-web - ```localhost:8000```:
+sc-web:
 ![Результат:](ert.png)
 
 
-dialogue web UI - ```localhost:3033```:
+dialogue web:
 ![Результат:](qwe.png)
 ![Результат:](rwert.png)
-
-
-Docker Desktop:
-![Результат:](last.png)
