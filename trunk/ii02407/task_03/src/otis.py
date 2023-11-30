@@ -11,52 +11,51 @@ def ter():
 
 
 # создание цикла
-def circle(x, y, r, **kwargs):
-    return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
+def circle(a, b, c, **kwargs):
+    return canvas.create_oval(a - c, b - c, a + c, b + c, **kwargs)
 
 
 # Связывающая
-def line(x1, y1, x2, y2):
-    connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-    x = x2 - x1
-    y = y2 - y1
-    dx = (connecting - 20) * x / connecting
-    dy = (connecting - 20) * y / connecting
-    return x2 - dx, y2 - dy, x1 + dx, y1 + dy
+def line(a1, b1, a2, b2):
+    con = sqrt((a2 - b1) ** 2 + (b2 - b1) ** 2)
+    a = a2 - a1
+    b = b2 - b1
+    da = (con - 20) * a / con
+    db = (con - 20) * b / con
+    return a2 - da, b2 - db, a1 + da, b1 + db
 
 
 # создание вершины
-def vertex(entry_name, window):
-    name = entry_name.get()
-    nodes.append(Fser(name))
+def vertex(entname, window):
+    names = entname.get()
+    nodes.append(Fser(names))
     window.destroy()
 
 
 # Класс параметров вершины
 class Fser:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, names):
+        self.names = names
 
-        seed_value = 42
+        value = 50
 
         # Create a random generator with the seed
-        rng = np.random.default_rng(seed_value)
+        rng = np.random.default_rng(value)
 
         # Генерируем случайные координаты с помощью генератора
-        self.x = rng.integers(0, 700)
-        self.y = rng.integers(0, 600)
+        self.a = rng.integers(0, 700)
+        self.b = rng.integers(0, 800)
 
-        self.circle = circle(self.x, self.y, 20, fill=color_vertex)
-        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
-        graph.add_node(name)
-
-    def move(self, x, y):
-        self.x = x
-        self.y = y
-        canvas.coords(self.circle, x - 20, y - 20, x + 20, y + 20)
-        canvas.coords(self.text, x, y)
+        self.circle = circle(self.a, self.b, 20, fill=color_vertex)
+        self.text = canvas.create_text(self.a, self.b, anchor='center', text=names, font="Arial 10", fill="black")
+        graph.add_node(names)
+    def move(self, a, b):
+        self.a = a
+        self.b = b
+        canvas.coords(self.circle, a - 20, b - 20, a + 20, b + 20)
+        canvas.coords(self.text, a, b)
         for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
+            if edge.n1 == self or edge.n2 == self:
                 edge.move()
 
     def change(self):
@@ -65,18 +64,18 @@ class Fser:
         win.geometry(okno)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
-        label = Label(win, text="Введите новое имя")
-        label.place(x=10, y=10)
+        lab = Label(win, text="Введите новое имя")
+        lab.place(x=10, y=10)
         entry = Entry(win, width=10)
         entry.place(x=10, y=40)
         button = Button(win, text="Изменить", command=lambda: self.cnames(entry.get()))
         button.place(x=10, y=70)
         win.mainloop()
 
-    def cnames(self, name):
-        graph._adj[name] = graph._adj.pop(self.name)
-        self.name = name
-        canvas.itemconfig(self.text, text=name)
+    def cnames(self, names):
+        graph._adj[names] = graph._adj.pop(self.names)
+        self.names = names
+        canvas.itemconfig(self.text, text=names)
 
     def change_color(self, color):
         canvas.itemconfig(self.circle, fill=color)
@@ -85,21 +84,21 @@ class Fser:
         canvas.delete(self.circle)
         canvas.delete(self.text)
         for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
+            if edge.n1 == self or edge.n2 == self:
                 edge.delete()
                 edges.remove(edge)
-        graph.remove_node(self.name)
+        graph.remove_node(self.names)
 
 
 # Класс параметров рёбер
 class Edge:
-    def __init__(self, node1, node2, weight: int):
+    def __init__(self, n1, n2, weight: int):
         self.weight = weight
-        self.node1 = node1
-        self.node2 = node2
-        self.line = canvas.create_line(line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
-        self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center', text=self.weight, font="Arial 20", fill="white")
-        graph.add_edge(node1.name, node2.name, weight=weight)
+        self.n1 = n1
+        self.n2 = n2
+        self.line = canvas.create_line(line(self.n1.a, self.n1.b, self.n2.a, self.n2.b), width=2, fill="black")
+        self.text = canvas.create_text((n1.a + n2.a) / 2, (n1.b + n2.b) / 2 - 5, anchor='center', text=self.weight, font="Arial 20", fill="white")
+        graph.add_edge(n1.names, n2.names, weight=weight)
 
     def change(self):
         win = Tk()
@@ -107,32 +106,32 @@ class Edge:
         win.geometry(okno)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
-        label = Label(win, text="Введите новый вес")
-        label.place(x=10, y=10)
+        lab = Label(win, text="Введите новый вес")
+        lab.place(a=10, b=10)
         entry = Entry(win, width=10)
-        entry.place(x=10, y=40)
+        entry.place(a=10, b=40)
         print(5)
         button = Button(win, text="Изменить", command=lambda: self.change_weight(entry.get()))
-        button.place(x=10, y=70)
+        button.place(a=10, b=70)
         win.mainloop()
 
     def change_weight(self, weight):
         self.weight = int(weight)
         canvas.itemconfig(self.text, text=weight)
-        graph.remove_edge(self.node1.name, self.node2.name)
-        graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
+        graph.remove_edge(self.n1.names, self.n2.names)
+        graph.add_edge(self.n1.names, self.n2.names, weight=self.weight)
 
     def change_color(self, color):
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
-        canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
+        canvas.coords(self.line, line(self.n1.a, self.n1.b, self.n2.a, self.n2.b))
+        canvas.coords(self.text, (self.n1.a + self.n2.a) / 2, (self.n1.b + self.n2.b) / 2 - 5)
 
     def delete(self):
         canvas.delete(self.line)
         canvas.delete(self.text)
-        graph.remove_edge(self.node1.name, self.node2.name)
+        graph.remove_edge(self.n1.names, self.n2.names)
 
 
 # изменение цвета
@@ -146,121 +145,121 @@ def color(color_lable):
 
 # добавления вершин
 def add_vertex():
-    add_window = Tk()
-    add_window.title("Добавление вершины")
-    add_window.geometry(okno)
-    add_window.wm_attributes('-topmost', 3)
-    add_window.resizable(False, False)
-    label = Label(add_window, text="Введите имя вершины")
-    entry_name = Entry(add_window)
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: color(color_lable))
-    color_button = Button(add_window, text="Добавить вершину", command=lambda: vertex(entry_name, add_window))
-    color_lable = Label(add_window, width=2, bg="white")
-    label.grid(row=0, column=0, sticky="ew")
-    entry_name.grid(row=1, column=0, sticky="ewns")
+    add_windows = Tk()
+    add_windows.title("Добавление вершины")
+    add_windows.geometry(okno)
+    add_windows.wm_attributes('-topmost', 3)
+    add_windows.resizable(False, False)
+    lab = Label(add_windows, text="Введите имя вершины")
+    entnames = Entry(add_windows)
+    add_button = Button(add_windows, text="Выбрать цвет", command=lambda: color(color_lable))
+    color_button = Button(add_windows, text="Добавить вершину", command=lambda: vertex(entnames, add_windows))
+    color_lable = Label(add_windows, width=2, bg="white")
+    lab.grid(row=0, column=0, sticky="ew")
+    entnames.grid(row=1, column=0, sticky="ewns")
     add_button.grid(row=2, column=0, sticky="ewns")
     color_button.grid(row=3, column=0, sticky="ewns")
     color_lable.grid(row=1, column=1)
-    add_window.mainloop()
+    add_windows.mainloop()
 
 
 # создание ребра
-def edge(entry_weight, entry_node1, entry_node2, window):
+def edge(entweight, entn1, entn2, window):
     try:
-        weight = int(entry_weight.get())
+        weight = int(entweight.get())
     except ValueError:
         messagebox.showerror("Ошибка", "Вес ребра должен быть числом")
     else:
-        node1 = entry_node1.get()
-        node2 = entry_node2.get()
+        n1 = entn1.get()
+        n2 = entn2.get()
         for vertex in nodes:
-            if vertex.name == node1:
-                node1 = vertex
-            if vertex.name == node2:
-                node2 = vertex
-        edges.append(Edge(node1, node2, weight))
+            if vertex.name == n1:
+                n1 = vertex
+            if vertex.name == n2:
+                n2 = vertex
+        edges.append(Edge(n1, n2, weight))
         window.destroy()
 
 
 # меню добавления ребер
 def add_edge():
-    add_window = Tk()
-    add_window.title("Добавление ребра")
-    add_window.geometry("220x220+1050+260")
-    add_window.wm_attributes('-topmost', 3)
-    add_window.resizable(False, False)
-    label = Label(add_window, text="Стартовая вершина")
-    entry_node1 = Entry(add_window, text="Стартовая вершина")
-    label2 = Label(add_window, text="Конечная вершина")
-    entry_node2 = Entry(add_window, text="Конечная вершина")
-    label3 = Label(add_window, text="Вес ребра")
-    entry_weight = Entry(add_window)
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: color(color_lable))
-    color_button = Button(add_window, text="Добавить ребро", command=lambda: edge(entry_weight, entry_node1, entry_node2, add_window))
-    color_lable = Label(add_window, width=2, bg="white")
-    label.grid(row=0, column=0, sticky="ew")
+    add_windows = Tk()
+    add_windows.title("Добавление ребра")
+    add_windows.geometry("220x220+1050+260")
+    add_windows.wm_attributes('-topmost', 3)
+    add_windows.resizable(False, False)
+    lab = Label(add_windows, text="Стартовая вершина")
+    entn1 = Entry(add_windows, text="Стартовая вершина")
+    lab2 = Label(add_windows, text="Конечная вершина")
+    entn2 = Entry(add_windows, text="Конечная вершина")
+    lab3 = Label(add_windows, text="Вес ребра")
+    entry_weight = Entry(add_windows)
+    add_button = Button(add_windows, text="Выбрать цвет", command=lambda: color(color_lable))
+    color_button = Button(add_windows, text="Добавить ребро", command=lambda: edge(entry_weight, entn1, entn2, add_windows))
+    color_lable = Label(add_windows, width=2, bg="white")
+    lab.grid(row=0, column=0, sticky="ew")
     entry_weight.grid(row=1, column=0, sticky="n")
-    label2.grid(row=2, column=0, sticky="ew")
-    entry_node1.grid(row=3, column=0, sticky="n")
-    label3.grid(row=4, column=0, sticky="ew")
-    entry_node2.grid(row=5, column=0, sticky="n")
+    lab2.grid(row=2, column=0, sticky="ew")
+    entn1.grid(row=3, column=0, sticky="n")
+    lab3.grid(row=4, column=0, sticky="ew")
+    entn2.grid(row=5, column=0, sticky="n")
     add_button.grid(row=6, column=0, sticky="n")
     color_button.grid(row=7, column=0, sticky="n")
     color_lable.grid(row=1, column=1)
-    add_window.mainloop()
+    add_windows.mainloop()
 
 
 def movefser(event):
-    for node in nodes:
-        if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-            node.move(event.x, event.y)
+    for n in nodes:
+        if n.a - 25 < event.a < n.a + 25 and n.b - 25 < event.b < n.b + 25:
+            n.move(event.a, event.b)
             break
 
 
 def nameorweight(event):
-    x, y = event.x, event.y
+    a, b = event.a, event.b
     for edge in edges:
         print(2)
-        legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
-        gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
+        legs_sum = sqrt((a - edge.n1.a) ** 2 + (b - edge.n1.b) ** 2) + sqrt((a - edge.n2.a) ** 2 + (b - edge.n2.b) ** 2)
+        gipotenusa = sqrt((edge.n2.a - edge.n1.a) ** 2 + (edge.n2.b - edge.n1.b) ** 2) + 10
         if legs_sum <= gipotenusa:
             edge.change()
             break
     else:
-        for node in nodes:
-            if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-                node.change()
+        for n in nodes:
+            if n.a - 25 < event.a < n.a + 25 and n.b - 25 < event.b < n.b + 25:
+                n.change()
                 break
 
 
 def chang(event):
-    x, y = event.x, event.y
-    for node in nodes:
-        if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-            node.change_color(askcolor()[1])
+    a, b = event.a, event.b
+    for n in nodes:
+        if n.a - 25 < event.a < n.a + 25 and n.b - 25 < event.b < n.b + 25:
+            n.change_color(askcolor()[1])
             break
     else:
         for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
-            gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
+            legs_sum = sqrt((a - edge.node1.a) ** 2 + (a - edge.node1.a) ** 2) + sqrt((a - edge.n2.a) ** 2 + (b - edge.n2.b) ** 2)
+            gipotenusa = sqrt((edge.n2.a - edge.n1.a) ** 2 + (edge.n2.b - edge.n1.b) ** 2) + 10
             if legs_sum <= gipotenusa:
                 edge.change_color(askcolor()[1])
                 break
 
 
 def delete(event):
-    x, y = event.x, event.y
-    for node in nodes:
-        if node.x - 25 < x < node.x + 25 and node.y - 25 < y < node.y + 25:
-            node.delete()
-            nodes.remove(node)
+    a, b = event.a, event.b
+    for n in nodes:
+        if n.a - 25 < a < n.a + 25 and n.b - 25 < b < n.b + 25:
+            n.delete()
+            nodes.remove(n)
             print(1)
             break
     else:
         for edge in edges:
             print(2)
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
-            gipotenusa = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
+            legs_sum = sqrt((a - edge.n1.a) ** 2 + (b - edge.n1.b) ** 2) + sqrt((a- edge.n2.a) ** 2 + (b - edge.n2.b) ** 2)
+            gipotenusa = sqrt((edge.n2.a - edge.n1.a) ** 2 + (edge.n2.b - edge.n1.b) ** 2) + 10
             if legs_sum <= gipotenusa:
                 edge.delete()
                 edges.remove(edge)
@@ -273,12 +272,12 @@ def short():
     win.title("Выбор вершин")
     win.geometry("200x120+1050+260")
     win.resizable(False, False)
-    label = Label(win, text="Выберите первую вершину")
-    label.grid(row=0, column=0, sticky="ew")
+    lab = Label(win, text="Выберите первую вершину")
+    lab.grid(row=0, column=0, sticky="ew")
     entry1 = Entry(win)
     entry1.grid(row=1, column=0, sticky="ewns")
-    label2 = Label(win, text="Выберите вторую вершину")
-    label2.grid(row=2, column=0, sticky="ew")
+    lab2 = Label(win, text="Выберите вторую вершину")
+    lab2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
     button = Button(win, text="Выбрать", command=lambda: func(enter, win))
@@ -303,8 +302,8 @@ def display(title, props):
     win = Tk()
     win.title(title)
     win.geometry("500x500")
-    label = Label(win, text=string)
-    label.pack()
+    lab = Label(win, text=string)
+    lab.pack()
     win.mainloop()
 
 
