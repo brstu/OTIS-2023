@@ -306,4 +306,4 @@ int main() {
 	0.930138
 	0.62243
 	completion nonlinmodel
-![График моделей с t = 100:](graph.png)
+![График моделей с t = 100:](graph.jpg)
