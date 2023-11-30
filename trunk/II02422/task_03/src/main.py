@@ -171,13 +171,12 @@ def find_vertex_at_position(x, y, data_vertex_id_x_y):
 
 def delete_line_between_vertices(x1, y1, x2, y2, data_id_unorient_line_x_y, canvas):
     for key in data_id_unorient_line_x_y:
-        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and \
-           (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2):
+        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2) or\
+         (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
             canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
             del data_id_unorient_line_x_y[key]
             return
-        elif (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and \
-             (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
+        elif (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
             canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
             del data_id_unorient_line_x_y[key]
             return
@@ -259,12 +258,8 @@ def delete_oriented_line_on_click(event):
                 y2 = data_vertex_id_x_y[i][1]
                 print("nam2,x2,y2   ",name2,x2,y2)
                 for key in data_id_orient_line_x_y:
-                    if data_id_orient_line_x_y[key][0][0] == x1 and data_id_orient_line_x_y[key][0][1] == y1 and\
-                         data_id_orient_line_x_y[key][1][0] == x2 and data_id_orient_line_x_y[key][1][1] == y2:
-                        del data_id_orient_line_x_y[key]
-                        break
-                    elif data_id_orient_line_x_y[key][0][0] == x2 and data_id_orient_line_x_y[key][0][1] == y2 and\
-                         data_id_orient_line_x_y[key][1][0] == x1 and data_id_orient_line_x_y[key][1][1] == y1:
+                    if data_id_orient_line_x_y[key][0][0] == x1 and data_id_orient_line_x_y[key][0][1] == y1 and data_id_orient_line_x_y[key][1][0] == x2 and data_id_orient_line_x_y[key][1][1] == y2 or\
+                     data_id_orient_line_x_y[key][0][0] == x2 and data_id_orient_line_x_y[key][0][1] == y2 and data_id_orient_line_x_y[key][1][0] == x1 and data_id_orient_line_x_y[key][1][1] == y1:
                         del data_id_orient_line_x_y[key]
                         break
                 print("data_id_orient_line_x_y in delete\t",data_id_orient_line_x_y)
@@ -519,7 +514,7 @@ def rename_vertex_on_click(event):
             print("имена вершин: ",array_name_vertex)
             # print("словарь вершин: ",data_vertex_id_x_y[i][2])
             print("оставшийся словарь вершин",data_vertex_id_x_y)
-            grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(entry.get(), new_application, i))
+            grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(entry.get(), new_application))
             grafbtn.grid(row=2, column=0, sticky="ew")
             new_application.mainloop()
             break
@@ -708,8 +703,8 @@ def adjancy_for_deikstra(nodes, weight, max_node):
 def deikstra(nodes,weight,max_node):
     matrix_adjacency = adjancy_for_deikstra(nodes, weight, max_node)
     for start in range(max_node):
-        distance = [inf for i in range(max_node)]
-        visited = [0 for i in range(max_node)]
+        distance = [inf for _ in range(max_node)]
+        visited = [0 for _ in range(max_node)]
         distance[start] = 0
         for i in range(max_node):
             v = -1
