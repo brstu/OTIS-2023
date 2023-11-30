@@ -6,7 +6,7 @@ import tkinter.colorchooser as colorchooser
 click_num = 0
 id_of_edge = 0
 button1 = "<Button-1>"
-numVertex = numVertex
+numVertex = "number of vertex"
 idText = "id text"
 textVertex = "text on vertex"
 
@@ -51,14 +51,16 @@ def edge_click():
 
 # функция для изменения цвета вершины
 def change_color():
-    main_label.configure(text="You have chosen to change the color of the vertex, click on the vertex to change its color")
+    main_label.configure(
+        text="You have chosen to change the color of the vertex, click on the vertex to change its color")
     canvas.unbind(button1)
     canvas.bind(button1, colour)
 
 
 # функция для изменения цвета текста
 def change_text_color():
-    main_label.configure(text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
+    main_label.configure(
+        text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
     canvas.unbind(button1)
     canvas.bind(button1, text_colour)
 
@@ -68,6 +70,7 @@ def change_edge_color():
     main_label.configure(text="You have chosen to change the color of the edges, click on the edge to change its color")
     canvas.unbind(button1)
     canvas.bind(button1, edge_colour)
+
 
 # функция для удаления вершин или ребер
 def delete_canvas(event):
@@ -118,7 +121,7 @@ def draw_canvas1(event):
     cord['id'].append(oval_id)
     canvas.create_text(x, y, text=itext, font="Arial 14", tags=texttag)  # создание текста
     cord['textID'].append(texttag)
-    cord['text on vertex'].append(itext)
+    cord[textVertex].append(itext)
 
 
 # функция для рисования ребра
@@ -159,7 +162,7 @@ def rename(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
-            cord['text on vertex'][cord['id'].index(x)] = new_name
+            cord[textVertex][cord['id'].index(x)] = new_name
             break
 
 
@@ -200,7 +203,7 @@ def adjacency_matrix():
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
     global cord, cord_edge, cord_edge2, ovals, edges
-    matrix = [[0 for i1 in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for i2 in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
@@ -210,13 +213,14 @@ def adjacency_matrix():
         i3 += 1
         print(i3)
 
+
 def incidence_matrix():
     k = 0
     inc_matrix = tk.Tk()
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("250x250")
     global cord, cord_edge, cord_edge2, ovals, edges
-    matrix = [[0 for idex in range(len(edges))] for jdex in range(len(ovals))]
+    matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
     for index in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
             edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
@@ -240,7 +244,7 @@ def dfs():
             if matrix[vert][u] == 1 and not visited[u]:
                 dfs_rec(u)
 
-    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for ii in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][ii])][cord['id'].index(cord_edge['id_vertex2'][ii])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][ii])][cord['id'].index(cord_edge['id_vertex1'][ii])] = 1
@@ -266,10 +270,9 @@ def bfs():
         for u, val in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec(u)
-                temp = val
-                temp += 1
+                val += 1
 
-    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for index, value in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
@@ -304,7 +307,7 @@ x1, y1, x2, y2 = 0, 0, 0, 0
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
 # ребро(но с id ребра)
-cord = {'id': [], idText: [], 'text on vertex': [], 'textID': [], numVertex: [], 'coordinatesX': [],
+cord = {'id': [], idText: [], textVertex: [], 'textID': [], numVertex: [], 'coordinatesX': [],
         'coordinatesY': []}  # для хранения инфы о вершинах
 tk.Tk.geometry(root, "800x600")
 canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
