@@ -171,16 +171,12 @@ def find_vertex_at_position(x, y, data_vertex_id_x_y):
 
 def delete_line_between_vertices(x1, y1, x2, y2, data_id_unorient_line_x_y, canvas):
     for key in data_id_unorient_line_x_y:
-        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2) or\
+        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2) or (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1) or\
          (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
             canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
             del data_id_unorient_line_x_y[key]
             return
-        elif (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
-            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-            del data_id_unorient_line_x_y[key]
-            return
-
+        
 def delete_unoriented_line_on_click(event):
     global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2, color
     global count_unoriented_line
@@ -486,9 +482,9 @@ def delete_lines(lines_data, vertex_name, all_vanish_line_id):
 def create_deleted_line(x1, y1, x2, y2, arrow=None):
     canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=2, arrow=arrow)
 
-def update_vertex_position(mouse_x, mouse_y, ID, name, data_id_x_y, canvas):
-    temp_color_vertex = data_id_x_y[ID][3]
-    data_id_x_y[ID] = [mouse_x, mouse_y, name, temp_color_vertex]
+def update_vertex_position(mouse_x, mouse_y, id, name, data_id_x_y, canvas):
+    temp_color_vertex = data_id_x_y[id][3]
+    data_id_x_y[id] = [mouse_x, mouse_y, name, temp_color_vertex]
     canvas.create_oval(mouse_x - 15, mouse_y - 15, mouse_x + 15, mouse_y + 15,
                        fill=temp_color_vertex, outline="black", width=2)
     canvas.create_text(mouse_x, mouse_y, text=name, font=m)
@@ -516,11 +512,11 @@ def appearance_vertex_on_move(event):
         update_vertex_position(mouse_x, mouse_y, ID_vanish_vertex, name_vanish_vertex, data_vertex_id_x_y, canvas)
         
         if ID_none_oriented_line != 0:
-            update_lines(all_vanish_nonorline_id, name_vanish_vertex, data_id_unorient_line_x_y, canvas, line_intersect_circle)
+            update_lines(mouse_x, mouse_y, all_vanish_nonorline_id, name_vanish_vertex, data_id_unorient_line_x_y, canvas, line_intersect_circle)
             print(b, data_id_unorient_line_x_y)
         
         if ID_oriented_line != 0:
-            update_lines(all_vanish_orline_id, name_vanish_vertex, data_id_orient_line_x_y, canvas, line_intersect_circle)
+            update_lines(mouse_x, mouse_y, all_vanish_orline_id, name_vanish_vertex, data_id_orient_line_x_y, canvas, line_intersect_circle)
             print(v, data_id_orient_line_x_y)
 
                 
@@ -545,7 +541,7 @@ def rename_vertex_on_click(event):
             print("имена вершин: ",array_name_vertex)
             # print("словарь вершин: ",data_vertex_id_x_y[i][2])
             print("оставшийся словарь вершин",data_vertex_id_x_y)
-            grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(entry.get(), new_application, 1))
+            grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(3, 2, 1))
             grafbtn.grid(row=2, column=0, sticky="ew")
             new_application.mainloop()
             break
@@ -776,7 +772,7 @@ def get_min_distance_vertex(visited, distance):
             min_vertex = v
     return min_vertex
 
-def update_distance(matrix_adjacency, distance, visited, v):
+def update_distance(matrix_adjacency, distance, v):
     for j in range(len(matrix_adjacency)):
         if matrix_adjacency[v][j] != 0:
             if distance[v] + matrix_adjacency[v][j] < distance[j]:
@@ -793,7 +789,7 @@ def dijkstra(nodes, weight, max_node):
             if v == -1 or distance[v] == inf:
                 break
             visited[v] = 1
-            distance = update_distance(matrix_adjacency, distance, visited, v)
+            distance = update_distance(matrix_adjacency, distance, v)
         print("vertex\tdistance")
         for i in range(max_node):
             print(i + 1, "\t", distance[i])
