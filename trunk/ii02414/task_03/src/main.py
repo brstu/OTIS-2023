@@ -260,24 +260,19 @@ def dfs():
 
 
 def bfs():
-    temp = 0
     global cord, cord_edge, cord_edge2, ovals, edges
     visited = [False] * len(ovals)
-    temp += 1
 
     def bfs_rec(vert):
         visited[vert] = True
         for u, val in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec(u)
-                val += 1
 
     matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for index, value in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
-        temp = value
-    temp += 1
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
