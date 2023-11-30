@@ -5,9 +5,9 @@ import tkinter.colorchooser as colorchooser
 
 click_num = 0
 id_of_edge = 0
-NUM_OF_VERTEX = 'num of vertex'
-ID_TEXT = 'id text'
-TEXT_ON_VERTEX = 'text on vertex'
+NUM_OF_VERTEX = 'VertexNum'
+ID_TEXT = 'IdText'
+TEXT_ON_VERTEX = 'VertexText'
 
 BUTTON_1 = "<Button-1>"
 # функция для рисования вершины
