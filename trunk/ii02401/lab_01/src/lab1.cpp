@@ -12,7 +12,7 @@
             std::cout << val << std::endl;
         }
         // Линейная модель
-        double linear(double y, int n, int t) {
+        double linear(double y, int n, int t) const{
             if (n < t) {
                 println(y);
                 return linear(a * y + b * u, n + 1, t);
