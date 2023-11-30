@@ -1,284 +1,358 @@
-#подключение библиотек
-from tkinter import messagebox,Canvas, Label, Entry, Button, Tk, Menu
-from tkinter.colorchooser import askcolor
-from numpy.random import randint
-from numpy import sqrt
-import networkx as nx
-def line_intersect_circle(x1, y1, x2, y2):
-    '''Returns the coordinates of the intersection points of a line and two circles'''
-    main_gipotenusa = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-    main_dx = x2 - x1
-    main_dy = y2 - y1
-    dx = (main_gipotenusa - 20) * main_dx / main_gipotenusa
-    dy = (main_gipotenusa - 20) * main_dy / main_gipotenusa
-    return x2 - dx, y2 - dy, x1 + dx, y1 + dy
-#класс создания вершин
-class Node:
-    def __init__(self, name):
-        self.name = name
-        self.x = randint(0, 636)
-        self.y = randint(0, 596)
+import tkinter as tk
+from tkinter import messagebox
+import tkinter.simpledialog as simpledialog
+import tkinter.colorchooser as colorchooser
 
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
-        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
-        graph.add_node(name)
-    def move(self, x, y):
-        self.x = x
-        self.y = y
-        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
-        canvas.coords(self.text, x, y)
-        for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
-                edge.move()
-    def change(self):
-        win = Tk()
-        win.title("Изменение имени")
-        win.geometry("190x120+1050+250")
-        win.wm_attributes('-topmost', 3)
-        win.resizable(False, False)
-        label = Label(win, text="Введите новое имя")
-        label.place(x=10, y=10)
-        entry = Entry(win, width=10)
-        entry.place(x=10, y=40)
-        button = Button(win, text="Изменить", command=lambda: self.change_name(entry.get()))
-        button.place(x=10, y=70)
-        win.mainloop()
-    def change_name(self, name):
-        graph._adj[name] = graph._adj.pop(self.name)
-        self.name = name
-        canvas.itemconfig(self.text, text=name)
-    def change_color(self, color):
-        canvas.itemconfig(self.circle, fill=color)
-    def delete(self):
-        canvas.delete(self.circle)
-        canvas.delete(self.text)
-        for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
-                edge.delete()
-                edges.remove(edge)
-        graph.remove_node(self.name)
-def create_circle(x, y, r, **kwargs):
-    return canvas.create_oval(x-r, y-r, x+r, y+r, **kwargs)
-#класс ребер
-class Edge:
-    def __init__(self, node1, node2, weight: int):
-        self.weight = weight
-        self.node1 = node1
-        self.node2 = node2
-        self.line = canvas.create_line(line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y),width=2, fill="black")
-        self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',text=self.weight, font="Arial 20", fill="white")
-        graph.add_edge(node1.name, node2.name, weight=weight)
-    def change(self):
-        win = Tk()
-        win.title("Изменение веса")
-        win.geometry("190x120+1050+250")
-        win.wm_attributes('-topmost', 3)
-        win.resizable(False, False)
-        label = Label(win, text="Введите новый вес")
-        label.place(x=10, y=10)
-        entry = Entry(win, width=10)
-        entry.place(x=10, y=40)
-        print(5)
-        button = Button(win, text="Изменить", command=lambda: self.change_weight(entry.get()))
-        button.place(x=10, y=70)
-        win.mainloop()
-    def change_weight(self, weight):
-        self.weight = int(weight)
-        canvas.itemconfig(self.text, text=weight)
-        graph.remove_edge(self.node1.name, self.node2.name)
-        graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
-    def change_color(self, color):
-        canvas.itemconfig(self.line, fill=color)
-    def move(self):
-        canvas.coords(self.line, line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
-        canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
-    def delete(self):
-        canvas.delete(self.line)
-        canvas.delete(self.text)
-        graph.remove_edge(self.node1.name, self.node2.name)
-#рисуем вершину
-def create_vertex(entry_name, window):
-    name = entry_name.get()
-    nodes.append(Node(name))
-    window.destroy()
-#выбор цвета
-def chose_color(color_lable):
-    global color_vertex
-    rgb, hx= askcolor()
-    print(rgb)
-    color_vertex = hx
-    color_lable.config(bg=color_vertex)
-#меню добавления вершин
-def menu_add_vertex():
-    global color_vertex
-    add_window = Tk()
-    add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
-    add_window.wm_attributes('-topmost', 3)
-    add_window.resizable(False, False)
-    label = Label(add_window, text="Введите имя вершины")
-    entry_name = Entry(add_window)
-    add_button = Button(add_window, text = "Выбрать цвет",command = lambda: chose_color(color_lable))
-    color_button = Button(add_window, text = "Добавить вершину",command = lambda: create_vertex(entry_name,add_window))
-    color_lable = Label(add_window,width=2,bg = "white")
-    label.grid(row=0, column=0, sticky="ew")
-    entry_name.grid(row=1, column=0, sticky="ewns")
-    add_button.grid(row=2, column=0, sticky="ewns")
-    color_button.grid(row=3, column=0, sticky="ewns")
-    color_lable.grid(row = 1,column=1)
-    add_window.mainloop()
-# создание ребра
-def create_edge(entry_weight, entry_node1, entry_node2, window):
-    try:
-        weight = int(entry_weight.get())
-    except ValueError:
-        messagebox.showerror("Ошибка", "Вес ребра должен быть числом")
-    else:
-        node1 = entry_node1.get()
-        node2 = entry_node2.get()
-        for vertex in nodes:
-            if vertex.name == node1:
-                node1 = vertex
-            if vertex.name == node2:
-                node2 = vertex
-        edges.append(Edge(node1, node2, weight))
-        window.destroy()
-#меню добавления ребер
-def menu_add_edge():
-    add_window = Tk()
-    add_window.title("Добавление ребра")
-    add_window.geometry("220x220+1050+250")
-    add_window.wm_attributes('-topmost', 3)
-    add_window.resizable(False, False)
-    label = Label(add_window, text="Введите вес ребра")
-    entry_weight = Entry(add_window)
-    label2 = Label(add_window, text="Введите имя первой вершины")
-    entry_node1 = Entry(add_window, text="Введите имя первой вершины")
-    label3 = Label(add_window, text="Введите имя второй вершины")
-    entry_node2 = Entry(add_window, text="Введите имя второй вершины")
-    add_button = Button(add_window, text = "Выбрать цвет",command = lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить ребро",command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
-    color_lable = Label(add_window,width=2,bg = "white")
-    label.grid(row=0, column=0, sticky="ew")
-    entry_weight.grid(row=1, column=0, sticky="ewns")
-    label2.grid(row=2, column=0, sticky="ew")
-    entry_node1.grid(row=3, column=0, sticky="ewns")
-    label3.grid(row=4, column=0, sticky="ew")
-    entry_node2.grid(row=5, column=0, sticky="ewns")
-    add_button.grid(row=6, column=0, sticky="ewns")
-    color_button.grid(row=7, column=0, sticky="ewns")
-    color_lable.grid(row = 1,column=1)
-    add_window.mainloop()
-def move_node(event):
-    for node in nodes:
-        if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-            node.move(event.x, event.y)
+click_num = 0
+id_of_edge = 0
+
+
+# функция для рисования вершины
+def draw_vertex():
+    main_label.configure(text="Вы выбрали рисование вершин, нажмите на свободное место для рисования вершины")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", draw_canvas1)
+
+
+# функция для рисования ребра
+def draw_edge():
+    main_label.configure(text="Вы выбрали рисование ребер, нажмите на вершину для рисования ребра")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", draw_canvas2)
+
+
+# функция для удаления вершины
+def delete_vertex():
+    main_label.configure(text="Вы выбрали удаление вершины или ребра, нажмите на вершину или ребро для удаления")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", delete_canvas)
+
+
+# функция для переименования вершины
+def rename_vertex():
+    main_label.configure(text="Вы выбрали переименование вершины, нажмите на вершину для переименования")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", rename)
+
+
+# функция для проверки массива
+def edge_click():
+    print("вершины")
+    for key, value in cord.items():
+        print(key, value)
+    print("ребра")
+    for value in cord_edge2.values():
+        print(value, end=", ")
+
+
+# функция для изменения цвета вершины
+def change_color():
+    main_label.configure(text="Вы выбрали изменение цвета вершины, нажмите на вершину для изменения её цвета")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", colour)
+
+
+# функция для изменения цвета текста
+def change_text_color():
+    main_label.configure(text="Вы выбрали изменение цвета текста, нажмите на вершину для изменения цвета её текста")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", text_colour)
+
+
+# функция для изменения цвета ребер
+def change_edge_color():
+    main_label.configure(text="Вы выбрали изменение цвета ребер, нажмите на ребро для изменения его цвета")
+    canvas.unbind("<Button-1>")
+    canvas.bind("<Button-1>", edge_colour)
+
+
+# def check_edge():
+#    canvas.unbind("<Button-1>")
+#    canvas.bind("<Button-1>", check_edge_canvas)
+
+
+# функция для удаления вершин или ребер
+def delete_canvas(event):
+    for x in ovals:
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            canvas.delete(x)  # удаление вершины
+            canvas.delete(cord['textID'][cord['id'].index(x)])  # удаление текста
+            ovals.remove(x)  # удаление вершины из массива
+            # удаление информации о вершине из словаря
+            cord['num of vertex'].remove(cord['num of vertex'][cord['id'].index(x)])
+            canvas.delete(cord['id text'][cord['id'].index(x)])
+            cord['textID'].remove(cord['textID'][cord['id'].index(x)])
+            cord['id text'].remove(cord['id text'][cord['id'].index(x)])
+            cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
+            cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
+            cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
+            cord['id'].remove(x)
             break
-def change_name_or_weight(event):
-    x, y = event.x, event.y
-    for edge in edges:
-        print(2)
-        legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 + (y - edge.node2.y)**2)
-        gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-        if legs_sum <= gipotenusa:
-            edge.change()
+    # удаление ребра
+    for y in edges:
+        tag_edge = 'edge' + str(y)
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
+            canvas.delete(tag_edge)
+            cord_edge['id_edge_text'].remove(tag_edge)
+            cord_edge['id_vertex1'].remove(cord_edge['id_vertex1'][edges.index(y)])
+            cord_edge['id_vertex2'].remove(cord_edge['id_vertex2'][edges.index(y)])
+            edges.remove(y)
             break
-    else:
-        for node in nodes:
-            if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-                node.change()
-                break
-def change_color(event):
-    x, y = event.x, event.y
-    for node in nodes:
-        if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
-            node.change_color(askcolor()[1])
+
+
+# функция для рисования вершины
+def draw_canvas1(event):
+    global oval_id
+    global i, tag, id_text
+    id_text += 1
+    i += 1
+    itext = str(i)  # присвоение текста вершине
+    x, y = event.x, event.y  # координаты клика
+    tag = 'oval' + str(id_text)
+    texttag = 'text' + str(id_text)
+    # добавление инфы о вершине в словарь
+    cord["num of vertex"].append(id_text)
+    cord['id text'].append(tag)
+    cord["coordinatesX"].append(x)
+    cord["coordinatesY"].append(y)
+    oval_id = canvas.create_oval(x - 15, y - 15, x + 15, y + 15, fill='red', tags=tag)  # создание вершины
+    ovals.append(oval_id)
+    cord['id'].append(oval_id)
+    canvas.create_text(x, y, text=itext, font="Arial 13", tags=texttag)  # создание текста
+    cord['textID'].append(texttag)
+    cord['text on vertex'].append(itext)
+
+
+# функция для рисования ребра
+def draw_canvas2(event):
+    global click_num
+    global x1, y1, x2, y2, id_of_edge
+    if click_num == 0:
+        for x in ovals:
+            if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:  # проверка клика на вершину
+                x1 = cord['coordinatesX'][cord['id'].index(x)]  # и получение ее координат
+                y1 = cord['coordinatesY'][cord['id'].index(x)]
+                cord_edge['id_vertex1'].append(x)
+                cord_edge2['id_vertex1'].append(x)
+                click_num = 1
+                main_label.configure(text="Выберите вторую вершину для рисования ребра")
+    elif click_num == 1:
+        for x in ovals:
+            if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+                x2 = cord['coordinatesX'][cord['id'].index(x)]
+                y2 = cord['coordinatesY'][cord['id'].index(x)]
+                cord_edge['id_vertex2'].append(x)
+                cord_edge2['id_vertex2'].append(x)
+        tag_edge = 'edge' + str(id_of_edge)
+        line = canvas.create_line(x1, y1, x2, y2, width=4, tags=tag_edge)  # создание ребра
+        edges.append(id_of_edge)
+        cord_edge['id_edge_text'].append(tag_edge)
+        id_of_edge += 1
+        canvas.tag_lower(line)  # перенос ребра под вершины
+        click_num = 0
+        main_label.configure(text="Выберите вершину для рисования ребра")
+
+
+# переименование вершины
+def rename(event):
+    for x in ovals:
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            new_name = simpledialog.askstring("Rename", "Enter new name")
+            canvas.delete(cord['textID'][cord['id'].index(x)])
+            canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
+                               text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
+            cord['text on vertex'][cord['id'].index(x)] = new_name
+            # canvas.itemconfig(cord['id text'][cord['id'].index(x)], text=new_name)
             break
-    else:
-        for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 + (y - edge.node2.y)**2)
-            gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-            if legs_sum <= gipotenusa:
-                edge.change_color(askcolor()[1])
-                break
-def delete(event):
-    x, y = event.x, event.y
-    for node in nodes:
-        if node.x - 25 < x < node.x + 25 and node.y - 25 < y < node.y + 25:
-            node.delete()
-            nodes.remove(node)
-            print(1)
+
+
+# изменение цвета вершины
+def colour(event):
+    for x in ovals:
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            new_colour = colorchooser.askcolor()
+            color_hex = new_colour[1]
+            canvas.itemconfig(x, fill=color_hex)
             break
+
+
+# изменение цвета текста
+def text_colour(event):
+    for x in ovals:
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            new_colour = colorchooser.askcolor()
+            color_hex = new_colour[1]
+            canvas.itemconfig(cord['textID'][cord['id'].index(x)], fill=color_hex)
+            break
+
+
+# изменение цвета ребра
+def edge_colour(event):
+    for x in edges:
+        tag_edge = 'edge' + str(x)
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
+            new_colour = colorchooser.askcolor()
+            color_hex = new_colour[1]
+            canvas.itemconfig(tag_edge, fill=color_hex)
+            break
+
+
+def adjacency_matrix():
+    k = 0
+    adj_matrix = tk.Tk()
+    adj_matrix.title("Adjacency matrix")
+    adj_matrix.geometry("150x150")
+    global cord, cord_edge, cord_edge2, ovals, edges
+    matrix = [[0 for i1 in range(len(ovals))] for j in range(len(ovals))]
+    for i2 in range(len(cord_edge['id_vertex1'])):
+        matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
+        matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
+    for i3, val3 in enumerate(matrix):
+        adj_matrix_label = tk.Label(adj_matrix, text=str(val3))
+        adj_matrix_label.grid(row=k, column=0)
+        i3 += 1
+        print(i3)
+    # for i3 in range(len(matrix)):
+    #    adj_matrix_label = tk.Label(adj_matrix, text=str(matrix[i3]))
+    #    adj_matrix_label.grid(row=k, column=0)
+    #    k += 1
+
+
+def incidence_matrix():
+    k = 0
+    inc_matrix = tk.Tk()
+    inc_matrix.title("Incidence matrix")
+    inc_matrix.geometry("150x150")
+    global cord, cord_edge, cord_edge2, ovals, edges
+    matrix = [[0 for idex in range(len(edges))] for jdex in range(len(ovals))]
+    for index in range(len(cord_edge['id_vertex1'])):
+        matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
+            edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
+        matrix[cord['id'].index(cord_edge['id_vertex2'][index])][
+            edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
+    for index2, vall in enumerate(matrix):
+        inc_matrix_label = tk.Label(inc_matrix, text=str(vall))
+        inc_matrix_label.grid(row=k, column=0)
+        k += 1
+        index2 += 1
+        print(index2)
+
+
+def dfs():
+    global cord, cord_edge, cord_edge2, ovals, edges
+    visited = [False] * len(ovals)
+
+    def dfs_rec(vert):
+        visited[vert] = True
+        for u in range(len(ovals)):
+            if matrix[vert][u] == 1 and not visited[u]:
+                dfs_rec(u)
+
+    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    for ii in range(len(cord_edge['id_vertex1'])):
+        matrix[cord['id'].index(cord_edge['id_vertex1'][ii])][cord['id'].index(cord_edge['id_vertex2'][ii])] = 1
+        matrix[cord['id'].index(cord_edge['id_vertex2'][ii])][cord['id'].index(cord_edge['id_vertex1'][ii])] = 1
+    count = 0
+    for v in range(len(ovals)):
+        if not visited[v]:
+            dfs_rec(v)
+            count += 1
+    if count == 1:
+        messagebox.showinfo("DFS", "Graph is connected")
     else:
-        for edge in edges:
-            print(2)
-            legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 + (y - edge.node2.y)**2)
-            gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-            if legs_sum <= gipotenusa:
-                edge.delete()
-                edges.remove(edge)
-                break
-
-def shortest_path():
-    enter = []
-    win = Tk()
-    win.title("Выбор вершин")
-    win.geometry("200x120+1050+250")
-    win.resizable(False, False)
-    label = Label(win, text="Выберите первую вершину")
-    label.grid(row=0, column=0, sticky="ew")
-    entry1 = Entry(win)
-    entry1.grid(row=1, column=0, sticky="ewns")
-    label2 = Label(win, text="Выберите вторую вершину")
-    label2.grid(row=2, column=0, sticky="ew")
-    entry2 = Entry(win)
-    entry2.grid(row=3, column=0, sticky="ewns")
-    button = Button(win, text="Выбрать", command=lambda: func(enter, win))
-    button.grid(row=4, column=0, sticky="ewns")
-
-    def func(arr, win):
-        arr += [entry1.get(), entry2.get()]
-        win.destroy()
-        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
-    win.mainloop()
-    return enter[0], enter[1]
-def display_props(title, props):
-    string = ''
-    for prop in props:
-        string += str(prop) + ' '
-    win = Tk()
-    win.title(title)
-    win.geometry("500x500")
-    label = Label(win, text=string)
-    label.pack()
-    win.mainloop()
-def eulerian_cycle():
-    display_props("Эйлеров цикл", nx.algorithms.eulerian_path(graph))
+        messagebox.showinfo("DFS", "Graph is not connected")
 
 
-nodes = []# Список имен вершин
-edges = []# Список ребер
-color_vertex = "#fff"
-graph = nx.Graph()  # Граф
-root = Tk()
-root.title("Работа с графами")
-root.geometry("800x600+500+150")
-root.resizable(False, False)
-canvas = Canvas(root, width=795, height=596, bg="grey")
-canvas.place(x=0, y=0)
-#главное меню
-main_menu = Menu()
-file_menu = Menu()
-file_menu1 = Menu()
-main_menu.add_cascade(label="Работа с вершинами", menu=file_menu)
-file_menu.add_command(label="Добавление вершин",command= menu_add_vertex)
-file_menu.add_command(label="Добавление ребра",command=menu_add_edge)
-main_menu.add_cascade(label="Алгоритмы", menu=file_menu1)
-file_menu1.add_command(label="Эйлеров цикл",command=eulerian_cycle)
-file_menu1.add_command(label="Кратчайший путь",command=shortest_path)
-root.config(menu=main_menu)
-canvas.bind('<B1-Motion>', move_node)
-canvas.bind('<Button-2>', change_name_or_weight)
-canvas.bind('<Button-3>', change_color)
-root.bind('<B3-Motion>', delete)
+def bfs():
+    temp = 0
+    global cord, cord_edge, cord_edge2, ovals, edges
+    visited = [False] * len(ovals)
+    temp += 1
+
+    def bfs_rec(vert):
+        visited[vert] = True
+        for u, val in enumerate(ovals):
+            if matrix[vert][u] == 1 and not visited[u]:
+                bfs_rec(u)
+                temp = val
+                temp += 1
+
+        # for u in range(len(ovals)):
+        #    if matrix[vert][u] == 1 and not visited[u]:
+        #        bfs_rec(u)
+
+    matrix = [[0 for idex in range(len(ovals))] for j in range(len(ovals))]
+    for index, value in enumerate(cord_edge['id_vertex1']):
+        matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
+        matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
+        temp = value
+    # for index in range(len(cord_edge['id_vertex1'])):
+    #    matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
+    #    matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].
+    #    index(cord_edge['id_vertex1'][index])] = 1
+    temp += 1
+    count = 0
+    for v in range(len(ovals)):
+        if not visited[v]:
+            bfs_rec(v)
+            count += 1
+    if count == 1:
+        messagebox.showinfo("BFS", "Graph is connected")
+    else:
+        messagebox.showinfo("BFS", "Graph is not connected")
+
+
+# main
+root = tk.Tk()
+root.title("Graph")
+main_label = tk.Label(root, text="Выберите действие")
+main_label.pack(side=tk.BOTTOM)
+# всякие переменные
+oval_id = None
+ovals = []
+edges = []
+i = 0
+id_text = 0
+tag = 0
+x1, y1, x2, y2 = 0, 0, 0, 0
+
+# словарь для хранения разной инфы о вершинах и ребрах
+cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
+cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
+# ребро(но с id ребра)
+cord = {'id': [], 'id text': [], 'text on vertex': [], 'textID': [], 'num of vertex': [], 'coordinatesX': [],
+        'coordinatesY': []}  # для хранения инфы о вершинах
+tk.Tk.geometry(root, "800x600")
+canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
+canvas.pack()
+menubar = tk.Menu(root)  # меню
+root.config(menu=menubar)
+
+# раздел меню
+graphmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Граф", menu=graphmenu)
+# кнопки в разделе меню
+graphmenu.add_command(label="Нарисовать вершину", command=draw_vertex)
+graphmenu.add_command(label="Нарисовать ребро", command=draw_edge)
+graphmenu.add_command(label="Удаление вершин или ребер", command=delete_vertex)
+
+redmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Редактирование", menu=redmenu)
+redmenu.add_command(label="Переименовать вершину", command=rename_vertex)
+redmenu.add_command(label="Перекрасить вершину", command=change_color)
+redmenu.add_command(label="Перекрасить текст", command=change_text_color)
+redmenu.add_command(label="Перекрасить ребро", command=change_edge_color)
+
+algmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Алгоритмы", menu=algmenu)
+algmenu.add_command(label="Вывести матрицу смежности", command=adjacency_matrix)
+algmenu.add_command(label="Вывести матрицу инцидентности", command=incidence_matrix)
+algmenu.add_command(label="Поиск в глубину", command=dfs)
+algmenu.add_command(label="Поиск в ширину", command=bfs)
+
+# testmenu = Menu(menubar, tearoff=0)
+# menubar.add_cascade(label="Тест", menu=testmenu)
+# testmenu.add_command(label="Проверить массив", command=edge_click)
+
+
 root.mainloop()
