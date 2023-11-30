@@ -1,1 +1,0 @@
-set(QT_USE_BUNDLED_BundledPhysX ON CACHE INTERNAL "")
