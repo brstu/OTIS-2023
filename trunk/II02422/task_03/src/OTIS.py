@@ -29,21 +29,21 @@ label["text"] = "Имя графа"  # Текст метки
 
 # Класс создания вершины
 class Vertex:
-    def __init__(self, canvas, color):
-        global x_click, y_click, vert_name, vertex_count
+    def __init__(self, canvas, color, x_click, y_click, vert_name, vertex_count):
         self.vertex_count = vertex_count
         self.vert_name = vert_name[-1]
         self.canvas = canvas
         self.color = color
         self.x = x_click
         self.y = y_click
-        self.id_vert = canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
+        self.id_vert = self.canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
         self.id_txt = self.canvas.create_text(self.x, self.y, anchor='center', text=self.vert_name,
-                                              font=n, fill="white")
-        canvas.unbind("m")
-
+                                              font=("Arial", 12), fill="white")
+        self.canvas.unbind("m")
+    
     def get_info(self):
-        return self.vertex_count, self.vert_name[self.vertex_count - 1]
+        return self.vertex_count, self.vert_name
+
 
 
 class Edge:
@@ -54,9 +54,9 @@ class Edge:
         self.x2, self.y2 = vertex2.x, vertex2.y
 
         self.weight = weight
+        self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2)
+
         if var1.get():
-            self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2,
-                                           arrow="last")
             if weight != 0:
                 self.rect = canvas.create_rectangle((self.x1 + self.x2) / 2 - 5,
                                                     (self.y1 + self.y2) / 2 - 8,
@@ -66,12 +66,11 @@ class Edge:
                 self.text = canvas.create_text((self.x1 + self.x2) / 2,
                                                (self.y1 + self.y2) / 2,
                                                text=self.weight,
-                                               font=('Arial', 14), fill='black', )
+                                               font=('Arial', 14), fill='black')
             else:
                 self.rect = None
                 self.text = None
         else:
-            self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2)
             if weight != 0:
                 self.rect = canvas.create_rectangle((self.x1 + self.x2) / 2 - 5,
                                                     (self.y1 + self.y2) / 2 - 8,
@@ -81,15 +80,17 @@ class Edge:
                 self.text = canvas.create_text((self.x1 + self.x2) / 2,
                                                (self.y1 + self.y2) / 2,
                                                text=self.weight,
-                                               font=('Arial', 14), fill='black', )
+                                               font=('Arial', 14), fill='black')
             else:
                 self.rect = None
                 self.text = None
 
     def delete(self):
         canvas.delete(self.line)
-        canvas.delete(self.rect)
-        canvas.delete(self.text)
+        if self.rect:
+            canvas.delete(self.rect)
+        if self.text:
+            canvas.delete(self.text)
 
 
 # Отслеживание нажатия кнопки мыши и запись в глобальные переменные
