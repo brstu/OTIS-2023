@@ -2,6 +2,6 @@
 
 int main()
 {
-    std::system("python main.py");
+    std::system("python main.pde");
     return 0;
 }

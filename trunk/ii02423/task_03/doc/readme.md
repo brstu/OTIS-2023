@@ -82,24 +82,7 @@
 
 # Результат программы: #
 
-## Окно
-![image](image/window.png)
-## Добавление вершин
-![image](image/add_vertex.png)
-## Cоединение вершин ребрами
-![image](image/add_adjes.png)
-## Перемещение вершин
-![image](image/move.png)
-## Изменяем вес ребер
-![image](image/waightchange.png)
-## Изменяем название вершин
-![image](image/vertexchangename.png)
-## Изменяем цвета вершин, ребер
-![image](image/colorchange.png)
-## Удаление ребер и вершин
-![image](image/deleteimage.png)
-## Кратчайший путь
-![image](image/shortpath.png)
-## Эйлеров цикл
-![image](image/eulerianpath.png)
+## Интерфейс
+![image](interface.png)
+
 
