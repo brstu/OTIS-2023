@@ -39,7 +39,7 @@ set(PROJECT_SOURCES
             ${PROJECT_SOURCES}
         )
     endif()
-endif()
+
 
 target_link_libraries(OTIS3END PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
