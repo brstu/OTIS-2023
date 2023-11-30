@@ -28,7 +28,6 @@ set(PROJECT_SOURCES
 #    set_property(TARGET OTIS3END APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
     if(ANDROID)
         add_library(OTIS3END SHARED
             ${PROJECT_SOURCES}
