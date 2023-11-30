@@ -3,20 +3,20 @@ from tkinter.colorchooser import askcolor
 import numpy as np
 from numpy import sqrt
 import networkx as nx
-WINDOW_GEOMETRY = "190x120+1050+250"
-FONT_ARIALS_BOLD = "Arial Bold"
+okno = "190x120+1050+260"
+FONT_AR = "Arial"
 # Эйлеров цикл
-def e_cycle():
-    display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
+def ter():
+    display("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
 
 
 # создание цикла
-def create_circle(x, y, r, **kwargs):
+def circle(x, y, r, **kwargs):
     return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
 
 
 # Связывающая
-def connecting_line(x1, y1, x2, y2):
+def line(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -26,14 +26,14 @@ def connecting_line(x1, y1, x2, y2):
 
 
 # создание вершины
-def create_vertex(entry_name, window):
+def vertex(entry_name, window):
     name = entry_name.get()
-    nodes.append(Node(name))
+    nodes.append(Fser(name))
     window.destroy()
 
 
 # Класс параметров вершины
-class Node:
+class Fser:
     def __init__(self, name):
         self.name = name
 
@@ -46,7 +46,7 @@ class Node:
         self.x = rng.integers(0, 700)
         self.y = rng.integers(0, 600)
 
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
+        self.circle = circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
 
@@ -62,18 +62,18 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Редактирование имени")
-        win.geometry(WINDOW_GEOMETRY)
+        win.geometry(okno)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
         label.place(x=10, y=10)
         entry = Entry(win, width=10)
         entry.place(x=10, y=40)
-        button = Button(win, text="Изменить", command=lambda: self.change_name(entry.get()))
+        button = Button(win, text="Изменить", command=lambda: self.cnames(entry.get()))
         button.place(x=10, y=70)
         win.mainloop()
 
-    def change_name(self, name):
+    def cnames(self, name):
         graph._adj[name] = graph._adj.pop(self.name)
         self.name = name
         canvas.itemconfig(self.text, text=name)
@@ -97,14 +97,14 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
+        self.line = canvas.create_line(line(self.node1.x, self.node1.y, self.node2.x, self.node2.y), width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center', text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
 
     def change(self):
         win = Tk()
         win.title("Редактирование веса ребра")
-        win.geometry(WINDOW_GEOMETRY)
+        win.geometry(okno)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -126,7 +126,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
@@ -136,7 +136,7 @@ class Edge:
 
 
 # изменение цвета
-def chose_color(color_lable):
+def color(color_lable):
     global color_vertex
     rgb, hx = askcolor()
     print(rgb)
@@ -145,16 +145,16 @@ def chose_color(color_lable):
 
 
 # добавления вершин
-def menu_add_vertex():
+def add_vertex():
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry(WINDOW_GEOMETRY)
+    add_window.geometry(okno)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
     entry_name = Entry(add_window)
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_name, add_window))
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: color(color_lable))
+    color_button = Button(add_window, text="Добавить вершину", command=lambda: vertex(entry_name, add_window))
     color_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_name.grid(row=1, column=0, sticky="ewns")
@@ -165,7 +165,7 @@ def menu_add_vertex():
 
 
 # создание ребра
-def create_edge(entry_weight, entry_node1, entry_node2, window):
+def edge(entry_weight, entry_node1, entry_node2, window):
     try:
         weight = int(entry_weight.get())
     except ValueError:
@@ -183,10 +183,10 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
 
 
 # меню добавления ребер
-def menu_add_edge():
+def add_edge():
     add_window = Tk()
     add_window.title("Добавление ребра")
-    add_window.geometry("220x220+1050+240")
+    add_window.geometry("220x220+1050+260")
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Стартовая вершина")
@@ -195,8 +195,8 @@ def menu_add_edge():
     entry_node2 = Entry(add_window, text="Конечная вершина")
     label3 = Label(add_window, text="Вес ребра")
     entry_weight = Entry(add_window)
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: color(color_lable))
+    color_button = Button(add_window, text="Добавить ребро", command=lambda: edge(entry_weight, entry_node1, entry_node2, add_window))
     color_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_weight.grid(row=1, column=0, sticky="n")
@@ -210,14 +210,14 @@ def menu_add_edge():
     add_window.mainloop()
 
 
-def move_node(event):
+def movefser(event):
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
             node.move(event.x, event.y)
             break
 
 
-def change_name_or_weight(event):
+def nameorweight(event):
     x, y = event.x, event.y
     for edge in edges:
         print(2)
@@ -233,7 +233,7 @@ def change_name_or_weight(event):
                 break
 
 
-def change_color(event):
+def chang(event):
     x, y = event.x, event.y
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
@@ -267,11 +267,11 @@ def delete(event):
                 break
 
 
-def shortest_path():
+def short():
     enter = []
     win = Tk()
     win.title("Выбор вершин")
-    win.geometry("200x120+1050+240")
+    win.geometry("200x120+1050+260")
     win.resizable(False, False)
     label = Label(win, text="Выберите первую вершину")
     label.grid(row=0, column=0, sticky="ew")
@@ -287,7 +287,7 @@ def shortest_path():
     def func(arr, win):
         arr += [entry1.get(), entry2.get()]
         win.destroy()
-        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
+        display("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     if len(enter) >= 2:
         return enter[0], enter[1]
@@ -296,7 +296,7 @@ def shortest_path():
         return None, None
 
 
-def display_props(title, props):
+def display(title, props):
     string = ''
     for prop in props:
         string += str(prop) + ' '
@@ -314,9 +314,9 @@ color_vertex = "azure2"
 graph = nx.Graph()  # Граф
 root = Tk()
 root.title("Графовый редактор")
-lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(FONT_ARIALS_BOLD, 10))
-lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(FONT_ARIALS_BOLD, 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(FONT_ARIALS_BOLD, 10))
+lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(FONT_AR, 10))
+lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(FONT_AR, 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(FONT_AR, 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
@@ -324,17 +324,17 @@ root.geometry("900x900")
 canvas = Canvas(root, width=700, height=900, bg="lavender")
 canvas.place(x=600, y=0)
 # главное меню
-button1 = Button(root, text="Новая вершина", anchor="w", command=menu_add_vertex, font=("Courier", 12), bg="thistle2")
-button2 = Button(root, text="Создать ребро", anchor="w", command=menu_add_edge, font=("Courier", 12), bg="light cyan")
-button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=e_cycle, font=("Courier", 12), bg="light blue")
-button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=shortest_path, font=("Courier", 12), bg="MistyRose2")
+button1 = Button(root, text="Новая вершина", anchor="w", command=add_vertex, font=("Courier", 12), bg="thistle2")
+button2 = Button(root, text="Создать ребро", anchor="w", command=add_edge, font=("Courier", 12), bg="light cyan")
+button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=ter, font=("Courier", 12), bg="light blue")
+button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=short, font=("Courier", 12), bg="MistyRose2")
 button1.grid(row=0, column=0, stick="ew")
 button2.grid(row=1, column=0, stick="ew")
 button3.grid(row=2, column=0, stick="ew")
 button4.grid(row=3, column=0, stick="ew")
-canvas.bind('<B1-Motion>', move_node)
-canvas.bind('<Button-2>', change_name_or_weight)
-canvas.bind('<Button-3>', change_color)
+canvas.bind('<B1-Motion>', movefser)
+canvas.bind('<Button-2>', nameorweight)
+canvas.bind('<Button-3>', chang)
 canvas.bind('<Double-Button>', delete)
 root.bind('<B3-Motion>', delete)
 root.mainloop()
