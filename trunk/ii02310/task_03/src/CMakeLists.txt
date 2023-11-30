@@ -48,7 +48,6 @@ target_link_libraries(OTIS3END PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 # explicit, fixed bundle identifier manually though.
 
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.OTIS3END)
-endif()
 set_target_properties(OTIS3END PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
