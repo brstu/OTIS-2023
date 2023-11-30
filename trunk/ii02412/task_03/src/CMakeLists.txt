@@ -4,4 +4,4 @@ project(LAB_03)
 
 set(SOURCES lab3.cpp)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(MyExecut__ ${SOURCES})
