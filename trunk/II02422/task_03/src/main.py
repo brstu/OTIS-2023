@@ -252,12 +252,6 @@ def delete_oriented_line_on_click(event):
             elif oriented_line == 1:
                 name2, x2, y2 = vertex_data[2], vertex_data[0], vertex_data[1]
                 print("nam2,x2,y2   ", name2, x2, y2)
-                for key, line_data in data_id_orient_line_x_y.items():
-                    cond1 = (line_data[0][0] == x1 and line_data[0][1] == y1 and line_data[1][0] == x2 and line_data[1][1] == y2)
-                    cond2 = (line_data[0][0] == x2 and line_data[0][1] == y2 and line_data[1][0] == x1 and line_data[1][1] == y1)
-                    if cond1 or cond2:
-                        del data_id_orient_line_x_y[key]
-                        break
                 print("data_id_orient_line_x_y in delete\t", data_id_orient_line_x_y)
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3, arrow=tk.LAST)
                 oriented_line = 0
