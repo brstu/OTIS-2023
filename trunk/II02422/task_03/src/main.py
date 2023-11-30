@@ -7,6 +7,15 @@ application.geometry("860x860+310+0") # Размер окна и его расп
 application.resizable(0, 0) #Запрет на изменение размера окна
 application.wm_attributes('-topmost', 1) # Окно всегда сверху
 
+n = "<Button-1>"
+m = "Arial 14"
+o = "data_id_unorient_line_x_y in delete\t"
+l = "data_id_orient_line_x_y\t"
+k = "словарь вершин:\t"
+b = "data_id_unorient_line_x_y:\t"
+v = "data_id_orient_line_x_y:\t"
+t = "граф не является Эйлеровым"
+
 canvas = tk.Canvas(application, bg="white", width=856, height=726) # Создание холста
 
 canvas.place(x=0, y=120)
@@ -30,7 +39,6 @@ rename_name = ""
 data_vertex_id_x_y = dict() # словарь для хранения ID рёбер их координат и имени
 global ID # id вершин
 ID = 0
-# array_all_ID = []
 
 
 global non_oriented_line # что-то типо счётчика
@@ -59,9 +67,8 @@ temp_edges = [] # список ребёр
 global max_node # максимальная степень вершины
 max_node = 0
 nodes = [] # список всех вершин
-# weight = []
-global UNORIN_ORIENT # булевая переменная для проверки на ориентированность графа
-UNORIN_ORIENT = 0 # если = 0 то граф неориентированный
+global orient_unorin # булевая переменная для проверки на ориентированность графа
+orient_unorin = 0 # если = 0 то граф неориентированный
 
 
 global result_adjancy_matrix,result_incidency_matrix # матрица смежности
@@ -87,7 +94,7 @@ def line_intersect_circle(x1, y1, x2, y2):# функция для нахожде
 
 
 def draw_vertixes(): # рисование вершин
-    canvas.bind_all("<Button-1>", draw_vertex_on_click)
+    canvas.bind_all(n, draw_vertex_on_click)
 def draw_vertex_on_click(event):
     global name_vertex
     global color_vertices_line
@@ -102,10 +109,10 @@ def draw_vertex_on_click(event):
         # array_all_ID.append(ID)
         data_vertex_id_x_y[ID] = [mouse_x, mouse_y, name_vertex,color_vertices_line]
         print("data_vertex_id_x_y\t",data_vertex_id_x_y)
-        canvas.create_text(mouse_x, mouse_y, text=name_vertex, font="Arial 14")
+        canvas.create_text(mouse_x, mouse_y, text=name_vertex, font=m)
 
 def change_color_vertex(): # изменение цвета вершин
-    canvas.bind_all("<Button-1>", change_color_vertex_on_click)
+    canvas.bind_all(n, change_color_vertex_on_click)
 def change_color_vertex_on_click(event):
     global color_vertices_line
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -116,12 +123,12 @@ def change_color_vertex_on_click(event):
             data_vertex_id_x_y[i][3] = color_vertices_line
             canvas.create_oval(data_vertex_id_x_y[i][0] - 15,data_vertex_id_x_y[i][1] - 15, data_vertex_id_x_y[i][0] + 15, \
                  data_vertex_id_x_y[i][1] + 15,fill=color_vertices_line, outline="black", width=2)
-            canvas.create_text(data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1], text=data_vertex_id_x_y[i][2], font="Arial 14")
+            canvas.create_text(data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1], text=data_vertex_id_x_y[i][2], font=m)
             print("data_vertex_id_x_y\t",data_vertex_id_x_y)
 
 
 def draw_unoriented_line_between_vertex(): # рисование неориентированного ребра
-    canvas.bind_all("<Button-1>",draw_line_between_vertex_on_click)
+    canvas.bind_all(n,draw_line_between_vertex_on_click)
 def draw_line_between_vertex_on_click(event):
     global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2,color
     global count_unoriented_line
@@ -149,51 +156,61 @@ def draw_line_between_vertex_on_click(event):
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill=color, width=2)
                 non_oriented_line = 0
                 break
-def delete_unoriented_line(): # удаление неориентированного ребра
-    canvas.bind_all("<Button-1>",delete_unoriented_line_on_click)
+
+def delete_unoriented_line(): 
+    canvas.bind_all(n, delete_unoriented_line_on_click)
+
+def is_within_range(x, y, target_x, target_y, threshold=15):
+    return target_x - threshold < x < target_x + threshold and target_y - threshold < y < target_y + threshold
+
+def find_vertex_at_position(x, y, data_vertex_id_x_y):
+    for i in data_vertex_id_x_y:
+        if is_within_range(x, y, data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1]):
+            return data_vertex_id_x_y[i][2], data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1]
+    return None, None, None
+
+def delete_line_between_vertices(x1, y1, x2, y2, data_id_unorient_line_x_y, canvas):
+    for key in data_id_unorient_line_x_y:
+        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and \
+           (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2):
+            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
+            del data_id_unorient_line_x_y[key]
+            return
+        elif (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and \
+             (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
+            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
+            del data_id_unorient_line_x_y[key]
+            return
+
 def delete_unoriented_line_on_click(event):
-    global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2,color
+    global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2, color
     global count_unoriented_line
+    
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
-    for i in data_vertex_id_x_y:
-        if mouse_x > data_vertex_id_x_y[i][0] - 15 and mouse_x < data_vertex_id_x_y[i][0] + 15 and\
-             mouse_y > data_vertex_id_x_y[i][1] - 15 and mouse_y < data_vertex_id_x_y[i][1] + 15:
-            if non_oriented_line == 0:
-                name1 = data_vertex_id_x_y[i][2]
-                x1 = data_vertex_id_x_y[i][0]
-                y1 = data_vertex_id_x_y[i][1]
-                non_oriented_line += 1
-                print("nam1,x1,y1   ",name1,x1,y1)
-                break
-            elif non_oriented_line == 1:
-                name2 = data_vertex_id_x_y[i][2]
-                x2 = data_vertex_id_x_y[i][0]
-                y2 = data_vertex_id_x_y[i][1]
-                print("nam2,x2,y2   ",name2,x2,y2)
-                count_unoriented_line-=1
-                for key in data_id_unorient_line_x_y:
-                    if data_id_unorient_line_x_y[key][0][0] == x1 and data_id_unorient_line_x_y[key][0][1] == y1 and\
-                         data_id_unorient_line_x_y[key][1][0] == x2 and data_id_unorient_line_x_y[key][1][1] == y2:
-                        print("data_id_unorient_line_x_y in delete\t",data_id_unorient_line_x_y)
-                        canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                        del data_id_unorient_line_x_y[key]
-                        break
-                    elif data_id_unorient_line_x_y[key][0][0] == x2 and data_id_unorient_line_x_y[key][0][1] == y2 and\
-                         data_id_unorient_line_x_y[key][1][0] == x1 and data_id_unorient_line_x_y[key][1][1] == y1:
-                        print("data_id_unorient_line_x_y in delete\t",data_id_unorient_line_x_y)
-                        canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                        del data_id_unorient_line_x_y[key]
-                        break
-                print("data_id_unorient_line_x_y in delete\t",data_id_unorient_line_x_y)
-                canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                non_oriented_line = 0
-                break
+    
+    name, x, y = find_vertex_at_position(mouse_x, mouse_y, data_vertex_id_x_y)
+    
+    if name:
+        if non_oriented_line == 0:
+            name1 = name
+            x1, y1 = x, y
+            non_oriented_line += 1
+            print("nam1,x1,y1   ", name1, x1, y1)
+        elif non_oriented_line == 1:
+            name2 = name
+            x2, y2 = x, y
+            print("nam2,x2,y2   ", name2, x2, y2)
+            count_unoriented_line -= 1
+            delete_line_between_vertices(x1, y1, x2, y2, data_id_unorient_line_x_y, canvas)
+            print(o, data_id_unorient_line_x_y)
+            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
+            non_oriented_line = 0
 
 
 def draw_oriented_line_between_vertex(): # рисование ориентированного ребра
-    canvas.bind_all("<Button-1>",draw_oriented_line_between_vertex_on_click)
+    canvas.bind_all(n,draw_oriented_line_between_vertex_on_click)
 def draw_oriented_line_between_vertex_on_click(event):
     global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2,color1
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -215,12 +232,12 @@ def draw_oriented_line_between_vertex_on_click(event):
                 x2 = data_vertex_id_x_y[i][0]
                 y2 = data_vertex_id_x_y[i][1]
                 data_id_orient_line_x_y[ID_oriented_line] = [[x1,y1,name1,color1],[x2,y2,name2,color1]]
-                print("data_id_orient_line_x_y\t",data_id_orient_line_x_y)
+                print(l,data_id_orient_line_x_y)
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill=color1, width=2, arrow=tk.LAST)
                 oriented_line = 0
                 break
 def delete_oriented_line(): # удаление ориентированного ребра
-    canvas.bind_all("<Button-1>",delete_oriented_line_on_click)
+    canvas.bind_all(n,delete_oriented_line_on_click)
 def delete_oriented_line_on_click(event):
     global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -257,7 +274,7 @@ def delete_oriented_line_on_click(event):
 
 
 def draw_weight_line(): # рисование веса
-    canvas.bind_all("<Button-1>",draw_weight_on_click)
+    canvas.bind_all(n,draw_weight_on_click)
 def draw_weight_on_click(event):
     global weight,ID_weight
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -270,7 +287,7 @@ def draw_weight_on_click(event):
 
 
 def delete_weight_line(): # удаление веса
-    canvas.bind_all("<Button-1>",delete_weight_on_click)
+    canvas.bind_all(n,delete_weight_on_click)
 def delete_weight_on_click(event):
     global weight,ID_weight
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -302,7 +319,7 @@ def input_weight_on_click(weight_line,root):
         root.destroy()
 
 
-def NAME_VERTEX(): # функция для задания имени вершины
+def vertex_name(): # функция для задания имени вершины
     new_application = tk.Tk()
     new_application.title("Задайте имя вершины")
     new_application.resizable(15, 15)
@@ -311,8 +328,8 @@ def NAME_VERTEX(): # функция для задания имени верши�
     label.grid(row=0, column=0, sticky="ew")
     entry = tk.Entry(new_application)
     entry.grid(row=1, column=0)
-    btnGraf = tk.Button(new_application, text="Ввод вершины", command=lambda: vertex_name(entry.get(), new_application))
-    btnGraf.grid(row=2, column=0, sticky="ew")
+    grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: vertex_name(entry.get(), new_application))
+    grafbtn.grid(row=2, column=0, sticky="ew")
     new_application.mainloop()
 def vertex_name(name, root): # проверка на существование вершины
     global name_vertex
@@ -327,7 +344,7 @@ def vertex_name(name, root): # проверка на существование 
         mb.showerror(" ","Такая вершина уже существует")
 
 def stop_add_vertex(): # для остановки действия
-    canvas.unbind_all("<Button-1>")
+    canvas.unbind_all(n)
 def color_vertex(color): # для изменения цвета вершины
     global color_vertices_line
     color_vertices_line = color
@@ -344,8 +361,8 @@ def graph_name(): # изменение имени графа
     label.grid(row=0, column=0, sticky="ew")
     entry = tk.Entry(new_application)
     entry.grid(row=1, column=0)
-    btnGraf = tk.Button(new_application, text="Ввод", command=lambda: change_graf_name(entry.get(), new_application))
-    btnGraf.grid(row=2, column=0, sticky="ew")
+    grafbtn = tk.Button(new_application, text="Ввод", command=lambda: change_graf_name(entry.get(), new_application))
+    grafbtn.grid(row=2, column=0, sticky="ew")
     new_application.mainloop()
 def change_graf_name(name, root): # изменение имени графа
     if name in all_name_garphs:
@@ -360,7 +377,7 @@ def change_graf_name(name, root): # изменение имени графа
     
 
 def delete_vertex():# удаление вершины
-    canvas.bind_all("<Button-1>", delete_vertex_on_click)
+    canvas.bind_all(n, delete_vertex_on_click)
 def delete_vertex_on_click(event):
     name_delete_vertex = ''
     global ID_none_oriented_line,ID_oriented_line
@@ -377,7 +394,7 @@ def delete_vertex_on_click(event):
                  data_vertex_id_x_y[i][1] + 15,fill="white", outline="white", width=2)
             name_delete_vertex = data_vertex_id_x_y[i][2]
             
-            print("словарь вершин:\t",data_vertex_id_x_y[i][2])
+            print(k,data_vertex_id_x_y[i][2])
             if ID_none_oriented_line !=0:
                 for name in data_id_unorient_line_x_y:
                     if data_id_unorient_line_x_y[name][0][2] == name_delete_vertex or data_id_unorient_line_x_y[name][1][2] == name_delete_vertex:
@@ -388,7 +405,7 @@ def delete_vertex_on_click(event):
                         all_delete_name1.append(name)
                 for j in all_delete_name1:
                     del data_id_unorient_line_x_y[j]
-                print("data_id_unorient_line_x_y:\t",data_id_unorient_line_x_y)
+                print(b,data_id_unorient_line_x_y)
             if ID_oriented_line !=0:
                 for name in data_id_orient_line_x_y:
                     if data_id_orient_line_x_y[name][0][2] == name_delete_vertex or data_id_orient_line_x_y[name][1][2] == name_delete_vertex:
@@ -398,11 +415,11 @@ def delete_vertex_on_click(event):
                         all_delete_name2.append(name)
                 for j in all_delete_name2:
                     del data_id_orient_line_x_y[j]
-                print("data_id_orient_line_x_y:\t",data_id_orient_line_x_y)
+                print(v,data_id_orient_line_x_y)
             del data_vertex_id_x_y[i]
             array_name_vertex.remove(name_delete_vertex)
             print("array_name_vertex:\t",array_name_vertex)
-            print("словарь вершин:\t",data_vertex_id_x_y)
+            print(k,data_vertex_id_x_y)
             break
 
 
@@ -413,7 +430,7 @@ ID_vanish_vertex = 0
 all_vanish_nonorline_id = []
 all_vanish_orline_id = []
 def move_vertex_and_line():
-    canvas.bind_all("<Button-1>", vanish_vertex_on_click)
+    canvas.bind_all(n, vanish_vertex_on_click)
 def vanish_vertex_on_click(event):
     print("event",event)
     global ID_none_oriented_line,ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
@@ -428,24 +445,24 @@ def vanish_vertex_on_click(event):
             name_vanish_vertex = data_vertex_id_x_y[i][2]
             ID_vanish_vertex = i
             print("имена вершин:\t",array_name_vertex)
-            print("словарь вершин:\t",data_vertex_id_x_y[i][2])
+            print(k,data_vertex_id_x_y[i][2])
             if ID_none_oriented_line !=0:
                 for tid in data_id_unorient_line_x_y:
                     if data_id_unorient_line_x_y[tid][0][2] == name_vanish_vertex or data_id_unorient_line_x_y[tid][1][2] == name_vanish_vertex:
                         canvas.create_line(*line_intersect_circle(data_id_unorient_line_x_y[tid][0][0], data_id_unorient_line_x_y[tid][0][1],\
                              data_id_unorient_line_x_y[tid][1][0], data_id_unorient_line_x_y[tid][1][1]), fill="white", width=2)
                         all_vanish_nonorline_id.append(tid)
-                print("data_id_unorient_line_x_y:\t",data_id_unorient_line_x_y)
+                print(b,data_id_unorient_line_x_y)
             if ID_oriented_line !=0:
                 for tid in data_id_orient_line_x_y:
                     if data_id_orient_line_x_y[tid][0][2] == name_vanish_vertex or data_id_orient_line_x_y[tid][1][2] == name_vanish_vertex:
                         canvas.create_line(*line_intersect_circle(data_id_orient_line_x_y[tid][0][0], data_id_orient_line_x_y[tid][0][1],\
                              data_id_orient_line_x_y[tid][1][0], data_id_orient_line_x_y[tid][1][1]), fill="white", width=2, arrow=tk.LAST)
                         all_vanish_orline_id.append(tid)
-                print("data_id_orient_line_x_y:\t",data_id_orient_line_x_y)
+                print(v,data_id_orient_line_x_y)
                 
             break
-    canvas.bind_all("<Button-1>", appearance_vertex_on_move)
+    canvas.bind_all(n, appearance_vertex_on_move)
 def appearance_vertex_on_move(event):
     global ID_none_oriented_line,ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -454,7 +471,7 @@ def appearance_vertex_on_move(event):
         temp_color_vertex = data_vertex_id_x_y[ID_vanish_vertex][3]
         data_vertex_id_x_y[ID_vanish_vertex] = [mouse_x, mouse_y, name_vanish_vertex,temp_color_vertex]
         canvas.create_oval(mouse_x - 15, mouse_y - 15, mouse_x + 15, mouse_y + 15,fill=temp_color_vertex, outline="black", width=2)
-        canvas.create_text(mouse_x, mouse_y, text=name_vanish_vertex, font="Arial 14")
+        canvas.create_text(mouse_x, mouse_y, text=name_vanish_vertex, font=m)
         print("data_vertex_id_x_y:\t",data_vertex_id_x_y)
         if ID_none_oriented_line !=0:
             for idi in all_vanish_nonorline_id:
@@ -466,7 +483,7 @@ def appearance_vertex_on_move(event):
                     data_id_unorient_line_x_y[idi][1] = [mouse_x, mouse_y, name_vanish_vertex,data_id_unorient_line_x_y[idi][1][3]]
                     canvas.create_line(*line_intersect_circle(data_id_unorient_line_x_y[idi][0][0], data_id_unorient_line_x_y[idi][0][1],\
                          data_id_unorient_line_x_y[idi][1][0], data_id_unorient_line_x_y[idi][1][1]), fill=data_id_unorient_line_x_y[idi][1][3], width=2)
-            print("data_id_unorient_line_x_y:\t",data_id_unorient_line_x_y)
+            print(b,data_id_unorient_line_x_y)
         if ID_oriented_line !=0:
             for idj in all_vanish_orline_id:
                 if name_vanish_vertex == data_id_orient_line_x_y[idj][0][2]:
@@ -479,11 +496,11 @@ def appearance_vertex_on_move(event):
                     canvas.create_line(*line_intersect_circle(data_id_orient_line_x_y[idj][0][0], data_id_orient_line_x_y[idj][0][1],\
                          data_id_orient_line_x_y[idj][1][0], data_id_orient_line_x_y[idj][1][1]), \
                              fill=data_id_orient_line_x_y[idj][1][3], width=2, arrow=tk.LAST)
-            print("data_id_orient_line_x_y:\t",data_id_orient_line_x_y)
+            print(v,data_id_orient_line_x_y)
                 
         
 def rename_vertex(): # переименование вершины
-    canvas.bind_all("<Button-1>", rename_vertex_on_click)
+    canvas.bind_all(n, rename_vertex_on_click)
 def rename_vertex_on_click(event):
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
@@ -502,8 +519,8 @@ def rename_vertex_on_click(event):
             print("имена вершин: ",array_name_vertex)
             # print("словарь вершин: ",data_vertex_id_x_y[i][2])
             print("оставшийся словарь вершин",data_vertex_id_x_y)
-            btnGraf = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(entry.get(), new_application, i))
-            btnGraf.grid(row=2, column=0, sticky="ew")
+            grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: rename_vertex_name(entry.get(), new_application, i))
+            grafbtn.grid(row=2, column=0, sticky="ew")
             new_application.mainloop()
             break
 def rename_vertex_name(name, root, i):
@@ -516,7 +533,7 @@ def rename_vertex_name(name, root, i):
         canvas.delete(data_vertex_id_x_y[i][2])
         canvas.create_oval(data_vertex_id_x_y[i][0] - 15, data_vertex_id_x_y[i][1] - 15, data_vertex_id_x_y[i][0] + 15,\
              data_vertex_id_x_y[i][1] + 15,fill=color_vertices_line, outline="black", width=2)
-        canvas.create_text(data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1], text=name, font="Arial 14", fill="black")
+        canvas.create_text(data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1], text=name, font=m, fill="black")
         array_name_vertex.remove(data_vertex_id_x_y[i][2])
         rename_name=data_vertex_id_x_y[i][2]
         print("rename_name\t",rename_name)
@@ -529,20 +546,20 @@ def rename_vertex_name(name, root, i):
 
                 if data_id_unorient_line_x_y[i][1][2] == rename_name:
                     data_id_unorient_line_x_y[i][1][2] = name
-            print("data_id_orient_line_x_y\t",data_id_unorient_line_x_y)
+            print(l,data_id_unorient_line_x_y)
         elif ID_oriented_line != 0: # при изменнии имени вершины, делаем проверку на нахождение переименованной вершины в словаре ориентированных ребер
             for i in data_id_orient_line_x_y: # и если находим, то меняем имя вершины в списке ребер на новое имя
                 if data_id_orient_line_x_y[i][0][2] == rename_name:
                     data_id_orient_line_x_y[i][0][2] = name
                 if data_id_orient_line_x_y[i][1][2] == rename_name:
                     data_id_orient_line_x_y[i][1][2] = name
-            print("data_id_orient_line_x_y\t",data_id_orient_line_x_y)
+            print(l,data_id_orient_line_x_y)
         array_name_vertex.append(name)
         root.destroy()
 
 
 def algorithm(): # функция для создания окна с алгоритмами
-    global max_node, UNORIN_ORIENT,result_adjancy_matrix,result_incidency_matrix
+    global max_node, orient_unorin,result_adjancy_matrix,result_incidency_matrix
     new_application = tk.Tk() # Создание окна
     new_application.geometry("432x470+195+0") # Размер окна и его расположение
     new_application.resizable(0, 0) # Запрет на изменение размера окна
@@ -555,24 +572,24 @@ def algorithm(): # функция для создания окна с алгор
     input_value = tk.Button(new_application, text="Ввод графа", command=lambda: graph_info(entry.get(), new_application),width=12, height=2)
     button_reading_file = tk.Button(new_application, text="Чтение из файла", command=lambda: reading_file(new_application),width=12, height=2)
 
-    if UNORIN_ORIENT ==0:
-        button_diametr_graph = tk.Button(new_application, text="Диаметр графа", command=lambda: diameterGraph(nodes,temp_edges),width=12, height=2)
-        button_radius_graph = tk.Button(new_application, text="Радиус графа", command=lambda: radiusGraph(nodes,temp_edges),width=12, height=2)
-        button_center_graph = tk.Button(new_application, text="Центр графа", command=lambda: centerGraph(nodes,temp_edges),width=12, height=2)
+    if orient_unorin ==0:
+        button_diametr_graph = tk.Button(new_application, text="Диаметр графа", command=lambda: graph_diam(nodes,temp_edges),width=12, height=2)
+        button_radius_graph = tk.Button(new_application, text="Радиус графа", command=lambda: graphradius(nodes,temp_edges),width=12, height=2)
+        button_center_graph = tk.Button(new_application, text="Центр графа", command=lambda: graph_center(nodes,temp_edges),width=12, height=2)
     else:
         button_diametr_graph = tk.Button(new_application, text="Диаметр графа",\
-             command=lambda: diameterGraph(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
+             command=lambda: graph_diam(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
         button_radius_graph = tk.Button(new_application, text="Радиус графа",\
-             command=lambda: radiusGraph(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
+             command=lambda: graphradius(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
         button_center_graph = tk.Button(new_application, text="Центр графа",\
-             command=lambda: centerGraph(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
+             command=lambda: graph_center(nodes,temp_edges),width=12, height=2, state=tk.DISABLED)
 
     entry.grid(row=0, column=1)
     input_value.grid(row=1, column=1, sticky="ew")
     button_reading_file.grid(row=2, column=1, sticky="ew")
     button_adjancy_matrix = tk.Button(new_application, text="Матрица\nсмежности", command=lambda: adjancy_matrix(temp_edges,max_node),width=12, height=2)
     button_incidency_matrix = tk.Button(new_application, text="Матрица\nинцидентности",\
-         command=lambda: incidency_matrix(temp_edges,max_node, UNORIN_ORIENT,new_application),width=12, height=2)
+         command=lambda: incidency_matrix(temp_edges,max_node, orient_unorin,new_application),width=12, height=2)
     button_euleran_circle = tk.Button(new_application, text="Эйлеров\nцикл", command=lambda: euleran_circle(result_adjancy_matrix),width=12, height=2)
     button_quit = tk.Button(new_application, text="Выход", command=new_application.destroy,width=12, height=2)
 
@@ -592,12 +609,12 @@ def algorithm(): # функция для создания окна с алгор
     new_application.mainloop()
 
 
-def graph_info(information, root): # функция для ввода графа
+def graph_info(information): # функция для ввода графа
     file = open("info.txt","w")
     file.write(information)
     file.close()
-def reading_file(root): # считывание записанного в файл графа
-    global max_node, UNORIN_ORIENT, temp_edges, nodes,weight
+def reading_file(): # считывание записанного в файл графа
+    global max_node, orient_unorin, temp_edges, nodes,weight
     file = open("info.txt ","r")
     temp = file.readline()
     information = temp.split(";")
@@ -606,11 +623,11 @@ def reading_file(root): # считывание записанного в фай�
     edges_graph = information[2]
     temp_weight = information[3]
     
-    UNORIN_ORIENT = 0
+    orient_unorin = 0
     if "UNORIENT" in name_type_graph:
-        UNORIN_ORIENT = 0
+        orient_unorin = 0
     elif "ORIENT" in name_type_graph:
-        UNORIN_ORIENT = 1
+        orient_unorin = 1
 
     nodes = temp_nodes.split(",")
     for i ,val in enumerate(nodes):
@@ -643,25 +660,25 @@ def reading_file(root): # считывание записанного в фай�
 def adjancy_matrix(nodes,max_node): # функция для матрицы смежности
     global result_adjancy_matrix
     print("Матрица смежности")
-    adj = [[0 for i in range(max_node)] for j in range(max_node)]
+    adj = [[0 for _ in range(max_node)] for _ in range(max_node)]
     for i,val in enumerate(nodes):
         adj[val[0]-1][val[1]-1]=1
-        if UNORIN_ORIENT == 0:
+        if orient_unorin == 0:
             adj[val[1]-1][val[0]-1]=1
     for i in range(max_node):
         print(adj[i])
     print()
     result_adjancy_matrix = adj
-def incidency_matrix(nodes,max_nodes, UNORIN_ORIENT,root):
+def incidency_matrix(nodes,max_nodes, orient_unorin):
     global result_incidency_matrix
     print("Матрица инцидентности")
-    if UNORIN_ORIENT == 0:
-        inc = [[0 for i in range(len(nodes))] for j in range(max_nodes)]
+    if orient_unorin == 0:
+        inc = [[0 for _ in range(len(nodes))] for _ in range(max_nodes)]
         for i,val in enumerate(nodes):
             inc[val[0]-1][i] = 1
             inc[val[1]-1][i] = 1
     else:
-        inc = [[0 for i in range(len(nodes))] for j in range(max_nodes)]
+        inc = [[0 for _ in range(len(nodes))] for _ in range(max_nodes)]
         for i,val in enumerate(nodes):
             inc[val[0]-1][i] = 1
             inc[val[1]-1][i] = -1
@@ -674,8 +691,8 @@ def incidency_matrix(nodes,max_nodes, UNORIN_ORIENT,root):
 def adjancy_for_deikstra(nodes, weight, max_node):
     n = len(nodes)
     m = 2
-    array_edge = [[0 for i in range(m)] for j in range(n)]
-    array_edjancy = [[0 for i in range(max_node)] for j in range(max_node)]
+    array_edge = [[0 for _ in range(m)] for _ in range(n)]
+    array_edjancy = [[0 for _ in range(max_node)] for _ in range(max_node)]
     for i in range(n):
         for j in range(m):
             array_edge[i][j] = nodes[i][j]
@@ -689,7 +706,7 @@ def adjancy_for_deikstra(nodes, weight, max_node):
         array_edjancy[y-1][x-1] = weight[i]
     return array_edjancy
 def deikstra(nodes,weight,max_node):
-    adjacencyMatrix = adjancy_for_deikstra(nodes, weight, max_node)
+    matrix_adjacency = adjancy_for_deikstra(nodes, weight, max_node)
     for start in range(max_node):
         distance = [inf for i in range(max_node)]
         visited = [0 for i in range(max_node)]
@@ -703,9 +720,9 @@ def deikstra(nodes,weight,max_node):
                 break
             visited[v] = 1
             for j in range(max_node):
-                if adjacencyMatrix[v][j] != 0:
+                if matrix_adjacency[v][j] != 0:
                     to = j
-                    size = adjacencyMatrix[v][j]
+                    size = matrix_adjacency[v][j]
                     if distance[v] + size < distance[to]:
                         distance[to] = distance[v] + size
         print("vertex\tdistance")
@@ -727,21 +744,21 @@ def dfs(adjacency_matrix, i, visited):
         if adjacency_matrix[i][j] == 1 and not visited[j]:
             dfs(adjacency_matrix, j, visited)
 
-def euleran_circle(adjacencyMatrix):
-    max_node = len(adjacencyMatrix)
-    print("conCompDFS(adjacencyMatrix)", connected_components(adjacencyMatrix))
-    if (connected_components(adjacencyMatrix) != 1):
-        print("граф не является Эйлеровым")
-        mb.showerror(" ","граф не является Эйлеровым")
+def euleran_circle(matrix_adjacency):
+    max_node = len(matrix_adjacency)
+    print("conCompDFS(matrix_adjacency)", connected_components(matrix_adjacency))
+    if (connected_components(matrix_adjacency) != 1):
+        print(t)
+        mb.showerror(" ",t)
     degrees = [0] * max_node
     for i in range(max_node):
         for j in range(max_node):
-            if (adjacencyMatrix[i][j]):
+            if (matrix_adjacency[i][j]):
                 degrees[i] += 1
     for i in range(max_node):
         if (degrees[i] % 2 != 0):
-            print("граф не является Эйлеровым")
-            mb.showerror(" ","граф не является Эйлеровым")
+            print(t)
+            mb.showerror(" ",t)
     path = []
     s = []
     poz = 0
@@ -750,9 +767,9 @@ def euleran_circle(adjacencyMatrix):
         poz = s[-1]
         temp = False
         for i in range(max_node):
-            if (adjacencyMatrix[poz][i]):
-                adjacencyMatrix[poz][i] = 0
-                adjacencyMatrix[i][poz] = 0
+            if (matrix_adjacency[poz][i]):
+                matrix_adjacency[poz][i] = 0
+                matrix_adjacency[i][poz] = 0
                 s.append(i)
                 temp = True
                 break
@@ -762,17 +779,17 @@ def euleran_circle(adjacencyMatrix):
     print("Euleran circle:\t",path)
 
 
-def radiusGraph(nodes,edges):
+def graphradius(nodes,edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
     print("радиус графа\t",nx.radius(G))
-def diameterGraph(nodes,edges):
+def graph_diam(nodes,edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
     print("диаметр графа\t",nx.diameter(G))
-def centerGraph(nodes,edges):
+def graph_center(nodes,edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
@@ -788,7 +805,7 @@ def main():
     button_yellow = tk.Button(application, text="yellow", command=lambda: color_vertex("yellow"),width=15, height=2, bg="yellow")
 
     button_name_graph = tk.Button(application, text="name graph", command=graph_name,width=15, height=2)
-    button_name_vertex = tk.Button(application, text="name vertex", command=NAME_VERTEX,width=15, height=2)
+    button_name_vertex = tk.Button(application, text="name vertex", command=vertex_name,width=15, height=2)
     button_delete_vertex = tk.Button(application, text="delete vertex", command=delete_vertex,width=15, height=2)
     button_rename_vertex = tk.Button(application, text="rename vertex", command=rename_vertex,width=15, height=2)
     button_draw_line_between_vertex = tk.Button(application, text="draw unoriented_line\n between vertex",\
