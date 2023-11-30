@@ -304,6 +304,7 @@ def display_props(title, props):
     label.pack()
     win.mainloop()
 
+
 nodes = []  # Список вершин
 edges = []  # Список ребер
 color_vertex = "azure2"
