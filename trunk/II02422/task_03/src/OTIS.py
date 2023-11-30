@@ -1,5 +1,4 @@
-from tkinter import Tk, Canvas, Button, Label, Entry, Checkbutton, BooleanVar
-from tkinter import messagebox
+from tkinter import Tk, Button, Label, Canvas, Entry, Checkbutton, BooleanVar, messagebox
 import numpy
 
 tk = Tk()  # Создание окна
@@ -27,23 +26,22 @@ label.place(x=370, y=100)  # Расположение метки
 label["text"] = "Имя графа"  # Текст метки
 
 
-# Класс создания вершины
 class Vertex:
-    def __init__(self, canvas, color, x_click, y_click, vert_name, vertex_count):
+    def __init__(self, canvas, color): 
+        global x_click, y_click, vert_name, vertex_count
         self.vertex_count = vertex_count
         self.vert_name = vert_name[-1]
         self.canvas = canvas
         self.color = color
         self.x = x_click
         self.y = y_click
-        self.id_vert = self.canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
+        self.id_vert = canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
         self.id_txt = self.canvas.create_text(self.x, self.y, anchor='center', text=self.vert_name,
-                                              font=("Arial", 12), fill="white")
-        self.canvas.unbind("m")
-    
-    def get_info(self):
-        return self.vertex_count, self.vert_name
+                                              font=n, fill="white")
+        canvas.unbind("m")
 
+    def get_info(self):
+        return self.vertex_count, self.vert_name[self.vertex_count - 1]
 
 
 class Edge:
@@ -54,9 +52,9 @@ class Edge:
         self.x2, self.y2 = vertex2.x, vertex2.y
 
         self.weight = weight
-        self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2)
-
         if var1.get():
+            self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2,
+                                           arrow="last")
             if weight != 0:
                 self.rect = canvas.create_rectangle((self.x1 + self.x2) / 2 - 5,
                                                     (self.y1 + self.y2) / 2 - 8,
@@ -66,11 +64,12 @@ class Edge:
                 self.text = canvas.create_text((self.x1 + self.x2) / 2,
                                                (self.y1 + self.y2) / 2,
                                                text=self.weight,
-                                               font=('Arial', 14), fill='black')
+                                               font=('Arial', 14), fill='black', )
             else:
                 self.rect = None
                 self.text = None
         else:
+            self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2)
             if weight != 0:
                 self.rect = canvas.create_rectangle((self.x1 + self.x2) / 2 - 5,
                                                     (self.y1 + self.y2) / 2 - 8,
@@ -80,17 +79,15 @@ class Edge:
                 self.text = canvas.create_text((self.x1 + self.x2) / 2,
                                                (self.y1 + self.y2) / 2,
                                                text=self.weight,
-                                               font=('Arial', 14), fill='black')
+                                               font=('Arial', 14), fill='black', )
             else:
                 self.rect = None
                 self.text = None
 
     def delete(self):
         canvas.delete(self.line)
-        if self.rect:
-            canvas.delete(self.rect)
-        if self.text:
-            canvas.delete(self.text)
+        canvas.delete(self.rect)
+        canvas.delete(self.text)
 
 
 # Отслеживание нажатия кнопки мыши и запись в глобальные переменные
@@ -348,12 +345,12 @@ def menu_delete_edge():
     label = Label(new_window)
     label["text"] = "Введите имя вершин, между которыми \nудаляется ребро\nПервая вершина"
     label.grid(row=0, column=0, sticky="ew")
-    label2 = Label(new_window)
-    label2["text"] = "Вторая вершина"
+    label4 = Label(new_window)
+    label4["text"] = "Вторая вершина"
     entry = Entry(new_window)
     entry2 = Entry(new_window)
     entry.grid(row=1, column=0, sticky="ew")
-    label2.grid(row=2, column=0, sticky="ew")
+    label4.grid(row=2, column=0, sticky="ew")
     entry2.grid(row=3, column=0, sticky="ew")
     del_btn = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
     del_btn.grid(row=4, column=0, sticky="ew")
@@ -384,9 +381,9 @@ def menu_rename_vertex():
     label1.grid(row=0, column=0, sticky="ew")
     entry1 = Entry(new_window)
     entry1.grid(row=1, column=0, sticky="ew")
-    label2 = Label(new_window)
-    label2["text"] = "Введите новое имя вершины"
-    label2.grid(row=2, column=0, sticky="ew")
+    label4 = Label(new_window)
+    label4["text"] = "Введите новое имя вершины"
+    label4.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(new_window)
     entry2.grid(row=3, column=0, sticky="ew")
     ren_btn = Button(new_window, text="Изменить имя",
@@ -394,14 +391,16 @@ def menu_rename_vertex():
     ren_btn.grid(row=4, column=0, sticky="ew")
 
 
-def line_intersect_circle(x1, y1, x2, y2):
-    main_gipotenuza = numpy.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-    main_dx = x2 - x1
-    main_dy = y2 - y1
-    dx = (main_gipotenuza - 20) * main_dx / main_gipotenuza
-    dy = (main_gipotenuza - 20) * main_dy / main_gipotenuza
+def calculate_delta(x1, y1, x2, y2):
+    gipot = numpy.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    dx = (gipot - 20) * (x2 - x1) / gipot
+    dy = (gipot - 20) * (y2 - y1) / gipot
+    return dx, dy
 
+def line_intersect_circle(x1, y1, x2, y2):
+    dx, dy = calculate_delta(x1, y1, x2, y2)
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
+
 
 
 def create_edge(en1, en2, weight, root):
@@ -436,15 +435,15 @@ def menu_create_edge():
     entry2 = Entry(new_window)
     entry3 = Entry(new_window)
     entry3.insert(0, "0")
-    label2 = Label(new_window)
+    label4 = Label(new_window)
     label3 = Label(new_window)
     label3["text"] = "Введите вес вершины"
-    label2["text"] = "Введите имя 2-ой вершины"
+    label4["text"] = "Введите имя 2-ой вершины"
     label1.grid(row=0, column=0, sticky="ew")
     vertname_btn = Button(new_window, text="Ввод",
                          command=lambda: create_edge(entry1.get(), entry2.get(), entry3.get(), new_window))
     entry1.grid(row=1, column=0, sticky="ew")
-    label2.grid(row=2, column=0, sticky="ew")
+    label4.grid(row=2, column=0, sticky="ew")
     entry2.grid(row=3, column=0, sticky="ew")
     label3.grid(row=4, column=0, sticky="ew")
     entry3.grid(row=5, column=0, sticky="ew")
