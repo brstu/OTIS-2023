@@ -1,6 +1,6 @@
 from tkinter import Tk, Canvas, Button, Label, Entry, Checkbutton, BooleanVar
-from tkinter import messagebox as mb
-import numpy as np
+from tkinter import messagebox
+import numpy
 
 tk = Tk()  # Создание окна
 tk.title("Graph")  # Заголовок окна
@@ -233,9 +233,9 @@ def give_color(numb):
 def create_vertex(root, entry):
     global call_count, vertex_count, color, vertex, vert_name
     if '' == entry.get():
-        mb.showerror(l, "Вы не ввели имя вершины")
+        messagebox.showerror(l, "Вы не ввели имя вершины")
     elif entry.get() in [vert.vert_name for vert in vertex]:
-        mb.showerror(l, "Такая вершина уже существует")
+        messagebox.showerror(l, "Такая вершина уже существует")
     elif entry.get() not in [vert.vert_name for vert in vertex]:
         vert_name[vertex_count] = entry.get()
         call_count += 1
@@ -299,7 +299,7 @@ def find_delete_vertex(entry, root):
                 flag = 0
                 break
         else:
-            mb.showerror(l, o)
+            messagebox.showerror(l, o)
             break
     if edge_count == 0:
         c2["state"] = "normal"
@@ -334,7 +334,7 @@ def find_delete_edge(en1, en2, root):
             root.destroy()
             break
     else:
-        mb.showerror(l, "Такого ребра не существует")
+        messagebox.showerror(l, "Такого ребра не существует")
     if edge_count == 0:
         c2["state"] = "normal"
 
@@ -369,7 +369,7 @@ def rename_vertex(en1, en2, root):
             root.destroy()
             break
     else:
-        mb.showerror(l, o)
+        messagebox.showerror(l, o)
 
 
 # Меню переназвания вершины
@@ -394,7 +394,7 @@ def menu_rename_vertex():
 
 
 def line_intersect_circle(x1, y1, x2, y2):
-    main_gipotenuza = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    main_gipotenuza = numpy.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
     main_dy = y2 - y1
     dx = (main_gipotenuza - 20) * main_dx / main_gipotenuza
@@ -411,13 +411,13 @@ def create_edge(en1, en2, weight, root):
             vert1 = vert
             break
     else:
-        mb.showerror(l, o)
+        messagebox.showerror(l, o)
     for vert in vertex:
         if vert.vert_name == en2:
             vert2 = vert
             break
     else:
-        mb.showerror(l, o)
+        messagebox.showerror(l, o)
     edges.append(Edge(vert1, vert2, weight))
     c2["state"] = "disable"
     edge_count += 1
