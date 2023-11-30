@@ -65,4 +65,3 @@ install(TARGETS OTIS3END
 
 
     qt_finalize_executable(OTIS3END)
-endif()
