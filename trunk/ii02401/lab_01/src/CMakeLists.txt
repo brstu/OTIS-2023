@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
-project(lab1)
+project(src)
 
-set(SOURCES lab1.cpp)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(src lab1.cpp)
