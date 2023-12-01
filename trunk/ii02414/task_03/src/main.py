@@ -6,9 +6,9 @@ import tkinter.colorchooser as colorchooser
 click_num = 0
 id_of_edge = 0
 button1 = "<Button-1>"
-numVertex = "number of vertex"
-idText = "id text"
-textVertex = "text on vertex"
+num_vertex = "number of vertex"
+id_text_global = "id text"
+text_vertex = "text on vertex"
 
 
 # функция для рисования вершины
@@ -80,13 +80,13 @@ def delete_canvas(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])  # удаление текста
             ovals.remove(x)  # удаление вершины из массива
             # удаление информации о вершине из словаря
-            cord[numVertex].remove(cord[numVertex][cord['id'].index(x)])
-            canvas.delete(cord[idText][cord['id'].index(x)])
+            cord[num_vertex].remove(cord[num_vertex][cord['id'].index(x)])
+            canvas.delete(cord[id_text_global][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
-            cord[idText].remove(cord[idText][cord['id'].index(x)])
+            cord[id_text_global].remove(cord[id_text_global][cord['id'].index(x)])
             cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
-            cord[textVertex].remove(cord[textVertex][cord['id'].index(x)])
+            cord[text_vertex].remove(cord[text_vertex][cord['id'].index(x)])
             cord['id'].remove(x)
             break
     # удаление ребра
@@ -112,8 +112,8 @@ def draw_canvas1(event):
     tag = 'oval' + str(id_text)
     texttag = 'text' + str(id_text)
     # добавление инфы о вершине в словарь
-    cord[numVertex].append(id_text)
-    cord[idText].append(tag)
+    cord[num_vertex].append(id_text)
+    cord[id_text_global].append(tag)
     cord["coordinatesX"].append(x)
     cord["coordinatesY"].append(y)
     oval_id = canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill='green', tags=tag)  # создание вершины
@@ -121,7 +121,7 @@ def draw_canvas1(event):
     cord['id'].append(oval_id)
     canvas.create_text(x, y, text=itext, font="Arial 14", tags=texttag)  # создание текста
     cord['textID'].append(texttag)
-    cord[textVertex].append(itext)
+    cord[text_vertex].append(itext)
 
 
 # функция для рисования ребра
@@ -162,7 +162,7 @@ def rename(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
-            cord[textVertex][cord['id'].index(x)] = new_name
+            cord[text_vertex][cord['id'].index(x)] = new_name
             break
 
 
@@ -302,7 +302,7 @@ x1, y1, x2, y2 = 0, 0, 0, 0
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
 # ребро(но с id ребра)
-cord = {'id': [], idText: [], textVertex: [], 'textID': [], numVertex: [], 'coordinatesX': [],
+cord = {'id': [], id_text_global: [], text_vertex: [], 'textID': [], num_vertex: [], 'coordinatesX': [],
         'coordinatesY': []}  # для хранения инфы о вершинах
 tk.Tk.geometry(root, "800x600")
 canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
