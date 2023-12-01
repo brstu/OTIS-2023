@@ -4,4 +4,4 @@ project(task1)
 
 set(SOURCES main.cpp)
 
-add_executable(Exeed ${SOURCES})
+add_executable(MyExec ${SOURCES})
