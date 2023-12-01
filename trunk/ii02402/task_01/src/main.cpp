@@ -2,7 +2,10 @@
 #include <vector>
 #include <cmath>
 
-using namespace std;
+// Используйте std:: перед идентификаторами из стандартной библиотеки
+using std::cout;
+using std::endl;
+using std::vector;
 
 vector<double> simulate_linear_system(double alpha, double beta, const vector<double>& input_signal) {
     vector<double> system_output(input_signal.size(), 0.0);
