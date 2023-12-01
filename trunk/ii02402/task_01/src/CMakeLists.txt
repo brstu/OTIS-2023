@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.5)
+project(Exeed_task_02)
 
-project(task1)
+set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCES main.cpp)
-
-add_executable(MyExec ${SOURCES})
+add_executable(Exeed_task_02 main.cpp)
