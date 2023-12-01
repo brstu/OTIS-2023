@@ -1,6 +1,6 @@
 from tkinter import messagebox as mb
 import tkinter as tk
-from math import inf, sqrt
+import math
 import networkx as nx
 application = tk.Tk() # Создание окна
 application.geometry("860x860+310+0") # Размер окна и его расположение
@@ -10,7 +10,7 @@ application.wm_attributes('-topmost', 1) # Окно всегда сверху
 n = "<Button-1>"
 m = "Arial 14"
 o = "data_id_unorient_line_x_y in delete\t"
-l = "data_id_orient_line_x_y\t"
+h = "data_id_orient_line_x_y\t"
 k = "словарь вершин:\t"
 b = "data_id_unorient_line_x_y:\t"
 v = "data_id_orient_line_x_y:\t"
@@ -25,58 +25,53 @@ label = tk.Label(application) # Создание метки
 label.place(x=370, y=125) # Расположение метки
 label["text"] = "Имя графа" # Текст метки
 
-global color_vertices_line # для хранения цвета вершин и рёбер
 color_vertices_line = 'white'
-global name_vertex # имя вершины
-name_vertex = ""
+name_vertex = "" # имя вершины
 array_name_vertex = [] # массив имен вершин
 all_name_garphs = [] # для имён графа
-global rename_name
 rename_name = ""
 
 
-
 data_vertex_id_x_y = dict() # словарь для хранения ID рёбер их координат и имени
-global ID # id вершин
-ID = 0
+id = 0
 
 
-global non_oriented_line # что-то типо счётчика
+# что-то типо счётчика
 non_oriented_line = 0
-global ID_none_oriented_line # ID для неоринтированных рёбер
-ID_none_oriented_line = 0
+# ID для неоринтированных рёбер
+id_none_oriented_line = 0
 data_id_unorient_line_x_y = dict() # словарь для хранения ID неориентированных рёбер и для имён и координат вершин с которыми они соединены
-global count_unoriented_line # количесвто рёбер
+# количесвто рёбер
 count_unoriented_line = 0
 
-global oriented_line # что-то типо счётчика
+# что-то типо счётчика
 oriented_line = 0
-global ID_oriented_line # ID для оринтированных рёбер
-ID_oriented_line = 0
+# ID для оринтированных рёбер
+id_oriented_line = 0
 data_id_orient_line_x_y = dict() # словарь для хранения ID ориентированных рёбер и для имён и координат вершин с которыми они соединены
 
 
-global weight
+
 weight = 0
 data_weight_line_x_y = dict() # массив для весов
-global ID_weight
-ID_weight = 0
+
+id_weight = 0
 
 
 temp_edges = [] # список ребёр
-global max_node # максимальная степень вершины
+# максимальная степень вершины
 max_node = 0
 nodes = [] # список всех вершин
-global orient_unorin # булевая переменная для проверки на ориентированность графа
+# булевая переменная для проверки на ориентированность графа
 orient_unorin = 0 # если = 0 то граф неориентированный
 
 
-global result_adjancy_matrix,result_incidency_matrix # матрица смежности
+# матрица смежности
 result_adjancy_matrix = []
 result_incidency_matrix = [] # матрица инцидентности
 
 
-global x1, y1, x2, y2 # переменные используемые для хранения координат вершин в функицях
+# переменные используемые для хранения координат вершин в функицях
 x1, y1, x2, y2 = 0, 0, 0, 0
 application.update()
 
@@ -84,7 +79,7 @@ application.update()
 
 def line_intersect_circle(x1, y1, x2, y2):# функция для нахождения точек пересечения прямой и окружности
     '''Возвращает координаты точек пересечения прямой и двух окружностей'''
-    main_gipotenusa = sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    main_gipotenusa = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
     main_dx = x2 - x1
     main_dy = y2 - y1
     dx = (main_gipotenusa - 15) * main_dx / main_gipotenusa
@@ -96,25 +91,21 @@ def line_intersect_circle(x1, y1, x2, y2):# функция для нахожде
 def draw_vertixes(): # рисование вершин
     canvas.bind_all(n, draw_vertex_on_click)
 def draw_vertex_on_click(event):
-    global name_vertex
-    global color_vertices_line
     r=15
-    global ID
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     if mouse_y > 0:
         canvas.create_oval(mouse_x - r, mouse_y - r, mouse_x + r, mouse_y+ r,fill=color_vertices_line, outline="black", width=2)
         print(mouse_x, mouse_y)
-        ID+=1
-        # array_all_ID.append(ID)
-        data_vertex_id_x_y[ID] = [mouse_x, mouse_y, name_vertex,color_vertices_line]
+        id+=1
+        # array_all_id.append(id)
+        data_vertex_id_x_y[id] = [mouse_x, mouse_y, name_vertex,color_vertices_line]
         print("data_vertex_id_x_y\t",data_vertex_id_x_y)
         canvas.create_text(mouse_x, mouse_y, text=name_vertex, font=m)
 
 def change_color_vertex(): # изменение цвета вершин
     canvas.bind_all(n, change_color_vertex_on_click)
 def change_color_vertex_on_click(event):
-    global color_vertices_line
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     for i in data_vertex_id_x_y:
@@ -130,8 +121,6 @@ def change_color_vertex_on_click(event):
 def draw_unoriented_line_between_vertex(): # рисование неориентированного ребра
     canvas.bind_all(n,draw_line_between_vertex_on_click)
 def draw_line_between_vertex_on_click(event):
-    global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2,color
-    global count_unoriented_line
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     color = color_vertices_line
@@ -146,18 +135,18 @@ def draw_line_between_vertex_on_click(event):
                 non_oriented_line += 1
                 break
             elif non_oriented_line == 1:
-                ID_none_oriented_line+=1
+                id_none_oriented_line+=1
                 name2 = data_vertex_id_x_y[i][2]
                 x2 = data_vertex_id_x_y[i][0]
                 y2 = data_vertex_id_x_y[i][1]
                 count_unoriented_line+=1
-                data_id_unorient_line_x_y[ID_none_oriented_line] = [[x1,y1,name1,color],[x2,y2,name2,color]]
+                data_id_unorient_line_x_y[id_none_oriented_line] = [[x1,y1,name1,color],[x2,y2,name2,color]]
                 print("data_id_unorient_line_x_y\t",data_id_unorient_line_x_y)
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill=color, width=2)
                 non_oriented_line = 0
                 break
 
-def delete_unoriented_line(): 
+def delete_unoriented_line():
     canvas.bind_all(n, delete_unoriented_line_on_click)
 
 def is_within_range(x, y, target_x, target_y, threshold=15):
@@ -171,16 +160,15 @@ def find_vertex_at_position(x, y, data_vertex_id_x_y):
 
 def delete_line_between_vertices(x1, y1, x2, y2, data_id_unorient_line_x_y, canvas):
     for key in data_id_unorient_line_x_y:
-        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2) or (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1) or\
-         (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
+        if (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x1, y1) and\
+           (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x2, y2) or\
+           (data_id_unorient_line_x_y[key][0][0], data_id_unorient_line_x_y[key][0][1]) == (x2, y2) and\
+           (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1) or\
+           (data_id_unorient_line_x_y[key][1][0], data_id_unorient_line_x_y[key][1][1]) == (x1, y1):
             canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
             del data_id_unorient_line_x_y[key]
-            return
-        
+            return       
 def delete_unoriented_line_on_click(event):
-    global x1, y1, x2, y2, non_oriented_line, ID_none_oriented_line, name1, name2, color
-    global count_unoriented_line
-    
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
@@ -207,7 +195,6 @@ def delete_unoriented_line_on_click(event):
 def draw_oriented_line_between_vertex(): # рисование ориентированного ребра
     canvas.bind_all(n,draw_oriented_line_between_vertex_on_click)
 def draw_oriented_line_between_vertex_on_click(event):
-    global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2,color1
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
@@ -222,19 +209,18 @@ def draw_oriented_line_between_vertex_on_click(event):
                 oriented_line += 1
                 break
             elif oriented_line == 1:
-                ID_oriented_line+=1
+                id_oriented_line+=1
                 name2 = data_vertex_id_x_y[i][2]
                 x2 = data_vertex_id_x_y[i][0]
                 y2 = data_vertex_id_x_y[i][1]
-                data_id_orient_line_x_y[ID_oriented_line] = [[x1,y1,name1,color1],[x2,y2,name2,color1]]
-                print(l,data_id_orient_line_x_y)
+                data_id_orient_line_x_y[id_oriented_line] = [[x1,y1,name1,color1],[x2,y2,name2,color1]]
+                print(h,data_id_orient_line_x_y)
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill=color1, width=2, arrow=tk.LAST)
                 oriented_line = 0
                 break
 def delete_oriented_line(): # удаление ориентированного ребра
     canvas.bind_all(n,delete_oriented_line_on_click)
 def delete_oriented_line_on_click(event):
-    global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
@@ -262,12 +248,11 @@ def delete_oriented_line_on_click(event):
 def draw_weight_line(): # рисование веса
     canvas.bind_all(n,draw_weight_on_click)
 def draw_weight_on_click(event):
-    global weight,ID_weight
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     if mouse_y > 0:
-        ID_weight+=1
-        data_weight_line_x_y[ID_weight]=[mouse_x,mouse_y,weight]
+        id_weight+=1
+        data_weight_line_x_y[id_weight]=[mouse_x,mouse_y,weight]
         print("data_weight_line_x_y\t",data_weight_line_x_y)
         canvas.create_text(mouse_x, mouse_y, text=weight, fill = "black", font=("Purisa", 12))
 
@@ -275,7 +260,6 @@ def draw_weight_on_click(event):
 def delete_weight_line(): # удаление веса
     canvas.bind_all(n,delete_weight_on_click)
 def delete_weight_on_click(event):
-    global weight,ID_weight
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     if mouse_y > 0:
@@ -297,7 +281,6 @@ def input_weight(): # рисование веса
     button1.grid(row=2, column=0, sticky="ew")
     new_application1.mainloop()
 def input_weight_on_click(weight_line,root):
-    global weight
     if weight_line == "":
         mb.showerror("","Вы не вес ребра")
     else:
@@ -317,8 +300,7 @@ def vertex_name(): # функция для задания имени верши�
     grafbtn = tk.Button(new_application, text="Ввод вершины", command=lambda: vertex_name(entry.get(), new_application))
     grafbtn.grid(row=2, column=0, sticky="ew")
     new_application.mainloop()
-def vertex_name(name, root): # проверка на существование вершины
-    global name_vertex
+def vertex_name1(name, root): # проверка на существование вершины
     if name == "":
         mb.showerror(" ","Вы не ввели имя вершины")
     elif name not in array_name_vertex:
@@ -332,7 +314,6 @@ def vertex_name(name, root): # проверка на существование 
 def stop_add_vertex(): # для остановки действия
     canvas.unbind_all(n)
 def color_vertex(color): # для изменения цвета вершины
-    global color_vertices_line
     color_vertices_line = color
     print(color_vertices_line)
  
@@ -362,10 +343,7 @@ def change_graf_name(name, root): # изменение имени графа
         root.destroy()
     
 
-def delete_vertex():# удаление вершины
-    canvas.bind_all(n, delete_vertex_on_click)
 def delete_vertex_on_click(event):
-    global ID_none_oriented_line, ID_oriented_line
     
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
@@ -374,20 +352,21 @@ def delete_vertex_on_click(event):
     
     if vertex_to_delete:
         delete_vertex(canvas, vertex_to_delete)
-        delete_associated_lines(canvas, vertex_to_delete, ID_none_oriented_line, data_id_unorient_line_x_y)
-        delete_associated_lines(canvas, vertex_to_delete, ID_oriented_line, data_id_orient_line_x_y)
+        delete_associated_lines(canvas, vertex_to_delete, id_none_oriented_line, data_id_unorient_line_x_y)
+        delete_associated_lines(canvas, vertex_to_delete, id_oriented_line, data_id_orient_line_x_y)
         
         remove_deleted_vertex(vertex_to_delete)
 
 def find_vertex_to_delete(mouse_x, mouse_y):
-    for i, vertex_data in data_vertex_id_x_y.items():
+    for _, vertex_data in data_vertex_id_x_y.items():
         x, y, name = vertex_data
         if x - 15 < mouse_x < x + 15 and y - 15 < mouse_y < y + 15:
             return name
     return None
 
 def delete_vertex(canvas, vertex_name):
-    for i, vertex_data in data_vertex_id_x_y.items():
+    canvas.bind_all(n, delete_vertex_on_click)
+    for _, vertex_data in data_vertex_id_x_y.items():
         x, y, name = vertex_data
         if name == vertex_name:
             canvas.create_oval(x - 15, y - 15, x + 15, y + 15, fill="white", outline="white", width=2)
@@ -414,16 +393,13 @@ def remove_deleted_vertex(vertex_name):
     array_name_vertex.remove(vertex_name)
 
 
-global name_vanish_vertex
 name_vanish_vertex = ''
-global ID_vanish_vertex
-ID_vanish_vertex = 0
+id_vanish_vertex = 0
 all_vanish_nonorline_id = []
 all_vanish_orline_id = []
 def move_vertex_and_line():
     canvas.bind_all(n, vanish_vertex_on_click)
 def vanish_vertex_on_click(event):
-    global ID_none_oriented_line, ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
     mouse_x, mouse_y = calculate_mouse_position()
 
     vertex_to_delete = find_vertex_to_delete(mouse_x, mouse_y)
@@ -437,16 +413,10 @@ def calculate_mouse_position():
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     return mouse_x, mouse_y
 
-def find_vertex_to_delete(mouse_x, mouse_y):
-    for vertex_id, (vertex_x, vertex_y, vertex_name) in data_vertex_id_x_y.items():
-        if (vertex_x - 15 < mouse_x < vertex_x + 15) and (vertex_y - 15 < mouse_y < vertex_y + 15):
-            return (vertex_id, vertex_name)
-    return None
 
 def delete_vertex_and_associated_lines(vertex_to_delete):
-    global ID_none_oriented_line, ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
     vertex_id, name_vanish_vertex = vertex_to_delete
-    ID_vanish_vertex = vertex_id
+    id_vanish_vertex = vertex_id
 
     delete_vertex_circle(vertex_id)
     delete_associated_lines(name_vanish_vertex)
@@ -457,10 +427,9 @@ def delete_vertex_circle(vertex_id):
                        fill="white", outline="white", width=2)
 
 def delete_associated_lines(vertex_name):
-    global ID_none_oriented_line, ID_oriented_line
-    if ID_none_oriented_line != 0:
+    if id_none_oriented_line != 0:
         delete_lines(data_id_unorient_line_x_y, vertex_name, all_vanish_nonorline_id)
-    if ID_oriented_line != 0:
+    if id_oriented_line != 0:
         delete_lines(data_id_orient_line_x_y, vertex_name, all_vanish_orline_id)
 
 def delete_lines(lines_data, vertex_name, all_vanish_line_id):
@@ -498,18 +467,17 @@ def update_lines(mouse_x, mouse_y, all_id, name, data_id_unorient_line_x_y, canv
                                fill=data_id_unorient_line_x_y[idi][1][3], width=2)
 
 def appearance_vertex_on_move(event):
-    global ID_none_oriented_line, ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     
     if mouse_y > 0:
-        update_vertex_position(mouse_x, mouse_y, ID_vanish_vertex, name_vanish_vertex, data_vertex_id_x_y, canvas)
+        update_vertex_position(mouse_x, mouse_y, id_vanish_vertex, name_vanish_vertex, data_vertex_id_x_y, canvas)
         
-        if ID_none_oriented_line != 0:
+        if id_none_oriented_line != 0:
             update_lines(mouse_x, mouse_y, all_vanish_nonorline_id, name_vanish_vertex, data_id_unorient_line_x_y, canvas, line_intersect_circle)
             print(b, data_id_unorient_line_x_y)
         
-        if ID_oriented_line != 0:
+        if id_oriented_line != 0:
             update_lines(mouse_x, mouse_y, all_vanish_orline_id, name_vanish_vertex, data_id_orient_line_x_y, canvas, line_intersect_circle)
             print(v, data_id_orient_line_x_y)
 
@@ -540,7 +508,6 @@ def rename_vertex_on_click(event):
             new_application.mainloop()
             break
 def rename_vertex_name(name, root, i):
-    global color_vertices_line, rename_name
 
     if not name:
         mb.showerror("", "Вы не ввели имя вершины")
@@ -556,8 +523,6 @@ def rename_vertex_name(name, root, i):
         array_name_vertex.append(name)
         root.destroy()
 
-def delete_vertex(i):
-    canvas.delete(data_vertex_id_x_y[i][2])
 
 def create_vertex_with_text(i, name):
     canvas.create_oval(
@@ -578,7 +543,6 @@ def create_vertex_with_text(i, name):
     )
 
 def update_vertex_data(i, name):
-    global rename_name
     rename_name = data_vertex_id_x_y[i][2]
     data_vertex_id_x_y[i][2] = name
     data_vertex_id_x_y[i][3] = color_vertices_line
@@ -597,7 +561,6 @@ def update_edge_names(old_name, new_name):
 
 
 def algorithm(): # функция для создания окна с алгоритмами
-    global max_node, orient_unorin,result_adjancy_matrix,result_incidency_matrix
     new_application = tk.Tk() # Создание окна
     new_application.geometry("432x470+195+0") # Размер окна и его расположение
     new_application.resizable(0, 0) # Запрет на изменение размера окна
@@ -608,7 +571,7 @@ def algorithm(): # функция для создания окна с алгор
     
     button_dejkstra = tk.Button(new_application, text="Алгоритм\nДейкстры", command=lambda: dijkstra(temp_edges,weight,max_node),width=12, height=2)
     input_value = tk.Button(new_application, text="Ввод графа", command=lambda: graph_info(entry.get()),width=12, height=2)
-    button_reading_file = tk.Button(new_application, text="Чтение из файла", command=lambda: reading_file(),width=12, height=2)
+    button_reading_file = tk.Button(new_application, text="Чтение из файла", command=reading_file, width=12, height=2)
 
     if orient_unorin ==0:
         button_diametr_graph = tk.Button(new_application, text="Диаметр графа", command=lambda: graph_diam(nodes,temp_edges),width=12, height=2)
@@ -652,7 +615,6 @@ def graph_info(information): # функция для ввода графа
     file.write(information)
     file.close()
 def reading_file(): # считывание записанного в файл графа
-    global max_node, orient_unorin, temp_edges, nodes,weight
     file = open("info.txt ","r")
     temp = file.readline()
     information = temp.split(";")
@@ -696,7 +658,6 @@ def reading_file(): # считывание записанного в файл г
     file.close()
 
 def adjancy_matrix(nodes,max_node): # функция для матрицы смежности
-    global result_adjancy_matrix
     print("Матрица смежности")
     adj = [[0 for _ in range(max_node)] for _ in range(max_node)]
     for i,val in enumerate(nodes):
@@ -708,7 +669,6 @@ def adjancy_matrix(nodes,max_node): # функция для матрицы см�
     print()
     result_adjancy_matrix = adj
 def incidency_matrix(nodes,max_nodes, orient_unorin):
-    global result_incidency_matrix
     print("Матрица инцидентности")
     if orient_unorin == 0:
         inc = [[0 for _ in range(len(nodes))] for _ in range(max_nodes)]
@@ -750,12 +710,6 @@ def initialize_distance_and_visited(max_node):
     visited = [0] * max_node
     return distance, visited
 
-def adjancy_for_deikstra(nodes, weight, max_node):
-    matrix_adjacency = [[0] * max_node for _ in range(max_node)]
-    for node, wt in zip(nodes, weight):
-        matrix_adjacency[node[0] - 1][node[1] - 1] = wt
-        matrix_adjacency[node[1] - 1][node[0] - 1] = wt  # Assuming an undirected graph
-    return matrix_adjacency
 
 def get_min_distance_vertex(visited, distance):
     min_distance = inf
