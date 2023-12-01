@@ -244,8 +244,8 @@ def shortest_path():
             display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
         else:
 
-    # Handle the case where 'enter' doesn't have enough elements
-    # You can raise an error, display a message, or handle it in another way
+        # Handle the case where 'enter' doesn't have enough elements
+        # You can raise an error, display a message, or handle it in another way
 
     win.mainloop()
     return 2
