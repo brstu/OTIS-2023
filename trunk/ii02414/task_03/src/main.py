@@ -202,7 +202,7 @@ def adjacency_matrix():
     adj_matrix = tk.Tk()
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
-    global cord, cord_edge, cord_edge2, ovals, edges
+    cord, cord_edge, cord_edge2, ovals, edges
     matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
     for i2 in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
@@ -265,12 +265,12 @@ def bfs():
 
     def bfs_rec(vert):
         visited[vert] = True
-        for u, val in enumerate(ovals):
+        for u in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec(u)
 
     matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
-    for index, value in enumerate(cord_edge['id_vertex1']):
+    for index in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
     count = 0
