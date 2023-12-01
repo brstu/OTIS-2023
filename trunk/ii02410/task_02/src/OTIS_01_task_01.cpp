@@ -20,7 +20,7 @@ public:
         double pidTD{ 0.55 };
         double pidT0{ 1.0 };
         double pidQ0{ pidK * (1 + pidTD / pidT0) };
-        double pidQ1{ -pidK * (1 + 2 * pidTD / pidT0 - pidT0 / pidT) };
+        double pidQ1 = -pidK * (1 + 2 * pidTD / pidT0 - pidT0 / pidT);
         double pidQ2{ pidK * pidTD / pidT0 };
         double error2{ 0.0 };
         double error3{ 0.0 };
