@@ -235,9 +235,7 @@ def incidence_matrix():
 
 
 def dfs():
-    global cord, cord_edge, cord_edge2, ovals, edges
     visited = [False] * len(ovals)
-
     def dfs_rec(vert):
         visited[vert] = True
         for u in range(len(ovals)):
