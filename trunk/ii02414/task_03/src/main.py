@@ -3,12 +3,41 @@ from tkinter import messagebox
 import tkinter.simpledialog as simpledialog
 import tkinter.colorchooser as colorchooser
 
+# main
+root = tk.Tk()
+root.title("Graph")
+main_label = tk.Label(root, text="Select an action")
+main_label.pack(side=tk.BOTTOM)
+
+# всякие переменные
 click_num = 0
 id_of_edge = 0
 button1 = "<Button-1>"
 num_vertex = "number of vertex"
 id_text_global = "id text"
 text_vertex = "text on vertex"
+
+oval_id = None
+ovals = []
+edges = []
+i = 0
+id_text = 0
+tag = 0
+x1, y1, x2, y2 = 0, 0, 0, 0
+
+# словарь для хранения разной инфы о вершинах и ребрах
+cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
+cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
+# ребро(но с id ребра)
+cord = {'id': [], id_text_global: [], text_vertex: [], 'textID': [], num_vertex: [], 'coordinatesX': [],
+        'coordinatesY': []}  # для хранения инфы о вершинах
+matrix_size = len(cord['id'])
+matrix = [[0] * matrix_size for _ in range(matrix_size)]
+tk.Tk.geometry(root, "800x600")
+canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
+canvas.pack()
+menubar = tk.Menu(root)  # меню
+root.config(menu=menubar)
 
 
 # функция для рисования вершины
@@ -41,10 +70,10 @@ def rename_vertex():
 
 # функция для проверки массива
 def edge_click():
-    print("Вершины")
+    print("Vertex")
     for key, value in cord.items():
         print(key, value)
-    print("Ребра")
+    print("Edge")
     for value in cord_edge2.values():
         print(value, end=", ")
 
@@ -197,16 +226,20 @@ def edge_colour(event):
             break
 
 
+def filling_matrix():
+    for i2 in range(len(cord_edge['id_vertex1'])):
+        matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
+        matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
+
+
 def adjacency_matrix():
     k = 0
     adj_matrix = tk.Tk()
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
 
-    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
-    for i2 in range(len(cord_edge['id_vertex1'])):
-        matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
-        matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
+    # Проходим по всем ребрам и устанавливаем соответствующие значения в матрице
+    filling_matrix()
     for i3, val3 in enumerate(matrix):
         adj_matrix_label = tk.Label(adj_matrix, text=str(val3))
         adj_matrix_label.grid(row=k, column=0)
@@ -220,14 +253,13 @@ def incidence_matrix():
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("250x250")
 
-    matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
     for index in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][
             edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][
             edges.index(cord_edge['id_edge_text'].index(cord_edge['id_edge_text'][index]))] = 1
-    for index2, vall in enumerate(matrix):
-        inc_matrix_label = tk.Label(inc_matrix, text=str(vall))
+    for index2, value1 in enumerate(matrix):
+        inc_matrix_label = tk.Label(inc_matrix, text=str(value1))
         inc_matrix_label.grid(row=k, column=0)
         k += 1
         index2 += 1
@@ -236,16 +268,14 @@ def incidence_matrix():
 
 def dfs():
     visited = [False] * len(ovals)
+
     def dfs_rec(vert):
         visited[vert] = True
         for u in range(len(ovals)):
             if matrix[vert][u] == 1 and not visited[u]:
                 dfs_rec(u)
 
-    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
-    for ii in range(len(cord_edge['id_vertex1'])):
-        matrix[cord['id'].index(cord_edge['id_vertex1'][ii])][cord['id'].index(cord_edge['id_vertex2'][ii])] = 1
-        matrix[cord['id'].index(cord_edge['id_vertex2'][ii])][cord['id'].index(cord_edge['id_vertex1'][ii])] = 1
+    filling_matrix()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
@@ -258,7 +288,6 @@ def dfs():
 
 
 def bfs():
-    global cord, cord_edge, cord_edge2, ovals, edges
     visited = [False] * len(ovals)
 
     def bfs_rec(vert):
@@ -266,11 +295,7 @@ def bfs():
         for u in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec(u)
-
-    matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
-    for index in enumerate(cord_edge['id_vertex1']):
-        matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
-        matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
+    filling_matrix()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
@@ -281,32 +306,6 @@ def bfs():
     else:
         messagebox.showinfo("BFS", "Graph is not connected")
 
-
-# main
-root = tk.Tk()
-root.title("Graph")
-main_label = tk.Label(root, text="Select an action")
-main_label.pack(side=tk.BOTTOM)
-# всякие переменные
-oval_id = None
-ovals = []
-edges = []
-i = 0
-id_text = 0
-tag = 0
-x1, y1, x2, y2 = 0, 0, 0, 0
-
-# словарь для хранения разной инфы о вершинах и ребрах
-cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
-cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
-# ребро(но с id ребра)
-cord = {'id': [], id_text_global: [], text_vertex: [], 'textID': [], num_vertex: [], 'coordinatesX': [],
-        'coordinatesY': []}  # для хранения инфы о вершинах
-tk.Tk.geometry(root, "800x600")
-canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
-canvas.pack()
-menubar = tk.Menu(root)  # меню
-root.config(menu=menubar)
 
 # раздел меню
 graphmenu = tk.Menu(menubar, tearoff=0)
