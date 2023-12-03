@@ -96,19 +96,19 @@ class Edge:
         canvas.delete(self.line)
         canvas.delete(self.text)
         graph.remove_edge(self.node1.name, self.node2.name)
-#рисуем вершину
+
 def create_vertex(entry_name, window):
     name = entry_name.get()
     nodes.append(Node(name))
     window.destroy()
-#выбор цвета
+
 def chose_color(color_lable):
     global color_vertex
     rgb, hx= askcolor()
     print(rgb)
     color_vertex = hx
     color_lable.config(bg=color_vertex)
-#меню добавления вершин
+
 def menu_add_vertex():
     global color_vertex
     add_window = Tk()
@@ -127,7 +127,7 @@ def menu_add_vertex():
     color_button.grid(row=3, column=0, sticky="ewns")
     color_lable.grid(row = 1,column=1)
     add_window.mainloop()
-# создание ребра
+
 def create_edge(entry_weight, entry_node1, entry_node2, window):
     try:
         weight = int(entry_weight.get())
@@ -143,7 +143,7 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
                 node2 = vertex
         edges.append(Edge(node1, node2, weight))
         window.destroy()
-#меню добавления ребер
+
 def menu_add_edge():
     add_window = Tk()
     add_window.title("Добавление ребра")
@@ -244,9 +244,7 @@ def shortest_path():
             display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
         else:
 
-        # Handle the case where 'enter' doesn't have enough elements
-        # You can raise an error, display a message, or handle it in another way
-
+       
     win.mainloop()
     return 2
 def display_props(title, props):
@@ -263,10 +261,10 @@ def eulerian_cycle():
     display_props("Эйлеров цикл", nx.algorithms.eulerian_path(graph))
 
 
-nodes = []# Список имен вершин
-edges = []# Список ребер
+nodes = []
+edges = []
 color_vertex = "#fff"
-graph = nx.Graph()  # Граф
+graph = nx.Graph()
 root = Tk()
 root.title("Работа с графами")
 root.geometry("800x600+500+150")
