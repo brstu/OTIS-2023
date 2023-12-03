@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 AxServer
+Description: Qt AxServer module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6AxServer
+Cflags: -I${includedir}/QtAxServer -I${includedir} -DQAXSERVER -DQT_AXSERVER_LIB
+Requires: Qt6Core Qt6Gui Qt6Widgets

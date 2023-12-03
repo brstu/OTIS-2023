@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 3DLogic
+Description: Qt 3DLogic module
+Version: 6.6.0
+Libs: -L${libdir} -lQt63DLogic
+Cflags: -I${includedir}/Qt3DLogic -I${includedir} -DQT_3DLOGIC_LIB
+Requires: Qt63DCore Qt6Core Qt6Gui

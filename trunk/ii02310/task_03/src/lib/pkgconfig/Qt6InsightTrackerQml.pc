@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 InsightTrackerQml
+Description: Qt InsightTrackerQml module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6InsightTrackerQml
+Cflags: -I${includedir}/QtInsightTrackerQml -I${includedir} -DQT_INSIGHTTRACKERQML_LIB
+Requires: Qt6Core Qt6Qml Qt6Quick Qt6InsightTracker

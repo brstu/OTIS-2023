@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Quick3DPhysics
+Description: Qt Quick3DPhysics module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6Quick3DPhysics
+Cflags: -I${includedir}/QtQuick3DPhysics -I${includedir} -DQT_QUICK3DPHYSICS_LIB
+Requires: Qt6Core Qt6Gui Qt6Qml Qt6Quick Qt6Quick3D

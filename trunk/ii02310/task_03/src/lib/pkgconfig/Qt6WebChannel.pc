@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 WebChannel
+Description: Qt WebChannel module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6WebChannel
+Cflags: -I${includedir}/QtWebChannel -I${includedir} -DQT_WEBCHANNEL_LIB
+Requires: Qt6Qml

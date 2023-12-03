@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 3DExtras
+Description: Qt 3DExtras module
+Version: 6.6.0
+Libs: -L${libdir} -lQt63DExtras
+Cflags: -I${includedir}/Qt3DExtras -I${includedir} -DQT_3DEXTRAS_LIB
+Requires: Qt6Core Qt6Gui Qt63DCore Qt63DInput Qt63DLogic Qt63DRender

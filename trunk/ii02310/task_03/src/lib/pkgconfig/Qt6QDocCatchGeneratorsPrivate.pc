@@ -1,0 +1,11 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QDocCatchGeneratorsPrivate
+Description: Qt QDocCatchGeneratorsPrivate module
+Version: 6.6.0
+Cflags: -I${includedir}/QtQDocCatchGeneratorsPrivate -I${includedir} -DQT_QDOCCATCHGENERATORSPRIVATE_LIB

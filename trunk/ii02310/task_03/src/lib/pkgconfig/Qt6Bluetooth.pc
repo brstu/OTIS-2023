@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Bluetooth
+Description: Qt Bluetooth module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6Bluetooth
+Cflags: -I${includedir}/QtBluetooth -I${includedir} -DQT_BLUETOOTH_LIB
+Requires: Qt6Core Qt6Network

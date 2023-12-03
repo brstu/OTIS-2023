@@ -1,0 +1,11 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QDocCatchConversionsPrivate
+Description: Qt QDocCatchConversionsPrivate module
+Version: 6.6.0
+Cflags: -I${includedir}/QtQDocCatchConversionsPrivate -I${includedir} -DQT_QDOCCATCHCONVERSIONSPRIVATE_LIB

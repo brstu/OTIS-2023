@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 DataVisualization
+Description: Qt DataVisualization module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6DataVisualization
+Cflags: -I${includedir}/QtDataVisualization -I${includedir} -DQT_DATAVISUALIZATION_LIB
+Requires: Qt6Core Qt6Gui Qt6OpenGL

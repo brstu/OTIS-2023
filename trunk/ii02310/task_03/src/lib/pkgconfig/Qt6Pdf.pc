@@ -1,0 +1,13 @@
+prefix=/Users/qt/work/install
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/./bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Pdf
+Description: Qt Pdf module
+Version: 6.6.0
+Libs: -L${libdir} -lQt6Pdf
+Cflags: -I${includedir}/QtPdf -I${includedir} -DQT_PDF_LIB
+Requires: Qt6Core Qt6Gui
