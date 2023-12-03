@@ -7,10 +7,50 @@ from tkinter import filedialog
 import json
 import numpy as np
 addEdge = "Add Edge"
-class GraphEditor:
+
+
+class MDIGraphEditor:
     def __init__(self, master):
         self.master = master
-        self.master.title("Graph Editor")
+        self.master.title("MDI Graph Editor")
+
+        self.notebook = ttk.Notebook(self.master)
+        self.notebook.pack(fill=tk.BOTH, expand=True)
+
+        self.graph_editors = {}
+
+        self.new_tab_button = tk.Button(self.master, text="New Graph Tab", command=self.create_new_tab)
+        self.new_tab_button.pack()
+
+    def create_new_tab(self):
+        new_tab = ttk.Frame(self.notebook)
+        graph_name = f"Graph {len(self.graph_editors) + 1}"
+
+        # Добавлена проверка на существование вкладки
+        if new_tab not in self.graph_editors:
+            graph_editor = GraphEditor(new_tab, graph_name)
+            self.graph_editors[new_tab] = graph_editor
+            self.notebook.add(new_tab, text=graph_name)
+            self.notebook.select(new_tab)  # Сделать новую вкладку текущей
+
+    def on_closing(self):
+        for graph_editor in self.graph_editors.values():
+            graph_editor.save_on_exit()
+        self.master.destroy()
+
+    def run(self):
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.master.mainloop()
+
+class GraphEditor:
+    def __init__(self, master, graph_name):
+        self.master = master
+        self.top_level = tk.Toplevel(master)  # Изменено: использование Toplevel вместо Frame
+        self.top_level.title(f"Graph Editor - {graph_name}")
+        self.graph_name = graph_name
+
+        #self.master = master
+        #self.master.title("Graph Editor")
 
         self.graph_name = tk.StringVar()
         self.graph_name.set("Graph")
@@ -155,21 +195,14 @@ class GraphEditor:
         if file_path:
             self.import_graph(file_path)
     def on_closing(self):
-        if self.current_graph:
-            # Сохраняем текущий граф перед закрытием
-            self.save_graph()
-            # Закрываем главное окно
-            self.master.destroy()
+        self.top_level.withdraw()
 
     def run(self):
-        # Метод для запуска главного цикла программы
-        root.protocol("WM_DELETE_WINDOW", self.on_closing)
-        root.mainloop()
+        self.top_level.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def save_on_exit(self):
-        if self.current_graph:
-            # Сохраняем текущий граф перед закрытием
-            self.save_graph()
+        print(f"Saving graph data for {self.graph_name}")
+
     def display_advanced_graph_info(self):
         if self.current_graph:
             selected_graph = self.graphs[self.current_graph]
@@ -193,18 +226,18 @@ class GraphEditor:
                 selected_vertex_degree = None
 
             # Incidence matrix
-            incidence_matrix = nx.incidence_matrix(selected_graph)
+            incidence_matrix = nx.incidence_matrix(selected_graph).toarray()
 
             # Adjacency matrix
-            adjacency_matrix = nx.to_numpy_array(selected_graph)
+            adjacency_matrix = nx.to_numpy_array(selected_graph, dtype=int)
 
             # Properties: tree, complete, connected, eulerian
             is_tree = nx.is_tree(selected_graph)
-            is_complete = nx.is_complete_graph(selected_graph)
-            is_connected = nx.is_connected(selected_graph)
-            is_eulerian = nx.is_eulerian(selected_graph)
+            is_complete = self.is_complete(selected_graph)
+            is_connected = nx.is_weakly_connected(selected_graph) if selected_graph.is_directed() else nx.is_connected(
+                selected_graph)
+            is_eulerian = nx.is_eulerian(selected_graph) if not selected_graph.is_directed() else False
 
-            # Display the information in a new window
             info_window = tk.Toplevel(self.master)
             info_window.title("Advanced Graph Information")
 
@@ -213,8 +246,8 @@ class GraphEditor:
                 f"Number of Edges: {num_edges}\n"
                 f"Degrees: {degrees}\n\n"
                 f"Degree of Selected Vertex '{selected_vertex}': {selected_vertex_degree}\n\n"
-                f"Incidence Matrix:\n{incidence_matrix}\n\n"
-                f"Adjacency Matrix:\n{adjacency_matrix}\n\n"
+                f"Incidence Matrix:\n{np.array2string(incidence_matrix, separator=', ')}\n\n"
+                f"Adjacency Matrix:\n{np.array2string(adjacency_matrix, separator=', ')}\n\n"
                 f"Is Tree: {is_tree}\n"
                 f"Is Complete: {is_complete}\n"
                 f"Is Connected: {is_connected}\n"
@@ -223,9 +256,17 @@ class GraphEditor:
 
             info_label = tk.Label(info_window, text=info_str, justify=tk.LEFT)
             info_label.pack(padx=10, pady=10)
-
         else:
             tk.messagebox.showinfo("Error", "Please select a valid graph.")
+
+    def is_complete(self, graph):
+        if graph.is_directed():
+            return False  # Directed graph cannot be complete
+        else:
+            num_nodes = graph.number_of_nodes()
+            num_possible_edges = num_nodes * (num_nodes - 1) // 2
+            return graph.number_of_edges() == num_possible_edges
+
     def calculate_distance_between_nodes(self):
         if self.current_graph:
             selected_graph = self.graphs[self.current_graph]
@@ -619,9 +660,5 @@ class GraphEditor:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = GraphEditor(root)
-
-    # Привяжем метод сохранения и закрытия к событию закрытия окна
-    root.protocol("WM_DELETE_WINDOW", app.on_closing)
-
-    app.run()
+    mdi_app = MDIGraphEditor(root)
+    mdi_app.run()
