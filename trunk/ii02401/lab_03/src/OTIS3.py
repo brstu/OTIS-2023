@@ -206,6 +206,8 @@ class GraphEditor:
             self.update_info_panel(info_str)
         except Exception as e:
             messagebox.showerror("Error", f"Error finding Eulerian cycle: {e}")
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = GraphEditor(root)
