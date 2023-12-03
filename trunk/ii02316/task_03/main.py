@@ -6,6 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from tkinter import filedialog
 import json
 import numpy as np
+addEdge = "Add Edge"
 class GraphEditor:
     def __init__(self, master):
         self.master = master
@@ -71,7 +72,7 @@ class GraphEditor:
         self.edge_type_menu = tk.OptionMenu(self.master, self.edge_type_var, "Directed", "Undirected")
         self.edge_type_menu.pack(pady=5)
 
-        self.add_edge_button = tk.Button(self.master, text="Add Edge", command=self.add_edge)
+        self.add_edge_button = tk.Button(self.master, text=addEdge, command=self.add_edge)
         self.add_edge_button.pack(pady=5)
 
         self.remove_edge_button = tk.Button(self.master, text="Remove Edge", command=self.remove_edge)
@@ -482,11 +483,11 @@ class GraphEditor:
 
     def add_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring("Add Edge", "Enter the start node:")
-            end_node = simpledialog.askstring("Add Edge", "Enter the end node:")
+            start_node = simpledialog.askstring(addEdge, "Enter the start node:")
+            end_node = simpledialog.askstring(addEdge, "Enter the end node:")
 
             # Запрос на ввод веса
-            weight = simpledialog.askfloat("Add Edge", "Enter the weight for the edge:")
+            weight = simpledialog.askfloat(addEdge, "Enter the weight for the edge:")
 
             # Get the edge type from the selected option in the menu
             edge_type = self.edge_type_var.get().lower()
