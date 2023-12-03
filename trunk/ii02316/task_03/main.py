@@ -108,6 +108,68 @@ class GraphEditor:
                                               command=self.display_advanced_graph_info)
         self.advanced_info_button.pack(side=tk.LEFT, padx=5)
 
+        self.export_button = tk.Button(self.master, text="Export Graph", command=self.show_export_dialog)
+        self.export_button.pack(side=tk.LEFT, padx=5)
+
+        self.import_button = tk.Button(self.master, text="Import Graph", command=self.show_import_dialog)
+        self.import_button.pack(side=tk.LEFT, padx=5)
+
+    def export_graph(self, file_path):
+        if self.current_graph:
+            graph_data = nx.node_link_data(self.graphs[self.current_graph])
+            with open(file_path, 'w') as file:
+                json.dump(graph_data, file)
+            tk.messagebox.showinfo("Export Successful", "Graph exported successfully.")
+        else:
+            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+
+    def import_graph(self, file_path):
+        try:
+            with open(file_path, 'r') as file:
+                graph_data = json.load(file)
+                graph_name = simpledialog.askstring("Graph Name", "Enter a name for the loaded graph:")
+
+                if graph_name:
+                    if graph_name not in self.graphs:
+                        new_graph = nx.node_link_graph(graph_data)
+                        self.graphs[graph_name] = new_graph
+                        self.current_graph = graph_name
+                        self.graph_dropdown['values'] = list(self.graphs.keys())
+                        self.graph_dropdown.set(graph_name)
+                        self.draw_graph()
+                    else:
+                        tk.messagebox.showinfo("Error", "Graph with this name already exists.")
+        except Exception as e:
+            tk.messagebox.showinfo("Error", f"Error during graph import: {e}")
+
+    def show_export_dialog(self):
+        if self.current_graph:
+            file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
+            if file_path:
+                self.export_graph(file_path)
+        else:
+            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+
+    def show_import_dialog(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
+        if file_path:
+            self.import_graph(file_path)
+    def on_closing(self):
+        if self.current_graph:
+            # Сохраняем текущий граф перед закрытием
+            self.save_graph()
+            # Закрываем главное окно
+            self.master.destroy()
+
+    def run(self):
+        # Метод для запуска главного цикла программы
+        root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        root.mainloop()
+
+    def save_on_exit(self):
+        if self.current_graph:
+            # Сохраняем текущий граф перед закрытием
+            self.save_graph()
     def display_advanced_graph_info(self):
         if self.current_graph:
             selected_graph = self.graphs[self.current_graph]
@@ -558,4 +620,8 @@ class GraphEditor:
 if __name__ == "__main__":
     root = tk.Tk()
     app = GraphEditor(root)
-    root.mainloop()
+
+    # Привяжем метод сохранения и закрытия к событию закрытия окна
+    root.protocol("WM_DELETE_WINDOW", app.on_closing)
+
+    app.run()
