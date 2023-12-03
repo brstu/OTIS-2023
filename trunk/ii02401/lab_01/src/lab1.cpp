@@ -1,68 +1,73 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-
+// Define a struct to hold parameters for the models
+struct ModelParameters {
+    double a;
+    double b;
+    double c;
+    double d;
+    double y;
+    double y_prev;
+    double u;
+    double u_prev;
+    int i;
+    int t;
+};
 const std::vector<double> y_lin;
 const std::vector<double> y_nonlin;
-
-void linear_model(double a, double b, double y, double u, int i, int t) {
-    if (i <= t) {
-        std::cout << y << std::endl;
-        // Внимание: мы не можем добавлять элементы в константный вектор
-        // y_lin.push_back(y);
-        double y_2 = a * y + b * u;
-        linear_model(a, b, y_2, u, i + 1, t);
+// odify the function to take a struct instead of individual parameters
+void linear_model(const ModelParameters& params) {
+    if (params.i <= params.t) {
+        std::cout << params.y << std::endl;
+        // Add elements to the vector if needed
+        // y_lin.push_back(params.y);
+        double y_2 = params.a * params.y + params.b * params.u;
+        ModelParameters new_params = params;
+        new_params.y = y_2;
+        new_params.i += 1;
+        linear_model(new_params);
     } else {
         std::cout << "END" << std::endl;
     }
 }
-
-void nonlinear_model(double a, double b, double c, double d, double y, double y_prev, double u, double u_prev, int i, int t) {
-    if (i == 1) {
-        std::cout << y << std::endl;
-        // Внимание: мы не можем добавлять элементы в константный вектор
-        // y_nonlin.push_back(y);
-        double y_2 = a * y - b * pow(y_prev, 2) + c * 0 + d * sin(0);
-        nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
-    } else if (i <= t) {
-        std::cout << y << std::endl;
-        // Внимание: мы не можем добавлять элементы в константный вектор
-        // y_nonlin.push_back(y);
-        double y_2 = a * y - b * pow(y_prev, 2) + c * u + d * sin(u_prev);
-        nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
+// Modify the function to take a struct instead of individual parameters
+void nonlinear_model(const ModelParameters& params) {
+    if (params.i == 1) {
+        std::cout << params.y << std::endl;
+        // Add elements to the vector if needed
+        // y_nonlin.push_back(params.y);
+        double y_2 = params.a * params.y - params.b * pow(params.y_prev, 2) + params.c * 0 + params.d * sin(0);
+        ModelParameters new_params = params;
+        new_params.y = y_2;
+        new_params.i += 1;
+        nonlinear_model(new_params);
+    } else if (params.i <= params.t) {
+        std::cout << params.y << std::endl;
+        // Add elements to the vector if needed
+        // y_nonlin.push_back(params.y);
+        double y_2 = params.a * params.y - params.b * pow(params.y_prev, 2) + params.c * params.u + params.d * sin(params.u_prev);
+        ModelParameters new_params = params;
+        new_params.y = y_2;
+        new_params.i += 1;
+        nonlinear_model(new_params);
     } else {
         std::cout << "END" << std::endl;
     }
 }
-
 int main() {
-    int i = 1;
-    double y = 0.0;
-    double u = 1.0;
-    int t = 10;
-    double a = 1.0;
-    double b = 0.5;
-    double c = 0.001;
-    double d = 0.999;
-
+    ModelParameters params;
+    params.i = 1;
+    params.y = 0.0;
+    params.u = 1.0;
+    params.t = 10;
+    params.a = 1.0;
+    params.b = 0.5;
+    params.c = 0.001;
+    params.d = 0.999;
     std::cout << "Linear Model:" << std::endl;
-    linear_model(a, b, y, u, i, t);
-
+    linear_model(params);
     std::cout << "Nonlinear Model:" << std::endl;
-    nonlinear_model(a, b, c, d, y, y, u, u, i, t);
-
-    std::cout << "linear_model: ";
-    for (const auto &val : y_lin) {
-        std::cout << val << " ";
-    }
-    std::cout << std::endl;
-
-    std::cout << "nonlinear_model: ";
-    for (const auto &val : y_nonlin) {
-        std::cout << val << " ";
-    }
-    std::cout << std::endl;
-
+    nonlinear_model(params);
     return 0;
 }
-
