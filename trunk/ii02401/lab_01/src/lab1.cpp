@@ -2,13 +2,14 @@
 #include <cmath>
 #include <vector>
 
-std::vector<double> y_lin;
-std::vector<double> y_nonlin;
+const std::vector<double> y_lin;
+const std::vector<double> y_nonlin;
 
 void linear_model(double a, double b, double y, double u, int i, int t) {
     if (i <= t) {
         std::cout << y << std::endl;
-        y_lin.push_back(y);
+        // Внимание: мы не можем добавлять элементы в константный вектор
+        // y_lin.push_back(y);
         double y_2 = a * y + b * u;
         linear_model(a, b, y_2, u, i + 1, t);
     } else {
@@ -19,12 +20,14 @@ void linear_model(double a, double b, double y, double u, int i, int t) {
 void nonlinear_model(double a, double b, double c, double d, double y, double y_prev, double u, double u_prev, int i, int t) {
     if (i == 1) {
         std::cout << y << std::endl;
-        y_nonlin.push_back(y);
+        // Внимание: мы не можем добавлять элементы в константный вектор
+        // y_nonlin.push_back(y);
         double y_2 = a * y - b * pow(y_prev, 2) + c * 0 + d * sin(0);
         nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
     } else if (i <= t) {
         std::cout << y << std::endl;
-        y_nonlin.push_back(y);
+        // Внимание: мы не можем добавлять элементы в константный вектор
+        // y_nonlin.push_back(y);
         double y_2 = a * y - b * pow(y_prev, 2) + c * u + d * sin(u_prev);
         nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
     } else {
@@ -62,3 +65,4 @@ int main() {
 
     return 0;
 }
+
