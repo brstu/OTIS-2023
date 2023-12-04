@@ -1,18 +1,21 @@
-cmake_minimum_required(VERSION 3.12)
-project(OTIS LAB 3)
+﻿# CMakeList.txt: проект CMake для CMakeProject2; включите исходный код и определения,
+# укажите здесь логику для конкретного проекта.
+#
+cmake_minimum_required (VERSION 3.8)
 
-# Найти интерпретатор Python
-find_package(Python REQUIRED COMPONENTS Interpreter)
+# Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
+if (POLICY CMP0141)
+  cmake_policy(SET CMP0141 NEW)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif()
 
-# Добавить ваш Python-скрипт в проект
-add_executable(my_python_script main.py)
+project ("CMakeProject2")
 
-# Задать цель для сборки проекта на Python
-add_custom_target(run_python_script
-    COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/main.py
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Running Python script"
-)
+# Добавьте источник в исполняемый файл этого проекта.
+add_executable (CMakeProject2 "CMakeProject2.cpp" "CMakeProject2.h")
 
-# Добавить зависимость от цели run_python_script
-add_dependencies(my_python_script run_python_script)
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET CMakeProject2 PROPERTY CXX_STANDARD 20)
+endif()
+
+# TODO: Добавьте тесты и целевые объекты, если это необходимо.
