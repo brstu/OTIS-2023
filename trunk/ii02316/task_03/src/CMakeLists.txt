@@ -4,4 +4,4 @@ project(CMakeProject2)
 
 set(SOURCES main2.cpp)
 
-add_executable(MExecutable ${SOURCES})
+add_executable(MExecutableTask03 main.cpp)
