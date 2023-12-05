@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
-project(lab01kolya)
+project(laba1)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(lab01kolya main.cpp)
+add_executable(laba1 main.cpp)
