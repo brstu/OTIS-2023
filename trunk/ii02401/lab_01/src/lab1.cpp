@@ -14,8 +14,11 @@ struct ModelParameters {
     double u_prev;
     int i;
     int t;
-    const std::vector<double> y_lin = {};
-    const std::vector<double> y_nonlin = {};
+    const std::vector<double> y_lin;
+    const std::vector<double> y_nonlin;
+
+    // Constructor to initialize constant vectors
+    ModelParameters() : y_lin({}), y_nonlin({}) {}
 };
 
 // Modify the function to take a struct instead of individual parameters
