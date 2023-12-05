@@ -29,8 +29,6 @@ rename_name = ""
 data_vertex_id_x_y = dict()  # словарь для хранения ID рёбер их координат и имени
 global ID  # id вершин
 ID = 0
-# array_all_ID = []
-
 
 global non_oriented_line  # что-то типо счётчика
 non_oriented_line = 0
@@ -56,7 +54,6 @@ temp_edges = []  # список ребёр
 global max_node  # максимальная степень вершины
 max_node = 0
 nodes = []  # список всех вершин
-# weight = []
 global UNORIN_ORIENT  # булевая переменная для проверки на ориентированность графа
 UNORIN_ORIENT = 0  # если = 0 то граф неориентированный
 
@@ -79,9 +76,13 @@ def line_intersect_circle(x1, y1, x2, y2):  # функция для нахожд
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
 
-def draw_vertixes():  # рисование вершин
-    canvas.bind_all("<Button-1>", draw_vertex_on_click)
+BUTTON_1 = "<Button-1>"
 
+def draw_vertices():
+    canvas.bind_all(BUTTON_1, draw_vertex_on_click)
+
+
+FONT = "Arial 14"
 
 def draw_vertex_on_click(event):
     global name_vertex
@@ -95,10 +96,9 @@ def draw_vertex_on_click(event):
                            outline="black", width=2)
         print(mouse_x, mouse_y)
         ID += 1
-        # array_all_ID.append(ID)
         data_vertex_id_x_y[ID] = [mouse_x, mouse_y, name_vertex, color_vertices_line]
         print("data_vertex_id_x_y\t", data_vertex_id_x_y)
-        canvas.create_text(mouse_x, mouse_y, text=name_vertex, font="Arial 14")
+        canvas.create_text(mouse_x, mouse_y, text=name_vertex, font=FONT)
 
 
 def change_color_vertex():  # изменение цвета вершин
@@ -154,7 +154,7 @@ def draw_line_between_vertex_on_click(event):
                 break
 
 
-def delete_unoriented_line():  # удаление неориентированного ребра
+def delete_unoriented_line():
     canvas.bind_all("<Button-1>", delete_unoriented_line_on_click)
 
 
@@ -164,40 +164,40 @@ def delete_unoriented_line_on_click(event):
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
+    clicked_vertex = get_clicked_vertex(mouse_x, mouse_y)
+    if clicked_vertex:
+        if non_oriented_line == 0:
+            name1, x1, y1 = clicked_vertex
+            non_oriented_line += 1
+            print("nam1,x1,y1   ", name1, x1, y1)
+        elif non_oriented_line == 1:
+            name2, x2, y2 = clicked_vertex
+            print("nam2,x2,y2   ", name2, x2, y2)
+            count_unoriented_line -= 1
+            delete_matching_unoriented_line(x1, y1, x2, y2)
+            print("data_id_unorient_line_x_y in delete\t", data_id_unorient_line_x_y)
+            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
+            non_oriented_line = 0
+
+
+def get_clicked_vertex(mouse_x, mouse_y):
     for i in data_vertex_id_x_y:
         if mouse_x > data_vertex_id_x_y[i][0] - 15 and mouse_x < data_vertex_id_x_y[i][0] + 15 and \
                 mouse_y > data_vertex_id_x_y[i][1] - 15 and mouse_y < data_vertex_id_x_y[i][1] + 15:
-            if non_oriented_line == 0:
-                name1 = data_vertex_id_x_y[i][2]
-                x1 = data_vertex_id_x_y[i][0]
-                y1 = data_vertex_id_x_y[i][1]
-                non_oriented_line += 1
-                print("nam1,x1,y1   ", name1, x1, y1)
-                break
-            elif non_oriented_line == 1:
-                name2 = data_vertex_id_x_y[i][2]
-                x2 = data_vertex_id_x_y[i][0]
-                y2 = data_vertex_id_x_y[i][1]
-                print("nam2,x2,y2   ", name2, x2, y2)
-                count_unoriented_line -= 1
-                for key in data_id_unorient_line_x_y:
-                    if data_id_unorient_line_x_y[key][0][0] == x1 and data_id_unorient_line_x_y[key][0][1] == y1 and \
-                            data_id_unorient_line_x_y[key][1][0] == x2 and data_id_unorient_line_x_y[key][1][1] == y2:
-                        print("data_id_unorient_line_x_y in delete\t", data_id_unorient_line_x_y)
-                        canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                        del data_id_unorient_line_x_y[key]
-                        break
-                    elif data_id_unorient_line_x_y[key][0][0] == x2 and data_id_unorient_line_x_y[key][0][1] == y2 and \
-                            data_id_unorient_line_x_y[key][1][0] == x1 and data_id_unorient_line_x_y[key][1][1] == y1:
-                        print("data_id_unorient_line_x_y in delete\t", data_id_unorient_line_x_y)
-                        canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                        del data_id_unorient_line_x_y[key]
-                        break
-                print("data_id_unorient_line_x_y in delete\t", data_id_unorient_line_x_y)
-                canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
-                non_oriented_line = 0
-                break
+            return data_vertex_id_x_y[i][2], data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1]
+    return None
 
+
+def delete_matching_unoriented_line(x1, y1, x2, y2):
+    for key in data_id_unorient_line_x_y:
+        if (data_id_unorient_line_x_y[key][0][0] == x1 and data_id_unorient_line_x_y[key][0][1] == y1 and
+                data_id_unorient_line_x_y[key][1][0] == x2 and data_id_unorient_line_x_y[key][1][1] == y2) or \
+                (data_id_unorient_line_x_y[key][0][0] == x2 and data_id_unorient_line_x_y[key][0][1] == y2 and
+                 data_id_unorient_line_x_y[key][1][0] == x1 and data_id_unorient_line_x_y[key][1][1] == y1):
+            print("data_id_unorient_line_x_y in delete\t", data_id_unorient_line_x_y)
+            canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3)
+            del data_id_unorient_line_x_y[key]
+            break
 
 def draw_oriented_line_between_vertex():  # рисование ориентированного ребра
     canvas.bind_all("<Button-1>", draw_oriented_line_between_vertex_on_click)
