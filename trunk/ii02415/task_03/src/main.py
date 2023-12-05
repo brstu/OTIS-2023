@@ -202,7 +202,7 @@ def delete_matching_unoriented_line(x1, y1, x2, y2):
 def draw_oriented_line_between_vertex():  # рисование ориентированного ребра
     canvas.bind_all("<Button-1>", draw_oriented_line_between_vertex_on_click)
 
-
+DATA_ID_ORIENT_LINE_X_Y_LABEL = "data_id_orient_line_x_y\t"
 def draw_oriented_line_between_vertex_on_click(event):
     global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2, color1
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -218,17 +218,16 @@ def draw_oriented_line_between_vertex_on_click(event):
                 y1 = data_vertex_id_x_y[i][1]
                 oriented_line += 1
                 break
-            elif oriented_line == 1:
+                elif oriented_line == 1:
                 ID_oriented_line += 1
                 name2 = data_vertex_id_x_y[i][2]
                 x2 = data_vertex_id_x_y[i][0]
                 y2 = data_vertex_id_x_y[i][1]
                 data_id_orient_line_x_y[ID_oriented_line] = [[x1, y1, name1, color1], [x2, y2, name2, color1]]
-                print("data_id_orient_line_x_y\t", data_id_orient_line_x_y)
+                print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_orient_line_x_y)
                 canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill=color1, width=2, arrow=tk.LAST)
                 oriented_line = 0
                 break
-
 
 def delete_oriented_line():  # удаление ориентированного ребра
     canvas.bind_all("<Button-1>", delete_oriented_line_on_click)
@@ -598,17 +597,17 @@ def rename_vertex_name(name, root, i):
             for i in data_id_unorient_line_x_y:  # и если находим, то меняем имя вершины в списке ребер на новое имя
                 if data_id_unorient_line_x_y[i][0][2] == rename_name:
                     data_id_unorient_line_x_y[i][0][2] = name
-
                 if data_id_unorient_line_x_y[i][1][2] == rename_name:
                     data_id_unorient_line_x_y[i][1][2] = name
+                print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_unorient_line_x_y)
             print("data_id_orient_line_x_y\t", data_id_unorient_line_x_y)
-        elif ID_oriented_line != 0:  # при изменнии имени вершины, делаем проверку на нахождение переименованной вершины в словаре ориентированных ребер
-            for i in data_id_orient_line_x_y:  # и если находим, то меняем имя вершины в списке ребер на новое имя
+            elif ID_oriented_line != 0:
+            for i in data_id_orient_line_x_y:
                 if data_id_orient_line_x_y[i][0][2] == rename_name:
                     data_id_orient_line_x_y[i][0][2] = name
                 if data_id_orient_line_x_y[i][1][2] == rename_name:
                     data_id_orient_line_x_y[i][1][2] = name
-            print("data_id_orient_line_x_y\t", data_id_orient_line_x_y)
+            print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_orient_line_x_y)
         array_name_vertex.append(name)
         root.destroy()
 
