@@ -3,54 +3,25 @@ from tkinter import simpledialog, colorchooser, messagebox
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 class GraphEditor:
     a="Add Edge"
     c="Choose Color"
     s="Shortest Path"
-
     def __init__(self, root):
         self.root = root
         self.root.title("Graph Editor")
-
-        self.graph = nx.Graph()
-        self.node_colors = {}  # Dictionary to store node colors
-        self.figure, self.ax = plt.subplots()
-        self.canvas = FigureCanvasTkAgg(self.figure, master=root)
-        self.canvas_widget = self.canvas.get_tk_widget()
-        self.canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-        self.menu = tk.Menu(root)
-        root.config(menu=self.menu)
-
         self.graph_menu = tk.Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label="Graph", menu=self.graph_menu)
         self.graph_menu.add_command(label="Add Vertex", command=self.add_vertex)
         self.graph_menu.add_command(label=a, command=self.add_edge)
-
         self.color_menu = tk.Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label="Node Color", menu=self.color_menu)
-        self.color_menu.add_command(label="Choose Color", command=self.choose_color)
-
         self.algorithm_menu = tk.Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label="Algorithms", menu=self.algorithm_menu)
         self.algorithm_menu.add_command(label=s, command=self.shortest_path)
         self.algorithm_menu.add_command(label="Eulerian Path", command=self.eulerian_path)
-
-    def add_vertex(self,x,y):
-        vertex = tk.simpledialog.askstring("Add Vertex", "Enter Vertex Label:")
-        if vertex:
-            self.graph.add_node(vertex)
-            self.node_colors[vertex] = "skyblue"  # Default color
+    def add_vertex(self):
             self.draw_graph()
-        self.x = x
-        self.y = y
-        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
-        canvas.coords(self.text, x, y)
-        for vertex in vertexes:
-            if vertex.node1 == self or vertex.node2 == self:
-                vertex.move()
-
     def add_edge(self):
         edge_start = tk.simpledialog.askstring(a, "Enter Start Vertex Label:")
         edge_end = tk.simpledialog.askstring(a, "Enter End Vertex Label:")
@@ -58,23 +29,12 @@ class GraphEditor:
         if edge_start and edge_end and edge_length:
             self.graph.add_edge(edge_start, edge_end, length=edge_length)
             self.draw_graph()
-
     def choose_color(self):
-        selected_vertex = tk.simpledialog.askstring(c, "Enter Vertex Label:")
+         selected_vertex = tk.simpledialog.askstring(c, "Enter Vertex Label:")
         if selected_vertex:
             color = colorchooser.askcolor(title=c)[1]
             self.node_colors[selected_vertex] = color
             self.draw_graph()
-
-    def draw_graph(self):
-        self.ax.clear()
-        pos = nx.spring_layout(self.graph)
-        node_colors = [self.node_colors[node] for node in self.graph.nodes]
-        nx.draw(self.graph, pos, with_labels=True, ax=self.ax, node_size=700, node_color=node_colors)
-        labels = nx.get_edge_attributes(self.graph, "length")
-        nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=labels, ax=self.ax)
-        self.canvas.draw()
-
     def shortest_path(self):
         try:
             start_vertex = tk.simpledialog.askstring(s, "Enter Start Vertex Label:")
@@ -84,16 +44,13 @@ class GraphEditor:
             messagebox.showinfo(s, f"Shortest Path: {path}\nLength: {length}")
         except nx.NetworkXNoPath:
             messagebox.showerror("Error", "No path found between the specified vertices.")
-
     def eulerian_path(self):
         try:
             path = nx.eulerian_circuit(self.graph)
             messagebox.showinfo("Eulerian Path", f"Eulerian Path: {list(path)}")
         except nx.NetworkXError:
             messagebox.showerror("Error", "No Eulerian path found in the graph.")
-
 if __name__ == "__main__":
     root = tk.Tk()
     app = GraphEditor(root)
     root.mainloop()
-
