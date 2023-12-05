@@ -1,8 +1,11 @@
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
 from tkinter.colorchooser import askcolor
-from numpy.random import randint
+from numpy import random
 from numpy import sqrt
 import networkx as nx
+
+
+MY_CONSTANT = "190x120+1050+250"
 
 
 def line_intersect_circle(x1, y1, x2, y2):
@@ -17,8 +20,10 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 636)
-        self.y = randint(0, 596)
+        rng_x = np.random.default_rng()
+        rng_y = np.random.default_rng()
+        self.x = rng_x.integers(0, 636)
+        self.y = rng_y.integers(0, 636)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
@@ -36,7 +41,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Изменение имени")
-        win.geometry("190x120+1050+250")
+        win.geometry(MY_CONSTANT)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -83,7 +88,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Изменение веса")
-        win.geometry("190x120+1050+250")
+        win.geometry(MY_CONSTANT)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
@@ -132,7 +137,7 @@ def menu_add_vertex():
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
-    add_window.geometry("190x120+1050+250")
+    add_window.geometry(MY_CONSTANT)
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
