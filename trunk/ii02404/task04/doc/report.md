@@ -28,9 +28,9 @@
 
 ---
 
-# Выполнение задания #
-Установка:
-Для выполения задания потребуется дополнительно установить программное обеспечение Docker
+# Completing a task #
+Installation:
+To complete the task, you will need to install additional software Docker
 ```
 git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
 cd nika
@@ -38,20 +38,16 @@ git submodule update --init --recursive
 docker compose pull
 ```
 
-Запуск:
+RUN:
 ```
 docker compose up --no-build
 ```
-По выпонению этой команды запускается два локальных сервера:
+After executing this command, two local servers are started:
 ```localhost:8000``` - это sc-web
-```localhost:3033``` - диалоговый веб-интерфейс
+```localhost:3033``` - диалоговый вебинтерфейс
 
-sc-web:
+![Result:](p1.png)
+![Result:](p2.png)
 
-![Вывод:](p1.png)
-![Вывод:](p2.png)
-
-Диалоговый веб-интерфейс:
-
-![Вывод:](p3.png)
-![Вывод:](p4.png)
+![Result:](p3.png)
+![Result:](p4.png)
