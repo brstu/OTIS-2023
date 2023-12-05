@@ -28,66 +28,69 @@
 # Код программы: #
 ```C++    
 #include <iostream>
+#include <vector>
 #include <cmath>
-using namespace std;
-class NonlinearModel {
-public:
-    NonlinearModel(int time, double desiredTemp = 10)
-        : time(time), desiredTemp(desiredTemp) {
-        arrayOfE[0] = 0.001;
-        arrayOfE[1] = 0.19;
-        arrayOfE[2] = 0.00002;
-        arrayOfQ[0] = 0.4;
-        arrayOfQ[1] = 0.1;
-        arrayOfQ[2] = 0.12;
-        weight[0] = 1;
-        weight[1] = 0;
-        weight[2] = 1;
-        weight[3] = 1.0;
-        prevU = weight[3];
-    }
-    void calculateModel() {
-        for (int i = 0; i < time; i++) {
-            param[3] = sin(param[3]);
-            double futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
-            param[1] = param[0];
-            param[0] = futureY;
-            arrayOfE[2] = desiredTemp - futureY;
-            futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
-            param[1] = param[0];
-            param[0] = futureY;
-            arrayOfE[1] = desiredTemp - futureY;
-            weight[2] = prevU + arrayOfQ[0] * arrayOfE[2] + arrayOfQ[1] * arrayOfE[1] + arrayOfQ[2] * arrayOfE[0];
-            futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
-            param[1] = param[0];
-            param[0] = futureY;
-            arrayOfE[0] = desiredTemp - futureY;
-            result[i] = param[0];
-        }
-    }
-    void printResults() {
-        cout << "Y" << endl;
-        for (int i = 0; i < time; i++) {
-            cout << result[i] << endl;
-        }
-    }
-private:
-    int time;
-    double desiredTemp;
-    double arrayOfE[3];
-    double arrayOfQ[3];
-    double weight[4];
-    double prevU;
-    double param[4] = {1, 0, 1, 1.0};
-    double result[200];
-};
+
+// Function to calculate PID control
+void calculatePID(double kp, double ki, double kd, double dt, double setpoint, double &in, double &prevErr, double &out) {
+    double err = setpoint - in;
+    out = kp * err + ki * err * dt + kd * (err - prevErr) / dt;
+    prevErr = err;
+}
+
+// Function to simulate the system with given coefficients
+void simulateSystem(double a, double b, double dt, double &in, double out) {
+    in = a * in + b * out;
+}
+
 int main() {
-    int size = 200;
-    NonlinearModel model(size);
-    model.calculateModel();
-    model.printResults();
+    // PID setups
+    double kp = 10.0;
+    double ki = 1.0;
+    double kd = 2.0;
+    double t = 0.0;
+    double dt = 1.0;
+    double T = 10.0;
+    double setpoint = 500.0;
+    double in = 0.0;
+    double prevErr = 0.0;
+    double out = 0.0;
+
+    // Model setups
+    double a = 0.5;
+    double b = 0.04;
+
+    // Vectors to store results
+    std::vector<double> results;
+    std::vector<double> times;
+    std::vector<double> outs;
+    std::vector<double> setpoints;
+
+    // Simulation loop
+    while (T >= t) {
+        // Calculate PID control
+        calculatePID(kp, ki, kd, dt, setpoint, in, prevErr, out);
+
+        // Store data for plotting
+        results.push_back(in);
+        times.push_back(t);
+        outs.push_back(out);
+        setpoints.push_back(setpoint);
+
+        // Simulate the system
+        simulateSystem(a, b, dt, in, out);
+
+        t += dt;
+    }
+
+    // Print results
+    for (const auto &result : results) {
+        std::cout << result << " ";
+    }
+
     return 0;
 }
+
 
 ```
 Вывод:
