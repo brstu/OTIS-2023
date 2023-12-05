@@ -1,49 +1,52 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-class Models {
+
+class CustomModels {
 private:
-    double a = 0.41;
-    double b = 1.4;
-    double c = 0.5;
-    double d = 0.3;
+    double param1 = 0.41;
+    double param2 = 1.4;
+    double param3 = 0.5;
+    double param4 = 0.3;
+
 public:
-    double linearModel(double f, double u) const {
-        double result = a * f + b * u;
+    double customLinearModel(double val1, double val2) const {
+        double result = param1 * val1 + param2 * val2;
         std::cout << result << std::endl;
         return result;
     }
 
-    double nonLinearModel(double f, double prevF, double u) const {
-        double result = a * f - b * prevF * prevF + c * u + d * sin(u);
+    double customNonLinearModel(double val1, double val2, double val3) const {
+        double result = param1 * val1 - param2 * val2 * val2 + param3 * val3 + param4 * sin(val3);
         std::cout << result << std::endl;
         return result;
     }
 };
 
 int main() {
-    double f = 0.0;
-    double u = 1.0;
-    double n = 100;
-    Models model;
+    double val1 = 0.0;
+    double val2 = 1.0;
+    double val3 = 100;  
+    CustomModels customModel;
 
-    std::cout << "LinearModeling\n";
+    std::cout << "CustomLinearModeling\n";
 
-    for (int i = 0; i < n; i++) {
-        f = model.linearModel(f, u);
+    for (int i = 0; i < val3; i++) {
+        val1 = customModel.customLinearModel(val1, val2);
     }
 
     std::cout << "---" << std::endl;
 
-    std::cout << "NonLinearModeling\n";
+    std::cout << "CustomNonLinearModeling\n";
 
-
-    double fn = 0;
-    f = 0;
-    for (int i = 0; i < n; i++) {
-        double prevF = f;
-        f = fn;
-        fn = model.nonLinearModel(f, prevF, u);
+    double prevVal1 = 0;
+    val1 = 0;
+    for (int i = 0; i < val3; i++) {
+        double tempVal = val1;
+        val1 = prevVal1;
+        prevVal1 = customModel.customNonLinearModel(val1, tempVal, val2);
     }
 
+    return 0;
 }
+
