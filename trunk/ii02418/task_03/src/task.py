@@ -242,9 +242,6 @@ def shortest_path():
 
         if len(arr) >= 2:
             display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
-        else:
-
-       
     win.mainloop()
     return 2
 def display_props(title, props):
