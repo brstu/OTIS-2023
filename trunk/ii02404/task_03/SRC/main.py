@@ -8,6 +8,7 @@ class GraphEditor:
     a="Add Edge"
     c="Choose Color"
     s="Shortest Path"
+
     def __init__(self, root):
         self.root = root
         self.root.title("Graph Editor")
@@ -36,12 +37,19 @@ class GraphEditor:
         self.algorithm_menu.add_command(label=s, command=self.shortest_path)
         self.algorithm_menu.add_command(label="Eulerian Path", command=self.eulerian_path)
 
-    def add_vertex(self):
+    def add_vertex(self,x,y):
         vertex = tk.simpledialog.askstring("Add Vertex", "Enter Vertex Label:")
         if vertex:
             self.graph.add_node(vertex)
             self.node_colors[vertex] = "skyblue"  # Default color
             self.draw_graph()
+        self.x = x
+        self.y = y
+        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
+        canvas.coords(self.text, x, y)
+        for vertex in vertexes:
+            if vertex.node1 == self or vertex.node2 == self:
+                vertex.move()
 
     def add_edge(self):
         edge_start = tk.simpledialog.askstring(a, "Enter Start Vertex Label:")
@@ -88,5 +96,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = GraphEditor(root)
     root.mainloop()
-
 
