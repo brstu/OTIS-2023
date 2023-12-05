@@ -20,6 +20,7 @@ public:
     void DFS(int vertex, bool visited[]);
     bool is_eularian();
     void findcycle(int V, vector<int>& way);
+    void showcycle();
 };
 
 Graph::Graph(int V)
@@ -75,10 +76,9 @@ void Graph::findcycle(int V, vector<int>& way) {
 }
 
 
-void main()
+void Graph::showcycle()
 {
     ifstream inp("graph.txt");
-
     if (inp.is_open()) {
         Graph g(0); // Создание объекта класса Graph с временным значением 0 для numV
         MainWindow window;

@@ -8,9 +8,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
- set(Qt6WidgetsTools_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake")
- set(Qt6Widgets_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake")
-set(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake")
+
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
@@ -70,9 +68,6 @@ install(TARGETS OTIS3END
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(OTIS3END)
-endif()
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(OTIS3END)
 endif()

@@ -17,103 +17,91 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>180</x>
       <y>10</y>
-      <width>521</width>
+      <width>571</width>
       <height>401</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="addVertexButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Добавить вершину</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addEdgeButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Добавить ребро</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="removeEdgeButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>110</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Удалить ребро</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="removeVertexButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>160</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Удалить вершину</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="changeVertexButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>210</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Изменить вершину</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addInformationButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>250</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Информация о графе</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addClearsceneButton">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>29</x>
-      <y>293</y>
-      <width>171</width>
-      <height>41</height>
+      <y>30</y>
+      <width>146</width>
+      <height>298</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Очистить экран</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="addVertexButton">
+         <property name="text">
+          <string>Добавить вершину</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addEdgeButton">
+         <property name="text">
+          <string>Добавить ребро</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeVertexButton">
+         <property name="text">
+          <string>Удалить вершину</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeEdgeButton">
+         <property name="text">
+          <string>Удалить ребро</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addInformationButton">
+         <property name="text">
+          <string>Информация о графе</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="changeVertexButton">
+         <property name="text">
+          <string>Редактировать вершину</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addClearsceneButton">
+         <property name="text">
+          <string>Очистить экран</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="export_2">
+       <property name="text">
+        <string>Экспорт в текстовый </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="import_2">
+       <property name="text">
+        <string>Импорт из текстового</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

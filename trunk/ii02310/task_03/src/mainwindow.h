@@ -16,6 +16,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    void importFromTextFile(const QString& fileName);
+    void exportToTextFile(const QString& fileName);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void updateEdges();
@@ -29,6 +31,7 @@ public:
         return edges.length();
     }
     QString getEulerCycle();
+    bool isGraphConnected();
     int getVertexIndex(const QString& vertexName) const;
 private slots:
     void on_addVertexButton_clicked();
@@ -43,6 +46,10 @@ private slots:
     void on_addInformationButton_clicked();
 
     void on_addClearsceneButton_clicked();
+
+    void on_export_2_clicked();
+
+    void on_import_2_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -6,6 +6,9 @@
 class Vertex : public QGraphicsItem
 {
 public:
+    QColor getColor() const {
+        return color;
+    }
     QString getName() const {
         return name;
     }
@@ -45,7 +48,7 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->setPen(Qt::black);
     painter->setBrush(color);
     painter->drawEllipse(-20, -20, 40, 40);
-    painter->setPen(Qt::black);
+    painter->setPen(Qt::green);
     painter->setFont(QFont("Arial", 12));
     painter->drawText(QRectF(-20, -20, 40, 40), Qt::AlignCenter, name);
 }

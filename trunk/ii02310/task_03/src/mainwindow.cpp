@@ -7,16 +7,17 @@
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QColorDialog>
+#include <QtCore>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QDoubleSpinBox>
 #include <QIODevice>
+#include <QFileDialog>
 #include <QFile>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QComboBox>
-#include <QFontMetrics>
 #include "edge.h"
 #include "vertex.h"
 #include "euler.h"
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    QFile::remove("graph.txt");
     delete ui;
 }
 
@@ -109,6 +111,7 @@ void MainWindow::updateEdges()
 {
     foreach (Edge* edge, edges) {
         edge->adjust();
+        edge->update();
     }
 }
 
@@ -165,6 +168,7 @@ void MainWindow::on_removeEdgeButton_clicked()
     dialog.exec();
 }
 
+
 void MainWindow::on_removeVertexButton_clicked()
 {
     if (vertices.isEmpty()) {
@@ -194,7 +198,7 @@ void MainWindow::on_removeVertexButton_clicked()
                 }
             }
 
-            // Удаление вершины
+
             scene->removeItem(vertex);
             vertices.removeOne(vertex);
             delete vertex;
@@ -261,6 +265,45 @@ void MainWindow::on_changeVertexButton_clicked()
     });
 
     dialog.exec();
+
+}
+bool MainWindow::isGraphConnected()
+{
+
+    if (vertices.isEmpty()) {
+        return false;
+    }
+
+
+    QVector<bool> visited(vertices.length(), false); // Массив для отслеживания посещенных вершин
+    QStack<Vertex*> stack;
+    stack.push(vertices[0]);
+
+    while (!stack.isEmpty()) {
+        Vertex* current = stack.pop();
+        int currentIdx = vertices.indexOf(current);
+        visited[currentIdx] = true;
+
+        // Перебираем ребра, инцидентные текущей вершине
+        foreach (Edge* edge, edges) {
+            if (edge->getSource() == current || edge->getDestination() == current) {
+                Vertex* adjacent = (edge->getSource() == current) ? edge->getDestination() : edge->getSource();
+                int adjacentIdx = vertices.indexOf(adjacent);
+                if (!visited[adjacentIdx]) {
+                    stack.push(adjacent);
+                }
+            }
+        }
+    }
+
+    // Проверка, что все вершины были достигнуты
+    for (int i = 0; i < visited.length(); ++i) {
+        if (!visited[i]) {
+            return false; // Найдена непосещенная вершина, граф не связный
+        }
+    }
+
+    return true; // Все вершины достижимы, граф связный
 }
 QString MainWindow::getEulerCycle() {
 
@@ -286,6 +329,8 @@ int MainWindow::getVertexIndex(const QString& vertexName) const {
     }
     return -1; // Вершина не найдена
 }
+
+
 void MainWindow::showGraphInfo()
 {
     // Количество вершин и ребер
@@ -296,22 +341,26 @@ void MainWindow::showGraphInfo()
     QString infoText = QString("Количество вершин: %1\nКоличество ребер: %2\n\n").arg(numVertices).arg(numEdges);
 
     // Строка со степенями вершин
-    QString degreesText = "Степени вершин:\n";
+QString degreesText = "Степени вершин:\n";
+    bool eulertrue = true;
+    bool treetrue = true;
     foreach (Vertex* vertex, vertices) {
         int degree = 0;
         foreach (Edge* edge, edges) {
-            if (edge->getSource() == vertex && edge->getDestination() == vertex) {
+            if (edge->getSource() == vertex || edge->getDestination() == vertex) {
                 degree++;
             }
         }
         degreesText += QString("Вершина %1: %2\n").arg(vertex->getName()).arg(degree);
+    if(degree % 2 != 0){ eulertrue = false;}
+    if(degree > 1){ treetrue = false;}
     }
 
     // Матрица инцидентности
     QString incidenceMatrixText = "Матрица инцидентности:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numEdges; j++) {
-            if (edges[j]->getSource() == vertices[i] && edges[j]->getDestination() == vertices[i]) {
+            if (edges[j]->getSource() == vertices[i] || edges[j]->getDestination() == vertices[i]) {
                 incidenceMatrixText += "1 ";
             } else {
                 incidenceMatrixText += "0 ";
@@ -340,8 +389,13 @@ void MainWindow::showGraphInfo()
         }
         adjacencyMatrixText += "\n";
     }
+    QString eulerCycleText;
+    if (eulertrue && isGraphConnected()) {
+        eulerCycleText = getEulerCycle();
+    } else {
+        eulerCycleText = "Эйлеровый цикл не существует.";
+    }
 
-    // Нахождение кратчайших путей
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
     for (int i = 0; i < numEdges; i++) {
@@ -365,30 +419,38 @@ void MainWindow::showGraphInfo()
     QString shortestPathsText = "Кратчайшие пути:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numVertices; j++) {
-            if (distances[i][j] != INT_MAX) {
+            if (i != j && distances[i][j] != INT_MAX) {
                 shortestPathsText += QString("(%1,%2): %3\n").arg(i).arg(j).arg(distances[i][j]);
             }
         }
     }
-
-    QString eulerCycleText = getEulerCycle();
-
+    QString connected;
+    if(isGraphConnected()){
+        connected = "Граф является связным";
+    } else {
+            connected = "Граф не является связным";
+    };
     // Формирование окна с информацией о графе
+    QString tree;
+    if(isGraphConnected() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
     QVBoxLayout layout(&dialog);
     QLabel infoLabel(infoText);
     QLabel degreesLabel(degreesText);
     QLabel incidenceMatrixLabel(incidenceMatrixText);
     QLabel adjacencyMatrixLabel(adjacencyMatrixText);
-    QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText);
+    QLabel GraphConnectedLabel(connected);
+    QLabel Tree(tree);
+    QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText); // Обновлено
     QLabel shortestPathsLabel(shortestPathsText);
     layout.addWidget(&infoLabel);
     layout.addWidget(&degreesLabel);
     layout.addWidget(&incidenceMatrixLabel);
     layout.addWidget(&adjacencyMatrixLabel);
+    layout.addWidget(&GraphConnectedLabel);
+    layout.addWidget(&Tree);
     layout.addWidget(&eulerCycleLabel);
     layout.addWidget(&shortestPathsLabel);
-
     dialog.exec();
 }
 void MainWindow::on_addInformationButton_clicked()
@@ -396,12 +458,124 @@ void MainWindow::on_addInformationButton_clicked()
     showGraphInfo();
 }
 
-
-
 void MainWindow::on_addClearsceneButton_clicked()
 {
     scene->clear();
     vertices.clear();
     edges.clear();
-    QFile::remove("graph.txt");
 }
+void MainWindow::exportToTextFile(const QString& fileName)
+{
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+
+            qDebug() << "Не удается открыть файл для записи: " << file.errorString();
+            return;
+    }
+
+
+    QTextStream out(&file);
+
+    for (int i = 0; i < vertices.length(); ++i)
+    {
+            Vertex* vertex = vertices[i];
+            out << "Vertex;" << vertex->getName() << ";" << vertex->getColor().name() << ";"
+                << vertex->scenePos().x() << ";" << vertex->scenePos().y() << "\n";
+    }
+
+
+    for (int i = 0; i < edges.length(); ++i)
+    {
+            Edge* edge = edges[i];
+            out << "Edge;" << vertices.indexOf(edge->getSource()) << ";" << vertices.indexOf(edge->getDestination()) << ";"
+                << edge->getWeight() << ";" << edge->getColor().name() << "\n";
+    }
+
+    file.close();
+}
+// Функция импорта данных из текстового файла в сцену
+void MainWindow::importFromTextFile(const QString& fileName)
+{
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+
+            qDebug() << "Не удается открыть файл для чтения: " << file.errorString();
+            return;
+    }
+
+
+    scene->clear();
+    vertices.clear();
+    edges.clear();
+
+
+    QTextStream in(&file);
+    while (!in.atEnd())
+    {
+            QString line = in.readLine();
+            QStringList parts = line.split(";");
+
+            if (parts[0] == "Vertex")
+            {
+            QString name = parts[1];
+            QColor color(parts[2]);
+            double x = parts[3].toDouble();
+            double y = parts[4].toDouble();
+
+            Vertex* vertex = new Vertex(name, color);
+            vertex->setPos(x, y);
+            vertices.append(vertex);
+            scene->addItem(vertex);
+            }
+            else if (parts[0] == "Edge")
+            {
+            int sourceVertexIndex = parts[1].toInt();
+            int destVertexIndex = parts[2].toInt();
+            double weight = parts[3].toDouble();
+            QColor color(parts[4]);
+
+            if (sourceVertexIndex >= 0 && sourceVertexIndex < vertices.length() &&
+                destVertexIndex >= 0 && destVertexIndex < vertices.length())
+            {
+                Vertex* sourceVertex = vertices[sourceVertexIndex];
+                Vertex* destVertex = vertices[destVertexIndex];
+                Edge* edge = new Edge(sourceVertex, destVertex, weight, color);
+                edges.append(edge);
+                scene->addItem(edge);
+            }
+            }
+    }
+
+    file.close();
+
+
+    scene->update();
+}
+
+
+
+void MainWindow::on_export_2_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Экспорт в файл");
+    if (!fileName.isEmpty())
+    {
+            exportToTextFile(fileName);
+    }
+}
+
+
+
+void MainWindow::on_import_2_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Импорт из файла");
+    if (!fileName.isEmpty())
+    {
+            importFromTextFile(fileName);
+    }
+}
+
+

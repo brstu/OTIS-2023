@@ -5,6 +5,9 @@
 class Edge : public QGraphicsItem
 {
 public:
+    QColor getColor() const {
+        return color;
+    }
     double getWeight() const {
         return weight;
     }
@@ -21,6 +24,7 @@ public:
     void adjust();
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 private:
+
     Vertex* source;
     Vertex* destination;
     double weight;
@@ -39,7 +43,8 @@ Edge::Edge(Vertex *source, Vertex *destination, double weight, const QColor& col
 }
 QRectF Edge::boundingRect() const
 {
-    return QRectF(sourcePoint, QSizeF(destinationPoint.x() - sourcePoint.x(), destinationPoint.y() - sourcePoint.y()));
+    qreal extra = 10; // добавим дополнительный зазор для отрисовки
+    return QRectF(sourcePoint, QSizeF(destinationPoint.x() - sourcePoint.x(), destinationPoint.y() - sourcePoint.y())).normalized().adjusted(-extra, -extra, extra, extra);
 }
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -47,15 +52,15 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(widget);
 
     QPointF textPos = (sourcePoint + destinationPoint) / 2;
-    painter->drawLine(sourcePoint, destinationPoint);
     painter->setPen(Qt::black);
+    painter->drawLine(sourcePoint, destinationPoint);
     painter->drawText(textPos, QString::number(weight));
-
 }
 
 void Edge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
+    adjust(); // обновите позицию ребра в соответствии с новыми позициями вершин
     if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
         mainWindow->updateEdges();
     }
@@ -74,5 +79,7 @@ void Edge::adjust()
 
     prepareGeometryChange();
 }
+
+
 
 #endif // EDGE_H
