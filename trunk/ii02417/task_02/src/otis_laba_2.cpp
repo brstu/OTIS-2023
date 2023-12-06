@@ -5,7 +5,21 @@
 
 int main()
 {
-	double a = 0.5, b = 0.6, c = 0.6, d = 0.4, e = 0.9, f0 = 1.2, fD = 1.1, g = 1.1, u = 1.0, u1 = 1.0, w = 60, F0, F1, F2, y = 10.0;
+    double a = 0.5;
+    double b = 0.6;
+    double c = 0.6;
+    double d = 0.4;
+    double e = 0.9;
+    double f0 = 1.2;
+    double fD = 1.1;
+    double g = 1.1;
+    double u = 1.0;
+    double u1 = 1.0;
+    double w = 60;
+    double F0;
+    double F1;
+    double F2;
+    double y = 10.0;
 
 	//Коэффициенты. 
 	F0 = e * (fD / f0 + 1);
