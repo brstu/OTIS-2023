@@ -32,7 +32,7 @@ void NonLinearModel() {
     std::vector<double> arrayNonLinearY(time);
 
     for (int i = 0; i < time; i++) {
-        yT = a * yT - b * pow(prevYT, 2) + c * uT + d * sin(uT);
+        yT = a * yT - b * std::pow(prevYT, 2) + c * uT + d * std::sin(uT);
         arrayNonLinearY[i] = yT;
         std::cout << yT << std::endl;
         prevYT = yT;
