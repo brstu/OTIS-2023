@@ -61,3 +61,4 @@ Web-диалог пользовательского интерфейса:
 ![task042.png](task042.png)
 ![task044.png](task044.png)
 ![task045.png](task045.png)
+
