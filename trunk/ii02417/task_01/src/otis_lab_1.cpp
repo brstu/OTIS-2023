@@ -21,6 +21,7 @@ void LinearModel() {
 
 void NonLinearModel() {
     std::cout << "Non-Linear Model" << std::endl;
+
     double yT = 1.5;
     double uT = 0.5;
     double prevYT = 0;
