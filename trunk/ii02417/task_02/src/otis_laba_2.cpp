@@ -4,7 +4,7 @@
 
 int main()
 {
-	float a = 0.5, b = 0.6, c = 0.6, d = 0.4, e = 0.9, f0 = 1.2, fD = 1.1, g = 1.1, u = 1.0, u1 = 1.0, w = 60, F0, F1, F2, y = 10.0;
+	double a = 0.5, b = 0.6, c = 0.6, d = 0.4, e = 0.9, f0 = 1.2, fD = 1.1, g = 1.1, u = 1.0, u1 = 1.0, w = 60, F0, F1, F2, y = 10.0;
 
 	//Коэффициенты. 
 	F0 = e * (fD / f0 + 1);
@@ -12,8 +12,8 @@ int main()
 	F2 = e * (fD / f0);
 
 	//Массивы для хранения.
-    std::vector<float> Yt = { y, y };
-    std::vector<float> E = { w - y, w - y };
+    std::vector<double> Yt = { y, y };
+    std::vector<double> E = { w - y, w - y };
 
 	//Вычисление значений.
     int temp = 2;
@@ -26,7 +26,7 @@ int main()
     }
 
     // Вывод графика
-    for (int i = 0; i < Yt.size(); i++) {
+    std::for_each(int i = 0; i < Yt.size(); i++) {
         std::cout << Yt[i] << std::endl;
     }
 }
