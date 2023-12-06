@@ -1,6 +1,6 @@
-from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
+from tkinter import messagebox, Canvas, Label, Entry, Button, Tk, StringVar
 from tkinter.colorchooser import askcolor
-from numpy import random
+import numpy as np
 from numpy import sqrt
 import networkx as nx
 
@@ -37,25 +37,6 @@ class Node:
         for edge in edges:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
-
-    def change(self):
-        win = Tk()
-        win.title("Изменение имени")
-        win.geometry(MY_CONSTANT)
-        win.wm_attributes('-topmost', 3)
-        win.resizable(False, False)
-        label = Label(win, text="Введите новое имя")
-        label.place(x=10, y=10)
-        entry = Entry(win, width=10)
-        entry.place(x=10, y=40)
-        button = Button(win, text="Изменить", command=lambda: self.change_name(entry.get()))
-        button.place(x=10, y=70)
-        win.mainloop()
-
-    def change_name(self, name):
-        graph.set_adj(name, graph.get_adj().pop(self.name))
-        self.name = name
-        canvas.itemconfig(self.text, text=name)
 
     def change_color(self, color):
         canvas.itemconfig(self.circle, fill=color)
