@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 int main()
 {
@@ -26,7 +27,7 @@ int main()
     }
 
     // Вывод графика
-    std::for_each(int i = 0; i < Yt.size(); i++) {
-        std::cout << Yt[i] << std::endl;
-    }
+    std::for_each(Yt.begin(), Yt.end(), [](double value) {
+        std::cout << value << std::endl;
+        });
 }
