@@ -20,8 +20,8 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        rng_x = np.random.default_rng()
-        rng_y = np.random.default_rng()
+        rng_x = np.random.default_rng(42)
+        rng_y = np.random.default_rng(42)
         self.x = rng_x.integers(0, 636)
         self.y = rng_y.integers(0, 636)
 
