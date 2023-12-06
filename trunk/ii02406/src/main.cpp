@@ -9,7 +9,7 @@ public:
     int id;
     std::vector<int> neighbors;
 
-    Vertex(int _id) : id(_id) {}
+    explicit Vertex(int _id) : id(_id) {}
 };
 
 // Класс, представляющий граф
