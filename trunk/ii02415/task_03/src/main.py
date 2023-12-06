@@ -203,6 +203,7 @@ def draw_oriented_line_between_vertex():  # рисование ориентир�
     canvas.bind_all("<Button-1>", draw_oriented_line_between_vertex_on_click)
 
 DATA_ID_ORIENT_LINE_X_Y_LABEL = "data_id_orient_line_x_y\t"
+
 def draw_oriented_line_between_vertex_on_click(event):
     global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2, color1
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
@@ -218,8 +219,9 @@ def draw_oriented_line_between_vertex_on_click(event):
                 y1 = data_vertex_id_x_y[i][1]
                 oriented_line += 1
                 break
-                elif oriented_line == 1:
+            elif oriented_line == 1:
                 ID_oriented_line += 1
+
                 name2 = data_vertex_id_x_y[i][2]
                 x2 = data_vertex_id_x_y[i][0]
                 y2 = data_vertex_id_x_y[i][1]
