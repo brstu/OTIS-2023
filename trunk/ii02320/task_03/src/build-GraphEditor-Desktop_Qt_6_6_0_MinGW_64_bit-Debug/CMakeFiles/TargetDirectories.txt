@@ -1,0 +1,8 @@
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/GraphEditor.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/CMakeFiles/GraphEditor_autogen.dir

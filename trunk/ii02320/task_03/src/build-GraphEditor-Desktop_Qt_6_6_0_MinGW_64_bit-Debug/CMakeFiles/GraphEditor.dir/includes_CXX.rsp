@@ -1,0 +1,1 @@
+-I"D:/progr/github/University/OTIS/lab3/build-GraphEditor-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/GraphEditor_autogen/include" -isystem D:/progr/Qt/6.6.0/mingw_64/include/QtCore -isystem D:/progr/Qt/6.6.0/mingw_64/include -isystem "D:/progr/Qt/6.6.0/mingw_64/mkspecs/win32-g++" -isystem D:/progr/Qt/6.6.0/mingw_64/include/QtWidgets -isystem D:/progr/Qt/6.6.0/mingw_64/include/QtGui

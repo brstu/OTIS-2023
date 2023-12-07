@@ -1,0 +1,56 @@
+{
+    "edges": [
+    ],
+    "key": "Orient",
+    "loops": [
+    ],
+    "name": "1",
+    "orEdges": [
+        {
+            "vert1": 0,
+            "vert2": 2,
+            "weight": "1"
+        },
+        {
+            "vert1": 2,
+            "vert2": 3,
+            "weight": "3"
+        },
+        {
+            "vert1": 3,
+            "vert2": 1,
+            "weight": "1"
+        },
+        {
+            "vert1": 1,
+            "vert2": 0,
+            "weight": "1"
+        }
+    ],
+    "vertices": [
+        {
+            "data1": 0,
+            "nameVert": "0",
+            "xPos": 137,
+            "yPos": 47
+        },
+        {
+            "data1": 1,
+            "nameVert": "1",
+            "xPos": 206,
+            "yPos": 155
+        },
+        {
+            "data1": 2,
+            "nameVert": "2",
+            "xPos": 121,
+            "yPos": 197
+        },
+        {
+            "data1": 3,
+            "nameVert": "3",
+            "xPos": 59,
+            "yPos": 108
+        }
+    ]
+}
