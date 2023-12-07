@@ -70,7 +70,7 @@ install(TARGETS GraphEditor
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/cmake")
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(GraphEditor)
 endif()
