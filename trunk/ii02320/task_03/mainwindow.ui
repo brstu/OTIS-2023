@@ -6,88 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>923</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QPushButton" name="addVertexButton">
-          <property name="text">
-           <string>Добавить вершину</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addEdgeButton">
-          <property name="text">
-           <string>Добавить ребро</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeVertexButton">
-          <property name="text">
-           <string>Удалить вершину</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeEdgeButton">
-          <property name="text">
-           <string>Удалить ребро</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addInformationButton">
-          <property name="text">
-           <string>Информация о графе</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="changeVertexButton">
-          <property name="text">
-           <string>Редактировать вершину</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addClearsceneButton">
-          <property name="text">
-           <string>Очистить экран</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="export_2">
-        <property name="text">
-         <string>Экспорт в текстовый </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="import_2">
-        <property name="text">
-         <string>Импорт из текстового</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QMdiArea" name="mdiArea"/>
     </item>
    </layout>
   </widget>
@@ -96,12 +25,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>923</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>Новый граф</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

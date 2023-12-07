@@ -23,10 +23,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(OTIS3END
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        euler.h
-        edge.h
-        vertex.h
-        startwindow.h startwindow.cpp startwindow.ui
+        graphwindow.h graphwindow.cpp graphwindow.ui
+        graph_LIB.h
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET OTIS3END APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
