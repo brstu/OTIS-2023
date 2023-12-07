@@ -80,7 +80,7 @@ void Graph::showcycle()
 {
     ifstream inp("graph.txt");
     if (inp.is_open()) {
-        Graph g(0); // Создание объекта класса Graph с временным значением 0 для numV
+        Graph g(0);
         MainWindow window;
         window.updateVertices();
         window.updateEdges();
@@ -96,6 +96,6 @@ void Graph::showcycle()
             g.addEdge(a, b);
         }
     }
-    else cout << "file not found";
+    else cout << "error";
 }
 #endif // EULER_H

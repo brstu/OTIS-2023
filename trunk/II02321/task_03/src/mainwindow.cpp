@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QGraphicsScene>
-#include <QGraphicsTextItem>
-#include <QInputDialog>
 #include <QPushButton>
 #include <QFormLayout>
 #include <QLineEdit>
@@ -10,7 +7,6 @@
 #include <QtCore>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
-#include <QPainter>
 #include <QDoubleSpinBox>
 #include <QIODevice>
 #include <QFileDialog>
@@ -28,84 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 }
-
 MainWindow::~MainWindow()
 {
     QFile::remove("graph.txt");
     delete ui;
-}
-
-void MainWindow::on_addVertexButton_clicked()
-{
-    QDialog dialog;
-    QFormLayout form(&dialog);
-    QLineEdit nameLineEdit;
-    form.addRow("Введи имя вершины", &nameLineEdit);
-    QPushButton addButton("Добавить вершину");
-    form.addRow(&addButton);
-
-    connect(&addButton, &QPushButton::clicked, [&]() {
-        QString name = nameLineEdit.text();
-        QColor color = QColorDialog::getColor();
-        Vertex* vertex = new Vertex(name, color);
-        scene->addItem(vertex);
-        vertices.append(vertex);
-        dialog.close();
-        updateEdges();
-    });
-
-    dialog.exec();
-}
-
-void MainWindow::on_addEdgeButton_clicked()
-{
-    if (vertices.isEmpty()) {
-        return;
-    }
-
-    QDialog dialog;
-    QFormLayout form(&dialog);
-
-    QLineEdit weightLineEdit;
-
-    QLineEdit sourceVertexLineEdit;
-    QLineEdit destinationVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
-    form.addRow("Укажите вес ребра", &weightLineEdit);
-    form.addRow("Начальная вершина", &sourceVertexLineEdit);
-    form.addRow("Конечная вершина", &destinationVertexLineEdit);
-    QPushButton addButton("Добавить ребро");
-    form.addRow(&addButton);
-    connect(&addButton, &QPushButton::clicked, [&]()
-    {
-        double weight = weightLineEdit.text().toInt();
-        int sourceIndex = sourceVertexLineEdit.text().toInt();
-        int destinationIndex = destinationVertexLineEdit.text().toInt();
-
-        if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length())
-        {
-            Vertex* sourceVertex = vertices.at(sourceIndex);
-            Vertex* destinationVertex = vertices.at(destinationIndex);
-            Edge* edge = new Edge(sourceVertex, destinationVertex, weight, QColorDialog::getColor());
-            scene->addItem(edge);
-            edges.append(edge);
-
-            QFile file("graph.txt");
-            if (file.open(QIODevice::Append | QIODevice::Text))
-            {
-                QTextStream out(&file);
-
-                // Записываем информацию о ребре в файл
-                out << sourceIndex << "                 " << destinationIndex << "                 " << weight << "\n";
-
-                file.close();
-            }
-        }
-        dialog.close();
-    });
-
-    dialog.exec();
 }
 void MainWindow::updateEdges()
 {
@@ -114,60 +36,6 @@ void MainWindow::updateEdges()
         edge->update();
     }
 }
-
-void MainWindow::on_removeEdgeButton_clicked()
-{
-    if (edges.isEmpty()) {
-        return;
-    }
-
-    QDialog dialog;
-    QFormLayout form(&dialog);
-    QLineEdit sourceVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
-    QLineEdit destinationVertexLineEdit;
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
-    form.addRow("Начальная вершина", &sourceVertexLineEdit);
-    form.addRow("Конечная вершина", &destinationVertexLineEdit);
-    QPushButton removeButton("Удалить ребро");
-    form.addRow(&removeButton);
-
-    connect(&removeButton, &QPushButton::clicked, [&]() {
-        int sourceIndex = sourceVertexLineEdit.text().toInt();
-        int destinationIndex = destinationVertexLineEdit.text().toInt();
-        if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length()) {
-            Vertex* sourceVertex = vertices.at(sourceIndex);
-            Vertex* destinationVertex = vertices.at(destinationIndex);
-
-
-            for (int i = 0; i < edges.length(); i++) {
-                Edge* edge = edges.at(i);
-                if (edge->getSourceVertex() == sourceVertex && edge->getDestinationVertex() == destinationVertex) {
-                    scene->removeItem(edge);
-                    edges.removeAt(i);
-                    delete edge;
-                    break;
-                }
-            }
-
-            // Обновляем файл без удаленного ребра
-            QFile file("graph.txt");
-            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                QTextStream out(&file);
-                for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSourceVertex());
-                    int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
-                }
-                file.close();
-            }
-        }
-        dialog.close();
-    });
-
-    dialog.exec();
-}
-
 
 void MainWindow::on_removeVertexButton_clicked()
 {
@@ -558,15 +426,9 @@ void MainWindow::importFromTextFile(const QString& fileName)
             }
             }
     }
-
     file.close();
-
-
     scene->update();
 }
-
-
-
 void MainWindow::on_export_2_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Экспорт в файл");
@@ -576,8 +438,6 @@ void MainWindow::on_export_2_clicked()
     }
 }
 
-
-
 void MainWindow::on_import_2_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Импорт из файла");
@@ -586,5 +446,148 @@ void MainWindow::on_import_2_clicked()
             importFromTextFile(fileName);
     }
 }
+
+
+void MainWindow::addVertex(const QString& name, const QColor& color, double x, double y)
+{
+    Vertex* vertex = new Vertex(name, color);
+    vertex->setPos(x, y);
+    scene->addItem(vertex);
+    vertices.append(vertex);
+}
+
+void MainWindow::addEdge(double weight, int sourceIndex, int destinationIndex)
+{
+    if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length())
+    {
+        Vertex* sourceVertex = vertices.at(sourceIndex);
+        Vertex* destinationVertex = vertices.at(destinationIndex);
+        Edge* edge = new Edge(sourceVertex, destinationVertex, weight, QColorDialog::getColor());
+        scene->addItem(edge);
+        edges.append(edge);
+
+        QFile file("graph.txt");
+        if (file.open(QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream out(&file);
+
+            // Записываем информацию о ребре в файл
+            out << sourceIndex << "                 " << destinationIndex << "                 " << weight << "\n";
+
+            file.close();
+        }
+    }
+}
+
+void MainWindow::removeEdge(Vertex* sourceVertex, Vertex* destinationVertex)
+{
+    for (int i = 0; i < edges.length(); i++) {
+        Edge* edge = edges.at(i);
+        if (edge->getSourceVertex() == sourceVertex && edge->getDestinationVertex() == destinationVertex) {
+            scene->removeItem(edge);
+            edges.removeAt(i);
+            delete edge;
+            break;
+        }
+    }
+
+    // Обновляем файл без удаленного ребра
+    QFile file("graph.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (const Edge* edge : edges) {
+            int sourceIndex = vertices.indexOf(edge->getSourceVertex());
+            int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
+            out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
+        }
+        file.close();
+    }
+}
+
+void MainWindow::on_addVertexButton_clicked()
+{
+    QDialog dialog;
+    QFormLayout form(&dialog);
+    QLineEdit nameLineEdit;
+    form.addRow("Введи имя вершины", &nameLineEdit);
+    QPushButton addButton("Добавить вершину");
+    form.addRow(&addButton);
+
+    connect(&addButton, &QPushButton::clicked, [&]() {
+        QString name = nameLineEdit.text();
+        QColor color = QColorDialog::getColor();
+        addVertex(name, color,50,50);
+        dialog.close();
+        updateEdges();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::on_addEdgeButton_clicked()
+{
+    if (vertices.isEmpty()) {
+        return;
+    }
+
+    QDialog dialog;
+    QFormLayout form(&dialog);
+
+    QLineEdit weightLineEdit;
+    QLineEdit sourceVertexLineEdit;
+    QLineEdit destinationVertexLineEdit;
+    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    form.addRow("Укажите вес ребра", &weightLineEdit);
+    form.addRow("Начальная вершина", &sourceVertexLineEdit);
+    form.addRow("Конечная вершина", &destinationVertexLineEdit);
+    QPushButton addButton("Добавить ребро");
+    form.addRow(&addButton);
+
+    connect(&addButton, &QPushButton::clicked, [&]()
+    {
+        double weight = weightLineEdit.text().toInt();
+        int sourceIndex = sourceVertexLineEdit.text().toInt();
+        int destinationIndex = destinationVertexLineEdit.text().toInt();
+        addEdge(weight, sourceIndex, destinationIndex);
+        dialog.close();
+    });
+
+    dialog.exec();
+}
+
+void MainWindow::on_removeEdgeButton_clicked()
+{
+    if (edges.isEmpty()) {
+        return;
+    }
+
+
+    QDialog dialog;
+    QFormLayout form(&dialog);
+    QLineEdit sourceVertexLineEdit;
+    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    QLineEdit destinationVertexLineEdit;
+    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    form.addRow("Начальная вершина", &sourceVertexLineEdit);
+    form.addRow("Конечная вершина", &destinationVertexLineEdit);
+    QPushButton removeButton("Удалить ребро");
+    form.addRow(&removeButton);
+
+    connect(&removeButton, &QPushButton::clicked, [&]() {
+        int sourceIndex = sourceVertexLineEdit.text().toInt();
+        int destinationIndex = destinationVertexLineEdit.text().toInt();
+        if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length()) {
+            Vertex* sourceVertex = vertices.at(sourceIndex);
+            Vertex* destinationVertex = vertices.at(destinationIndex);
+            removeEdge(sourceVertex, destinationVertex);
+        }
+        dialog.close();
+    });
+
+    dialog.exec();
+}
+
+
 
 

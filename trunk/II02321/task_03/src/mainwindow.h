@@ -37,20 +37,17 @@ public:
 private slots:
     void on_addVertexButton_clicked();
     void on_addEdgeButton_clicked();
-
     void on_removeEdgeButton_clicked();
-
     void on_removeVertexButton_clicked();
-
     void on_changeVertexButton_clicked();
-
     void on_addInformationButton_clicked();
-
     void on_addClearsceneButton_clicked();
-
     void on_export_2_clicked();
-
     void on_import_2_clicked();
+
+    void addVertex(const QString& name, const QColor& color, double x, double y);
+    void addEdge(double weight, int sourceIndex, int destinationIndex);
+    void removeEdge(Vertex* sourceVertex, Vertex* destinationVertex);
 
 private:
     Ui::MainWindow *ui;

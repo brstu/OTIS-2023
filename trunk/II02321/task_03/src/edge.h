@@ -35,7 +35,7 @@ private:
 };
 
 Edge::Edge(Vertex *sourceVertex, Vertex *destination, double weight, const QColor& color)
-    : sourceVertex(sourceVertex), destinationVertex(destinationVertex), weightEdge(weightEdge), colorEdge(colorEdge)
+    : sourceVertex(sourceVertex), destinationVertex(destination), weightEdge(weight), colorEdge(color)
 {
     sourceVertex->setTextOffset(QPointF(-25, -35));
     destination->setTextOffset(QPointF(-25, -35));
@@ -44,7 +44,7 @@ Edge::Edge(Vertex *sourceVertex, Vertex *destination, double weight, const QColo
 }
 QRectF Edge::boundingRect() const
 {
-    qreal extra = 10; // добавим дополнительный зазор для отрисовки
+    qreal extra = 10;
     return QRectF(sourcePoint, QSizeF(destinationPoint.x() - sourcePoint.x(), destinationPoint.y() - sourcePoint.y())).normalized().adjusted(-extra, -extra, extra, extra);
 }
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -56,7 +56,7 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->setPen(Qt::black);
     painter->drawLine(sourcePoint, destinationPoint);
     QFont font;
-    font.setPixelSize(20); // Установка размера шрифта
+    font.setPixelSize(20);
     painter->setFont(font);
     painter->drawText(textPos, QString::number(weightEdge));
 }
@@ -64,7 +64,7 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 void Edge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
-    adjust(); // обновите позицию ребра в соответствии с новыми позициями вершин
+    adjust();
     if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
         mainWindow->updateEdges();
     }
