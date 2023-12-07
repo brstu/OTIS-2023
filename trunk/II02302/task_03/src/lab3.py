@@ -268,7 +268,7 @@ def delete(event):
 
 
 def shortest_path():
-    enter = []
+    enter[2] = []
     win = Tk()
     win.title("Выбор вершин")
     win.geometry("200x120+1050+250")
@@ -290,7 +290,7 @@ def shortest_path():
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     win.mainloop()
-    return enter[0]
+    return enter[0], enter[1]
 
 
 def display_props(title, props):
