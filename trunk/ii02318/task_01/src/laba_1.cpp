@@ -8,13 +8,13 @@ private:
     double b;
     double c;
     double d;
-    double y;
-    double u;
-    double y0;
-    double u0;
+    double y = 0.02;
+    double u = 1;
+    double y0 = 0.00;
+    double u0 = 0.00;
 public:
     Model(double a, double b, double c, double d)
-        : a(a), b(b), c(c), d(d), y(0.02), u(1), y0(0.00), u0(0.00) {}
+        : a(a), b(b), c(c), d(d) {}
 
     double lfunc() {
         y = a * y + b * u;
