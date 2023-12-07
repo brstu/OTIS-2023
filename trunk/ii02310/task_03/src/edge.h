@@ -2,41 +2,42 @@
 #define EDGE_H
 #include "vertex.h"
 #include <QPainter>
+#include <QFont>
 class Edge : public QGraphicsItem
 {
 public:
-    QColor getColor() const {
-        return color;
+    QColor getColorEdge() const {
+        return colorEdge;
     }
-    double getWeight() const {
-        return weight;
+    double getWeightEdge() const {
+        return weightEdge;
     }
-    Vertex* getSource() const {
-        return source;
+    Vertex* getSourceVertex() const {
+        return sourceVertex;
     }
 
-    Vertex* getDestination() const {
-        return destination;
+    Vertex* getDestinationVertex() const {
+        return destinationVertex;
     }
-    Edge(Vertex* source, Vertex* destination, double weight, const QColor& color);
+    Edge(Vertex* sourceVertex, Vertex* destination, double weight, const QColor& color);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void adjust();
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 private:
 
-    Vertex* source;
-    Vertex* destination;
-    double weight;
-    QColor color;
+    Vertex* sourceVertex;
+    Vertex* destinationVertex;
+    double weightEdge;
+    QColor colorEdge;
     QPointF sourcePoint;
     QPointF destinationPoint;
 };
 
-Edge::Edge(Vertex *source, Vertex *destination, double weight, const QColor& color)
-    : source(source), destination(destination), weight(weight), color(color)
+Edge::Edge(Vertex *sourceVertex, Vertex *destination, double weight, const QColor& color)
+    : sourceVertex(sourceVertex), destinationVertex(destinationVertex), weightEdge(weightEdge), colorEdge(colorEdge)
 {
-    source->setTextOffset(QPointF(-25, -35));
+    sourceVertex->setTextOffset(QPointF(-25, -35));
     destination->setTextOffset(QPointF(-25, -35));
     adjust(); //
     setFlag(ItemIsSelectable);
@@ -54,7 +55,10 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     QPointF textPos = (sourcePoint + destinationPoint) / 2;
     painter->setPen(Qt::black);
     painter->drawLine(sourcePoint, destinationPoint);
-    painter->drawText(textPos, QString::number(weight));
+    QFont font;
+    font.setPixelSize(20); // Установка размера шрифта
+    painter->setFont(font);
+    painter->drawText(textPos, QString::number(weightEdge));
 }
 
 void Edge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -70,12 +74,12 @@ void Edge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Edge::adjust()
 {
-    if (!source || !destination) {
+    if (!sourceVertex || !destinationVertex) {
         return;
     }
 
-    sourcePoint = source->pos();
-    destinationPoint = destination->pos();
+    sourcePoint = sourceVertex->pos();
+    destinationPoint = destinationVertex->pos();
 
     prepareGeometryChange();
 }

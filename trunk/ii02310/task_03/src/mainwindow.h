@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    bool complGraph();
     void importFromTextFile(const QString& fileName);
     void exportToTextFile(const QString& fileName);
     MainWindow(QWidget *parent = nullptr);

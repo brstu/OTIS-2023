@@ -142,7 +142,7 @@ void MainWindow::on_removeEdgeButton_clicked()
 
             for (int i = 0; i < edges.length(); i++) {
                 Edge* edge = edges.at(i);
-                if (edge->getSource() == sourceVertex && edge->getDestination() == destinationVertex) {
+                if (edge->getSourceVertex() == sourceVertex && edge->getDestinationVertex() == destinationVertex) {
                     scene->removeItem(edge);
                     edges.removeAt(i);
                     delete edge;
@@ -155,9 +155,9 @@ void MainWindow::on_removeEdgeButton_clicked()
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 QTextStream out(&file);
                 for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSource());
-                    int destinationIndex = vertices.indexOf(edge->getDestination());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeight() << "\n";
+                    int sourceIndex = vertices.indexOf(edge->getSourceVertex());
+                    int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
+                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
                 }
                 file.close();
             }
@@ -191,7 +191,7 @@ void MainWindow::on_removeVertexButton_clicked()
             // Удаление связанных ребер
             for (int i = edges.length() - 1; i >= 0; --i) {
                 Edge* edge = edges.at(i);
-                if (edge->getSource() == vertex || edge->getDestination() == vertex) {
+                if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
                     scene->removeItem(edge);
                     edges.removeAt(i);
                     delete edge;
@@ -208,9 +208,9 @@ void MainWindow::on_removeVertexButton_clicked()
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 QTextStream out(&file);
                 for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSource());
-                    int destinationIndex = vertices.indexOf(edge->getDestination());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeight() << "\n";
+                    int sourceIndex = vertices.indexOf(edge->getSourceVertex());
+                    int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
+                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
                 }
                 file.close();
             }
@@ -251,9 +251,9 @@ void MainWindow::on_changeVertexButton_clicked()
         QString newName = vertexNameLineEdit.text();
         if (vertexIndex >= 0 && vertexIndex < vertices.length()) {
             Vertex* vertex = vertices.at(vertexIndex);
-            vertex->setName(newName);
+            vertex->setNameVertex(newName);
             QColor color = QColorDialog::getColor();
-            vertex->setColor(color);
+            vertex->setColorVertex(color);
             vertex->update();
             updateVertices();
         }
@@ -286,8 +286,8 @@ bool MainWindow::isGraphConnected()
 
         // Перебираем ребра, инцидентные текущей вершине
         foreach (Edge* edge, edges) {
-            if (edge->getSource() == current || edge->getDestination() == current) {
-                Vertex* adjacent = (edge->getSource() == current) ? edge->getDestination() : edge->getSource();
+            if (edge->getSourceVertex() == current || edge->getDestinationVertex() == current) {
+                Vertex* adjacent = (edge->getSourceVertex() == current) ? edge->getDestinationVertex() : edge->getSourceVertex();
                 int adjacentIdx = vertices.indexOf(adjacent);
                 if (!visited[adjacentIdx]) {
                     stack.push(adjacent);
@@ -310,8 +310,8 @@ QString MainWindow::getEulerCycle() {
     QString eulerCycle;
     Graph g(vertices.length());
     for (Edge* edge : edges) {
-        int src = vertices.indexOf(edge->getSource());
-        int dest = vertices.indexOf(edge->getDestination());
+        int src = vertices.indexOf(edge->getSourceVertex());
+        int dest = vertices.indexOf(edge->getDestinationVertex());
         g.addEdge(src, dest);
     }
     vector<int> eulerPath;
@@ -323,13 +323,17 @@ QString MainWindow::getEulerCycle() {
 }
 int MainWindow::getVertexIndex(const QString& vertexName) const {
     for (int i = 0; i < vertices.length(); i++) {
-        if (vertices[i]->getName() == vertexName) {
+        if (vertices[i]->getNameVertex() == vertexName) {
             return i;
         }
     }
     return -1; // Вершина не найдена
 }
-
+bool MainWindow::complGraph(){
+    int numVertices = vertices.length();
+    int numEdges = edges.length();
+    if(numVertices*(numVertices-1)/2 != numEdges){return false;}else{return true;}
+}
 
 void MainWindow::showGraphInfo()
 {
@@ -347,11 +351,11 @@ QString degreesText = "Степени вершин:\n";
     foreach (Vertex* vertex, vertices) {
         int degree = 0;
         foreach (Edge* edge, edges) {
-            if (edge->getSource() == vertex || edge->getDestination() == vertex) {
+            if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
                 degree++;
             }
         }
-        degreesText += QString("Вершина %1: %2\n").arg(vertex->getName()).arg(degree);
+        degreesText += QString("Вершина %1: %2\n").arg(vertex->getNameVertex()).arg(degree);
     if(degree % 2 != 0){ eulertrue = false;}
     if(degree > 1){ treetrue = false;}
     }
@@ -360,7 +364,7 @@ QString degreesText = "Степени вершин:\n";
     QString incidenceMatrixText = "Матрица инцидентности:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numEdges; j++) {
-            if (edges[j]->getSource() == vertices[i] || edges[j]->getDestination() == vertices[i]) {
+            if (edges[j]->getSourceVertex() == vertices[i] || edges[j]->getDestinationVertex() == vertices[i]) {
                 incidenceMatrixText += "1 ";
             } else {
                 incidenceMatrixText += "0 ";
@@ -375,8 +379,8 @@ QString degreesText = "Степени вершин:\n";
         for (int j = 0; j < numVertices; j++) {
             bool isAdjacent = false;
             foreach (Edge* edge, edges) {
-                if ((edge->getSource() == vertices[i] && edge->getDestination() == vertices[j]) ||
-                    (edge->getSource() == vertices[j] && edge->getDestination() == vertices[i])) {
+                if ((edge->getSourceVertex() == vertices[i] && edge->getDestinationVertex() == vertices[j]) ||
+                    (edge->getSourceVertex() == vertices[j] && edge->getDestinationVertex() == vertices[i])) {
                     isAdjacent = true;
                     break;
                 }
@@ -399,9 +403,9 @@ QString degreesText = "Степени вершин:\n";
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
     for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = getVertexIndex(edges[i]->getSource()->getName());
-        int destinationIndex = getVertexIndex(edges[i]->getDestination()->getName());
-        int weight = edges[i]->getWeight();
+        int sourceIndex = getVertexIndex(edges[i]->getSourceVertex()->getNameVertex());
+        int destinationIndex = getVertexIndex(edges[i]->getDestinationVertex()->getNameVertex());
+        int weight = edges[i]->getWeightEdge();
 
         distances[sourceIndex][destinationIndex] = weight;
         distances[destinationIndex][sourceIndex] = weight;
@@ -424,6 +428,9 @@ QString degreesText = "Степени вершин:\n";
             }
         }
     }
+    QString completeGraph;
+    if(complGraph()){completeGraph = "Граф является полным";}
+    else {completeGraph = "Граф не является полным";};
     QString connected;
     if(isGraphConnected()){
         connected = "Граф является связным";
@@ -441,6 +448,7 @@ QString degreesText = "Степени вершин:\n";
     QLabel adjacencyMatrixLabel(adjacencyMatrixText);
     QLabel GraphConnectedLabel(connected);
     QLabel Tree(tree);
+    QLabel CompleteGraphLabel(completeGraph);
     QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText); // Обновлено
     QLabel shortestPathsLabel(shortestPathsText);
     layout.addWidget(&infoLabel);
@@ -449,6 +457,7 @@ QString degreesText = "Степени вершин:\n";
     layout.addWidget(&adjacencyMatrixLabel);
     layout.addWidget(&GraphConnectedLabel);
     layout.addWidget(&Tree);
+    layout.addWidget(&CompleteGraphLabel);
     layout.addWidget(&eulerCycleLabel);
     layout.addWidget(&shortestPathsLabel);
     dialog.exec();
@@ -481,7 +490,7 @@ void MainWindow::exportToTextFile(const QString& fileName)
     for (int i = 0; i < vertices.length(); ++i)
     {
             Vertex* vertex = vertices[i];
-            out << "Vertex;" << vertex->getName() << ";" << vertex->getColor().name() << ";"
+            out << "Vertex;" << vertex->getNameVertex() << ";" << vertex->getColorVertex().name() << ";"
                 << vertex->scenePos().x() << ";" << vertex->scenePos().y() << "\n";
     }
 
@@ -489,8 +498,8 @@ void MainWindow::exportToTextFile(const QString& fileName)
     for (int i = 0; i < edges.length(); ++i)
     {
             Edge* edge = edges[i];
-            out << "Edge;" << vertices.indexOf(edge->getSource()) << ";" << vertices.indexOf(edge->getDestination()) << ";"
-                << edge->getWeight() << ";" << edge->getColor().name() << "\n";
+            out << "Edge;" << vertices.indexOf(edge->getSourceVertex()) << ";" << vertices.indexOf(edge->getDestinationVertex()) << ";"
+                << edge->getWeightEdge() << ";" << edge->getColorEdge().name() << "\n";
     }
 
     file.close();
