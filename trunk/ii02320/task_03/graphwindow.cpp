@@ -1121,8 +1121,7 @@ QString degreesText = "Степени вершин:\n";
         VEC1 path(verts.length());
         VEC2 matrix = createWeightMatrix();
         distance = search.Dejkstra(matrix, start, path);
-        convert a;
-        //a.print(matrix);
+
         VEC1 way;
 
         // Создаем строку с результатами
