@@ -14,7 +14,7 @@ void LinearModel() {
 
     for (int i = 0; i < time; i++) {
         yT = a * yT + b * uT;
-        arrayLinearY[i] = yT;
+       // arrayLinearY[i] = yT;
         std::cout << yT << std::endl;
     }
 }
@@ -34,7 +34,7 @@ void NonLinearModel() {
 
     for (int i = 0; i < time; i++) {
         yT = a * yT - b * std::pow(prevYT, 2) + c * uT + d * std::sin(uT);
-        arrayNonLinearY[i] = yT;
+       // arrayNonLinearY[i] = yT;
         std::cout << yT << std::endl;
         prevYT = yT;
     }
