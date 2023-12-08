@@ -6,30 +6,30 @@
 class Vertex : public QGraphicsItem
 {
 public:
-    QColor getColorVertex() const {
-        return colorVertex;
+    QColor getColor() const {
+        return color;
     }
-    QString getNameVertex() const {
-        return nameVertex;
+    QString getName() const {
+        return name;
     }
-    void setColorVertex(const QColor& newColorVertex) {
-        colorVertex = newColorVertex;
+    void setColor(const QColor& newColor) {
+        color = newColor;
     }
-    void setNameVertex(const QString& newNameVertex) {
-        nameVertex = newNameVertex;
+    void setName(const QString& newName) {
+        name = newName;
     }
-    Vertex(const QString& nameVertex, const QColor& colorVertex);
+    Vertex(const QString& name, const QColor& color);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setTextOffset(const QPointF& offset);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    QString nameVertex;
-    QColor colorVertex;
+    QString name;
+    QColor color;
     QPointF textOffset;
 };
-Vertex::Vertex(const QString& nameVertex, const QColor& colorVertex) : nameVertex(nameVertex), colorVertex(colorVertex)
+Vertex::Vertex(const QString& name, const QColor& color) : name(name), color(color)
 {
     setFlag(ItemIsMovable);
 }
@@ -46,11 +46,11 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     Q_UNUSED(widget);
 
     painter->setPen(Qt::black);
-    painter->setBrush(colorVertex);
+    painter->setBrush(color);
     painter->drawEllipse(-20, -20, 40, 40);
     painter->setPen(Qt::green);
     painter->setFont(QFont("Arial", 12));
-    painter->drawText(QRectF(-20, -20, 40, 40), Qt::AlignCenter, nameVertex);
+    painter->drawText(QRectF(-20, -20, 40, 40), Qt::AlignCenter, name);
 }
 
 void Vertex::setTextOffset(const QPointF &offset)

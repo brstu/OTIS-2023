@@ -26,7 +26,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         euler.h
         edge.h
         vertex.h
-        startwindow.h startwindow.cpp startwindow.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET OTIS3END APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
