@@ -202,7 +202,9 @@ def delete_matching_unoriented_line(x1, y1, x2, y2):
 def draw_oriented_line_between_vertex():  # рисование ориентированного ребра
     canvas.bind_all("<Button-1>", draw_oriented_line_between_vertex_on_click)
 
+
 DATA_ID_ORIENT_LINE_X_Y_LABEL = "data_id_orient_line_x_y\t"
+
 
 def draw_oriented_line_between_vertex_on_click(event):
     global x1, y1, x2, y2, oriented_line, ID_oriented_line, name1, name2, color1
@@ -599,19 +601,23 @@ def rename_vertex_name(name, root, i):
             for i in data_id_unorient_line_x_y:  # и если находим, то меняем имя вершины в списке ребер на новое имя
                 if data_id_unorient_line_x_y[i][0][2] == rename_name:
                     data_id_unorient_line_x_y[i][0][2] = name
-                if data_id_unorient_line_x_y[i][1][2] == rename_name:
-                    data_id_unorient_line_x_y[i][1][2] = name
-                print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_unorient_line_x_y)
-            print("data_id_orient_line_x_y\t", data_id_unorient_line_x_y)
-            elif ID_oriented_line != 0:
-            for i in data_id_orient_line_x_y:
-                if data_id_orient_line_x_y[i][0][2] == rename_name:
-                    data_id_orient_line_x_y[i][0][2] = name
-                if data_id_orient_line_x_y[i][1][2] == rename_name:
-                    data_id_orient_line_x_y[i][1][2] = name
-            print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_orient_line_x_y)
-        array_name_vertex.append(name)
-        root.destroy()
+                    if data_id_unorient_line_x_y[i][1][2] == rename_name:
+                        data_id_unorient_line_x_y[i][1][2] = name
+                    print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_unorient_line_x_y)
+
+                    print("data_id_orient_line_x_y\t", data_id_unorient_line_x_y)
+
+                    elif ID_oriented_line != 0:
+                    for i in data_id_orient_line_x_y:
+                        if data_id_orient_line_x_y[i][0][2] == rename_name:
+                            data_id_orient_line_x_y[i][0][2] = name
+                        if data_id_orient_line_x_y[i][1][2] == rename_name:
+                            data_id_orient_line_x_y[i][1][2] = name
+
+                print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_orient_line_x_y)
+
+                array_name_vertex.append(name)
+                root.destroy()
 
 
 def algorithm():  # функция для создания окна с алгоритмами
