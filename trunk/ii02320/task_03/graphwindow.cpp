@@ -75,9 +75,8 @@ void GraphWindow::on_addVertPushButton_clicked()
         verts.append(vert);
     }
 }
-void GraphWindow::on_addEdgePushButton_clicked()
-{
 
+QGraphicsEllipseItem* GraphWindow::getSelectedVertex(){
     // Подготовка списка названий вершин
     QStringList vertexNames;
     for (const Vertice& vert : verts) {
@@ -89,11 +88,11 @@ void GraphWindow::on_addEdgePushButton_clicked()
 
     // Вывод списка вершин и предложение выбрать первую вершину
     bool ok;
-    QString selectedVertexName1 = QInputDialog::getItem(this, "Выбор первой вершины", "Выберите первую вершину для создания ребра:", vertexNames, 0, false, &ok);
+    QString selectedVertexName1 = QInputDialog::getItem(this, "Выбор вершины", "Выберите вершину для создания ребра:", vertexNames, 0, false, &ok);
 
     if (!ok) {
         // Пользователь отменил операцию
-        return;
+        return 0;
     }
 
     // Поиск соответствующей вершины по выбранному имени
@@ -108,35 +107,23 @@ void GraphWindow::on_addEdgePushButton_clicked()
 
     if (!selectedVertex1) {
         QMessageBox::warning(this, "Ошибка", "Не удалось найти выбранную первую вершину.");
-        return;
+        return 0;
     }
+    return selectedVertex1;
+}
 
-    // Вывод списка вершин и предложение выбрать вторую вершину
-    QString selectedVertexName2 = QInputDialog::getItem(this, "Выбор второй вершины", "Выберите вторую вершину для создания ребра:", vertexNames, 0, false, &ok);
-
-    if (!ok) {
-        // Пользователь отменил операцию
-        return;
-    }
+void GraphWindow::on_addEdgePushButton_clicked()
+{
+    QGraphicsEllipseItem* selectedVertex1 = getSelectedVertex();
+    if (!selectedVertex1) return;
+    QGraphicsEllipseItem* selectedVertex2 = getSelectedVertex();
+    if (!selectedVertex2) return;
+    bool ok;
     double weight = QInputDialog::getInt(this, "Введите вес ребра", "Введите вес ребра:", 1, -2147483647, 2147483647, 2, &ok);
-    // Поиск соответствующей вершины по выбранному имени
     if (!ok) {
-
-        return;
-    }
-    QGraphicsEllipseItem* selectedVertex2 = nullptr;
-    for (const Vertice& vert : verts) {
-        QGraphicsTextItem* textItem = vert.textvert;
-        if (textItem && textItem->toPlainText() == selectedVertexName2) {
-            selectedVertex2 = vert.vert;
-            break;
-        }
+    return;
     }
 
-    if (!selectedVertex2) {
-        QMessageBox::warning(this, "Ошибка", "Не удалось найти выбранную вторую вершину.");
-        return;
-    }
     qreal middleX = (selectedVertex1->scenePos().x() + selectedVertex2->scenePos().x()) / 2.0;
     qreal middleY = (selectedVertex1->scenePos().y() + selectedVertex2->scenePos().y()) / 2.0;
 
@@ -306,48 +293,24 @@ void GraphWindow::updateLoopPosition(QGraphicsEllipseItem* loop, QGraphicsEllips
 
 void GraphWindow::on_renamePushButton_clicked()
 {
-    // Подготовка списка названий вершин
-    QStringList vertexNames;
-    for (const Vertice& vert : verts) {
-        QGraphicsTextItem* textItem = vert.textvert;
-        if (textItem) {
-            vertexNames.append(textItem->toPlainText());
-        }
-    }
+    QGraphicsEllipseItem* selectedVertex = getSelectedVertex();
+    if (!selectedVertex) return;
+    for (const Vertice& vert : verts){
+        if (selectedVertex == vert.vert){
 
-    // Вывод списка вершин и предложение выбрать первую вершину
-    bool ok;
-    QString selectedVertexName1 = QInputDialog::getItem(this, "Выбор вершины для переименования", "Выберите вершину для изменения имени:", vertexNames, 0, false, &ok);
-
-    if (!ok) {
-        // Пользователь отменил операцию
-        return;
-    }
-
-    // Поиск соответствующей вершины по выбранному имени
-    QGraphicsEllipseItem* selectedVertex1 = nullptr;
-    for (const Vertice& vert : verts) {
-        QGraphicsTextItem* textItem = vert.textvert;
-        if (textItem && textItem->toPlainText() == selectedVertexName1) {
-            selectedVertex1 = vert.vert;
-             QString newName = QInputDialog::getText(this,"Введите новое имя вершины","Имя:");
+            QString newName = QInputDialog::getText(this,"Введите новое имя вершины","Имя:");
             if (!newName.isEmpty()){
-            textItem->setPlainText(newName);
-             QRectF textRect = textItem->boundingRect();
-            // Установить позицию текста в центр вершины
-            qreal xPos = (vert.vert->boundingRect().width() - textRect.width()) / 2.0;
-            qreal yPos = (vert.vert->boundingRect().height() - textRect.height()) / 2.0;
-            textItem->setPos(xPos, yPos);
-            break;
-            } else {QMessageBox::warning(this, "Ошибка", "Пустое название");}
+                vert.textvert->setPlainText(newName);
+                QRectF textRect = vert.textvert->boundingRect();
+                // Установить позицию текста в центр вершины
+                qreal xPos = (vert.vert->boundingRect().width() - textRect.width()) / 2.0;
+                qreal yPos = (vert.vert->boundingRect().height() - textRect.height()) / 2.0;
+                vert.textvert->setPos(xPos, yPos);
+                break;
+            } else {QMessageBox::warning(this, "Ошибка", "Пустое название"); break;}
 
         }
-    }
-
-    if (!selectedVertex1) {
-        QMessageBox::warning(this, "Ошибка", "Не удалось найти выбранную первую вершину.");
-        return;
-    }
+        }
 }
 
 void GraphWindow::on_deletePushButton_clicked()
@@ -608,7 +571,63 @@ void GraphWindow::copyObjects()
     }
 }
 
+void GraphWindow::addEdge(Vertice vert1, Vertice vert2,Edge edge){
+    QGraphicsLineItem* edge1 = new QGraphicsLineItem;
+    //edge->setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsTextItem* weight = new QGraphicsTextItem;
+    ui->graphicsView->scene()->addItem(weight);
+    weight->setPlainText(edge.weight->toPlainText());
+    edge1->setFlag(QGraphicsItem::ItemIsSelectable);
+    //edge->setLine(selectedVertex1->scenePos().x() + 25, selectedVertex1->scenePos().y() + 25,
+    // selectedVertex2->scenePos().x() + 25, selectedVertex2->scenePos().y() + 25);
+    edge1->setData(0,"edge");
+    edge1->setData(1,vert1.vert->data(1));
+    edge1->setData(2,vert2.vert->data(1));
+    // Добавление ребра на сцену
+    ui->graphicsView->scene()->addItem(edge1);
+    Edge edge2;
+    edge2.vertex1 = vert1.vert;
+    edge2.vertex2 = vert2.vert;
+    edge2.edgeItem = edge1;
+    edge2.weight = weight;
+    edges.append(edge2);
 
+    // Соединение сигнала изменения сцены с обновлением позиции ребра
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateEdgePosition();
+    });
+}
+
+void GraphWindow::addOrEdge(Vertice vert1, Vertice vert2,OrEdge edge){
+    QGraphicsLineItem* directedEdge = new QGraphicsLineItem;
+    QGraphicsTextItem* weight = new QGraphicsTextItem;
+    ui->graphicsView->scene()->addItem(weight);
+    weight->setPlainText(edge.weight->toPlainText());
+    directedEdge->setFlag(QGraphicsItem::ItemIsSelectable);
+    directedEdge->setData(1,vert1.vert->data(1));
+    directedEdge->setData(2,vert2.vert->data(1));
+
+
+    directedEdge->setData(0,"edge");
+    // Добавление ориентированного ребра на сцену
+    ui->graphicsView->scene()->addItem(directedEdge);
+
+
+
+    QGraphicsPolygonItem* arrowhead = new QGraphicsPolygonItem(QPolygonF()) ;
+    arrowhead->setBrush(Qt::black);
+    ui->graphicsView->scene()->addItem(arrowhead);
+    OrEdge directedEdge1;
+    directedEdge1.vertex1 = vert1.vert;
+    directedEdge1.vertex2 = vert2.vert;
+    directedEdge1.edgeItem = directedEdge;
+    directedEdge1.arrowItem = arrowhead;
+    directedEdge1.weight = weight;
+    or_edges.append(directedEdge1);
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateOrEdgePosition();
+    });
+}
 
 void GraphWindow::pasteObjects()
 {
@@ -672,30 +691,7 @@ void GraphWindow::pasteObjects()
         for (const Vertice& vert1 : pastedVert){
             for (const Vertice& vert2 : pastedVert){
                 if (edge.edgeItem->data(1) == vert1.vert->data(2) && edge.edgeItem->data(2) == vert2.vert->data(2)){
-                    QGraphicsLineItem* edge1 = new QGraphicsLineItem;
-                    //edge->setFlag(QGraphicsItem::ItemIsMovable);
-                    QGraphicsTextItem* weight = new QGraphicsTextItem;
-                    ui->graphicsView->scene()->addItem(weight);
-                    weight->setPlainText(edge.weight->toPlainText());
-                    edge1->setFlag(QGraphicsItem::ItemIsSelectable);
-                    //edge->setLine(selectedVertex1->scenePos().x() + 25, selectedVertex1->scenePos().y() + 25,
-                    // selectedVertex2->scenePos().x() + 25, selectedVertex2->scenePos().y() + 25);
-                    edge1->setData(0,"edge");
-                    edge1->setData(1,vert1.vert->data(1));
-                    edge1->setData(2,vert2.vert->data(1));
-                    // Добавление ребра на сцену
-                    ui->graphicsView->scene()->addItem(edge1);
-                    Edge edge2;
-                    edge2.vertex1 = vert1.vert;
-                    edge2.vertex2 = vert2.vert;
-                    edge2.edgeItem = edge1;
-                    edge2.weight = weight;
-                    edges.append(edge2);
-
-                    // Соединение сигнала изменения сцены с обновлением позиции ребра
-                    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
-                        updateEdgePosition();
-                    });
+                    addEdge(vert1,vert2,edge);
                 }
             }
         }
@@ -705,34 +701,7 @@ void GraphWindow::pasteObjects()
         for (const Vertice& vert1 : pastedVert){
             for (const Vertice& vert2 : pastedVert){
                 if (edge.edgeItem->data(1) == vert1.vert->data(2) && edge.edgeItem->data(2) == vert2.vert->data(2)){
-                    QGraphicsLineItem* directedEdge = new QGraphicsLineItem;
-                    QGraphicsTextItem* weight = new QGraphicsTextItem;
-                    ui->graphicsView->scene()->addItem(weight);
-                    weight->setPlainText(edge.weight->toPlainText());
-                    directedEdge->setFlag(QGraphicsItem::ItemIsSelectable);
-                    directedEdge->setData(1,vert1.vert->data(1));
-                    directedEdge->setData(2,vert2.vert->data(1));
-
-
-                    directedEdge->setData(0,"edge");
-                    // Добавление ориентированного ребра на сцену
-                    ui->graphicsView->scene()->addItem(directedEdge);
-
-
-
-                    QGraphicsPolygonItem* arrowhead = new QGraphicsPolygonItem(QPolygonF()) ;
-                    arrowhead->setBrush(Qt::black);
-                    ui->graphicsView->scene()->addItem(arrowhead);
-                    OrEdge directedEdge1;
-                    directedEdge1.vertex1 = vert1.vert;
-                    directedEdge1.vertex2 = vert2.vert;
-                    directedEdge1.edgeItem = directedEdge;
-                    directedEdge1.arrowItem = arrowhead;
-                    directedEdge1.weight = weight;
-                    or_edges.append(directedEdge1);
-                    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
-                        updateOrEdgePosition();
-                    });
+                    addOrEdge(vert1,vert2,edge);
                 }
             }
         }
@@ -933,30 +902,11 @@ void GraphWindow::loadGraph(const QJsonObject& json){
         for (const Vertice& vert1: verts){
             for (const Vertice& vert2 : verts){
                 if (edgeObject["vert1"].toInt() == vert1.vert->data(1).toInt() && edgeObject["vert2"].toInt() == vert2.vert->data(1).toInt()){
-                    QGraphicsLineItem* edge1 = new QGraphicsLineItem;
-                    //edge->setFlag(QGraphicsItem::ItemIsMovable);
-                    QGraphicsTextItem* weight = new QGraphicsTextItem;
-                    weight->setPlainText(edgeObject["weight"].toString());
-                    ui->graphicsView->scene()->addItem(weight);
-                    edge1->setFlag(QGraphicsItem::ItemIsSelectable);
-                    //edge->setLine(selectedVertex1->scenePos().x() + 25, selectedVertex1->scenePos().y() + 25,
-                    // selectedVertex2->scenePos().x() + 25, selectedVertex2->scenePos().y() + 25);
-                    edge1->setData(0,"edge");
-                    edge1->setData(1,vert1.vert->data(1));
-                    edge1->setData(2,vert2.vert->data(1));
-                    // Добавление ребра на сцену
-                    ui->graphicsView->scene()->addItem(edge1);
-                    Edge edge2;
-                    edge2.vertex1 = vert1.vert;
-                    edge2.vertex2 = vert2.vert;
-                    edge2.edgeItem = edge1;
-                    edge2.weight = weight;
-                    edges.append(edge2);
-
-                    // Соединение сигнала изменения сцены с обновлением позиции ребра
-                    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
-                        updateEdgePosition();
-                    });
+                    Edge edge;
+                    QGraphicsTextItem* text = new QGraphicsTextItem;
+                    text->setPlainText(edgeObject["weight"].toString());
+                    edge.weight = text;
+                    addEdge(vert1,vert2,edge);
                 }
             }
         }
@@ -967,35 +917,12 @@ void GraphWindow::loadGraph(const QJsonObject& json){
         QJsonObject edgeObject = edgeValue.toObject();
         for (const Vertice& vert1: verts){
             for (const Vertice& vert2 : verts){
-                if (edgeObject["vert1"].toInt() == vert1.vert->data(1).toInt() && edgeObject["vert2"].toInt() == vert2.vert->data(1).toInt()){\
-
-                        QGraphicsLineItem* directedEdge = new QGraphicsLineItem;
-                    directedEdge->setFlag(QGraphicsItem::ItemIsSelectable);
-                    directedEdge->setData(1,vert1.vert->data(1));
-                    directedEdge->setData(2,vert2.vert->data(1));
-
-
-                    directedEdge->setData(0,"edge");
-                    // Добавление ориентированного ребра на сцену
-                    ui->graphicsView->scene()->addItem(directedEdge);
-
-                    QGraphicsTextItem* weight = new QGraphicsTextItem;
-                    weight->setPlainText(edgeObject["weight"].toString());
-                    ui->graphicsView->scene()->addItem(weight);
-
-                    QGraphicsPolygonItem* arrowhead = new QGraphicsPolygonItem(QPolygonF()) ;
-                    arrowhead->setBrush(Qt::black);
-                    ui->graphicsView->scene()->addItem(arrowhead);
-                    OrEdge directedEdge1;
-                    directedEdge1.vertex1 = vert1.vert;
-                    directedEdge1.vertex2 = vert2.vert;
-                    directedEdge1.edgeItem = directedEdge;
-                    directedEdge1.arrowItem = arrowhead;
-                    directedEdge1.weight = weight;
-                    or_edges.append(directedEdge1);
-                    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
-                        updateOrEdgePosition();
-                    });
+                if (edgeObject["vert1"].toInt() == vert1.vert->data(1).toInt() && edgeObject["vert2"].toInt() == vert2.vert->data(1).toInt()){
+                    OrEdge edge;
+                    QGraphicsTextItem* text = new QGraphicsTextItem;
+                    text->setPlainText(edgeObject["weight"].toString());
+                    edge.weight = text;
+                    addOrEdge(vert1,vert2,edge);
                 }
             }
         }

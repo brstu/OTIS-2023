@@ -26,7 +26,42 @@
 #include <vector>
 #include <QTableWidget>
 #include "graph_LIB.h"
+struct Edge {
+    QGraphicsEllipseItem* vertex1;
+    QGraphicsEllipseItem* vertex2;
+    QGraphicsLineItem* edgeItem;
+    QGraphicsTextItem* weight;
+    bool operator==(const Edge& other) const {
+        return vertex1 == other.vertex1 && vertex2 == other.vertex2 && edgeItem == other.edgeItem;
+    }
 
+};
+
+struct OrEdge {
+    QGraphicsEllipseItem* vertex1;
+    QGraphicsEllipseItem* vertex2;
+    QGraphicsLineItem* edgeItem;
+    QGraphicsPolygonItem* arrowItem;
+    QGraphicsTextItem* weight;
+    bool operator==(const OrEdge& other) const {
+        return vertex1 == other.vertex1 && vertex2 == other.vertex2 && edgeItem == other.edgeItem && arrowItem==other.arrowItem;
+    }
+
+};
+struct Loop {
+    QGraphicsEllipseItem* vertex1;
+    QGraphicsEllipseItem* loop;
+    QGraphicsTextItem* weight;
+    bool operator==(const Loop& other) const {
+        return vertex1 == other.vertex1 && loop == other.loop;
+    }
+
+};
+
+struct Vertice{
+    QGraphicsEllipseItem* vert;
+    QGraphicsTextItem* textvert;
+};
 namespace Ui {
 class GraphWindow;
 }
@@ -225,6 +260,10 @@ private slots:
         return true;
     }
 
+    QGraphicsEllipseItem* getSelectedVertex();
+    void addEdge(Vertice vert1, Vertice vert2,Edge edge);
+    void addOrEdge(Vertice vert1, Vertice vert2,OrEdge edge);
+
 private:
     Ui::GraphWindow *ui;
     QGraphicsScene *scene;
@@ -234,42 +273,7 @@ private:
     void saveGraph(QJsonObject& json) const;
     void loadGraph(const QJsonObject& json);
 
-    struct Edge {
-        QGraphicsEllipseItem* vertex1;
-        QGraphicsEllipseItem* vertex2;
-        QGraphicsLineItem* edgeItem;
-        QGraphicsTextItem* weight;
-        bool operator==(const Edge& other) const {
-            return vertex1 == other.vertex1 && vertex2 == other.vertex2 && edgeItem == other.edgeItem;
-        }
 
-    };
-
-    struct OrEdge {
-        QGraphicsEllipseItem* vertex1;
-        QGraphicsEllipseItem* vertex2;
-        QGraphicsLineItem* edgeItem;
-        QGraphicsPolygonItem* arrowItem;
-        QGraphicsTextItem* weight;
-        bool operator==(const OrEdge& other) const {
-            return vertex1 == other.vertex1 && vertex2 == other.vertex2 && edgeItem == other.edgeItem && arrowItem==other.arrowItem;
-        }
-
-    };
-    struct Loop {
-        QGraphicsEllipseItem* vertex1;
-        QGraphicsEllipseItem* loop;
-        QGraphicsTextItem* weight;
-        bool operator==(const Loop& other) const {
-            return vertex1 == other.vertex1 && loop == other.loop;
-        }
-
-    };
-
-    struct Vertice{
-        QGraphicsEllipseItem* vert;
-        QGraphicsTextItem* textvert;
-    };
 
     QString graphName;
     QList<Vertice> verts;
