@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.simpledialog as simpledialog
 import tkinter.colorchooser as colorchooser
-from collections import deque
 
 # main
 root = tk.Tk()
@@ -27,7 +26,8 @@ tag = 0
 x1, y1, x2, y2 = 0, 0, 0, 0
 object_edge_first = {'id_vertex1': [], 'id_vertex2': []}
 object_edge_second = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
-object_first = {'id': [], id_text_global: [], text_vertex_global: [], 'textID': [], num_vertexes: [], 'coordinatesX': [], 'coordinatesY': []}
+object_first = {'id': [], id_text_global: [], text_vertex_global: [], 'textID': [], num_vertexes: [],
+                'coordinatesX': [], 'coordinatesY': []}
 array_size = len(object_first['id'])
 array = [[0] * array_size for _ in range(array_size)]
 tk.Tk.geometry(root, "800x600")
@@ -186,8 +186,10 @@ def rename_handler(event):
             canvas.delete(object_first['textID'][object_first['id'].index(x)])
 
             # Create text with the new name on canvas
-            canvas.create_text(object_first['coordinatesX'][object_first['id'].index(x)], object_first['coordinatesY'][object_first['id'].index(x)],
-                               text=new_name, font="Arial 13", tags=(object_first['textID'][object_first['id'].index(x)]))
+            canvas.create_text(object_first['coordinatesX'][object_first['id'].index(x)],
+                               object_first['coordinatesY'][object_first['id'].index(x)],
+                               text=new_name, font="Arial 13",
+                               tags=(object_first['textID'][object_first['id'].index(x)]))
 
             # Update data structures with the new name
             object_first[text_vertex_global][object_first['id'].index(x)] = new_name
@@ -202,6 +204,7 @@ def colour_handler(event):
             color_hex = new_colour[1]
             canvas.itemconfig(x, fill=color_hex)
             break
+
 
 def text_colour_handler(event):
     # Обработчик события для изменения цвета текста объекта на холсте
@@ -236,6 +239,7 @@ def fill_adjacency_matrix():
         array[vertex1_index][vertex2_index] = 1
         array[vertex2_index][vertex1_index] = 1
 
+
 def adjacency_matrix_handler():
     k = 0
     adj_matrix = tk.Tk()
@@ -268,12 +272,13 @@ def incidence_matrix_handler():
         index2 += 1
         print(index2)
 
+
 def dfs_handler():
     visited = [False] * len(circle)
 
     def dfs_rec_handler(vert):
         visited[vert] = True
-        for u, oval in enumerate(circle):
+        for u in enumerate(circle):
             if array[vert][u] == 1 and not visited[u]:
                 dfs_rec_handler(u)
 
@@ -284,6 +289,7 @@ def dfs_handler():
             dfs_rec_handler(v)
             count += 1
     messagebox.showinfo("DFS", "Graph is connected" if count == 1 else "Graph is not connected")
+
 
 def bfs_handler():
     visited = [False] * len(circle)
@@ -301,7 +307,6 @@ def bfs_handler():
             bfs_rec_handler(v)
             count += 1
     messagebox.showinfo("BFS", "Graph is connected" if count == 1 else "Graph is not connected")
-
 
 
 # раздел меню
