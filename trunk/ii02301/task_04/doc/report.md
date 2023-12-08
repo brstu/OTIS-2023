@@ -10,7 +10,7 @@
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
-<p align="right">Лапин В. А.</p>
+<p align="right">Бусень А. Д.</p>
 <p align="right">Проверил:</p>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
@@ -63,8 +63,7 @@ sc-web - ```localhost:8000```:
 
 dialogue web UI - ```localhost:3033```:
 ![Результат:](2.png)
-![Результат:](3.png)
 
 
 Docker Desktop:
-![Результат:](4.png)
+![Результат:](3.png)
