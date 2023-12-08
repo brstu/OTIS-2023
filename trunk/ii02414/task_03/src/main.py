@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.simpledialog as simpledialog
 import tkinter.colorchooser as colorchooser
+from collections import deque
 
 # main
 root = tk.Tk()
@@ -195,6 +196,7 @@ def rename_handler(event):
 
 
 def colour_handler(event):
+    # Обработчик события для изменения цвета объекта на холсте
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
             new_colour = colorchooser.askcolor()
@@ -202,31 +204,38 @@ def colour_handler(event):
             canvas.itemconfig(x, fill=color_hex)
             break
 
-
 def text_colour_handler(event):
-    for x in ovals:
-        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+    # Обработчик события для изменения цвета текста объекта на холсте
+    for oval in ovals:
+        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == oval:
+            # Запрос цвета у пользователя
             new_colour = colorchooser.askcolor()
             color_hex = new_colour[1]
-            canvas.itemconfig(cord['textID'][cord['id'].index(x)], fill=color_hex)
+            # Изменение цвета текста
+            canvas.itemconfig(cord['textID'][cord['id'].index(oval)], fill=color_hex)
             break
 
 
 def edge_colour_handler(event):
-    for x in edges:
-        tag_edge = 'edge' + str(x)
+    # Обработчик события для изменения цвета граней на холсте
+    for edge in edges:
+        tag_edge = 'edge' + str(edge)
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
+            # Запрос цвета у пользователя
             new_colour = colorchooser.askcolor()
             color_hex = new_colour[1]
+            # Изменение цвета грани
             canvas.itemconfig(tag_edge, fill=color_hex)
             break
 
 
-def filling_matrix_handler():
-    for i2 in range(len(cord_edge['id_vertex1'])):
-        matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
-        matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
-
+def fill_adjacency_matrix():
+    # Заполнение матрицы смежности на основе данных о вершинах и ребрах
+    for edge_index in range(len(cord_edge['id_vertex1'])):
+        vertex1_index = cord['id'].index(cord_edge['id_vertex1'][edge_index])
+        vertex2_index = cord['id'].index(cord_edge['id_vertex2'][edge_index])
+        matrix[vertex1_index][vertex2_index] = 1
+        matrix[vertex2_index][vertex1_index] = 1
 
 def adjacency_matrix_handler():
     k = 0
@@ -234,7 +243,7 @@ def adjacency_matrix_handler():
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
 
-    filling_matrix_handler()
+    fill_adjacency_matrix()
     for i3, val3 in enumerate(matrix):
         adj_matrix_label = tk.Label(adj_matrix, text=str(val3))
         adj_matrix_label.grid(row=k, column=0)
@@ -260,47 +269,40 @@ def incidence_matrix_handler():
         index2 += 1
         print(index2)
 
-
 def dfs_handler():
     visited = [False] * len(ovals)
 
     def dfs_rec_handler(vert):
         visited[vert] = True
-        for u in range(len(ovals)):
+        for u, oval in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 dfs_rec_handler(u)
 
-    filling_matrix_handler()
+    fill_adjacency_matrix()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
             dfs_rec_handler(v)
             count += 1
-    if count == 1:
-        messagebox.showinfo("DFS", "Graph is connected")
-    else:
-        messagebox.showinfo("DFS", "Graph is not connected")
-
+    messagebox.showinfo("DFS", "Graph is connected" if count == 1 else "Graph is not connected")
 
 def bfs_handler():
     visited = [False] * len(ovals)
 
     def bfs_rec_handler(vert):
         visited[vert] = True
-        for u in enumerate(ovals):
+        for u, oval in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec_handler(u)
 
-    filling_matrix_handler()
+    fill_adjacency_matrix()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
             bfs_rec_handler(v)
             count += 1
-    if count == 1:
-        messagebox.showinfo("BFS", "Graph is connected")
-    else:
-        messagebox.showinfo("BFS", "Graph is not connected")
+    messagebox.showinfo("BFS", "Graph is connected" if count == 1 else "Graph is not connected")
+
 
 
 # раздел меню
