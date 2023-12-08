@@ -316,7 +316,7 @@ root.title("Графовый редактор")
 StR = 'Arial Bold'
 lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(StR, 10))
 lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(StR, 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=("StR, 10))
+lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(StR, 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
