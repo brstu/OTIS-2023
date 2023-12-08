@@ -24,51 +24,43 @@ i = 0
 id_text = 0
 tag = 0
 x1, y1, x2, y2 = 0, 0, 0, 0
-
-# словарь для хранения разной инфы о вершинах и ребрах
-cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет ребро
-cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}  # для хранения id вершин, которые соединяет
-# ребро(но с id ребра)
+cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
+cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
 cord = {'id': [], id_text_global: [], text_vertex: [], 'textID': [], num_vertex: [], 'coordinatesX': [],
-        'coordinatesY': []}  # для хранения инфы о вершинах
+        'coordinatesY': []}
 matrix_size = len(cord['id'])
 matrix = [[0] * matrix_size for _ in range(matrix_size)]
 tk.Tk.geometry(root, "800x600")
-canvas = tk.Canvas(root, width=1920, height=1080)  # основной canvas
+canvas = tk.Canvas(root, width=1920, height=1080)
 canvas.pack()
 menubar = tk.Menu(root)  # меню
 root.config(menu=menubar)
 
 
-# функция для рисования вершины
 def draw_vertex_handler():
     main_label.configure(text="You have chosen to draw vertices, click on the free space to draw the vertex")
     canvas.unbind(button1)
     canvas.bind(button1, draw_canvas_handler)
 
 
-# функция для рисования ребра
 def draw_edge_handler():
     main_label.configure(text="You have chosen to draw edges, click on the vertex to draw the edge")
     canvas.unbind(button1)
     canvas.bind(button1, draw_canvas_handler_second)
 
 
-# функция для удаления вершины
 def delete_vertex_handler():
     main_label.configure(text="You have chosen to delete a vertex or edge, click on the vertex or edge to delete")
     canvas.unbind(button1)
     canvas.bind(button1, delete_canvas_handler)
 
 
-# функция для переименования вершины
 def rename_vertex_handler():
     main_label.configure(text="You have chosen to rename a vertex, click on the vertex to rename it")
     canvas.unbind(button1)
     canvas.bind(button1, rename_handler)
 
 
-# функция для проверки массива
 def edge_click_handler():
     print("Vertex")
     for key, value in cord.items():
@@ -78,7 +70,6 @@ def edge_click_handler():
         print(value, end=", ")
 
 
-# функция для изменения цвета вершины
 def change_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the vertex, click on the vertex to change its color")
@@ -86,7 +77,6 @@ def change_color_handler():
     canvas.bind(button1, colour_handler)
 
 
-# функция для изменения цвета текста
 def change_text_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
@@ -94,21 +84,19 @@ def change_text_color_handler():
     canvas.bind(button1, text_colour_handler)
 
 
-# функция для изменения цвета ребер
 def change_edge_color_handler():
     main_label.configure(text="You have chosen to change the color of the edges, click on the edge to change its color")
     canvas.unbind(button1)
     canvas.bind(button1, edge_colour_handler)
 
 
-# функция для удаления вершин или ребер
 def delete_canvas_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
-            canvas.delete(x)  # удаление вершины
-            canvas.delete(cord['textID'][cord['id'].index(x)])  # удаление текста
-            ovals.remove(x)  # удаление вершины из массива
-            # удаление информации о вершине из словаря
+            canvas.delete(x)
+            canvas.delete(cord['textID'][cord['id'].index(x)])
+            ovals.remove(x)
+
             cord[num_vertex].remove(cord[num_vertex][cord['id'].index(x)])
             canvas.delete(cord[id_text_global][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
@@ -118,7 +106,7 @@ def delete_canvas_handler(event):
             cord[text_vertex].remove(cord[text_vertex][cord['id'].index(x)])
             cord['id'].remove(x)
             break
-    # удаление ребра
+
     for y in edges:
         tag_edge = 'edge' + str(y)
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
@@ -130,17 +118,16 @@ def delete_canvas_handler(event):
             break
 
 
-# функция для рисования вершины
 def draw_canvas_handler(event):
     global oval_id
     global i, tag, id_text
     id_text += 1
     i += 1
-    itext = str(i)  # присвоение текста вершине
-    x, y = event.x, event.y  # координаты клика
+    itext = str(i)
+    x, y = event.x, event.y
     tag = 'oval' + str(id_text)
     texttag = 'text' + str(id_text)
-    # добавление инфы о вершине в словарь
+
     cord[num_vertex].append(id_text)
     cord[id_text_global].append(tag)
     cord["coordinatesX"].append(x)
@@ -153,14 +140,13 @@ def draw_canvas_handler(event):
     cord[text_vertex].append(itext)
 
 
-# функция для рисования ребра
 def draw_canvas_handler_second(event):
     global click_num
     global x1, y1, x2, y2, id_of_edge
     if click_num == 0:
         for x in ovals:
-            if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:  # проверка клика на вершину
-                x1 = cord['coordinatesX'][cord['id'].index(x)]  # и получение ее координат
+            if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+                x1 = cord['coordinatesX'][cord['id'].index(x)]
                 y1 = cord['coordinatesY'][cord['id'].index(x)]
                 cord_edge['id_vertex1'].append(x)
                 cord_edge2['id_vertex1'].append(x)
@@ -174,14 +160,15 @@ def draw_canvas_handler_second(event):
                 cord_edge['id_vertex2'].append(x)
                 cord_edge2['id_vertex2'].append(x)
         tag_edge = 'edge' + str(id_of_edge)
-        line = canvas.create_line(x1, y1, x2, y2, width=4, tags=tag_edge)  # создание ребра
+        line = canvas.create_line(x1, y1, x2, y2, width=4, tags=tag_edge)
         edges.append(id_of_edge)
         cord_edge['id_edge_text'].append(tag_edge)
         id_of_edge += 1
-        canvas.tag_lower(line)  # перенос ребра под вершины
+        canvas.tag_lower(line)
         click_num = 0
         main_label.configure(text="Select a vertex to draw an edge on")
-# переименование вершины
+
+
 def rename_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
@@ -192,8 +179,6 @@ def rename_handler(event):
             cord[text_vertex][cord['id'].index(x)] = new_name
             break
 
-
-# изменение цвета вершины
 def colour_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
@@ -202,8 +187,6 @@ def colour_handler(event):
             canvas.itemconfig(x, fill=color_hex)
             break
 
-
-# изменение цвета текста
 def text_colour_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
@@ -212,8 +195,6 @@ def text_colour_handler(event):
             canvas.itemconfig(cord['textID'][cord['id'].index(x)], fill=color_hex)
             break
 
-
-# изменение цвета ребра
 def edge_colour_handler(event):
     for x in edges:
         tag_edge = 'edge' + str(x)
@@ -222,7 +203,6 @@ def edge_colour_handler(event):
             color_hex = new_colour[1]
             canvas.itemconfig(tag_edge, fill=color_hex)
             break
-
 
 def filling_matrix_handler():
     for i2 in range(len(cord_edge['id_vertex1'])):
@@ -236,14 +216,12 @@ def adjacency_matrix_handler():
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
 
-    # Проходим по всем ребрам и устанавливаем соответствующие значения в матрице
     filling_matrix_handler()
     for i3, val3 in enumerate(matrix):
         adj_matrix_label = tk.Label(adj_matrix, text=str(val3))
         adj_matrix_label.grid(row=k, column=0)
         i3 += 1
         print(i3)
-
 
 def incidence_matrix_handler():
     k = 0
@@ -262,7 +240,6 @@ def incidence_matrix_handler():
         k += 1
         index2 += 1
         print(index2)
-
 
 def dfs_handler():
     visited = [False] * len(ovals)
@@ -293,6 +270,7 @@ def bfs_handler():
         for u in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
                 bfs_rec_handler(u)
+
     filling_matrix_handler()
     count = 0
     for v in range(len(ovals)):
