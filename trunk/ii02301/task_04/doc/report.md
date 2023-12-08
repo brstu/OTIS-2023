@@ -18,7 +18,7 @@
 
 ---
 
-# Общее задание #
+ Общее задание 
 1. Изучить [руководство](https://github.com/ostis-apps/nika).
 
 2. Запустить данный проект на локальной машине (домашний персональный компьютер, ноутбук, рабочая машина в аудитории и т.п.). Продемонстрировать работу проекта преподавателю.
@@ -28,24 +28,8 @@
 
 ---
 
-# Установка #
 
-```
-git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
-cd nika
-git submodule update --init --recursive
-docker compose pull
-```
-В ходе установки возникла ошибка ``` error: unable to create file ... (file too long)```
-
-Решение:
-```
-cd nika
-git config --local core.longpaths true
-```
-Также в ходе выполнения задания требовалось дополнительно установить [Docker](https://docs.docker.com/)(c плагином Compose)
- 
-# Запуск #
+ Запуск 
 ```
 docker compose up --no-build
 ```
@@ -55,7 +39,7 @@ sc-web - ```localhost:8000```
 
 dialogue web UI - ```localhost:3033```
 
-# Результат #
+ Результат 
 
 sc-web - ```localhost:8000```:
 ![Результат:](1.png)
