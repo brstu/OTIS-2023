@@ -1,10 +1,10 @@
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
 from tkinter.colorchooser import askcolor
-import numpy as np 
+import numpy
 from numpy import sqrt
 import networkx as nx
 
-rng = np.random.default_rng();
+rng = numpy.random.default_rng(300);
 sizes = '190x120+1050+250'
 
 # Эйлеров цикл
@@ -18,7 +18,7 @@ def create_circle(x, y, r, **kwargs):
 
 
 # Связывающая
-def сonnectingLine(x1, y1, x2, y2):
+def сonnectingline(x1, y1, x2, y2):
     connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
@@ -92,7 +92,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(сonnectingline(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
@@ -123,7 +123,7 @@ class Edge:
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, сonnectingline(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
