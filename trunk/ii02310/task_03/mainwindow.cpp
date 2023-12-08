@@ -114,7 +114,18 @@ void MainWindow::updateEdges()
         edge->update();
     }
 }
-
+void MainWindow::updateFileGraph(){
+    QFile file("graph.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (const Edge* edge : edges) {
+            int sourceIndex = vertices.indexOf(edge->getSource());
+            int destinationIndex = vertices.indexOf(edge->getDestination());
+            out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeight() << "\n";
+        }
+        file.close();
+    }
+}
 void MainWindow::on_removeEdgeButton_clicked()
 {
     if (edges.isEmpty()) {
@@ -151,16 +162,7 @@ void MainWindow::on_removeEdgeButton_clicked()
             }
 
             // Обновляем файл без удаленного ребра
-            QFile file("graph.txt");
-            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                QTextStream out(&file);
-                for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSource());
-                    int destinationIndex = vertices.indexOf(edge->getDestination());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeight() << "\n";
-                }
-                file.close();
-            }
+            updateFileGraph();
         }
         dialog.close();
     });
@@ -204,16 +206,7 @@ void MainWindow::on_removeVertexButton_clicked()
             delete vertex;
 
             // Обновление файла без удаленной вершины и связанных ребер
-            QFile file("graph.txt");
-            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                QTextStream out(&file);
-                for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSource());
-                    int destinationIndex = vertices.indexOf(edge->getDestination());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeight() << "\n";
-                }
-                file.close();
-            }
+            updateFileGraph();
         }
         dialog.close();
     });
