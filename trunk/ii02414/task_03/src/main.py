@@ -41,35 +41,35 @@ root.config(menu=menubar)
 
 
 # функция для рисования вершины
-def draw_vertex():
+def draw_vertex_handler():
     main_label.configure(text="You have chosen to draw vertices, click on the free space to draw the vertex")
     canvas.unbind(button1)
-    canvas.bind(button1, draw_canvas1)
+    canvas.bind(button1, draw_canvas_handler)
 
 
 # функция для рисования ребра
-def draw_edge():
+def draw_edge_handler():
     main_label.configure(text="You have chosen to draw edges, click on the vertex to draw the edge")
     canvas.unbind(button1)
-    canvas.bind(button1, draw_canvas2)
+    canvas.bind(button1, draw_canvas_handler_second)
 
 
 # функция для удаления вершины
-def delete_vertex():
+def delete_vertex_handler():
     main_label.configure(text="You have chosen to delete a vertex or edge, click on the vertex or edge to delete")
     canvas.unbind(button1)
-    canvas.bind(button1, delete_canvas)
+    canvas.bind(button1, delete_canvas_handler)
 
 
 # функция для переименования вершины
-def rename_vertex():
+def rename_vertex_handler():
     main_label.configure(text="You have chosen to rename a vertex, click on the vertex to rename it")
     canvas.unbind(button1)
-    canvas.bind(button1, rename)
+    canvas.bind(button1, rename_handler)
 
 
 # функция для проверки массива
-def edge_click():
+def edge_click_handler():
     print("Vertex")
     for key, value in cord.items():
         print(key, value)
@@ -79,30 +79,30 @@ def edge_click():
 
 
 # функция для изменения цвета вершины
-def change_color():
+def change_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the vertex, click on the vertex to change its color")
     canvas.unbind(button1)
-    canvas.bind(button1, colour)
+    canvas.bind(button1, colour_handler)
 
 
 # функция для изменения цвета текста
-def change_text_color():
+def change_text_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
     canvas.unbind(button1)
-    canvas.bind(button1, text_colour)
+    canvas.bind(button1, text_colour_handler)
 
 
 # функция для изменения цвета ребер
-def change_edge_color():
+def change_edge_color_handler():
     main_label.configure(text="You have chosen to change the color of the edges, click on the edge to change its color")
     canvas.unbind(button1)
-    canvas.bind(button1, edge_colour)
+    canvas.bind(button1, edge_colour_handler)
 
 
 # функция для удаления вершин или ребер
-def delete_canvas(event):
+def delete_canvas_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
             canvas.delete(x)  # удаление вершины
@@ -131,7 +131,7 @@ def delete_canvas(event):
 
 
 # функция для рисования вершины
-def draw_canvas1(event):
+def draw_canvas_handler(event):
     global oval_id
     global i, tag, id_text
     id_text += 1
@@ -154,7 +154,7 @@ def draw_canvas1(event):
 
 
 # функция для рисования ребра
-def draw_canvas2(event):
+def draw_canvas_handler_second(event):
     global click_num
     global x1, y1, x2, y2, id_of_edge
     if click_num == 0:
@@ -181,10 +181,8 @@ def draw_canvas2(event):
         canvas.tag_lower(line)  # перенос ребра под вершины
         click_num = 0
         main_label.configure(text="Select a vertex to draw an edge on")
-
-
 # переименование вершины
-def rename(event):
+def rename_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
             new_name = simpledialog.askstring("Rename", "Enter new name")
@@ -196,7 +194,7 @@ def rename(event):
 
 
 # изменение цвета вершины
-def colour(event):
+def colour_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
             new_colour = colorchooser.askcolor()
@@ -206,7 +204,7 @@ def colour(event):
 
 
 # изменение цвета текста
-def text_colour(event):
+def text_colour_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
             new_colour = colorchooser.askcolor()
@@ -216,7 +214,7 @@ def text_colour(event):
 
 
 # изменение цвета ребра
-def edge_colour(event):
+def edge_colour_handler(event):
     for x in edges:
         tag_edge = 'edge' + str(x)
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
@@ -226,20 +224,20 @@ def edge_colour(event):
             break
 
 
-def filling_matrix():
+def filling_matrix_handler():
     for i2 in range(len(cord_edge['id_vertex1'])):
         matrix[cord['id'].index(cord_edge['id_vertex1'][i2])][cord['id'].index(cord_edge['id_vertex2'][i2])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][i2])][cord['id'].index(cord_edge['id_vertex1'][i2])] = 1
 
 
-def adjacency_matrix():
+def adjacency_matrix_handler():
     k = 0
     adj_matrix = tk.Tk()
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("250x250")
 
     # Проходим по всем ребрам и устанавливаем соответствующие значения в матрице
-    filling_matrix()
+    filling_matrix_handler()
     for i3, val3 in enumerate(matrix):
         adj_matrix_label = tk.Label(adj_matrix, text=str(val3))
         adj_matrix_label.grid(row=k, column=0)
@@ -247,7 +245,7 @@ def adjacency_matrix():
         print(i3)
 
 
-def incidence_matrix():
+def incidence_matrix_handler():
     k = 0
     inc_matrix = tk.Tk()
     inc_matrix.title("Incidence matrix")
@@ -266,20 +264,20 @@ def incidence_matrix():
         print(index2)
 
 
-def dfs():
+def dfs_handler():
     visited = [False] * len(ovals)
 
-    def dfs_rec(vert):
+    def dfs_rec_handler(vert):
         visited[vert] = True
         for u in range(len(ovals)):
             if matrix[vert][u] == 1 and not visited[u]:
-                dfs_rec(u)
+                dfs_rec_handler(u)
 
-    filling_matrix()
+    filling_matrix_handler()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
-            dfs_rec(v)
+            dfs_rec_handler(v)
             count += 1
     if count == 1:
         messagebox.showinfo("DFS", "Graph is connected")
@@ -287,19 +285,19 @@ def dfs():
         messagebox.showinfo("DFS", "Graph is not connected")
 
 
-def bfs():
+def bfs_handler():
     visited = [False] * len(ovals)
 
-    def bfs_rec(vert):
+    def bfs_rec_handler(vert):
         visited[vert] = True
         for u in enumerate(ovals):
             if matrix[vert][u] == 1 and not visited[u]:
-                bfs_rec(u)
-    filling_matrix()
+                bfs_rec_handler(u)
+    filling_matrix_handler()
     count = 0
     for v in range(len(ovals)):
         if not visited[v]:
-            bfs_rec(v)
+            bfs_rec_handler(v)
             count += 1
     if count == 1:
         messagebox.showinfo("BFS", "Graph is connected")
@@ -311,22 +309,22 @@ def bfs():
 graphmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Graph", menu=graphmenu)
 # кнопки в разделе меню
-graphmenu.add_command(label="Draw a vertex", command=draw_vertex)
-graphmenu.add_command(label="Draw an edge", command=draw_edge)
-graphmenu.add_command(label="Removing vertices or edges", command=delete_vertex)
+graphmenu.add_command(label="Draw a vertex", command=draw_vertex_handler)
+graphmenu.add_command(label="Draw an edge", command=draw_edge_handler)
+graphmenu.add_command(label="Removing vertices or edges", command=delete_vertex_handler)
 
 redmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Editing", menu=redmenu)
-redmenu.add_command(label="Rename a vertex", command=rename_vertex)
-redmenu.add_command(label="Repaint the vertex", command=change_color)
-redmenu.add_command(label="Recolor text", command=change_text_color)
-redmenu.add_command(label="Repaint an edge", command=change_edge_color)
+redmenu.add_command(label="Rename a vertex", command=rename_vertex_handler)
+redmenu.add_command(label="Repaint the vertex", command=change_color_handler)
+redmenu.add_command(label="Recolor text", command=change_text_color_handler)
+redmenu.add_command(label="Repaint an edge", command=change_edge_color_handler)
 
 algmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Algorithms", menu=algmenu)
-algmenu.add_command(label="Output the adjacency matrix", command=adjacency_matrix)
-algmenu.add_command(label="Output the incidence matrix", command=incidence_matrix)
-algmenu.add_command(label="Search in depth", command=dfs)
-algmenu.add_command(label="Search in width", command=bfs)
+algmenu.add_command(label="Output the adjacency matrix", command=adjacency_matrix_handler)
+algmenu.add_command(label="Output the incidence matrix", command=incidence_matrix_handler)
+algmenu.add_command(label="Search in depth", command=dfs_handler)
+algmenu.add_command(label="Search in width", command=bfs_handler)
 
 root.mainloop()
