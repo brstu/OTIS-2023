@@ -296,7 +296,7 @@ def bfs_handler():
 
     def bfs_rec_handler(vert):
         visited[vert] = True
-        for u, oval in enumerate(circle):
+        for u in enumerate(circle):
             if array[vert][u] == 1 and not visited[u]:
                 bfs_rec_handler(u)
 
