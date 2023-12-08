@@ -37,30 +37,35 @@ menubar = tk.Menu(root)  # меню
 root.config(menu=menubar)
 
 
+# Function to handle drawing vertices
 def draw_vertex_handler():
     main_label.configure(text="You have chosen to draw vertices, click on the free space to draw the vertex")
     canvas.unbind(button1)
     canvas.bind(button1, draw_canvas_handler)
 
 
+# Function to handle drawing edges
 def draw_edge_handler():
     main_label.configure(text="You have chosen to draw edges, click on the vertex to draw the edge")
     canvas.unbind(button1)
     canvas.bind(button1, draw_canvas_handler_second)
 
 
+# Function to handle deleting vertices or edges
 def delete_vertex_handler():
     main_label.configure(text="You have chosen to delete a vertex or edge, click on the vertex or edge to delete")
     canvas.unbind(button1)
     canvas.bind(button1, delete_canvas_handler)
 
 
+# Function to handle renaming vertices
 def rename_vertex_handler():
     main_label.configure(text="You have chosen to rename a vertex, click on the vertex to rename it")
     canvas.unbind(button1)
     canvas.bind(button1, rename_handler)
 
 
+# Function to handle displaying information about vertices and edges
 def edge_click_handler():
     print("Vertex")
     for key, value in cord.items():
@@ -70,6 +75,7 @@ def edge_click_handler():
         print(value, end=", ")
 
 
+# Function to handle changing the color of vertices
 def change_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the vertex, click on the vertex to change its color")
@@ -77,6 +83,7 @@ def change_color_handler():
     canvas.bind(button1, colour_handler)
 
 
+# Function to handle changing the text color of vertices
 def change_text_color_handler():
     main_label.configure(
         text="You have chosen to change the color of the text, click on the vertex to change the color of its text")
@@ -84,19 +91,23 @@ def change_text_color_handler():
     canvas.bind(button1, text_colour_handler)
 
 
+# Function to handle changing the color of edges
 def change_edge_color_handler():
     main_label.configure(text="You have chosen to change the color of the edges, click on the edge to change its color")
     canvas.unbind(button1)
     canvas.bind(button1, edge_colour_handler)
 
 
+# Function to handle deleting vertices or edges based on user click
 def delete_canvas_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            # Delete the vertex
             canvas.delete(x)
             canvas.delete(cord['textID'][cord['id'].index(x)])
             ovals.remove(x)
 
+            # Remove information about the vertex from data structures
             cord[num_vertex].remove(cord[num_vertex][cord['id'].index(x)])
             canvas.delete(cord[id_text_global][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
@@ -105,19 +116,10 @@ def delete_canvas_handler(event):
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
             cord[text_vertex].remove(cord[text_vertex][cord['id'].index(x)])
             cord['id'].remove(x)
-            break
-
-    for y in edges:
-        tag_edge = 'edge' + str(y)
-        if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == canvas.find_withtag(tag_edge)[0]:
-            canvas.delete(tag_edge)
-            cord_edge['id_edge_text'].remove(tag_edge)
-            cord_edge['id_vertex1'].remove(cord_edge['id_vertex1'][edges.index(y)])
-            cord_edge['id_vertex2'].remove(cord_edge['id_vertex2'][edges.index(y)])
-            edges.remove(y)
-            break
+            break  # Exit the loop after deleting the first matching vertex
 
 
+# Function to handle drawing vertices
 def draw_canvas_handler(event):
     global oval_id
     global i, tag, id_text
@@ -128,22 +130,27 @@ def draw_canvas_handler(event):
     tag = 'oval' + str(id_text)
     texttag = 'text' + str(id_text)
 
+    # Store information about the vertex in the data structures
     cord[num_vertex].append(id_text)
     cord[id_text_global].append(tag)
     cord["coordinatesX"].append(x)
     cord["coordinatesY"].append(y)
-    oval_id = canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill='green', tags=tag)  # создание вершины
+
+    # Create oval (vertex) and text on canvas
+    oval_id = canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill='green', tags=tag)
     ovals.append(oval_id)
     cord['id'].append(oval_id)
-    canvas.create_text(x, y, text=itext, font="Arial 14", tags=texttag)  # создание текста
+    canvas.create_text(x, y, text=itext, font="Arial 14", tags=texttag)
     cord['textID'].append(texttag)
     cord[text_vertex].append(itext)
 
 
+# Function to handle drawing edges
 def draw_canvas_handler_second(event):
     global click_num
     global x1, y1, x2, y2, id_of_edge
     if click_num == 0:
+        # Select the first vertex for the edge
         for x in ovals:
             if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
                 x1 = cord['coordinatesX'][cord['id'].index(x)]
@@ -153,6 +160,7 @@ def draw_canvas_handler_second(event):
                 click_num = 1
                 main_label.configure(text="Select the second vertex to draw the edge")
     elif click_num == 1:
+        # Select the second vertex and draw the edge
         for x in ovals:
             if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
                 x2 = cord['coordinatesX'][cord['id'].index(x)]
@@ -169,15 +177,22 @@ def draw_canvas_handler_second(event):
         main_label.configure(text="Select a vertex to draw an edge on")
 
 
+# Function to handle renaming vertices
 def rename_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
+            # Prompt user for a new name
             new_name = simpledialog.askstring("Rename", "Enter new name")
             canvas.delete(cord['textID'][cord['id'].index(x)])
+
+            # Create text with the new name on canvas
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
+
+            # Update data structures with the new name
             cord[text_vertex][cord['id'].index(x)] = new_name
             break
+
 
 def colour_handler(event):
     for x in ovals:
@@ -187,6 +202,7 @@ def colour_handler(event):
             canvas.itemconfig(x, fill=color_hex)
             break
 
+
 def text_colour_handler(event):
     for x in ovals:
         if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
@@ -194,6 +210,7 @@ def text_colour_handler(event):
             color_hex = new_colour[1]
             canvas.itemconfig(cord['textID'][cord['id'].index(x)], fill=color_hex)
             break
+
 
 def edge_colour_handler(event):
     for x in edges:
@@ -203,6 +220,7 @@ def edge_colour_handler(event):
             color_hex = new_colour[1]
             canvas.itemconfig(tag_edge, fill=color_hex)
             break
+
 
 def filling_matrix_handler():
     for i2 in range(len(cord_edge['id_vertex1'])):
@@ -223,6 +241,7 @@ def adjacency_matrix_handler():
         i3 += 1
         print(i3)
 
+
 def incidence_matrix_handler():
     k = 0
     inc_matrix = tk.Tk()
@@ -240,6 +259,7 @@ def incidence_matrix_handler():
         k += 1
         index2 += 1
         print(index2)
+
 
 def dfs_handler():
     visited = [False] * len(ovals)
