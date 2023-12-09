@@ -15,13 +15,13 @@ public:
     }
 
     // Modified linear model
-    double linear(double y, int n, int t) {
+    double linear(double y_input, int n, int t) {
         if (n < t) {
-            println(this->y);  // Use this->y to refer to the member variable
-            return linear(a * this->y + b * u, n + 1, t);
+            println(y_input);
+            return linear(a * y_input + b * u, n + 1, t);
         }
-        println(this->y);
-        return a * this->y + b * u;
+        println(y_input);
+        return a * y_input + b * u;
     }
 };
 
