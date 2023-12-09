@@ -1,7 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.6)
 
-project(CMakeProject2)
+project(OTIS3)
 
-set(SOURCES main2.cpp)
+set(SOURCES OTIS_3.cpp)
 
-add_executable(MExecutableTask03 main.cpp)
+add_executable(MExecutable ${SOURCES})
