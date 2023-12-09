@@ -7,34 +7,34 @@ import networkx as nx
 rng = numpy.random.default_rng(300);
 sizes = '190x120+1050+250'
 
-# Эйлеров цикл
+# cycle
 def e_cycle():
-    display_props("Нахождение эйлерова цикла", nx.algorithms.eulerian_path(graph))
+    display_props("Euler cycle", nx.algorithms.eulerian_path(graph))
 
 
-# создание цикла
+# create cycle
 def create_circle(x, y, r, **kwargs):
     return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
 
 
-# Связывающая
+# connectivity
 def connecting_line(x1, y1, x2, y2):
-    connecting = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    connect = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     x = x2 - x1
     y = y2 - y1
-    dx = (connecting - 20) * x / connecting
-    dy = (connecting - 20) * y / connecting
+    dx = (connect - 20) * x / connect
+    dy = (connect - 20) * y / connect
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
 
-# создание вершины
-def create_vertex(entry_name, window):
-    name = entry_name.get()
-    nodes.append(Node(name))
+# create vertex
+def create_vertex(Entry_Name, window):
+    Name = Entry_Name.get()
+    nodes.append(Node(Name))
     window.destroy()
 
 
-# Класс параметров вершины
+# vertex parameter class
 class Node:
     def __init__(self, name):
         self.name = name
@@ -86,7 +86,7 @@ class Node:
         graph.remove_node(self.name)
 
 
-# Класс параметров рёбер
+# Edges parametr class
 class Edge:
     def __init__(self, node1, node2, weight: int):
         self.weight = weight
@@ -132,7 +132,7 @@ class Edge:
         graph.remove_edge(self.node1.name, self.node2.name)
 
 
-# изменение цвета
+# change color
 def chose_color(color_lable):
     global color_vertex
     rgb, hx = askcolor()
@@ -141,7 +141,7 @@ def chose_color(color_lable):
     color_lable.config(bg=color_vertex)
 
 
-# добавления вершин
+# add vertex
 def menu_add_vertex():
     add_window = Tk()
     add_window.title("Добавление вершины")
@@ -161,7 +161,7 @@ def menu_add_vertex():
     add_window.mainloop()
 
 
-# создание ребра
+# create edge
 def create_edge(entry_weight, entry_node1, entry_node2, window):
     try:
         weight = int(entry_weight.get())
@@ -179,7 +179,7 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
         window.destroy()
 
 
-# меню добавления ребер
+# menu adding edge
 def menu_add_edge():
     add_window = Tk()
     add_window.title("Добавление ребра")
@@ -306,16 +306,16 @@ def display_props(title, props):
     win.mainloop()
 
 
-nodes = []  # Список вершин
-edges = []  # Список ребер
+nodes = []  # list of vertex
+edges = []  # list of edges
 color_vertex = "azure2"
-graph = nx.Graph()  # Граф
+graph = nx.Graph()  # graph
 root = Tk()
-root.title("Графовый редактор")
+root.title("graph editor")
 StR = 'Arial Bold'
-lbl1 = Label(root, text="Для удаления элемента кликните дважды", font=(StR, 10))
-lbl2 = Label(root, text="Для изменения параметров элемента кликните левой кнопкой мыши", font=(StR, 10))
-lbl3 = Label(root, text="Для изменения цвета кликните правой кнопкой мыши", font=(StR, 10))
+lbl1 = Label(root, text="for delete click twice", font=(StR, 10))
+lbl2 = Label(root, text="for change parametr of element click left button", font=(StR, 10))
+lbl3 = Label(root, text="for change color click right button", font=(StR, 10))
 lbl1.grid(column=0, row=4)
 lbl2.grid(column=0, row=5)
 lbl3.grid(column=0, row=6)
@@ -327,7 +327,7 @@ button1 = Button(root, text="Новая вершина", anchor="w", command=men
 button2 = Button(root, text="Создать ребро", anchor="w", command=menu_add_edge, font=("Courier", 12), bg="light cyan")
 button3 = Button(root, text="Нахождение кратчайший путь", anchor="w", command=e_cycle, font=("Courier", 12),
                  bg="light blue")
-button4 = Button(root, text="Построение эйлерова цикл", anchor="w", command=shortest_path, font=("Courier", 12),
+button4 = Button(root, text="Create euler cycle", anchor="w", command=shortest_path, font=("Courier", 12),
                  bg="MistyRose2")
 button1.grid(row=0, column=0, stick="ew")
 button2.grid(row=1, column=0, stick="ew")
