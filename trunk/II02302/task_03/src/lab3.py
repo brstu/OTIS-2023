@@ -92,7 +92,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
