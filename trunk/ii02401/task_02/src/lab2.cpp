@@ -5,9 +5,7 @@
 
 class CustomNonlinearModel {
 public:
-    CustomNonlinearModel(int time, double desiredTemp = 10) : time(time), desiredTemp(desiredTemp), generator(std::random_device{}()) {
-        arrayOfE = {0.003, 0.15, 0.0001};
-
+    CustomNonlinearModel(int time, double desiredTemp = 10) : time(time), desiredTemp(desiredTemp), generator(getSeededEngine()), arrayOfE{0.003, 0.15, 0.0001} {
         // Introduce randomness to the coefficients for a 60% difference
         arrayOfQ = {0.25 * (1 + 0.6 * getRandom()), 0.12 * (1 + 0.6 * getRandom()), 0.08 * (1 + 0.6 * getRandom())};
 
@@ -59,12 +57,21 @@ private:
     std::array<double, 3> arrayOfQ;
     std::array<double, 4> weight;
     double prevU;
-    std::array<double, 4> param = {1, 0, 1, 1.0};
+    std::array<double, 4> param{1, 0, 1, 1.0};
     std::array<double, 200> result;
     std::mt19937 generator;
 
     double getRandom() {
-        return ((double)generator() / generator.max()) - 0.5;
+        static std::uniform_real_distribution<double> distribution(-0.5, 0.5);
+        return distribution(generator);
+    }
+
+    std::mt19937 getSeededEngine() {
+        std::random_device rd;
+        std::array<int, std::mt19937::state_size> seed_data;
+        std::generate(seed_data.begin(), seed_data.end(), std::ref(rd));
+        std::seed_seq seq(seed_data.begin(), seed_data.end());
+        return std::mt19937(seq);
     }
 };
 
