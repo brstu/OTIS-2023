@@ -1,70 +1,48 @@
 #include <iostream>
 #include <cmath>
-#include <vector>
 
-// Define a struct to hold parameters for the models
-struct ModelParameters {
-    double a;
-    double b;
-    double c;
-    double d;
-    double y;
-    double y_prev;
-    double u;
-    double u_prev;
-    int i;
-    int t;
-    const std::vector<double> y_lin; // Use const for y_lin
-    const std::vector<double> y_nonlin; // Use const for y_nonlin
+class functs {
+public:
+    double a = 0.2;  // Modified value
+    double b = 0.3;  // Modified value
+    double c = 0.2;  // Modified value
+    double d = 0.3;  // Modified value
+    double u = 1.0;
+    double y = 0.0;
 
-    // Constructor (initialize y_lin and y_nonlin in the constructor body)
-    ModelParameters() : y_lin(), y_nonlin(), i(1), y(0.0), u(1.0), t(10), a(1.0), b(0.5), c(0.001), d(0.999) {}
+    void println(double val) {
+        std::cout << val << std::endl;
+    }
 
+    // Modified linear model
+    double linear(double y, int n, int t) {
+        if (n < t) {
+            println(y);
+            return linear(a * y + b * u, n + 1, t);
+        }
+        println(y);
+        return a * y + b * u;
+    }
 };
 
-// Modify the function to take a struct instead of individual parameters
-void linear_model(ModelParameters& params) {
-    if (params.i <= params.t) {
-        std::cout << params.y << std::endl;
-        // Append to y_lin directly
-        const_cast<std::vector<double>&>(params.y_lin).push_back(params.y);
-        double y_2 = params.a * params.y + params.b * params.u;
-        params.y = y_2;
-        params.i += 1;
-        linear_model(params);
-    } else {
-        std::cout << "END" << std::endl;
-    }
-}
-
-// Modify the function to take a struct instead of individual parameters
-void nonlinear_model(ModelParameters& params) {
-    if (params.i == 1) {
-        std::cout << params.y << std::endl;
-        // Append to y_nonlin directly
-        const_cast<std::vector<double>&>(params.y_nonlin).push_back(params.y);
-        double y_2 = params.a * params.y - params.b * pow(params.y_prev, 2) + params.c * 0 + params.d * sin(0);
-        params.y = y_2;
-        params.i += 1;
-        nonlinear_model(params);
-    } else if (params.i <= params.t) {
-        std::cout << params.y << std::endl;
-        // Append to y_nonlin directly
-        const_cast<std::vector<double>&>(params.y_nonlin).push_back(params.y);
-        double y_2 = params.a * params.y - params.b * pow(params.y_prev, 2) + params.c * params.u + params.d * sin(params.u_prev);
-        params.y = y_2;
-        params.i += 1;
-        nonlinear_model(params);
-    } else {
-        std::cout << "END" << std::endl;
-    }
-}
-
 int main() {
-    ModelParameters params;
-    std::cout << "Linear Model:" << std::endl;
-    linear_model(params);
-    std::cout << "Nonlinear Model:" << std::endl;
-    nonlinear_model(params);
+    functs f;
+
+    std::cout << "Modified Линейная модель" << std::endl;
+    std::cout << f.linear(f.y, 0, 10) << std::endl;
+    std::cout << "                   " << std::endl;
+    std::cout << "Modified Нелинейная модель" << std::endl;
+    f.println(f.y);
+    double y_prev = f.y;
+    double u_prev = f.u;
+    f.y = f.a * f.y - f.b * y_prev * y_prev + f.c * 1.0 + f.d * sin(1.0);
+    for (int i = 1; i < 10; i++) {
+        f.println(f.y);
+        double temp = f.y;
+        f.y = f.a * f.y - f.b * y_prev * y_prev + f.c * f.u + f.d * sin(u_prev);
+        y_prev = temp;
+        u_prev = f.u;
+    }
+
     return 0;
 }
