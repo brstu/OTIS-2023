@@ -106,16 +106,14 @@ def create_vertex(entry_name, window):
     window.destroy()
 
 
-def chose_color(color_lable):
-    global color_vertex
+def chose_color(color_label):
     rgb, hx = askcolor()
     print(rgb)
-    color_vertex = hx
-    color_lable.config(bg=color_vertex)
+    color_value = hx
+    color_label.config(bg=color_value)
 
 
 def menu_add_vertex():
-    global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(MY_CONSTANT)
