@@ -28,9 +28,9 @@ def connecting_line(x1, y1, x2, y2):
 
 
 # create vertex
-def create_vertex(Entry_Name, window):
-    Name = Entry_Name.get()
-    nodes.append(Node(Name))
+def create_vertex(entry_nname, window):
+    nname = entry_nname.get()
+    nodes.append(Node(nname))
     window.destroy()
 
 
