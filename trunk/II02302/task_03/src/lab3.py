@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 from tkinter import messagebox, Canvas, Label, Entry, Button, Tk
 from tkinter.colorchooser import askcolor
 import numpy
@@ -342,4 +340,3 @@ canvas.bind('<Button-3>', change_color)
 canvas.bind('<Double-Button>', delete)
 root.bind('<B3-Motion>', delete)
 root.mainloop()
->>>>>>> 502f2d36f951a6dee541a8902f2574cac1baed26
