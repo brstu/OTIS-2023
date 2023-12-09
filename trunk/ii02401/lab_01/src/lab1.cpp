@@ -10,18 +10,18 @@ public:
     double u = 1.0;
     double y = 0.0;
 
-    void println(double val) {
+    void println(double val) const {
         std::cout << val << std::endl;
     }
 
     // Modified linear model
     double linear(double y, int n, int t) {
         if (n < t) {
-            println(y);
-            return linear(a * y + b * u, n + 1, t);
+            println(this->y);  // Use this->y to refer to the member variable
+            return linear(a * this->y + b * u, n + 1, t);
         }
-        println(y);
-        return a * y + b * u;
+        println(this->y);
+        return a * this->y + b * u;
     }
 };
 
