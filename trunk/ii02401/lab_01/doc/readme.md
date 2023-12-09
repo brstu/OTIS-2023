@@ -44,68 +44,53 @@ Task is to write program (**С++**), which simulates this object temperature.
 ```C++
 #include <iostream>
 #include <cmath>
-#include <vector>
 
-std::vector<double> y_lin;
-std::vector<double> y_nonlin;
+class functs {
+public:
+    double a = 0.2;  // Modified value
+    double b = 0.3;  // Modified value
+    double c = 0.2;  // Modified value
+    double d = 0.3;  // Modified value
+    double u = 1.0;
+    double y = 0.0;
 
-void linear_model(double a, double b, double y, double u, int i, int t) {
-    if (i <= t) {
-        std::cout << y << std::endl;
-        y_lin.push_back(y);
-        double y_2 = a * y + b * u;
-        linear_model(a, b, y_2, u, i + 1, t);
-    } else {
-        std::cout << "END" << std::endl;
+    void println(double val) {
+        std::cout << val << std::endl;
     }
-}
 
-void nonlinear_model(double a, double b, double c, double d, double y, double y_prev, double u, double u_prev, int i, int t) {
-    if (i == 1) {
-        std::cout << y << std::endl;
-        y_nonlin.push_back(y);
-        double y_2 = a * y - b * pow(y_prev, 2) + c * 0 + d * sin(0);
-        nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
-    } else if (i <= t) {
-        std::cout << y << std::endl;
-        y_nonlin.push_back(y);
-        double y_2 = a * y - b * pow(y_prev, 2) + c * u + d * sin(u_prev);
-        nonlinear_model(a, b, c, d, y_2, y, u, u, i + 1, t);
-    } else {
-        std::cout << "END" << std::endl;
+    // Modified linear model
+    double linear(double y, int n, int t) {
+        if (n < t) {
+            println(y);
+            return linear(a * y + b * u, n + 1, t);
+        }
+        println(y);
+        return a * y + b * u;
     }
-}
+};
 
 int main() {
-    int i = 1;
-    double y = 0.0;
-    double u = 1.0;
-    int t = 10;
-    double a = 1.0;
-    double b = 0.5;
-    double c = 0.001;
-    double d = 0.999;
+    functs f;
 
-    std::cout << "Linear Model:" << std::endl;
-    linear_model(a, b, y, u, i, t);
-
-    std::cout << "Nonlinear Model:" << std::endl;
-    nonlinear_model(a, b, c, d, y, y, u, u, i, t);
-
-    std::cout << "linear_model: ";
-    for (const auto &val : y_lin) {
-        std::cout << val << " ";
+    std::cout << "Modified Линейная модель" << std::endl;
+    std::cout << f.linear(f.y, 0, 10) << std::endl;
+    std::cout << "                   " << std::endl;
+    std::cout << "Modified Нелинейная модель" << std::endl;
+    f.println(f.y);
+    double y_prev = f.y;
+    double u_prev = f.u;
+    f.y = f.a * f.y - f.b * y_prev * y_prev + f.c * 1.0 + f.d * sin(1.0);
+    for (int i = 1; i < 10; i++) {
+        f.println(f.y);
+        double temp = f.y;
+        f.y = f.a * f.y - f.b * y_prev * y_prev + f.c * f.u + f.d * sin(u_prev);
+        y_prev = temp;
+        u_prev = f.u;
     }
-    std::cout << std::endl;
-
-    std::cout << "nonlinear_model: ";
-    for (const auto &val : y_nonlin) {
-        std::cout << val << " ";
-    }
-    std::cout << std::endl;
 
     return 0;
 }
+
 ```     
 
 Вывод программы:
