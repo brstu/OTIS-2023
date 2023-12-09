@@ -5,9 +5,9 @@
 
 using namespace std;
 
-class NonlinearModel {
+class ModifiedNonlinearModel {
 public:
-    NonlinearModel(int time, double desiredTemp = 10) : time(time), desiredTemp(desiredTemp) {
+    ModifiedNonlinearModel(int time, double desiredTemp = 10) : time(time), desiredTemp(desiredTemp) {
         arrayOfE[0] = 0.001;
         arrayOfE[1] = 0.19;
         arrayOfE[2] = 0.00002;
@@ -55,7 +55,7 @@ public:
     }
 
     void printResults() {
-        cout << "Y" << endl;
+        cout << " Y Mod" << endl;
         for (int i = 0; i < time; i++) {
             cout << result[i] << endl;
         }
@@ -76,7 +76,7 @@ int main() {
     srand(static_cast<unsigned>(time(0))); // Seed the random number generator
 
     int size = 200;
-    NonlinearModel model(size);
+    ModifiedNonlinearModel model(size);
     model.calculateModel();
     model.printResults();
 
