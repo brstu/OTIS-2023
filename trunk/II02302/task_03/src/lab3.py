@@ -291,7 +291,7 @@ def shortest_path():
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     win.mainloop()
-    return enter[]
+    return enter
 
 
 def display_props(title, props):
