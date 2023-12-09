@@ -92,7 +92,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(сonnectingline(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.line = canvas.create_line(сonnecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
@@ -143,7 +143,7 @@ def chose_color(color_lable):
 
 # добавления вершин
 def menu_add_vertex():
-    global color_vertex
+    color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(sizes)
@@ -270,7 +270,7 @@ def delete(event):
 
 
 def shortest_path():
-    enter[2] = []
+    enter = []
     win = Tk()
     win.title("Выбор вершин")
     win.geometry("200x120+1050+250")
