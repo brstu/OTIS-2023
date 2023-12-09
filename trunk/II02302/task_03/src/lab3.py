@@ -143,7 +143,6 @@ def chose_color(color_lable):
 
 # добавления вершин
 def menu_add_vertex():
-    color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
     add_window.geometry(sizes)
@@ -292,7 +291,7 @@ def shortest_path():
         display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
 
     win.mainloop()
-    return enter[0], enter[1]
+    return enter[0]
 
 
 def display_props(title, props):
