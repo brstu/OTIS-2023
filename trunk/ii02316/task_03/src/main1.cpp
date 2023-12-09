@@ -1,6 +1,6 @@
 #include <cstdlib>
 
 int main() {
-    std::system("python OTIS3.py");
+    std::system("python main.py");
     return 0;
 }
