@@ -14,13 +14,13 @@ int main()
 	int vertexCount, edgesCount;
 	fin >> vertexCount >> edgesCount;
 
-	int** matrix = new int* [vertexCount];//матрица
-	for (int i = 0; i < vertexCount; i++)//матрица
-		matrix[i] = new int[vertexCount];//матрица
+	int** matrix = new int* [vertexCount];//Г¬Г ГІГ°ГЁГ¶Г 
+	for (int i = 0; i < vertexCount; i++)//Г¬Г ГІГ°ГЁГ¶Г 
+		matrix[i] = new int[vertexCount];//Г¬Г ГІГ°ГЁГ¶Г 
 	vector<bool> used(vertexCount);
-	int res;//количество компонент связности 
-	int* path = new int[vertexCount];//путь для циклов
-	int* f = new int[vertexCount];//посещённые вершины
+	int res;//ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІ Г±ГўГїГ§Г­Г®Г±ГІГЁ 
+	int* path = new int[vertexCount];//ГЇГіГІГј Г¤Г«Гї Г¶ГЁГЄГ«Г®Гў
+	int* f = new int[vertexCount];//ГЇГ®Г±ГҐГ№ВёГ­Г­Г»ГҐ ГўГҐГ°ГёГЁГ­Г»
 			//menu
 	int go;
 	do
@@ -57,8 +57,6 @@ int main()
 			case 3://bfs
 				system("cls");
 				res = 0;
-				for (auto i : used)
-					i = false;
 				for (int i = 0; i < vertexCount; i++)
 					if (!used[i])
 					{
@@ -102,17 +100,16 @@ int main()
 				
 			case 6://Euler
 				system("cls");
-				//проверка компонент связности 
+				//ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІ Г±ГўГїГ§Г­Г®Г±ГІГЁ 
 				if ( res > 1)
 					cout << "Wrong\n";
 				else
 				{
-					//проверка степеней входа
+					//ГЇГ°Г®ГўГҐГ°ГЄГ  Г±ГІГҐГЇГҐГ­ГҐГ© ГўГµГ®Г¤Г 
 					int check = 0;
-					int buf;
 					for (int i = 0; i < vertexCount; i++)
 					{
-						buf = 0;
+						int buf = 0;
 						for (int j = 0; j < vertexCount; j++)
 							buf += matrix[i][j];
 						if (buf % 2)
@@ -132,12 +129,12 @@ int main()
 					}
 				}
 
-			case 7://Дейкстра
+			case 7://Г„ГҐГ©ГЄГ±ГІГ°Г 
 				system("cls");
 				Dijkstra(matrix,vertexCount);
 				break;
 
-			case 8://Флойд
+			case 8://Г”Г«Г®Г©Г¤
 				system("cls");
 				Floyd(matrix, vertexCount);
 				break;
