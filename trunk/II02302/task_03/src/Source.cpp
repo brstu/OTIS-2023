@@ -69,8 +69,6 @@ int main()
 			case 4://dfs
 				system("cls");
 				res = 0;
-				for (auto i : used)
-					i = false;
 				for (int i = 0; i < vertexCount; i++)
 					if (!used[i])
 					{
