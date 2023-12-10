@@ -43,7 +43,6 @@ void nonlinmodel(double y, double y1, double i) {
 
 int main() {
     double i = 1; //start time
-    double y = 0, y1 = 0;
     ofstream file1("lin.txt");
     ofstream file2("nonlin.txt");
     file1.clear();
