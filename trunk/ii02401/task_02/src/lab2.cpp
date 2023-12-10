@@ -1,61 +1,59 @@
 #include <iostream>
 #include <cmath>
 
-struct NonlinearParams {
-    double A;
-    double B;
-    double C;
-    double D;
-    double K;
-    double T0;
-    double TD;
-    double T;
-    double w;
-    double ys;
-};
-
-class functs {
+class NonlinModel {
 public:
-    double a = 0.3;
-    double b = 0.4;
-    double c = 0.1;
-    double d = 0.5;
-    double u = 1.0;
-    double y = 0.0;
+    NonlinModel(int time, double desiredTemp = 10)
+        : time(time), desiredTemp(desiredTemp), arrayOfE{0.001, 0.19, 0.00002},
+          arrayOfQ{0.4, 0.1, 0.12}, weight{1, 0, 1, 1.0}, prevU(weight[3]) {}
 
-    void println(double val) const {
-        std::cout << val << std::endl;
-    }
+    void calModel() {
+        for (int i = 0; i < time; i++) {
+            param[3] = std::sin(param[3]);
 
-    void nonliney(const NonlinearParams& params) const {
-        double q0 = params.K * (1 + (params.TD / params.T0));
-        double q1 = -params.K * (1 + 2 * (params.TD / params.T0) - (params.T0 / params.T));
-        double q2 = params.K * (params.TD / params.T0);
-        double u_prev = 1.0;
-        double e_prev1 = params.w - params.ys;
-        double e_prev2 = params.w - params.ys;
-        double y_prev = params.ys;
-        double u = 1.0;
-        
-        std::cout << "Y" << std::endl;
-        while (std::abs(y - params.w) > 0.1) {
-            double e = params.w - y;
-            double u = u_prev + q0 * e + q1 * e_prev1 + q2 * e_prev2;
-            y = params.A * y - params.B * y_prev + params.C * u + params.D * std::sin(u_prev);
-            e_prev2 = e_prev1;
-            e_prev1 = e;
-            u_prev = u;
+            double futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
+            param[1] = param[0];
+            param[0] = futureY;
+            arrayOfE[2] = desiredTemp - futureY;
 
-            println(y);
+            futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
+            param[1] = param[0];
+            param[0] = futureY;
+            arrayOfE[1] = desiredTemp - futureY;
+
+            weight[2] = prevU + arrayOfQ[0] * arrayOfE[2] + arrayOfQ[1] * arrayOfE[1] + arrayOfQ[2] * arrayOfE[0];
+
+            futureY = weight[0] * param[0] - weight[1] * param[1] * param[1] + weight[2] * param[2] + weight[3] * param[3];
+            param[1] = param[0];
+            param[0] = futureY;
+            arrayOfE[0] = desiredTemp - futureY;
+
+            result[i] = param[0];
         }
     }
+
+    void printRes () const {
+        std::cout << "Y" << std::endl;
+        for (int i = 0; i < time; i++) {
+            std::cout << result[i] << std::endl;
+        }
+    }
+
+private:
+    int time;
+    double desiredTemp;
+    double arrayOfE[3];
+    double arrayOfQ[3];
+    double weight[4];
+    double prevU;
+    double param[4] = {1, 0, 1, 1.0};
+    double result[200];
 };
 
 int main() {
-    functs f;
-    
-    NonlinearParams params = {0.5, 0.6, 0.6, 0.6, 0.8, 1.1, 1, 1.1, 20, 2.0};
-    f.nonliney(params);
-
+    int size = 200;
+    NonlinModel model(size);
+    model.calModel();
+    model.printRes();
     return 0;
 }
