@@ -35,7 +35,8 @@ public:
         double e_prev1 = params.w - params.ys;
         double e_prev2 = params.w - params.ys;
         double y_prev = params.ys;
-
+        double u = 1.0;
+        
         std::cout << "Y" << std::endl;
         while (std::abs(y - params.w) > 0.1) {
             double e = params.w - y;
