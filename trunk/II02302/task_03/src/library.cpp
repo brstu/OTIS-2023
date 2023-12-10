@@ -642,11 +642,11 @@ void PrintSSCs(int**& matrix, int vertexCount, stack<int>& mainStack)
         if (!isVisited[top])
         {
             isVisited[top] = true;
-            bool check = false;
+            //bool check = false;
             stack<int> tempStack;
             tempStack.push(top);
 
-            while (check && !tempStack.empty())
+            while (!tempStack.empty())
             {
                 int ttop = tempStack.top();
                 tempStack.pop();
