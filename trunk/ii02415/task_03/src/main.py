@@ -581,8 +581,6 @@ def rename_vertex_on_click(event):
             break
 
 
-старая версия
-
 def rename_vertex_name(name, root, i):
     global color_vertices_line, rename_name
     if name == "":
