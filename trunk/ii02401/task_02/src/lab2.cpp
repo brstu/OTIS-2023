@@ -5,11 +5,8 @@
 class NonlinearModel {
 public:
     NonlinearModel(int time, double desiredTemp = 10)
-        : time(time), desiredTemp(desiredTemp), prevU(1.0) {
-        arrayOfE = {0.001, 0.19, 0.00002};
-        arrayOfQ = {0.4, 0.1, 0.12};
-        weight = {1, 0, 1, 1.0};
-    }
+        : time(time), desiredTemp(desiredTemp), prevU{1.0}, arrayOfE{0.001, 0.19, 0.00002},
+          arrayOfQ{0.4, 0.1, 0.12}, weight{1, 0, 1, 1.0} {}
 
     void calculateModel() {
         for (int i = 0; i < time; i++) {
