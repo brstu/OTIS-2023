@@ -3,11 +3,24 @@
 #include <QVector>
 #include <QPoint>
 #include <QPair>
+#include <QColor>
+#include <QString>
 
 inline int getSquaredDist(const QPoint& p);
 
 class Graph {
  public:
+
+    QColor getVertexColor(int vertexIndex) const;
+    QString getVertexName(int vertexIndex) const;
+
+    int addVertexPro(const QPoint& p);
+
+
+    // Сеттеры для цвета и имени вершины
+    void setVertexColor(int vertexIndex, const QColor &color);
+    void setVertexName(int vertexIndex, const QString &name);
+
   Graph() {}
 
   int getCountOfVerteces() const;
@@ -27,6 +40,10 @@ class Graph {
   QList<int> getConnectionPoints() const;
   QList<QList<int> > getAllPathsNotLonger(int a, int b, int totalLength) const;
 private:
+
+  QVector<QColor> _vertexColors;
+  QVector<QString> _vertexNames;
+
   void dfsConnectionPoints(int v, int p, int& T, QVector<bool>& used, QVector<bool>& isConnectionPoint, QVector<int>& t, QVector<int>& up) const;
   void dfsFindWayTo(int v, int destination, int maxLengthLeft, QVector<bool>& used, QList<QList<int> > &resultList, QList<int> &currentList) const;
 

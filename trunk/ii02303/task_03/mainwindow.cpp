@@ -1,27 +1,93 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QList>
 #include <QDebug>
+#include <QMessageBox>
+#include <QColorDialog>
+#include <QInputDialog>
 
+#include "graph.h"
 #include "mainwindow.h"
 
 #define FIND_NEAREST_FOR_PACEMENT
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow) {
-  addingAnEdge = movingAVertex = false;
+    addingAnEdge = movingAVertex = false;
 
-  QPalette palette;
-  palette.setColor(backgroundRole(), getBackgroundColor());
-  setPalette(palette);
+    QPalette palette;
+    palette.setColor(backgroundRole(), getBackgroundColor());
+    setPalette(palette);
 
-  timerListChanged.setInterval(40);
-  connect(&timerListChanged, SIGNAL(timeout()), this, SLOT(checkListViewChanged()));
-  timerListChanged.start();
-  currentListViewIdx = -1;
+    timerListChanged.setInterval(40);
+    connect(&timerListChanged, SIGNAL(timeout()), this, SLOT(checkListViewChanged()));
+    timerListChanged.start();
+    currentListViewIdx = -1;
 
-  ui->setupUi(this);
+    ui->setupUi(this);
 }
 
+void MainWindow::on_pushButtonEding_clicked() {
+  if (ui->radioEditing->isChecked()) {
+      bool ok;
+      int vertexIndex = QInputDialog::getInt(this, "Edit Vertex", "Enter index of the vertex to edit", 0, 0, G.getCountOfVerteces() - 1, 1, &ok);
+      if (ok) {
+          // Открываем диалог для редактирования вершины
+          QColor color = QColorDialog::getColor(vertexColors.value(vertexIndex, Qt::white), this, "Select Color", QColorDialog::DontUseNativeDialog);
+          QString name = QInputDialog::getText(this, "Edit Vertex", "Enter name for the vertex", QLineEdit::Normal, vertexNames.value(vertexIndex));
+
+          // Сохраняем цвет и название вершины
+          vertexColors[vertexIndex] = color;
+          vertexNames[vertexIndex] = name;
+          update();
+      }
+  }
+}
+void MainWindow::displayGraphInformation() {
+  // Вывести информацию о графе, например, количество вершин и рёбер
+  int numVertices = G.getCountOfVerteces();
+  int numEdges = G.getCountOfEdges();
+
+  QMessageBox::information(this, "Graph Information",
+                           QString("Number of vertices: %1\nNumber of edges: %2").arg(numVertices).arg(numEdges));
+}
+
+void MainWindow::displayVertexInformation(int vertexIndex) {
+  QColor vertexColor = G.getVertexColor(vertexIndex);
+  QString vertexName = G.getVertexName(vertexIndex);
+
+  // Показываем диалог выбора цвета
+  QColor chosenColor = QColorDialog::getColor(vertexColor, this, "Choose Vertex Color", QColorDialog::DontUseNativeDialog);
+
+  if (chosenColor.isValid()) {
+      // Если цвет выбран, обновляем цвет вершины
+      G.setVertexColor(vertexIndex, chosenColor);
+  }
+
+  // Показываем диалог ввода имени
+  QString newName = QInputDialog::getText(this, "Enter Vertex Name", "Vertex Name:", QLineEdit::Normal, vertexName);
+
+  if (!newName.isEmpty()) {
+      // Если имя введено, обновляем имя вершины
+      G.setVertexName(vertexIndex, newName);
+  }
+
+  update();  // Обновляем отображение
+}
+
+// В файл .cpp
+void MainWindow::on_pushButtonInformation_clicked() {
+  displayGraphInformation();
+}
+
+void MainWindow::on_listView_clicked(const QModelIndex &index) {
+  if (ui->radioEditing->isChecked()) {
+      int vertexIndex = index.row();
+      displayVertexInformation(vertexIndex);
+  }
+}
+
+//................
 
 MainWindow::~MainWindow() {
   delete ui;

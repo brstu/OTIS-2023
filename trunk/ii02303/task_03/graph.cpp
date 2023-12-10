@@ -3,6 +3,46 @@
 #include <queue>
 #include <QSet>
 
+
+
+// graph.cpp
+
+int Graph::addVertexPro(const QPoint& p) {
+    for(int i = 0; i < _hasEdge.size(); ++i)
+        _hasEdge[i].push_back(0);
+
+    _hasEdge.push_back(QVector<int>(_hasEdge.size() + 1, 0));
+    _coordinates.push_back(p);
+    _vertexColors.push_back(Qt::black);
+    _vertexNames.push_back(QString::number(_hasEdge.size() - 1));
+
+    return _hasEdge.size() - 1;
+}
+
+QColor Graph::getVertexColor(int vertexIndex) const {
+    assert(0 <= vertexIndex && vertexIndex < _vertexColors.size());
+    return _vertexColors[vertexIndex];
+}
+
+QString Graph::getVertexName(int vertexIndex) const {
+    assert(0 <= vertexIndex && vertexIndex < _vertexNames.size());
+    return _vertexNames[vertexIndex];
+}
+
+void Graph::setVertexColor(int vertexIndex, const QColor &color) {
+    assert(0 <= vertexIndex && vertexIndex < _vertexColors.size());
+    _vertexColors[vertexIndex] = color;
+}
+
+void Graph::setVertexName(int vertexIndex, const QString &name) {
+    assert(0 <= vertexIndex && vertexIndex < _vertexNames.size());
+    _vertexNames[vertexIndex] = name;
+}
+
+
+
+
+
 int getSquaredDist(const QPoint& p) {
   return p.x()*p.x() + p.y()*p.y();
 }

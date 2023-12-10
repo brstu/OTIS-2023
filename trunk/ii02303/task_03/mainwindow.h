@@ -21,6 +21,11 @@ public:
   ~MainWindow();
   
 private slots:
+
+    void on_pushButtonEding_clicked();
+    void on_pushButtonInformation_clicked();
+    void on_listView_clicked(const QModelIndex &index);
+
   void on_actionAlgo_1_triggered();
   void on_actionAlgo_2_triggered();
   void on_pushButtonClearMarking_clicked();
@@ -29,6 +34,12 @@ private slots:
   void on_pushButtonRandomGraph_clicked();
 
 private:
+  void displayGraphInformation();
+  void displayVertexInformation(int vertexIndex);
+
+  QMap<int, QColor> vertexColors; // Хранение цвета для каждой вершины
+  QMap<int, QString> vertexNames; // Хранение названия для каждой вершины
+
   int getRadius() {return 15;}
     QColor getBackgroundColor() { return QColor(173, 216, 230); }
   QColor getVertexColor() {return QColor(0xff66ff);}

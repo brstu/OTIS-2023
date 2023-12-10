@@ -58,6 +58,34 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButtonInformation">
+         <property name="text">
+          <string>Information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonEding">
+         <property name="text">
+          <string>Eding</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Convert from file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonClearMarking_4">
+         <property name="text">
+          <string>Convert to file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButtonRandomGraph">
          <property name="text">
           <string>Make random graph</string>
@@ -111,6 +139,11 @@
     </property>
     <addaction name="actionAlgo_1"/>
     <addaction name="actionAlgo_2"/>
+    <addaction name="actionAlgo_3"/>
+    <addaction name="actionAlgo_4"/>
+    <addaction name="actionAlgo_5"/>
+    <addaction name="actionAlgo_6"/>
+    <addaction name="actionAlgo_7"/>
    </widget>
    <addaction name="menuStart_algorithm"/>
   </widget>
@@ -136,6 +169,31 @@
   <action name="actionAlgo_2">
    <property name="text">
     <string>Algo-2</string>
+   </property>
+  </action>
+  <action name="actionAlgo_3">
+   <property name="text">
+    <string>Algo-3</string>
+   </property>
+  </action>
+  <action name="actionAlgo_4">
+   <property name="text">
+    <string>Algo-4</string>
+   </property>
+  </action>
+  <action name="actionAlgo_5">
+   <property name="text">
+    <string>Algo-5</string>
+   </property>
+  </action>
+  <action name="actionAlgo_6">
+   <property name="text">
+    <string>Algo-6</string>
+   </property>
+  </action>
+  <action name="actionAlgo_7">
+   <property name="text">
+    <string>Algo-7</string>
    </property>
   </action>
  </widget>
