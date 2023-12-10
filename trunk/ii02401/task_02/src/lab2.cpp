@@ -1,13 +1,16 @@
 #include <iostream>
 #include <cmath>
+#include <array>
 
-class NonlinModel {
+class NonlinearModel {
 public:
-    NonlinModel(int time, double desiredTemp = 10)
-        : time(time), desiredTemp(desiredTemp), arrayOfE{0.001, 0.19, 0.00002},
-          arrayOfQ{0.4, 0.1, 0.12}, weight{1, 0, 1, 1.0}, prevU(weight[3]) {}
+    NonlinearModel(int time, double desiredTemp = 10)
+        : time(time), desiredTemp(desiredTemp),
+          arrayOfQ{0.4, 0.1, 0.12}, weight{1, 0, 1, 1.0}, prevU(weight[3]) {
+        arrayOfE = {0.001, 0.19, 0.00002};
+    }
 
-    void calModel() {
+    void calculateModel() {
         for (int i = 0; i < time; i++) {
             param[3] = std::sin(param[3]);
 
@@ -32,7 +35,7 @@ public:
         }
     }
 
-    void printRes () const {
+    void printResults() const {
         std::cout << "Y" << std::endl;
         for (int i = 0; i < time; i++) {
             std::cout << result[i] << std::endl;
@@ -42,18 +45,18 @@ public:
 private:
     int time;
     double desiredTemp;
-    double arrayOfE[3];
-    double arrayOfQ[3];
-    double weight[4];
+    std::array<double, 3> arrayOfE;
+    std::array<double, 3> arrayOfQ;
+    std::array<double, 4> weight;
     double prevU;
-    double param[4] = {1, 0, 1, 1.0};
-    double result[200];
+    std::array<double, 4> param{1, 0, 1, 1.0};
+    std::array<double, 200> result;
 };
 
 int main() {
     int size = 200;
-    NonlinModel model(size);
-    model.calModel();
-    model.printRes();
+    NonlinearModel model(size);
+    model.calculateModel();
+    model.printResults();
     return 0;
 }
