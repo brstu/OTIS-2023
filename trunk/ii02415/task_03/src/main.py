@@ -414,11 +414,41 @@ DATA_UNORIENT_LINE_LABEL = "data_id_unorient_line_x_y:\t"
 
 DATA_ORIENT_LINE_LABEL = "data_id_orient_line_x_y:\t"
 
+def delete_lines_for_vertex(vertex_id, lines_data):
+    all_delete_names = []
+    for name in lines_data:
+        if lines_data[name][0][2] == vertex_id or lines_data[name][1][2] == vertex_id:
+            canvas.create_line(*line_intersect_circle(lines_data[name][0][0], lines_data[name][0][1],
+                                                     lines_data[name][1][0], lines_data[name][1][1]), fill="white",
+                               width=3)
+            canvas.delete(lines_data[name])
+            all_delete_names.append(name)
+    for name in all_delete_names:
+        del lines_data[name]
+    return lines_data
+
+def delete_none_oriented_lines(vertex_id):
+    global ID_none_oriented_line
+    if ID_none_oriented_line != 0:
+        data_id_unorient_line_x_y = delete_lines_for_vertex(vertex_id, data_id_unorient_line_x_y)
+    return data_id_unorient_line_x_y
+
+def delete_oriented_lines(vertex_id):
+    global ID_oriented_line
+    if ID_oriented_line != 0:
+        data_id_orient_line_x_y = delete_lines_for_vertex(vertex_id, data_id_orient_line_x_y)
+    return data_id_orient_line_x_y
+
+def delete_vertex(vertex_id):
+    canvas.delete(data_vertex_id_x_y[vertex_id][2])
+    del data_vertex_id_x_y[vertex_id]
+    array_name_vertex.remove(vertex_id)
+    print("array_name_vertex:\t", array_name_vertex)
+    print(VERTEX_DICT_LABEL, data_vertex_id_x_y)
+
 def delete_vertex_on_click(event):
-    name_delete_vertex = ''
+    name_delete_vertex = ""
     global ID_none_oriented_line, ID_oriented_line
-    all_delete_name1 = []
-    all_delete_name2 = []
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
@@ -431,40 +461,14 @@ def delete_vertex_on_click(event):
             name_delete_vertex = vertex_id
 
             print(VERTEX_DICT_LABEL, vertex_id)
-            if ID_none_oriented_line != 0:
-                for name in data_id_unorient_line_x_y:
-                    if data_id_unorient_line_x_y[name][0][2] == name_delete_vertex or \
-                            data_id_unorient_line_x_y[name][1][2] == name_delete_vertex:
-                        canvas.create_line(*line_intersect_circle(data_id_unorient_line_x_y[name][0][0],
-                                                                  data_id_unorient_line_x_y[name][0][1],
-                                                                  data_id_unorient_line_x_y[name][1][0],
-                                                                  data_id_unorient_line_x_y[name][1][1]), fill="white",
-                                           width=3)
-                        canvas.delete(data_id_unorient_line_x_y[name])
-                        all_delete_name1.append(name)
-                for j in all_delete_name1:
-                    del data_id_unorient_line_x_y[j]
-                print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
+            data_id_unorient_line_x_y = delete_none_oriented_lines(name_delete_vertex)
+            print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
 
-            if ID_oriented_line != 0:
-                for name in data_id_orient_line_x_y:
-                    if data_id_orient_line_x_y[name][0][2] == name_delete_vertex or data_id_orient_line_x_y[name][1][
-                        2] == name_delete_vertex:
-                        canvas.create_line(*line_intersect_circle(data_id_orient_line_x_y[name][0][0],
-                                                                  data_id_orient_line_x_y[name][0][1],
-                                                                  data_id_orient_line_x_y[name][1][0],
-                                                                  data_id_orient_line_x_y[name][1][1]), fill="white",
-                                           width=3, arrow=tk.LAST)
-                        canvas.delete(data_id_orient_line_x_y[name])
-                        all_delete_name2.append(name)
-                for j in all_delete_name2:
-                    del data_id_orient_line_x_y[j]
-                print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
+            data_id_orient_line_x_y = delete_oriented_lines(name_delete_vertex)
+            print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
 
-            del data_vertex_id_x_y[i]
-            array_name_vertex.remove(name_delete_vertex)
-            print("array_name_vertex:\t", array_name_vertex)
-            print(VERTEX_DICT_LABEL, data_vertex_id_x_y)
+            delete_vertex(name_delete_vertex)
+
             break
 
 
@@ -479,7 +483,41 @@ all_vanish_orline_id = []
 def move_vertex_and_line():
     canvas.bind_all(BUTTON_1, vanish_vertex_on_click)
 
+def is_within_vertex_bounds(mouse_x, mouse_y, vertex_x, vertex_y):
+    return mouse_x > vertex_x - 15 and mouse_x < vertex_x + 15 and mouse_y > vertex_y - 15 and mouse_y < vertex_y + 15
 
+def delete_none_oriented_lines(vertex_id):
+    global ID_none_oriented_line
+    all_vanish_nonorline_id = []
+    if ID_none_oriented_line != 0:
+        for tid, line_data in data_id_unorient_line_x_y.items():
+            if line_data[0][2] == vertex_id or line_data[1][2] == vertex_id:
+                canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
+                                                          line_data[1][0], line_data[1][1]),
+                                   fill="white", width=2)
+                all_vanish_nonorline_id.append(tid)
+        print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
+    return data_id_unorient_line_x_y, all_vanish_nonorline_id
+
+def delete_oriented_lines(vertex_id):
+    global ID_oriented_line
+    all_vanish_orline_id = []
+    if ID_oriented_line != 0:
+        for tid, line_data in data_id_orient_line_x_y.items():
+            if line_data[0][2] == vertex_id or line_data[1][2] == vertex_id:
+                canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
+                                                          line_data[1][0], line_data[1][1]),
+                                   fill="white", width=2, arrow=tk.LAST)
+                all_vanish_orline_id.append(tid)
+        print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
+    return data_id_orient_line_x_y, all_vanish_orline_id
+
+def delete_vertex(vertex_id):
+    canvas.delete(data_vertex_id_x_y[vertex_id][2])
+    del data_vertex_id_x_y[vertex_id]
+    array_name_vertex.remove(vertex_id)
+    print("array_name_vertex:\t", array_name_vertex)
+    print(VERTEX_DICT_LABEL, data_vertex_id_x_y)
 
 def vanish_vertex_on_click(event):
     print("event", event)
@@ -490,8 +528,7 @@ def vanish_vertex_on_click(event):
 
     for i, vertex_data in data_vertex_id_x_y.items():
         vertex_x, vertex_y, vertex_id = vertex_data
-        if mouse_x > vertex_x - 15 and mouse_x < vertex_x + 15 and \
-                mouse_y > vertex_y - 15 and mouse_y < vertex_y + 15:
+        if is_within_vertex_bounds(mouse_x, mouse_y, vertex_x, vertex_y):
             canvas.create_oval(vertex_x - 15, vertex_y - 15, vertex_x + 15,
                                vertex_y + 15, fill="white", outline="white", width=2)
             name_vanish_vertex = vertex_id
@@ -499,61 +536,60 @@ def vanish_vertex_on_click(event):
             print("имена вершин:\t", array_name_vertex)
             print(VERTEX_DICT_LABEL, vertex_data[2])
 
-            if ID_none_oriented_line != 0:
-                for tid, line_data in data_id_unorient_line_x_y.items():
-                    if line_data[0][2] == name_vanish_vertex or line_data[1][2] == name_vanish_vertex:
-                        canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
-                                                                  line_data[1][0], line_data[1][1]),
-                                           fill="white", width=2)
-                        all_vanish_nonorline_id.append(tid)
-                print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
+            data_id_unorient_line_x_y, all_vanish_nonorline_id = delete_none_oriented_lines(name_vanish_vertex)
 
-            if ID_oriented_line != 0:
-                for tid, line_data in data_id_orient_line_x_y.items():
-                    if line_data[0][2] == name_vanish_vertex or line_data[1][2] == name_vanish_vertex:
-                        canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
-                                                                  line_data[1][0], line_data[1][1]),
-                                           fill="white", width=2, arrow=tk.LAST)
-                        all_vanish_orline_id.append(tid)
-                print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
+            data_id_orient_line_x_y, all_vanish_orline_id = delete_oriented_lines(name_vanish_vertex)
+
+            delete_vertex(name_vanish_vertex)
+
             break
+
 
     canvas.bind_all(BUTTON_1, appearance_vertex_on_move)
 
+
+def update_vertex_coordinates(mouse_x, mouse_y):
+    temp_color_vertex = data_vertex_id_x_y[ID_vanish_vertex][3]
+    data_vertex_id_x_y[ID_vanish_vertex] = [mouse_x, mouse_y, name_vanish_vertex, temp_color_vertex]
+    canvas.create_oval(mouse_x - 15, mouse_y - 15, mouse_x + 15, mouse_y + 15, fill=temp_color_vertex,
+                       outline="black", width=2)
+    canvas.create_text(mouse_x, mouse_y, text=name_vanish_vertex, font=FONT)
+    print("data_vertex_id_x_y:\t", data_vertex_id_x_y)
+
+def update_non_oriented_lines():
+    if ID_none_oriented_line != 0:
+        for idi in all_vanish_nonorline_id:
+            line_data = data_id_unorient_line_x_y[idi]
+            if name_vanish_vertex == line_data[0][2]:
+                line_data[0] = [mouse_x, mouse_y, name_vanish_vertex, line_data[0][3]]
+            elif name_vanish_vertex == line_data[1][2]:
+                line_data[1] = [mouse_x, mouse_y, name_vanish_vertex, line_data[1][3]]
+            canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
+                                                      line_data[1][0], line_data[1][1]),
+                               fill=line_data[0][3], width=2)
+        print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
+
+def update_oriented_lines():
+    if ID_oriented_line != 0:
+        for idj in all_vanish_orline_id:
+            line_data = data_id_orient_line_x_y[idj]
+            if name_vanish_vertex == line_data[0][2]:
+                line_data[0] = [mouse_x, mouse_y, name_vanish_vertex, line_data[0][3]]
+            elif name_vanish_vertex == line_data[1][2]:
+                line_data[1] = [mouse_x, mouse_y, name_vanish_vertex, line_data[1][3]]
+            canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
+                                                      line_data[1][0], line_data[1][1]),
+                               fill=line_data[0][3], width=2, arrow=tk.LAST)
+        print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
 
 def appearance_vertex_on_move(event):
     global ID_none_oriented_line, ID_oriented_line, name_vanish_vertex, ID_vanish_vertex
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     if mouse_y > 0:
-        temp_color_vertex = data_vertex_id_x_y[ID_vanish_vertex][3]
-        data_vertex_id_x_y[ID_vanish_vertex] = [mouse_x, mouse_y, name_vanish_vertex, temp_color_vertex]
-        canvas.create_oval(mouse_x - 15, mouse_y - 15, mouse_x + 15, mouse_y + 15, fill=temp_color_vertex,
-                           outline="black", width=2)
-        canvas.create_text(mouse_x, mouse_y, text=name_vanish_vertex, font=FONT)
-        print("data_vertex_id_x_y:\t", data_vertex_id_x_y)
-        if ID_none_oriented_line != 0:
-            for idi in all_vanish_nonorline_id:
-                line_data = data_id_unorient_line_x_y[idi]
-                if name_vanish_vertex == line_data[0][2]:
-                    line_data[0] = [mouse_x, mouse_y, name_vanish_vertex, line_data[0][3]]
-                elif name_vanish_vertex == line_data[1][2]:
-                    line_data[1] = [mouse_x, mouse_y, name_vanish_vertex, line_data[1][3]]
-                canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
-                                                          line_data[1][0], line_data[1][1]),
-                                   fill=line_data[0][3], width=2)
-            print(DATA_UNORIENT_LINE_LABEL, data_id_unorient_line_x_y)
-        if ID_oriented_line != 0:
-            for idj in all_vanish_orline_id:
-                line_data = data_id_orient_line_x_y[idj]
-                if name_vanish_vertex == line_data[0][2]:
-                    line_data[0] = [mouse_x, mouse_y, name_vanish_vertex, line_data[0][3]]
-                elif name_vanish_vertex == line_data[1][2]:
-                    line_data[1] = [mouse_x, mouse_y, name_vanish_vertex, line_data[1][3]]
-                canvas.create_line(*line_intersect_circle(line_data[0][0], line_data[0][1],
-                                                          line_data[1][0], line_data[1][1]),
-                                   fill=line_data[0][3], width=2, arrow=tk.LAST)
-            print(DATA_ORIENT_LINE_LABEL, data_id_orient_line_x_y)
+        update_vertex_coordinates(mouse_x, mouse_y)
+        update_non_oriented_lines()
+        update_oriented_lines()
 
 
 def rename_vertex():  # переименование вершины
@@ -584,18 +620,13 @@ def rename_vertex_on_click(event):
             break
 
 
-def rename_vertex_name(name, root, i):
-    global color_vertices_line, rename_name
+def show_error(message):
+    mb.showerror(" ", message)
 
-    if name == "":
-        mb.showerror(" ", "Вы не ввели имя вершины")
-        return
-
-    if name in array_name_vertex:
-        mb.showerror(" ", "Такое имя вершины уже существует")
-        return
-
+def delete_previous_vertex(i):
     canvas.delete(data_vertex_id_x_y[i][2])
+
+def create_updated_vertex(name, i):
     canvas.create_oval(
         data_vertex_id_x_y[i][0] - 15, data_vertex_id_x_y[i][1] - 15,
         data_vertex_id_x_y[i][0] + 15, data_vertex_id_x_y[i][1] + 15,
@@ -606,12 +637,14 @@ def rename_vertex_name(name, root, i):
         text=name, font=FONT, fill="black"
     )
 
+def update_vertex_data(name, i):
     array_name_vertex.remove(data_vertex_id_x_y[i][2])
     rename_name = data_vertex_id_x_y[i][2]
     print("rename_name\t", rename_name)
     data_vertex_id_x_y[i][2] = name
     data_vertex_id_x_y[i][3] = color_vertices_line
 
+def update_unoriented_lines(name):
     if ID_none_oriented_line != 0:
         for i in data_id_unorient_line_x_y:
             if data_id_unorient_line_x_y[i][0][2] == rename_name:
@@ -621,12 +654,30 @@ def rename_vertex_name(name, root, i):
         print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_unorient_line_x_y)
         print(DATA_ORIENT_LINE_LABEL, data_id_unorient_line_x_y)
 
-        if ID_oriented_line != 0:
-            for i in data_id_orient_line_x_y:
-                if data_id_orient_line_x_y[i][0][2] == rename_name:
-                    data_id_orient_line_x_y[i][0][2] = name
-                if data_id_orient_line_x_y[i][1][2] == rename_name:
-                    data_id_orient_line_x_y[i][1][2] = name
+def update_oriented_lines(name):
+    if ID_oriented_line != 0:
+        for i in data_id_orient_line_x_y:
+            if data_id_orient_line_x_y[i][0][2] == rename_name:
+                data_id_orient_line_x_y[i][0][2] = name
+            if data_id_orient_line_x_y[i][1][2] == rename_name:
+                data_id_orient_line_x_y[i][1][2] = name
+
+def rename_vertex_name(name, root, i):
+    global color_vertices_line, rename_name
+
+    if name == "":
+        show_error("Вы не ввели имя вершины")
+        return
+
+    if name in array_name_vertex:
+        show_error("Такое имя вершины уже существует")
+        return
+
+    delete_previous_vertex(i)
+    create_updated_vertex(name, i)
+    update_vertex_data(name, i)
+    update_unoriented_lines(name)
+    update_oriented_lines(name)
 
     print(DATA_ID_ORIENT_LINE_X_Y_LABEL, data_id_orient_line_x_y)
 
