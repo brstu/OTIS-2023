@@ -471,7 +471,7 @@ class GraphEditor:
             ax = figure.add_subplot(111)
 
             node_colors = [selected_graph.nodes[node].get('color', 'red') for node in selected_graph.nodes]
-            edge_colors = [selected_graph.edges[edge].get('color', 'blue') for edge in selected_graph.edges]
+            edgecolors = [selected_graph.edges[edge].get('color', 'blue') for edge in selected_graph.edges]
 
             pos = nx.spring_layout(selected_graph, seed=42)
 
@@ -480,7 +480,7 @@ class GraphEditor:
             nx.draw_networkx_nodes(selected_graph, pos, ax=ax, node_color=node_colors, node_size=800)
             nx.draw_networkx_labels(selected_graph, pos, ax=ax, font_size=10, font_color='black')
             nx.draw_networkx_edges(selected_graph, pos, ax=ax, edgelist=selected_graph.edges(),
-                                   edge_color=edge_colors,
+                                   edge_color=edgecolors,
                                    connectionstyle='arc3,rad=0.1', arrows=True, width=1.5, arrowstyle='->')
             nx.draw_networkx_edge_labels(selected_graph, pos, edge_labels=edge_labels, ax=ax)
 
