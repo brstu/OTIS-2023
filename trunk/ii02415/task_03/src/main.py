@@ -538,12 +538,11 @@ def vanish_vertex_on_click(event):
 
             _, _ = delete_none_oriented_lines(name_vanish_vertex)
 
-            _, all_vanish_orline_id = delete_oriented_lines(name_vanish_vertex)
+            _, _ = delete_oriented_lines(name_vanish_vertex)
 
             delete_vertex(name_vanish_vertex)
 
             break
-
 
     canvas.bind_all(BUTTON_1, appearance_vertex_on_move)
 
@@ -696,9 +695,9 @@ def algorithm():  # функция для создания окна с алго�
     button_dejkstra = tk.Button(new_application, text="Алгоритм\nДейкстры",
                                 command=lambda: deikstra(temp_edges, weight, max_node), width=12, height=2)
     input_value = tk.Button(new_application, text="Ввод графа",
-                            command=lambda: graph_info(entry.get(), new_application), width=12, height=2)
+                            command=lambda: graph_info(entry.get()), width=12, height=2)
     button_reading_file = tk.Button(new_application, text="Чтение из файла",
-                                    command=lambda: reading_file(new_application), width=12, height=2)
+                                    command=lambda: reading_file(), width=12, height=2)
 
     if UNORIN_ORIENT == 0:
         button_diametr_graph = tk.Button(new_application, text="Диаметр графа",
@@ -708,13 +707,13 @@ def algorithm():  # функция для создания окна с алго�
         button_center_graph = tk.Button(new_application, text="Центр графа",
                                         command=lambda: centerGraph(nodes, temp_edges), width=12, height=2)
     else:
-        button_diametr_graph = tk.Button(new_application, text="Диаметр графа", \
+        button_diametr_graph = tk.Button(new_application, text="Диаметр графа",
                                          command=lambda: diameterGraph(nodes, temp_edges), width=12, height=2,
                                          state=tk.DISABLED)
-        button_radius_graph = tk.Button(new_application, text="Радиус графа", \
+        button_radius_graph = tk.Button(new_application, text="Радиус графа",
                                         command=lambda: radiusGraph(nodes, temp_edges), width=12, height=2,
                                         state=tk.DISABLED)
-        button_center_graph = tk.Button(new_application, text="Центр графа", \
+        button_center_graph = tk.Button(new_application, text="Центр графа",
                                         command=lambda: centerGraph(nodes, temp_edges), width=12, height=2,
                                         state=tk.DISABLED)
 
@@ -723,9 +722,9 @@ def algorithm():  # функция для создания окна с алго�
     button_reading_file.grid(row=2, column=1, sticky="ew")
     button_adjancy_matrix = tk.Button(new_application, text="Матрица\nсмежности",
                                       command=lambda: adjancy_matrix(temp_edges, max_node), width=12, height=2)
-    button_incidency_matrix = tk.Button(new_application, text="Матрица\nинцидентности", \
-                                        command=lambda: incidency_matrix(temp_edges, max_node, UNORIN_ORIENT,
-                                                                         new_application), width=12, height=2)
+    button_incidency_matrix = tk.Button(new_application, text="Матрица\nинцидентности",
+                                        command=lambda: incidency_matrix(temp_edges, max_node, UNORIN_ORIENT),
+                                        width=12, height=2)
     button_euleran_circle = tk.Button(new_application, text="Эйлеров\nцикл",
                                       command=lambda: euleran_circle(result_adjancy_matrix), width=12, height=2)
     button_quit = tk.Button(new_application, text="Выход", command=new_application.destroy, width=12, height=2)
