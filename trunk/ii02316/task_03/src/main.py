@@ -26,6 +26,7 @@ Graphwiththisnamealreadyexists = "Graph with this name already exists."
 Enterthestartnode = "Enter the start node:"
 Pleaseentervalidstartandendnodes = "Please enter valid start and end nodes."
 Entertheendnode = "Enter the end node:"
+style = 'arc3,rad=0.1'
 class MDIGraphEditor:
     def __init__(self, master):
         self.master = master
@@ -65,7 +66,7 @@ class GraphEditor:
         self.top_level = tk.Toplevel(master)  # Изменено: использование Toplevel вместо Frame
         self.top_level.title(f"Graph Editor - {graph_name}")
         self.graph_name = graph_name
-        
+
         #self.master.title("Graph Editor")
 
         self.graph_name = tk.StringVar()
@@ -480,7 +481,7 @@ class GraphEditor:
             nx.draw_networkx_labels(selected_graph, pos, ax=ax, font_size=10, font_color='black')
             nx.draw_networkx_edges(selected_graph, pos, ax=ax, edgelist=selected_graph.edges(),
                                    edge_color=edge_colors,
-                                   connectionstyle='arc3,rad=0.1', arrows=True, width=1.5, arrowstyle='->')
+                                   connectionstyle=style, arrows=True, width=1.5, arrowstyle='->')
             nx.draw_networkx_edge_labels(selected_graph, pos, edge_labels=edge_labels, ax=ax)
 
             canvas = FigureCanvasTkAgg(figure, master=draw_window)
@@ -512,7 +513,7 @@ class GraphEditor:
             nx.draw_networkx_labels(selected_graph, pos, ax=ax, font_size=10, font_color='black')
 
             nx.draw_networkx_edges(selected_graph, pos, ax=ax, edgelist=selected_graph.edges(),
-                                   edge_color=edge_colors, connectionstyle='arc3,rad=0.1', width=1.5, arrows=False)
+                                   edge_color=edge_colors, connectionstyle=style, width=1.5, arrows=False)
 
             canvas = FigureCanvasTkAgg(figure, master=draw_window)
             canvas.draw()
@@ -552,7 +553,7 @@ class GraphEditor:
                 if directed:
                     # Draw directed edge with arrow
                     nx.draw_networkx_edges(selected_graph, pos, edgelist=[(start, end)], ax=ax,
-                                           edge_color=edge_color, width=1.5, arrows=True, connectionstyle='arc3,rad=0.1')
+                                           edge_color=edge_color, width=1.5, arrows=True, connectionstyle=style)
                 else:
                     # Draw undirected edge without arrow
                     nx.draw_networkx_edges(selected_graph, pos, edgelist=[(start, end)], ax=ax,
