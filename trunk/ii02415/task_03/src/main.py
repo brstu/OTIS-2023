@@ -536,9 +536,9 @@ def vanish_vertex_on_click(event):
             print("имена вершин:\t", array_name_vertex)
             print(VERTEX_DICT_LABEL, vertex_data[2])
 
-            data_id_unorient_line_x_y, all_vanish_nonorline_id = delete_none_oriented_lines(name_vanish_vertex)
+            _, _ = delete_none_oriented_lines(name_vanish_vertex)
 
-            data_id_orient_line_x_y, all_vanish_orline_id = delete_oriented_lines(name_vanish_vertex)
+            _, all_vanish_orline_id = delete_oriented_lines(name_vanish_vertex)
 
             delete_vertex(name_vanish_vertex)
 
@@ -746,13 +746,13 @@ def algorithm():  # функция для создания окна с алго�
     new_application.mainloop()
 
 
-def graph_info(information, root):  # функция для ввода графа
+def graph_info(information):  # функция для ввода графа
     file = open("info.txt", "w")
     file.write(information)
     file.close()
 
 
-def reading_file(root):  # считывание записанного в файл графа
+def reading_file():  # считывание записанного в файл графа
     global max_node, UNORIN_ORIENT, temp_edges, nodes, weight
     file = open("info.txt ", "r")
     temp = file.readline()
@@ -800,32 +800,32 @@ def reading_file(root):  # считывание записанного в фай
 def adjancy_matrix(nodes, max_node):  # функция для матрицы смежности
     global result_adjancy_matrix
     print("Матрица смежности")
-    adj = [[0 for i in range(max_node)] for j in range(max_node)]
-    for i, val in enumerate(nodes):
+    adj = [[0 for _ in range(max_node)] for _ in range(max_node)]
+    for val in nodes:
         adj[val[0] - 1][val[1] - 1] = 1
         if UNORIN_ORIENT == 0:
             adj[val[1] - 1][val[0] - 1] = 1
-    for i in range(max_node):
-        print(adj[i])
+    for row in adj:
+        print(row)
     print()
     result_adjancy_matrix = adj
 
 
-def incidency_matrix(nodes, max_nodes, UNORIN_ORIENT, root):
+def incidency_matrix(nodes, max_nodes, unorin_orient):
     global result_incidency_matrix
     print("Матрица инцидентности")
-    if UNORIN_ORIENT == 0:
-        inc = [[0 for i in range(len(nodes))] for j in range(max_nodes)]
+    if unorin_orient == 0:
+        inc = [[0 for _ in range(len(nodes))] for _ in range(max_nodes)]
         for i, val in enumerate(nodes):
             inc[val[0] - 1][i] = 1
             inc[val[1] - 1][i] = 1
     else:
-        inc = [[0 for i in range(len(nodes))] for j in range(max_nodes)]
+        inc = [[0 for _ in range(len(nodes))] for _ in range(max_nodes)]
         for i, val in enumerate(nodes):
             inc[val[0] - 1][i] = 1
             inc[val[1] - 1][i] = -1
-    for i in range(max_nodes):
-        print(inc[i])
+    for row in inc:
+        print(row)
     print()
     result_incidency_matrix = inc
 
@@ -833,8 +833,8 @@ def incidency_matrix(nodes, max_nodes, UNORIN_ORIENT, root):
 def adjancy_for_deikstra(nodes, weight, max_node):
     n = len(nodes)
     m = 2
-    array_edge = [[0 for i in range(m)] for j in range(n)]
-    array_edjancy = [[0 for i in range(max_node)] for j in range(max_node)]
+    array_edge = [[0 for _ in range(m)] for _ in range(n)]
+    array_edjancy = [[0 for _ in range(max_node)] for _ in range(max_node)]
     for i in range(n):
         for j in range(m):
             array_edge[i][j] = nodes[i][j]
@@ -850,28 +850,46 @@ def adjancy_for_deikstra(nodes, weight, max_node):
 
 
 def deikstra(nodes, weight, max_node):
-    adjacencyMatrix = adjancy_for_deikstra(nodes, weight, max_node)
+    adjacency_matrix = adjancy_for_deikstra(nodes, weight, max_node)
     for start in range(max_node):
-        distance = [inf for i in range(max_node)]
-        visited = [0 for i in range(max_node)]
-        distance[start] = 0
-        for i in range(max_node):
-            v = -1
-            for j in range(max_node):
-                if visited[j] == 0 and (v == -1 or distance[j] < distance[v]):
-                    v = j
-            if distance[v] == inf:
-                break
-            visited[v] = 1
-            for j in range(max_node):
-                if adjacencyMatrix[v][j] != 0:
-                    to = j
-                    size = adjacencyMatrix[v][j]
-                    if distance[v] + size < distance[to]:
-                        distance[to] = distance[v] + size
-        print("vertex\tdistance")
-        for i in range(max_node):
-            print(i + 1, "\t", distance[i])
+        distance = calculate_distances(adjacency_matrix, start, max_node)
+        print_distances(distance, max_node)
+
+
+def calculate_distances(adjacency_matrix, start, max_node):
+    distance = [inf for _ in range(max_node)]
+    visited = [0 for _ in range(max_node)]
+    distance[start] = 0
+    for _ in range(max_node):
+        v = find_min_distance_vertex(distance, visited, max_node)
+        if distance[v] == inf:
+            break
+        visited[v] = 1
+        update_distances(adjacency_matrix, distance, v, max_node)
+    return distance
+
+
+def find_min_distance_vertex(distance, visited, max_node):
+    v = -1
+    for j in range(max_node):
+        if visited[j] == 0 and (v == -1 or distance[j] < distance[v]):
+            v = j
+    return v
+
+
+def update_distances(adjacency_matrix, distance, v, max_node):
+    for j in range(max_node):
+        if adjacency_matrix[v][j] != 0:
+            to = j
+            size = adjacency_matrix[v][j]
+            if distance[v] + size < distance[to]:
+                distance[to] = distance[v] + size
+
+
+def print_distances(distance, max_node):
+    print("vertex\tdistance")
+    for i in range(max_node):
+        print(i + 1, "\t", distance[i])
 
 
 def connected_components(adjacency_matrix):
@@ -891,56 +909,77 @@ def dfs(adjacency_matrix, i, visited):
             dfs(adjacency_matrix, j, visited)
 
 
-def euleran_circle(adjacencyMatrix):
-    max_node = len(adjacencyMatrix)
-    print("conCompDFS(adjacencyMatrix)", connected_components(adjacencyMatrix))
-    if (connected_components(adjacencyMatrix) != 1):
-        print("граф не является Эйлеровым")
-        mb.showerror(" ", "граф не является Эйлеровым")
-    degrees = [0] * max_node
-    for i in range(max_node):
-        for j in range(max_node):
-            if (adjacencyMatrix[i][j]):
-                degrees[i] += 1
-    for i in range(max_node):
-        if (degrees[i] % 2 != 0):
-            print("граф не является Эйлеровым")
-            mb.showerror(" ", "граф не является Эйлеровым")
-    path = []
-    s = []
-    poz = 0
-    s.append(poz)
-    while s:
-        poz = s[-1]
-        temp = False
-        for i in range(max_node):
-            if (adjacencyMatrix[poz][i]):
-                adjacencyMatrix[poz][i] = 0
-                adjacencyMatrix[i][poz] = 0
-                s.append(i)
-                temp = True
-                break
-        if not temp:
-            path.append((poz + 1))
-            s.pop()
+ERROR_MESSAGE = "граф не является Эйлеровым"
+
+def euleran_circle(adjacency_matrix):
+    max_node = len(adjacency_matrix)
+    check_connected_components(adjacency_matrix)
+    check_degrees(adjacency_matrix)
+
+    path = find_euleran_circle(adjacency_matrix, max_node)
     print("Euleran circle:\t", path)
 
 
-def radiusGraph(nodes, edges):
+def check_connected_components(adjacency_matrix):
+    if connected_components(adjacency_matrix) != 1:
+        print(ERROR_MESSAGE)
+        mb.showerror(" ", ERROR_MESSAGE)
+
+
+def check_degrees(adjacency_matrix):
+    degrees = calculate_degrees(adjacency_matrix)
+    for degree in degrees:
+        if degree % 2 != 0:
+            print(ERROR_MESSAGE)
+            mb.showerror(" ", ERROR_MESSAGE)
+
+
+def calculate_degrees(adjacency_matrix):
+    max_node = len(adjacency_matrix)
+    degrees = [0] * max_node
+    for i in range(max_node):
+        for j in range(max_node):
+            if adjacency_matrix[i][j]:
+                degrees[i] += 1
+    return degrees
+
+
+def find_euleran_circle(adjacency_matrix, max_node):
+    path = []
+    stack = []
+    position = 0
+    stack.append(position)
+    while stack:
+        position = stack[-1]
+        temp = False
+        for i in range(max_node):
+            if adjacency_matrix[position][i]:
+                adjacency_matrix[position][i] = 0
+                adjacency_matrix[i][position] = 0
+                stack.append(i)
+                temp = True
+                break
+        if not temp:
+            path.append(position + 1)
+            stack.pop()
+    return path
+
+
+def radius_graph(nodes, edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
     print("радиус графа\t", nx.radius(G))
 
 
-def diameterGraph(nodes, edges):
+def diameter_graph(nodes, edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
     print("диаметр графа\t", nx.diameter(G))
 
 
-def centerGraph(nodes, edges):
+def center_graph(nodes, edges):
     G = nx.Graph()
     G.add_nodes_from(nodes)
     G.add_edges_from(edges)
