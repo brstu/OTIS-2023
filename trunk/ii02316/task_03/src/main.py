@@ -378,7 +378,15 @@ class GraphEditor:
         else:
             tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
-
+    def calculate_diameter_radius_center(self):
+        if self.current_graph:
+            selected_graph = self.graphs[self.current_graph]
+            diameter = nx.diameter(selected_graph)
+            radius = nx.radius(selected_graph)
+            center = nx.center(selected_graph)
+            tk.messagebox.showinfo("Graph Metrics", f"Diameter: {diameter}\nRadius: {radius}\nCenter: {center}")
+        else:
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def find_eulerian_cycles(self):
         if self.current_graph:
