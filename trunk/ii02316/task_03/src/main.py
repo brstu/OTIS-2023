@@ -65,8 +65,7 @@ class GraphEditor:
         self.top_level = tk.Toplevel(master)  # Изменено: использование Toplevel вместо Frame
         self.top_level.title(f"Graph Editor - {graph_name}")
         self.graph_name = graph_name
-
-        #self.master = master
+        
         #self.master.title("Graph Editor")
 
         self.graph_name = tk.StringVar()
