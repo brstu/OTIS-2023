@@ -25,6 +25,7 @@ GraphName = "Graph Name"
 Graphwiththisnamealreadyexists = "Graph with this name already exists."
 Enterthestartnode = "Enter the start node:"
 Pleaseentervalidstartandendnodes = "Please enter valid start and end nodes."
+Entertheendnode = "Enter the end node:"
 class MDIGraphEditor:
     def __init__(self, master):
         self.master = master
@@ -288,7 +289,7 @@ class GraphEditor:
             selected_graph = self.graphs[self.current_graph]
 
             start_node = simpledialog.askstring(CalculateDistance, Enterthestartnode)
-            end_node = simpledialog.askstring(CalculateDistance, "Enter the end node:")
+            end_node = simpledialog.askstring(CalculateDistance, Entertheendnode)
 
             if start_node is not None and end_node is not None:
                 try:
@@ -306,8 +307,8 @@ class GraphEditor:
                                                            command=self.calculate_distance_between_nodes)
                 self.calculate_distance_button.pack(pady=5)
 
-    def split_path_inout(path):
-        path_iter = iter(path)
+    def split_path_inout(self):
+        path_iter = iter(self)
         ctl_points, command = next(path_iter, ([], None))
         in_points, out_points = [], []
 
@@ -345,7 +346,7 @@ class GraphEditor:
             tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
     def show_find_shortest_path_dialog(self):
         start_node = simpledialog.askstring(ShortestPath, Enterthestartnode)
-        end_node = simpledialog.askstring(ShortestPath, "Enter the end node:")
+        end_node = simpledialog.askstring(ShortestPath, Entertheendnode)
         if start_node and end_node:
             self.find_shortest_path(start_node, end_node)
         else:
@@ -353,7 +354,7 @@ class GraphEditor:
 
     def show_find_paths_dialog(self):
         start_node = simpledialog.askstring(FindPaths, Enterthestartnode)
-        end_node = simpledialog.askstring(FindPaths, "Enter the end node:")
+        end_node = simpledialog.askstring(FindPaths, Entertheendnode)
         if start_node and end_node:
             self.find_all_paths(start_node, end_node)
         else:
@@ -603,7 +604,7 @@ class GraphEditor:
     def add_edge(self):
         if self.current_graph:
             start_node = simpledialog.askstring(addEdge, Enterthestartnode)
-            end_node = simpledialog.askstring(addEdge, "Enter the end node:")
+            end_node = simpledialog.askstring(addEdge, Entertheendnode)
 
             # Запрос на ввод веса
             weight = simpledialog.askfloat(addEdge, "Enter the weight for the edge:")
@@ -625,7 +626,7 @@ class GraphEditor:
     def remove_edge(self):
         if self.current_graph:
             start_node = simpledialog.askstring(RemoveEdge, Enterthestartnode)
-            end_node = simpledialog.askstring(RemoveEdge, "Enter the end node:")
+            end_node = simpledialog.askstring(RemoveEdge, Entertheendnode)
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 self.graphs[self.current_graph].remove_edge(start_node, end_node)
                 self.graphs[self.current_graph].remove_edge(end_node,
@@ -664,7 +665,7 @@ class GraphEditor:
     def color_edge(self):
         if self.current_graph:
             start_node = simpledialog.askstring(ColorEdge, Enterthestartnode)
-            end_node = simpledialog.askstring(ColorEdge, "Enter the end node:")
+            end_node = simpledialog.askstring(ColorEdge, Entertheendnode)
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 color = colorchooser.askcolor()[1]
                 self.graphs[self.current_graph].edges[start_node, end_node]['color'] = color
