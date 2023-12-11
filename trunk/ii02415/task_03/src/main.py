@@ -102,7 +102,7 @@ def draw_vertex_on_click(event):
 
 
 def change_color_vertex():  # изменение цвета вершин
-    canvas.bind_all("<Button-1>", change_color_vertex_on_click)
+    canvas.bind_all(BUTTON_1, change_color_vertex_on_click)
 
 
 def change_color_vertex_on_click(event):
@@ -122,7 +122,7 @@ def change_color_vertex_on_click(event):
 
 
 def draw_unoriented_line_between_vertex():  # рисование неориентированного ребра
-    canvas.bind_all("<Button-1>", draw_line_between_vertex_on_click)
+    canvas.bind_all(BUTTON_1, draw_line_between_vertex_on_click)
 
 
 def draw_line_between_vertex_on_click(event):
@@ -155,7 +155,7 @@ def draw_line_between_vertex_on_click(event):
 
 
 def delete_unoriented_line():
-    canvas.bind_all("<Button-1>", delete_unoriented_line_on_click)
+    canvas.bind_all(BUTTON_1, delete_unoriented_line_on_click)
 
 
 def delete_unoriented_line_on_click(event):
@@ -200,7 +200,7 @@ def delete_matching_unoriented_line(x1, y1, x2, y2):
             break
 
 def draw_oriented_line_between_vertex():  # рисование ориентированного ребра
-    canvas.bind_all("<Button-1>", draw_oriented_line_between_vertex_on_click)
+    canvas.bind_all(BUTTON_1, draw_oriented_line_between_vertex_on_click)
 
 
 DATA_ID_ORIENT_LINE_X_Y_LABEL = "data_id_orient_line_x_y\t"
@@ -234,7 +234,7 @@ def draw_oriented_line_between_vertex_on_click(event):
                 break
 
 def delete_oriented_line():  # удаление ориентированного ребра
-    canvas.bind_all("<Button-1>", delete_oriented_line_on_click)
+    canvas.bind_all(BUTTON_1, delete_oriented_line_on_click)
 
 
 def delete_oriented_line_on_click(event):
@@ -242,38 +242,53 @@ def delete_oriented_line_on_click(event):
     mouse_x = canvas.winfo_pointerx() - canvas.winfo_rootx()
     mouse_y = canvas.winfo_pointery() - canvas.winfo_rooty()
     print(mouse_x, mouse_y)
+
     for i in data_vertex_id_x_y:
-        if mouse_x > data_vertex_id_x_y[i][0] - 15 and mouse_x < data_vertex_id_x_y[i][0] + 15 and \
-                mouse_y > data_vertex_id_x_y[i][1] - 15 and mouse_y < data_vertex_id_x_y[i][1] + 15:
-            if oriented_line == 0:
-                name1 = data_vertex_id_x_y[i][2]
-                x1 = data_vertex_id_x_y[i][0]
-                y1 = data_vertex_id_x_y[i][1]
-                oriented_line += 1
-                print("nam1,x1,y1   ", name1, x1, y1)
-                break
-            elif oriented_line == 1:
-                name2 = data_vertex_id_x_y[i][2]
-                x2 = data_vertex_id_x_y[i][0]
-                y2 = data_vertex_id_x_y[i][1]
-                print("nam2,x2,y2   ", name2, x2, y2)
-                for key in data_id_orient_line_x_y:
-                    if data_id_orient_line_x_y[key][0][0] == x1 and data_id_orient_line_x_y[key][0][1] == y1 and \
-                            data_id_orient_line_x_y[key][1][0] == x2 and data_id_orient_line_x_y[key][1][1] == y2:
-                        del data_id_orient_line_x_y[key]
-                        break
-                    elif data_id_orient_line_x_y[key][0][0] == x2 and data_id_orient_line_x_y[key][0][1] == y2 and \
-                            data_id_orient_line_x_y[key][1][0] == x1 and data_id_orient_line_x_y[key][1][1] == y1:
-                        del data_id_orient_line_x_y[key]
-                        break
-                print("data_id_orient_line_x_y in delete\t", data_id_orient_line_x_y)
-                canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3, arrow=tk.LAST)
-                oriented_line = 0
-                break
+        if is_within_range(mouse_x, mouse_y, data_vertex_id_x_y[i]):
+            handle_oriented_line(i)
+            break
+
+
+def is_within_range(x, y, vertex):
+    vertex_x, vertex_y = vertex[0], vertex[1]
+    return (
+            vertex_x - 15 < x < vertex_x + 15 and
+            vertex_y - 15 < y < vertex_y + 15
+    )
+
+
+def handle_oriented_line(i):
+    global oriented_line, name1, name2, x1, y1, x2, y2
+
+    if oriented_line == 0:
+        name1, x1, y1 = data_vertex_id_x_y[i][2], data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1]
+        oriented_line += 1
+        print("nam1,x1,y1   ", name1, x1, y1)
+    elif oriented_line == 1:
+        name2, x2, y2 = data_vertex_id_x_y[i][2], data_vertex_id_x_y[i][0], data_vertex_id_x_y[i][1]
+        print("nam2,x2,y2   ", name2, x2, y2)
+        delete_oriented_line()
+
+
+def delete_oriented_line():
+    global oriented_line
+
+    for key in data_id_orient_line_x_y:
+        if (
+                (data_id_orient_line_x_y[key][0][0] == x1 and data_id_orient_line_x_y[key][0][1] == y1 and
+                 data_id_orient_line_x_y[key][1][0] == x2 and data_id_orient_line_x_y[key][1][1] == y2) or
+                (data_id_orient_line_x_y[key][0][0] == x2 and data_id_orient_line_x_y[key][0][1] == y2 and
+                 data_id_orient_line_x_y[key][1][0] == x1 and data_id_orient_line_x_y[key][1][1] == y1)
+        ):
+            del data_id_orient_line_x_y[key]
+            break
+    print("data_id_orient_line_x_y in delete\t", data_id_orient_line_x_y)
+    canvas.create_line(*line_intersect_circle(x1, y1, x2, y2), fill="white", width=3, arrow=tk.LAST)
+    oriented_line = 0
 
 
 def draw_weight_line():  # рисование веса
-    canvas.bind_all("<Button-1>", draw_weight_on_click)
+    canvas.bind_all(BUTTON_1, draw_weight_on_click)
 
 
 def draw_weight_on_click(event):
@@ -288,7 +303,7 @@ def draw_weight_on_click(event):
 
 
 def delete_weight_line():  # удаление веса
-    canvas.bind_all("<Button-1>", delete_weight_on_click)
+    canvas.bind_all(BUTTON_1, delete_weight_on_click)
 
 
 def delete_weight_on_click(event):
@@ -354,7 +369,7 @@ def vertex_name(name, root):  # проверка на существование
 
 
 def stop_add_vertex():  # для остановки действия
-    canvas.unbind_all("<Button-1>")
+    canvas.unbind_all(BUTTON_1)
 
 
 def color_vertex(color):  # для изменения цвета вершины
@@ -391,7 +406,7 @@ def change_graf_name(name, root):  # изменение имени графа
 
 
 def delete_vertex():  # удаление вершины
-    canvas.bind_all("<Button-1>", delete_vertex_on_click)
+    canvas.bind_all(BUTTON_1, delete_vertex_on_click)
 
 
 def delete_vertex_on_click(event):
@@ -457,7 +472,7 @@ all_vanish_orline_id = []
 
 
 def move_vertex_and_line():
-    canvas.bind_all("<Button-1>", vanish_vertex_on_click)
+    canvas.bind_all(BUTTON_1, vanish_vertex_on_click)
 
 
 def vanish_vertex_on_click(event):
@@ -500,7 +515,8 @@ def vanish_vertex_on_click(event):
                 print("data_id_orient_line_x_y:\t", data_id_orient_line_x_y)
 
             break
-    canvas.bind_all("<Button-1>", appearance_vertex_on_move)
+
+    canvas.bind_all(BUTTON_1, appearance_vertex_on_move)
 
 
 def appearance_vertex_on_move(event):
@@ -553,7 +569,7 @@ def appearance_vertex_on_move(event):
 
 
 def rename_vertex():  # переименование вершины
-    canvas.bind_all("<Button-1>", rename_vertex_on_click)
+    canvas.bind_all(BUTTON_1, rename_vertex_on_click)
 
 
 def rename_vertex_on_click(event):
