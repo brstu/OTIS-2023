@@ -6,8 +6,20 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from tkinter import filedialog
 import json
 import numpy as np
-addEdge = "Add Edge"
 
+addEdge = "Add Edge"
+GraphInfo = "Graph Info"
+DrawGraph = "Draw Graph"
+Directed = "Directed"
+Undirected = "Undirected"
+RemoveEdge = "Remove Edge"
+EditNodeContent = "Edit Node Content"
+ColorNode = "Color Node"
+ColorEdge = "Color Edge"
+FindPaths = "Find Paths"
+ShortestPath = "Shortest Path"
+CalculateDistance = "Calculate Distance"
+AdvancedGraphInfo = "Advanced Graph Info"
 
 class MDIGraphEditor:
     def __init__(self, master):
@@ -87,10 +99,10 @@ class GraphEditor:
         self.info_draw_frame = tk.Frame(self.master)
         self.info_draw_frame.pack(pady=5)
 
-        self.info_button = tk.Button(self.info_draw_frame, text="Graph Info", command=self.display_graph_info)
+        self.info_button = tk.Button(self.info_draw_frame, text=GraphInfo, command=self.display_graph_info)
         self.info_button.pack(side=tk.LEFT)
 
-        self.draw_graph_button = tk.Button(self.info_draw_frame, text="Draw Graph", command=self.draw_graph)
+        self.draw_graph_button = tk.Button(self.info_draw_frame, text=DrawGraph, command=self.draw_graph)
         self.draw_graph_button.pack(side=tk.LEFT, padx=5)
 
         self.node_label = tk.Label(self.master, text="Node Content:")
@@ -109,31 +121,31 @@ class GraphEditor:
         self.edge_type_var = tk.StringVar()
         self.edge_type_var.set("Directed")
 
-        self.edge_type_menu = tk.OptionMenu(self.master, self.edge_type_var, "Directed", "Undirected")
+        self.edge_type_menu = tk.OptionMenu(self.master, self.edge_type_var, Directed, Undirected)
         self.edge_type_menu.pack(pady=5)
 
         self.add_edge_button = tk.Button(self.master, text=addEdge, command=self.add_edge)
         self.add_edge_button.pack(pady=5)
 
-        self.remove_edge_button = tk.Button(self.master, text="Remove Edge", command=self.remove_edge)
+        self.remove_edge_button = tk.Button(self.master, text=RemoveEdge, command=self.remove_edge)
         self.remove_edge_button.pack(pady=5)
 
-        self.edit_node_button = tk.Button(self.master, text="Edit Node Content", command=self.edit_node_content)
+        self.edit_node_button = tk.Button(self.master, text=EditNodeContent, command=self.edit_node_content)
         self.edit_node_button.pack(pady=5)
 
-        self.color_node_button = tk.Button(self.master, text="Color Node", command=self.color_node)
+        self.color_node_button = tk.Button(self.master, text=ColorNode, command=self.color_node)
         self.color_node_button.pack(pady=5)
 
-        self.color_edge_button = tk.Button(self.master, text="Color Edge", command=self.color_edge)
+        self.color_edge_button = tk.Button(self.master, text=ColorEdge, command=self.color_edge)
         self.color_edge_button.pack(pady=5)
 
-        self.find_paths_button = tk.Button(self.master, text="Find Paths", command=self.show_find_paths_dialog)
+        self.find_paths_button = tk.Button(self.master, text=FindPaths, command=self.show_find_paths_dialog)
         self.find_paths_button.pack(pady=5)
 
-        self.find_shortest_path_button = tk.Button(self.master, text="Shortest Path", command=self.show_find_shortest_path_dialog)
+        self.find_shortest_path_button = tk.Button(self.master, text=ShortestPath, command=self.show_find_shortest_path_dialog)
         self.find_shortest_path_button.pack(pady=5)
 
-        self.calculate_distance_button = tk.Button(self.master, text="Calculate Distance",
+        self.calculate_distance_button = tk.Button(self.master, text=CalculateDistance,
                                                    command=self.calculate_distance_between_nodes)
         self.calculate_distance_button.pack(pady=5)
 
@@ -144,7 +156,7 @@ class GraphEditor:
         self.find_eulerian_cycles_button.pack(pady=5)
 
         # Additional button for displaying advanced graph information
-        self.advanced_info_button = tk.Button(self.info_draw_frame, text="Advanced Graph Info",
+        self.advanced_info_button = tk.Button(self.info_draw_frame, text=AdvancedGraphInfo,
                                               command=self.display_advanced_graph_info)
         self.advanced_info_button.pack(side=tk.LEFT, padx=5)
 
@@ -215,7 +227,7 @@ class GraphEditor:
             degrees = [selected_graph.degree(node) for node in selected_graph.nodes]
 
             # Degree for the selected vertex
-            selected_vertex = simpledialog.askstring("Advanced Graph Info", "Enter the vertex to get degree:")
+            selected_vertex = simpledialog.askstring(AdvancedGraphInfo, "Enter the vertex to get degree:")
             if selected_vertex is not None:
                 if selected_vertex in selected_graph:
                     selected_vertex_degree = selected_graph.degree(selected_vertex)
@@ -239,7 +251,7 @@ class GraphEditor:
             is_eulerian = nx.is_eulerian(selected_graph) if not selected_graph.is_directed() else False
 
             info_window = tk.Toplevel(self.master)
-            info_window.title("Advanced Graph Information")
+            info_window.title("AdvancedGraphInformation")
 
             info_str = (
                 f"Number of Vertices: {num_vertices}\n"
@@ -271,8 +283,8 @@ class GraphEditor:
         if self.current_graph:
             selected_graph = self.graphs[self.current_graph]
 
-            start_node = simpledialog.askstring("Calculate Distance", "Enter the start node:")
-            end_node = simpledialog.askstring("Calculate Distance", "Enter the end node:")
+            start_node = simpledialog.askstring(CalculateDistance, "Enter the start node:")
+            end_node = simpledialog.askstring(CalculateDistance, "Enter the end node:")
 
             if start_node is not None and end_node is not None:
                 try:
@@ -328,16 +340,16 @@ class GraphEditor:
         else:
             tk.messagebox.showinfo("Error", "Please select a valid graph.")
     def show_find_shortest_path_dialog(self):
-        start_node = simpledialog.askstring("Shortest Path", "Enter the start node:")
-        end_node = simpledialog.askstring("Shortest Path", "Enter the end node:")
+        start_node = simpledialog.askstring(ShortestPath, "Enter the start node:")
+        end_node = simpledialog.askstring(ShortestPath, "Enter the end node:")
         if start_node and end_node:
             self.find_shortest_path(start_node, end_node)
         else:
             tk.messagebox.showinfo("Error", "Please enter valid start and end nodes.")
 
     def show_find_paths_dialog(self):
-        start_node = simpledialog.askstring("Find Paths", "Enter the start node:")
-        end_node = simpledialog.askstring("Find Paths", "Enter the end node:")
+        start_node = simpledialog.askstring(FindPaths, "Enter the start node:")
+        end_node = simpledialog.askstring(FindPaths, "Enter the end node:")
         if start_node and end_node:
             self.find_all_paths(start_node, end_node)
         else:
@@ -356,7 +368,7 @@ class GraphEditor:
             selected_graph = self.graphs[self.current_graph]
             shortest_path = nx.shortest_path(selected_graph, source=start_node, target=end_node)
             shortest_distance = nx.shortest_path_length(selected_graph, source=start_node, target=end_node)
-            tk.messagebox.showinfo("Shortest Path", f"Shortest path from {start_node} to {end_node}:\n{shortest_path}\n"
+            tk.messagebox.showinfo(ShortestPath, f"Shortest path from {start_node} to {end_node}:\n{shortest_path}\n"
                                                     f"Shortest distance: {shortest_distance}")
         else:
             tk.messagebox.showinfo("Error", "Please select a valid graph.")
@@ -608,8 +620,8 @@ class GraphEditor:
 
     def remove_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring("Remove Edge", "Enter the start node:")
-            end_node = simpledialog.askstring("Remove Edge", "Enter the end node:")
+            start_node = simpledialog.askstring(RemoveEdge, "Enter the start node:")
+            end_node = simpledialog.askstring(RemoveEdge, "Enter the end node:")
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 self.graphs[self.current_graph].remove_edge(start_node, end_node)
                 self.graphs[self.current_graph].remove_edge(end_node,
@@ -623,7 +635,7 @@ class GraphEditor:
     def edit_node_content(self):
         if self.current_graph:
             old_content = self.node_content.get()
-            new_content = simpledialog.askstring("Edit Node Content", f"Enter new content for node '{old_content}':")
+            new_content = simpledialog.askstring(EditNodeContent, f"Enter new content for node '{old_content}':")
             if new_content is not None:
                 if old_content in self.graphs[self.current_graph]:
                     self.graphs[self.current_graph].remove_node(old_content)
@@ -636,7 +648,7 @@ class GraphEditor:
 
     def color_node(self):
         if self.current_graph:
-            node_content = simpledialog.askstring("Color Node", "Enter the node to color:")
+            node_content = simpledialog.askstring(ColorNode, "Enter the node to color:")
             if node_content in self.graphs[self.current_graph]:
                 color = colorchooser.askcolor()[1]
                 self.graphs[self.current_graph].nodes[node_content]['color'] = color
@@ -647,8 +659,8 @@ class GraphEditor:
 
     def color_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring("Color Edge", "Enter the start node:")
-            end_node = simpledialog.askstring("Color Edge", "Enter the end node:")
+            start_node = simpledialog.askstring(ColorEdge, "Enter the start node:")
+            end_node = simpledialog.askstring(ColorEdge, "Enter the end node:")
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 color = colorchooser.askcolor()[1]
                 self.graphs[self.current_graph].edges[start_node, end_node]['color'] = color
