@@ -20,7 +20,11 @@ FindPaths = "Find Paths"
 ShortestPath = "Shortest Path"
 CalculateDistance = "Calculate Distance"
 AdvancedGraphInfo = "Advanced Graph Info"
-
+Pleaseselectavalidgraph = "Please select a valid graph."
+GraphName = "Graph Name"
+Graphwiththisnamealreadyexists = "Graph with this name already exists."
+Enterthestartnode = "Enter the start node:"
+Pleaseentervalidstartandendnodes = "Please enter valid start and end nodes."
 class MDIGraphEditor:
     def __init__(self, master):
         self.master = master
@@ -173,13 +177,13 @@ class GraphEditor:
                 json.dump(graph_data, file)
             tk.messagebox.showinfo("Export Successful", "Graph exported successfully.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def import_graph(self, file_path):
         try:
             with open(file_path, 'r') as file:
                 graph_data = json.load(file)
-                graph_name = simpledialog.askstring("Graph Name", "Enter a name for the loaded graph:")
+                graph_name = simpledialog.askstring(GraphName, "Enter a name for the loaded graph:")
 
                 if graph_name:
                     if graph_name not in self.graphs:
@@ -190,7 +194,7 @@ class GraphEditor:
                         self.graph_dropdown.set(graph_name)
                         self.draw_graph()
                     else:
-                        tk.messagebox.showinfo("Error", "Graph with this name already exists.")
+                        tk.messagebox.showinfo("Error", Graphwiththisnamealreadyexists)
         except Exception as e:
             tk.messagebox.showinfo("Error", f"Error during graph import: {e}")
 
@@ -200,7 +204,7 @@ class GraphEditor:
             if file_path:
                 self.export_graph(file_path)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def show_import_dialog(self):
         file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
@@ -269,7 +273,7 @@ class GraphEditor:
             info_label = tk.Label(info_window, text=info_str, justify=tk.LEFT)
             info_label.pack(padx=10, pady=10)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def is_complete(self, graph):
         if graph.is_directed():
@@ -283,7 +287,7 @@ class GraphEditor:
         if self.current_graph:
             selected_graph = self.graphs[self.current_graph]
 
-            start_node = simpledialog.askstring(CalculateDistance, "Enter the start node:")
+            start_node = simpledialog.askstring(CalculateDistance, Enterthestartnode)
             end_node = simpledialog.askstring(CalculateDistance, "Enter the end node:")
 
             if start_node is not None and end_node is not None:
@@ -293,9 +297,9 @@ class GraphEditor:
                 except nx.NetworkXNoPath:
                     tk.messagebox.showinfo("Error", "No path found between the specified nodes.")
             else:
-                tk.messagebox.showinfo("Error", "Please enter valid start and end nodes.")
+                tk.messagebox.showinfo("Error", Pleaseentervalidstartandendnodes)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def create_distance_button(self):
                 self.calculate_distance_button = tk.Button(self.master, text="Calculate Distance Between Nodes",
@@ -338,22 +342,22 @@ class GraphEditor:
 
             tk.messagebox.showinfo("Graph Metrics", f"Diameter: {diameter}\nRadius: {radius}\nCenter: {center}")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
     def show_find_shortest_path_dialog(self):
-        start_node = simpledialog.askstring(ShortestPath, "Enter the start node:")
+        start_node = simpledialog.askstring(ShortestPath, Enterthestartnode)
         end_node = simpledialog.askstring(ShortestPath, "Enter the end node:")
         if start_node and end_node:
             self.find_shortest_path(start_node, end_node)
         else:
-            tk.messagebox.showinfo("Error", "Please enter valid start and end nodes.")
+            tk.messagebox.showinfo("Error", Pleaseentervalidstartandendnodes)
 
     def show_find_paths_dialog(self):
-        start_node = simpledialog.askstring(FindPaths, "Enter the start node:")
+        start_node = simpledialog.askstring(FindPaths, Enterthestartnode)
         end_node = simpledialog.askstring(FindPaths, "Enter the end node:")
         if start_node and end_node:
             self.find_all_paths(start_node, end_node)
         else:
-            tk.messagebox.showinfo("Error", "Please enter valid start and end nodes.")
+            tk.messagebox.showinfo("Error", Pleaseentervalidstartandendnodes)
 
     def find_all_paths(self, start_node, end_node):
         if self.current_graph:
@@ -361,7 +365,7 @@ class GraphEditor:
             all_paths = list(nx.all_simple_paths(selected_graph, source=start_node, target=end_node))
             tk.messagebox.showinfo("All Paths", f"All paths from {start_node} to {end_node}:\n{all_paths}")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def find_shortest_path(self, start_node, end_node):
         if self.current_graph:
@@ -371,7 +375,7 @@ class GraphEditor:
             tk.messagebox.showinfo(ShortestPath, f"Shortest path from {start_node} to {end_node}:\n{shortest_path}\n"
                                                     f"Shortest distance: {shortest_distance}")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def calculate_diameter_radius_center(self):
         if self.current_graph:
@@ -381,7 +385,7 @@ class GraphEditor:
             center = nx.center(selected_graph)
             tk.messagebox.showinfo("Graph Metrics", f"Diameter: {diameter}\nRadius: {radius}\nCenter: {center}")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def find_eulerian_cycles(self):
         if self.current_graph:
@@ -392,9 +396,9 @@ class GraphEditor:
             except nx.NetworkXError:
                 tk.messagebox.showinfo("Error", "Graph does not have an Eulerian circuit.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
     def create_graph(self):
-        graph_name = simpledialog.askstring("Graph Name", "Enter a name for the graph:")
+        graph_name = simpledialog.askstring(GraphName, "Enter a name for the graph:")
         if graph_name:
             if graph_name not in self.graphs:
                 self.graphs[graph_name] = nx.DiGraph()  # Use DiGraph for a directed graph
@@ -402,11 +406,11 @@ class GraphEditor:
                 self.graph_dropdown['values'] = list(self.graphs.keys())
                 self.graph_dropdown.set(graph_name)
             else:
-                tk.messagebox.showinfo("Error", "Graph with this name already exists.")
+                tk.messagebox.showinfo("Error", Graphwiththisnamealreadyexists)
 
     def set_graph_name(self):
         if self.current_graph:
-            new_name = simpledialog.askstring("Graph Name", "Enter a new name for the graph:")
+            new_name = simpledialog.askstring(GraphName, "Enter a new name for the graph:")
             if new_name:
                 if new_name not in self.graphs:
                     self.graphs[new_name] = self.graphs.pop(self.current_graph)
@@ -414,9 +418,9 @@ class GraphEditor:
                     self.graph_dropdown['values'] = list(self.graphs.keys())
                     self.graph_dropdown.set(new_name)
                 else:
-                    tk.messagebox.showinfo("Error", "Graph with this name already exists.")
+                    tk.messagebox.showinfo("Error", Graphwiththisnamealreadyexists)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def save_graph(self):
         if self.current_graph:
@@ -425,7 +429,7 @@ class GraphEditor:
                 with open(file_path, 'w') as file:
                     json.dump(nx.node_link_data(self.graphs[self.current_graph]), file)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def load_graph(self):
         file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
@@ -433,7 +437,7 @@ class GraphEditor:
             with open(file_path, 'r') as file:
                 data = json.load(file)
                 new_graph = nx.node_link_graph(data)
-                graph_name = simpledialog.askstring("Graph Name", "Enter a name for the loaded graph:")
+                graph_name = simpledialog.askstring(GraphName, "Enter a name for the loaded graph:")
                 if graph_name:
                     if graph_name not in self.graphs:
                         self.graphs[graph_name] = new_graph
@@ -441,7 +445,7 @@ class GraphEditor:
                         self.graph_dropdown['values'] = list(self.graphs.keys())
                         self.graph_dropdown.set(graph_name)
                     else:
-                        tk.messagebox.showinfo("Error", "Graph with this name already exists.")
+                        tk.messagebox.showinfo("Error", Graphwiththisnamealreadyexists)
 
     def display_graph_info(self):
         if self.current_graph:
@@ -453,7 +457,7 @@ class GraphEditor:
             info_str = f"Graph Info:\nNumber of Nodes: {num_nodes}\nNumber of Edges: {num_edges}\nDegrees: {degrees}"
             tk.messagebox.showinfo("Graph Info", info_str)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def draw_directed_graph(self):
         if self.current_graph:
@@ -487,7 +491,7 @@ class GraphEditor:
             toolbar.update()
             canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def draw_undirected_graph(self):
         if self.current_graph:
@@ -518,7 +522,7 @@ class GraphEditor:
             toolbar.update()
             canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
 
     def draw_combined_graph(self):
@@ -563,7 +567,7 @@ class GraphEditor:
             toolbar.update()
             canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def draw_graph(self):
         if self.current_graph:
@@ -575,7 +579,7 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", "Invalid edge type. Please select 'Directed' or 'Undirected'.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def add_node(self):
         if self.current_graph:
@@ -583,7 +587,7 @@ class GraphEditor:
             self.graphs[self.current_graph].add_node(node_content)
             tk.messagebox.showinfo("Node Added", f"Node '{node_content}' added to the graph.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def remove_node(self):
         if self.current_graph:
@@ -594,11 +598,11 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", f"Node '{node_content}' not found in the graph.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def add_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring(addEdge, "Enter the start node:")
+            start_node = simpledialog.askstring(addEdge, Enterthestartnode)
             end_node = simpledialog.askstring(addEdge, "Enter the end node:")
 
             # Запрос на ввод веса
@@ -616,11 +620,11 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", "Invalid edge type. Please select 'Directed' or 'Undirected'.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def remove_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring(RemoveEdge, "Enter the start node:")
+            start_node = simpledialog.askstring(RemoveEdge, Enterthestartnode)
             end_node = simpledialog.askstring(RemoveEdge, "Enter the end node:")
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 self.graphs[self.current_graph].remove_edge(start_node, end_node)
@@ -630,7 +634,7 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", f"Edge not found between nodes '{start_node}' and '{end_node}'.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def edit_node_content(self):
         if self.current_graph:
@@ -644,7 +648,7 @@ class GraphEditor:
                 else:
                     tk.messagebox.showinfo("Error", f"Node '{old_content}' not found in the graph.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def color_node(self):
         if self.current_graph:
@@ -655,11 +659,11 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", f"Node '{node_content}' not found in the graph.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
     def color_edge(self):
         if self.current_graph:
-            start_node = simpledialog.askstring(ColorEdge, "Enter the start node:")
+            start_node = simpledialog.askstring(ColorEdge, Enterthestartnode)
             end_node = simpledialog.askstring(ColorEdge, "Enter the end node:")
             if (start_node, end_node) in self.graphs[self.current_graph].edges:
                 color = colorchooser.askcolor()[1]
@@ -667,7 +671,7 @@ class GraphEditor:
             else:
                 tk.messagebox.showinfo("Error", f"Edge not found between nodes '{start_node}' and '{end_node}'.")
         else:
-            tk.messagebox.showinfo("Error", "Please select a valid graph.")
+            tk.messagebox.showinfo("Error", Pleaseselectavalidgraph)
 
 
 if __name__ == "__main__":
