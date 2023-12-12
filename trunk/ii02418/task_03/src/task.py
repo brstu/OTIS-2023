@@ -190,13 +190,13 @@ def move_node(event):
 
 
 def change_name_or_weight(event):
-    x, y = event.x, event.y
+    x_, y_ = event.x, event.y
     for edge in edges:
         print(2)
-        legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 +
-                                                                              (y - edge.node2.y)**2)
-        gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-        if legs_sum <= gipotenusa:
+        legs_of_sum = sqrt((x_ - edge.node1.x)**2 + (y_ - edge.node1.y)**2) + sqrt((x_ - edge.node2.x)**2 +
+                                                                                     (y_ - edge.node2.y)**2)
+        gipotenuza = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
+        if legs_of_sum <= gipotenuza:
             edge.change()
             break
     else:
@@ -207,17 +207,17 @@ def change_name_or_weight(event):
 
 
 def change_color(event):
-    x, y = event.x, event.y
+    x_, y_ = event.x, event.y
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
             node.change_color(askcolor()[1])
             break
     else:
         for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) +\
-                       sqrt((x - edge.node2.x)**2 + (y - edge.node2.y)**2)
+            legs_of_sum = sqrt((x_ - edge.node1.x)**2 + (y_ - edge.node1.y)**2) +\
+                       sqrt((x_ - edge.node2.x)**2 + (y_ - edge.node2.y)**2)
             gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-            if legs_sum <= gipotenusa:
+            if legs_of_sum <= gipotenusa:
                 edge.change_color(askcolor()[1])
                 break
 
@@ -233,10 +233,10 @@ def delete(event):
     else:
         for edge in edges:
             print(2)
-            legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 +
+            legs_of_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 +
                                                                                   (y - edge.node2.y)**2)
             gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
-            if legs_sum <= gipotenusa:
+            if legs_of_sum <= gipotenusa:
                 edge.delete()
                 edges.remove(edge)
                 break
