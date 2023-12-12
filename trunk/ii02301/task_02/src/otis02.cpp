@@ -14,7 +14,6 @@ const double c = 0.4;
 const double d = 0.4;
 
 void nelineyn(double znach) {
-    int t1 = 100;
     double q0 = k * (1 + td / t0);
     double q1 = -k * (1 + 2 * td / t0 - t0 / t);
     double q2 = k * td / t0;
