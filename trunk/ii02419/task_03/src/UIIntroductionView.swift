@@ -55,7 +55,7 @@ class UIIntroductionView: UIView {
     }
     // удаление ребра
     func deleteEdge(edge: [Int]) {
-        var edges = [edge[0] - 1, edge[1] - 1]
+        let edges = [edge[0] - 1, edge[1] - 1]
 
         guard allPeaks.contains(edges[0]) && allPeaks.contains(edges[1]) else {
             return
@@ -66,22 +66,20 @@ class UIIntroductionView: UIView {
                 allPeaks.remove(at: index - 1...index)
                 break
             } else if element == edges[0] {
-                if allPeaks.indices.contains(index + 1) {
-                    let nextElement = allPeaks[index + 1]
-
-                    if nextElement == edges[1] {
-                        allPeaks.remove(at: index...index + 1)
-                        break
-                    } else if allPeaks[index - 1] == edges[1] {
-                        allPeaks.remove(at: index - 1...index)
-                        break
-                    }
-                } else if allPeaks[index - 1] == edges[1] {
-                    allPeaks.remove(at: index - 1...index)
+                if let nextIndex = allPeaks.indices.dropFirst(index).first,
+                   allPeaks[nextIndex] == edges[1] || allPeaks[index - 1] == edges[1] {
+                    allPeaks.remove(at: index - 1...index + 1)
                     break
                 }
+            } else if allPeaks[index - 1] == edges[1] {
+                allPeaks.remove(at: index - 1...index)
+                break
             }
         }
+    }
+
+    
+    
 
         setNeedsDisplay()
     }
