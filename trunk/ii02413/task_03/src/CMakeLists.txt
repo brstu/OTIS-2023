@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.25)
+project(src)
 
-project(OTIS_03333333333333333333)
-#xerytcvghbhnfjrcbdsj hfhewh;iihfudcviewkbhfui
-set(SOURCES main2.cpp)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MExecutable ${SOURCES})
+add_executable(ii02413_task1 main2.cpp)
