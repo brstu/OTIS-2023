@@ -1,6 +1,7 @@
 ﻿#include <iostream>
+using namespace std;
 
 int main() {
-    std::system("python main.py");
+    system("python main.py");
     return 0;
 }
