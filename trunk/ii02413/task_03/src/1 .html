@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример графа без D3.js</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        #graphContainer {
+            display: flex;
+        }
+
+        canvas {
+            flex: 1;
+            display: block;
+        }
+
+        #interface {
+            width: 150px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="graphContainer">
+        <canvas id="graphCanvas"></canvas>
+        <div id="interface">
+            <h2>Управление</h2>
+            <button onclick="addNode()">+ Узел</button>
+            <button onclick="addEdge()">+ Связь</button>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById("graphCanvas");
+        const ctx = canvas.getContext("2d");
+
+        class Node {
+            constructor(x, y, label) {
+                this.x = x;
+                this.y = y;
+                this.radius = 15;
+                this.label = label || "Node";
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = "#009688"; // Цвет узла
+                ctx.fill();
+                ctx.strokeStyle = "#004D40"; // Цвет обводки узла
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = "#000";
+                ctx.font = "bold 12px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(this.label, this.x, this.y);
+            }
+        }
+
+        class Edge {
+            constructor(node1, node2) {
+                this.node1 = node1;
+                this.node2 = node2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.node1.x, this.node1.y);
+                ctx.lineTo(this.node2.x, this.node2.y);
+                ctx.strokeStyle = "#004D40"; // Цвет связи
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = 0.7; // Прозрачность связи
+                ctx.stroke();
+                ctx.globalAlpha = 1; // Сброс прозрачности
+            }
+        }
+
+        const nodes = [];
+        const edges = [];
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            edges.forEach(edge => edge.draw());
+            nodes.forEach(node => node.draw());
+
+            requestAnimationFrame(drawGraph);
+        }
+
+        function addNode() {
+            const label = prompt("Введите название узла:");
+            if (!label) return;
+
+            const newNode = new Node(Math.random() * canvas.width, Math.random() * canvas.height, label);
+            nodes.push(newNode);
+        }
+
+        function addEdge() {
+            if (nodes.length < 2) {
+                alert("Необходимо создать как минимум два узла перед добавлением связи.");
+                return;
+            }
+
+            const randomNode1 = nodes[Math.floor(Math.random() * nodes.length)];
+            let randomNode2 = randomNode1;
+
+            while (randomNode2 === randomNode1) {
+                randomNode2 = nodes[Math.floor(Math.random() * nodes.length)];
+            }
+
+            const newEdge = new Edge(randomNode1, randomNode2);
+            edges.push(newEdge);
+        }
+
+        drawGraph();
+    </script>
+</body>
+</html>
