@@ -62,7 +62,7 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
     if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
-        mainWindow->updateEdges();
+        mainWindow->uE();
     }
     update();
 }

@@ -18,66 +18,66 @@
 #include "vertex.h"
 #include "algoritm.h"
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), u(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
+    u->setupUi(this);
+    s = new QGraphicsScene(this);
+    u->graphicsView->setScene(s);
 }
 MainWindow::~MainWindow()
 {
     QFile::remove("graph.txt");
-    delete ui;
+    delete u;
 }
-void MainWindow::updateEdges()
+void MainWindow::uE()
 {
-    foreach (Edge* edge, edges) {
+    foreach (Edge* edge, e) {
         edge->adjust();
         edge->update();
     }
 }
 
-void MainWindow::on_removeVertexButton_clicked()
+void MainWindow::on_rVB()
 {
-    if (vertices.isEmpty()) {
+    if (v.isEmpty()) {
         return;
     }
 
     QDialog dialog;
     QFormLayout form(&dialog);
     QLineEdit vertexIndexLineEdit;
-    vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vertices.length() - 1) + ")");
+    vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(v.length() - 1) + ")");
     form.addRow("Индекс вершины", &vertexIndexLineEdit);
     QPushButton removeButton("Удалить вершину");
     form.addRow(&removeButton);
 
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
-        if (vertexIndex >= 0 && vertexIndex < vertices.length()) {
-            Vertex* vertex = vertices.at(vertexIndex);
+        if (vertexIndex >= 0 && vertexIndex < v.length()) {
+            Vertex* vertex = v.at(vertexIndex);
 
             // Удаление связанных ребер
-            for (int i = edges.length() - 1; i >= 0; --i) {
-                Edge* edge = edges.at(i);
+            for (int i = e.length() - 1; i >= 0; --i) {
+                Edge* edge = e.at(i);
                 if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
-                    scene->removeItem(edge);
-                    edges.removeAt(i);
+                    s->removeItem(edge);
+                    e.removeAt(i);
                     delete edge;
                 }
             }
 
 
-            scene->removeItem(vertex);
-            vertices.removeOne(vertex);
+            s->removeItem(vertex);
+            v.removeOne(vertex);
             delete vertex;
 
             // Обновление файла без удаленной вершины и связанных ребер
             QFile file("graph.txt");
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 QTextStream out(&file);
-                for (const Edge* edge : edges) {
-                    int sourceIndex = vertices.indexOf(edge->getSourceVertex());
-                    int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
+                for (const Edge* edge : e) {
+                    int sourceIndex = v.indexOf(edge->getSourceVertex());
+                    int destinationIndex = v.indexOf(edge->getDestinationVertex());
                     out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
                 }
                 file.close();
@@ -89,24 +89,24 @@ void MainWindow::on_removeVertexButton_clicked()
     dialog.exec();
 }
 
-void MainWindow::updateVertices()
+void MainWindow::uV()
 {
-    for (Vertex* vertex : vertices) {
+    for (Vertex* vertex : v) {
         vertex->update();
     }
 }
 
 
-void MainWindow::on_changeVertexButton_clicked()
+void MainWindow::on_cVB()
 {
-    if (vertices.isEmpty()) {
+    if (v.isEmpty()) {
         return;
     }
 
     QDialog dialog;
     QFormLayout form(&dialog);
     QLineEdit vertexIndexLineEdit;
-    vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vertices.length() - 1) + ")");
+    vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(v.length() - 1) + ")");
     QLineEdit vertexNameLineEdit;
     vertexNameLineEdit.setPlaceholderText("Новое название вершины");
     form.addRow("Индекс вершины", &vertexIndexLineEdit);
@@ -117,13 +117,13 @@ void MainWindow::on_changeVertexButton_clicked()
     connect(&buttonBox, &QDialogButtonBox::accepted, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
         QString newName = vertexNameLineEdit.text();
-        if (vertexIndex >= 0 && vertexIndex < vertices.length()) {
-            Vertex* vertex = vertices.at(vertexIndex);
+        if (vertexIndex >= 0 && vertexIndex < v.length()) {
+            Vertex* vertex = v.at(vertexIndex);
             vertex->setNameVertex(newName);
             QColor color = QColorDialog::getColor();
             vertex->setColorVertex(color);
             vertex->update();
-            updateVertices();
+            uV();
         }
         dialog.close();
     });
@@ -135,28 +135,28 @@ void MainWindow::on_changeVertexButton_clicked()
     dialog.exec();
 
 }
-bool MainWindow::isGraphConnected()
+bool MainWindow::iGC()
 {
 
-    if (vertices.isEmpty()) {
+    if (v.isEmpty()) {
         return false;
     }
 
 
-    QVector<bool> visited(vertices.length(), false); // Массив для отслеживания посещенных вершин
+    QVector<bool> visited(v.length(), false); // Массив для отслеживания посещенных вершин
     QStack<Vertex*> stack;
-    stack.push(vertices[0]);
+    stack.push(v[0]);
 
     while (!stack.isEmpty()) {
         Vertex* current = stack.pop();
-        int currentIdx = vertices.indexOf(current);
+        int currentIdx = v.indexOf(current);
         visited[currentIdx] = true;
 
         // Перебираем ребра, инцидентные текущей вершине
-        foreach (Edge* edge, edges) {
+        foreach (Edge* edge, e) {
             if (edge->getSourceVertex() == current || edge->getDestinationVertex() == current) {
                 Vertex* adjacent = (edge->getSourceVertex() == current) ? edge->getDestinationVertex() : edge->getSourceVertex();
-                int adjacentIdx = vertices.indexOf(adjacent);
+                int adjacentIdx = v.indexOf(adjacent);
                 if (!visited[adjacentIdx]) {
                     stack.push(adjacent);
                 }
@@ -173,13 +173,13 @@ bool MainWindow::isGraphConnected()
 
     return true; // Все вершины достижимы, граф связный
 }
-QString MainWindow::getEulerCycle() {
+QString MainWindow::gEC() {
 
     QString eulerCycle;
-    Graph g(vertices.length());
-    for (Edge* edge : edges) {
-        int src = vertices.indexOf(edge->getSourceVertex());
-        int dest = vertices.indexOf(edge->getDestinationVertex());
+    Graph g(v.length());
+    for (Edge* edge : e) {
+        int src = v.indexOf(edge->getSourceVertex());
+        int dest = v.indexOf(edge->getDestinationVertex());
         g.addEdge(src, dest);
     }
     vector<int> eulerPath;
@@ -189,25 +189,25 @@ QString MainWindow::getEulerCycle() {
     }
     return eulerCycle;
 }
-int MainWindow::getVertexIndex(const QString& vertexName) const {
-    for (int i = 0; i < vertices.length(); i++) {
-        if (vertices[i]->getNameVertex() == vertexName) {
+int MainWindow::gV(const QString& vertexName) const {
+    for (int i = 0; i < v.length(); i++) {
+        if (v[i]->getNameVertex() == vertexName) {
             return i;
         }
     }
     return -1; // Вершина не найдена
 }
-bool MainWindow::complGraph(){
-    int numVertices = vertices.length();
-    int numEdges = edges.length();
+bool MainWindow::cG(){
+    int numVertices = v.length();
+    int numEdges = e.length();
     if(numVertices*(numVertices-1)/2 != numEdges){return false;}else{return true;}
 }
 
-void MainWindow::showGraphInfo()
+void MainWindow::sGI()
 {
     // Количество вершин и ребер
-    int numVertices = vertices.length();
-    int numEdges = edges.length();
+    int numVertices = v.length();
+    int numEdges = e.length();
 
     // Строка с информацией о количестве вершин и ребер
     QString infoText = QString("Количество вершин: %1\nКоличество ребер: %2\n\n").arg(numVertices).arg(numEdges);
@@ -216,9 +216,9 @@ void MainWindow::showGraphInfo()
 QString degreesText = "Степени вершин:\n";
     bool eulertrue = true;
     bool treetrue = true;
-    foreach (Vertex* vertex, vertices) {
+    foreach (Vertex* vertex, v) {
         int degree = 0;
-        foreach (Edge* edge, edges) {
+        foreach (Edge* edge, e) {
             if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
                 degree++;
             }
@@ -232,7 +232,7 @@ QString degreesText = "Степени вершин:\n";
     QString incidenceMatrixText = "Матрица инцидентности:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numEdges; j++) {
-            if (edges[j]->getSourceVertex() == vertices[i] || edges[j]->getDestinationVertex() == vertices[i]) {
+            if (e[j]->getSourceVertex() == v[i] || e[j]->getDestinationVertex() == v[i]) {
                 incidenceMatrixText += "1 ";
             } else {
                 incidenceMatrixText += "0 ";
@@ -246,9 +246,9 @@ QString degreesText = "Степени вершин:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numVertices; j++) {
             bool isAdjacent = false;
-            foreach (Edge* edge, edges) {
-                if ((edge->getSourceVertex() == vertices[i] && edge->getDestinationVertex() == vertices[j]) ||
-                    (edge->getSourceVertex() == vertices[j] && edge->getDestinationVertex() == vertices[i])) {
+            foreach (Edge* edge, e) {
+                if ((edge->getSourceVertex() == v[i] && edge->getDestinationVertex() == v[j]) ||
+                    (edge->getSourceVertex() == v[j] && edge->getDestinationVertex() == v[i])) {
                     isAdjacent = true;
                     break;
                 }
@@ -262,8 +262,8 @@ QString degreesText = "Степени вершин:\n";
         adjacencyMatrixText += "\n";
     }
     QString eulerCycleText;
-    if (eulertrue && isGraphConnected()) {
-        eulerCycleText = getEulerCycle();
+    if (eulertrue && iGC()) {
+        eulerCycleText = gEC();
     } else {
         eulerCycleText = "Эйлеровый цикл не существует.";
     }
@@ -271,9 +271,9 @@ QString degreesText = "Степени вершин:\n";
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
     for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = getVertexIndex(edges[i]->getSourceVertex()->getNameVertex());
-        int destinationIndex = getVertexIndex(edges[i]->getDestinationVertex()->getNameVertex());
-        int weight = edges[i]->getWeightEdge();
+        int sourceIndex = gV(e[i]->getSourceVertex()->getNameVertex());
+        int destinationIndex = gV(e[i]->getDestinationVertex()->getNameVertex());
+        int weight = e[i]->getWeightEdge();
 
         distances[sourceIndex][destinationIndex] = weight;
         distances[destinationIndex][sourceIndex] = weight;
@@ -297,17 +297,17 @@ QString degreesText = "Степени вершин:\n";
         }
     }
     QString completeGraph;
-    if(complGraph()){completeGraph = "Граф является полным";}
+    if(cG()){completeGraph = "Граф является полным";}
     else {completeGraph = "Граф не является полным";};
     QString connected;
-    if(isGraphConnected()){
+    if(iGC()){
         connected = "Граф является связным";
     } else {
             connected = "Граф не является связным";
     };
     // Формирование окна с информацией о графе
     QString tree;
-    if(isGraphConnected() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
+    if(iGC() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
     QVBoxLayout layout(&dialog);
     QLabel infoLabel(infoText);
@@ -330,18 +330,18 @@ QString degreesText = "Степени вершин:\n";
     layout.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
-void MainWindow::on_addInformationButton_clicked()
+void MainWindow::on_aIB()
 {
-    showGraphInfo();
+    sGI();
 }
 
-void MainWindow::on_addClearsceneButton_clicked()
+void MainWindow::on_aCB()
 {
-    scene->clear();
-    vertices.clear();
-    edges.clear();
+    s->clear();
+    v.clear();
+    e.clear();
 }
-void MainWindow::exportToTextFile(const QString& fileName)
+void MainWindow::eTTF(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -355,25 +355,25 @@ void MainWindow::exportToTextFile(const QString& fileName)
 
     QTextStream out(&file);
 
-    for (int i = 0; i < vertices.length(); ++i)
+    for (int i = 0; i < v.length(); ++i)
     {
-            Vertex* vertex = vertices[i];
+            Vertex* vertex = v[i];
             out << "Vertex;" << vertex->getNameVertex() << ";" << vertex->getColorVertex().name() << ";"
                 << vertex->scenePos().x() << ";" << vertex->scenePos().y() << "\n";
     }
 
 
-    for (int i = 0; i < edges.length(); ++i)
+    for (int i = 0; i < e.length(); ++i)
     {
-            Edge* edge = edges[i];
-            out << "Edge;" << vertices.indexOf(edge->getSourceVertex()) << ";" << vertices.indexOf(edge->getDestinationVertex()) << ";"
+            Edge* edge = e[i];
+            out << "Edge;" << v.indexOf(edge->getSourceVertex()) << ";" << v.indexOf(edge->getDestinationVertex()) << ";"
                 << edge->getWeightEdge() << ";" << edge->getColorEdge().name() << "\n";
     }
 
     file.close();
 }
 // Функция импорта данных из текстового файла в сцену
-void MainWindow::importFromTextFile(const QString& fileName)
+void MainWindow::iFTF(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -385,9 +385,9 @@ void MainWindow::importFromTextFile(const QString& fileName)
     }
 
 
-    scene->clear();
-    vertices.clear();
-    edges.clear();
+    s->clear();
+    v.clear();
+    e.clear();
 
 
     QTextStream in(&file);
@@ -405,8 +405,8 @@ void MainWindow::importFromTextFile(const QString& fileName)
 
             Vertex* vertex = new Vertex(name, color);
             vertex->setPos(x, y);
-            vertices.append(vertex);
-            scene->addItem(vertex);
+            v.append(vertex);
+            s->addItem(vertex);
             }
             else if (parts[0] == "Edge")
             {
@@ -415,26 +415,26 @@ void MainWindow::importFromTextFile(const QString& fileName)
             double weight = parts[3].toDouble();
             QColor color(parts[4]);
 
-            if (sourceVertexIndex >= 0 && sourceVertexIndex < vertices.length() &&
-                destVertexIndex >= 0 && destVertexIndex < vertices.length())
+            if (sourceVertexIndex >= 0 && sourceVertexIndex < v.length() &&
+                destVertexIndex >= 0 && destVertexIndex < v.length())
             {
-                Vertex* sourceVertex = vertices[sourceVertexIndex];
-                Vertex* destVertex = vertices[destVertexIndex];
+                Vertex* sourceVertex = v[sourceVertexIndex];
+                Vertex* destVertex = v[destVertexIndex];
                 Edge* edge = new Edge(sourceVertex, destVertex, weight, color);
-                edges.append(edge);
-                scene->addItem(edge);
+                e.append(edge);
+                s->addItem(edge);
             }
             }
     }
     file.close();
-    scene->update();
+    s->update();
 }
 void MainWindow::on_export_2_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Экспорт в файл");
     if (!fileName.isEmpty())
     {
-            exportToTextFile(fileName);
+            eTTF(fileName);
     }
 }
 
@@ -443,7 +443,7 @@ void MainWindow::on_import_2_clicked()
     QString fileName = QFileDialog::getOpenFileName(this, "Импорт из файла");
     if (!fileName.isEmpty())
     {
-            importFromTextFile(fileName);
+            iFTF(fileName);
     }
 }
 
@@ -452,19 +452,19 @@ void MainWindow::addVertex(const QString& name, const QColor& color, double x, d
 {
     Vertex* vertex = new Vertex(name, color);
     vertex->setPos(x, y);
-    scene->addItem(vertex);
-    vertices.append(vertex);
+    s->addItem(vertex);
+    v.append(vertex);
 }
 
 void MainWindow::addEdge(double weight, int sourceIndex, int destinationIndex)
 {
-    if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length())
+    if (sourceIndex >= 0 && sourceIndex < v.length() && destinationIndex >= 0 && destinationIndex < v.length())
     {
-        Vertex* sourceVertex = vertices.at(sourceIndex);
-        Vertex* destinationVertex = vertices.at(destinationIndex);
+        Vertex* sourceVertex = v.at(sourceIndex);
+        Vertex* destinationVertex = v.at(destinationIndex);
         Edge* edge = new Edge(sourceVertex, destinationVertex, weight, QColorDialog::getColor());
-        scene->addItem(edge);
-        edges.append(edge);
+        s->addItem(edge);
+        e.append(edge);
 
         QFile file("graph.txt");
         if (file.open(QIODevice::Append | QIODevice::Text))
@@ -481,11 +481,11 @@ void MainWindow::addEdge(double weight, int sourceIndex, int destinationIndex)
 
 void MainWindow::removeEdge(Vertex* sourceVertex, Vertex* destinationVertex)
 {
-    for (int i = 0; i < edges.length(); i++) {
-        Edge* edge = edges.at(i);
+    for (int i = 0; i < e.length(); i++) {
+        Edge* edge = e.at(i);
         if (edge->getSourceVertex() == sourceVertex && edge->getDestinationVertex() == destinationVertex) {
-            scene->removeItem(edge);
-            edges.removeAt(i);
+            s->removeItem(edge);
+            e.removeAt(i);
             delete edge;
             break;
         }
@@ -495,16 +495,16 @@ void MainWindow::removeEdge(Vertex* sourceVertex, Vertex* destinationVertex)
     QFile file("graph.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
-        for (const Edge* edge : edges) {
-            int sourceIndex = vertices.indexOf(edge->getSourceVertex());
-            int destinationIndex = vertices.indexOf(edge->getDestinationVertex());
+        for (const Edge* edge : e) {
+            int sourceIndex = v.indexOf(edge->getSourceVertex());
+            int destinationIndex = v.indexOf(edge->getDestinationVertex());
             out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
         }
         file.close();
     }
 }
 
-void MainWindow::on_addVertexButton_clicked()
+void MainWindow::on_addVB()
 {
     QDialog dialog;
     QFormLayout form(&dialog);
@@ -518,15 +518,15 @@ void MainWindow::on_addVertexButton_clicked()
         QColor color = QColorDialog::getColor();
         addVertex(name, color,50,50);
         dialog.close();
-        updateEdges();
+        uE();
     });
 
     dialog.exec();
 }
 
-void MainWindow::on_addEdgeButton_clicked()
+void MainWindow::on_addEB()
 {
-    if (vertices.isEmpty()) {
+    if (v.isEmpty()) {
         return;
     }
 
@@ -536,8 +536,8 @@ void MainWindow::on_addEdgeButton_clicked()
     QLineEdit weightLineEdit;
     QLineEdit sourceVertexLineEdit;
     QLineEdit destinationVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(v.length() - 1) + ")");
+    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(v.length() - 1) + ")");
     form.addRow("Укажите вес ребра", &weightLineEdit);
     form.addRow("Начальная вершина", &sourceVertexLineEdit);
     form.addRow("Конечная вершина", &destinationVertexLineEdit);
@@ -556,9 +556,9 @@ void MainWindow::on_addEdgeButton_clicked()
     dialog.exec();
 }
 
-void MainWindow::on_removeEdgeButton_clicked()
+void MainWindow::on_rEB()
 {
-    if (edges.isEmpty()) {
+    if (e.isEmpty()) {
         return;
     }
 
@@ -566,9 +566,9 @@ void MainWindow::on_removeEdgeButton_clicked()
     QDialog dialog;
     QFormLayout form(&dialog);
     QLineEdit sourceVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(v.length() - 1) + ")");
     QLineEdit destinationVertexLineEdit;
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertices.length() - 1) + ")");
+    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(v.length() - 1) + ")");
     form.addRow("Начальная вершина", &sourceVertexLineEdit);
     form.addRow("Конечная вершина", &destinationVertexLineEdit);
     QPushButton removeButton("Удалить ребро");
@@ -577,9 +577,9 @@ void MainWindow::on_removeEdgeButton_clicked()
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int sourceIndex = sourceVertexLineEdit.text().toInt();
         int destinationIndex = destinationVertexLineEdit.text().toInt();
-        if (sourceIndex >= 0 && sourceIndex < vertices.length() && destinationIndex >= 0 && destinationIndex < vertices.length()) {
-            Vertex* sourceVertex = vertices.at(sourceIndex);
-            Vertex* destinationVertex = vertices.at(destinationIndex);
+        if (sourceIndex >= 0 && sourceIndex < v.length() && destinationIndex >= 0 && destinationIndex < v.length()) {
+            Vertex* sourceVertex = v.at(sourceIndex);
+            Vertex* destinationVertex = v.at(destinationIndex);
             removeEdge(sourceVertex, destinationVertex);
         }
         dialog.close();

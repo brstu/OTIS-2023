@@ -1,12 +1,11 @@
-//#include "mainwindow.h"
-#include "startwindow.h"
+#include "creategraph.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    StartWindow w;
+    CreateGraph w;
     w.show();
     return a.exec();
 }

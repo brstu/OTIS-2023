@@ -16,32 +16,32 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    bool complGraph();
-    void importFromTextFile(const QString& fileName);
-    void exportToTextFile(const QString& fileName);
+    bool cG();
+    void iFTF(const QString& fileName);
+    void eTTF(const QString& fileName);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void updateEdges();
-    void updateVertices();
-    void showGraphInfo();
-    void showeulerInfo();
-    int getNumberOfVertices() {
-        return vertices.length();
+    void uE();
+    void uV();
+    void sGI();
+    void sI();
+    int gNOV() {
+        return v.length();
     }
-    int getNumberOfEdges() {
-        return edges.length();
+    int gNOE() {
+        return e.length();
     }
-    QString getEulerCycle();
-    bool isGraphConnected();
-    int getVertexIndex(const QString& vertexName) const;
+    QString gEC();
+    bool iGC();
+    int gV(const QString& vertexName) const;
 private slots:
-    void on_addVertexButton_clicked();
-    void on_addEdgeButton_clicked();
-    void on_removeEdgeButton_clicked();
-    void on_removeVertexButton_clicked();
-    void on_changeVertexButton_clicked();
-    void on_addInformationButton_clicked();
-    void on_addClearsceneButton_clicked();
+    void on_addVB();
+    void on_addEB();
+    void on_rEB();
+    void on_rVB();
+    void on_cVB();
+    void on_aIB();
+    void on_aCB();
     void on_export_2_clicked();
     void on_import_2_clicked();
 
@@ -50,9 +50,9 @@ private slots:
     void removeEdge(Vertex* sourceVertex, Vertex* destinationVertex);
 
 private:
-    Ui::MainWindow *ui;
-    QGraphicsScene *scene;
-    QList<Vertex*> vertices;
-    QList<Edge*> edges;
+    Ui::MainWindow *u;
+    QGraphicsScene *s;
+    QList<Vertex*> v;
+    QList<Edge*> e;
 };
 #endif // WINDOW_H

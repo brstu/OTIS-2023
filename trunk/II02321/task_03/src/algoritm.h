@@ -82,11 +82,11 @@ void Graph::showcycle()
     if (inp.is_open()) {
         Graph g(0);
         MainWindow window;
-        window.updateVertices();
-        window.updateEdges();
+        window.uV();
+        window.uE();
 
-        int numV = window.getNumberOfVertices();
-        int numAdj = window.getNumberOfEdges();
+        int numV = window.gNOV();
+        int numAdj = window.gNOE();
 
         g = Graph(numV);
 
