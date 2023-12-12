@@ -5,14 +5,14 @@
 
 using namespace std;
 
-double K = 0.0001;
-double T = 100;
-double TD = 100;
-double T0 = 1;
+const double K = 0.0001;
+const double T = 100;
+const double TD = 100;
+const double T0 = 1;
 
-double q0 = K * (1 + TD / T0);
-double q1 = -K * (1 + 2 * TD / T0 - T0 / T);
-double q2 = K * TD / T0;
+const double q0 = K * (1 + TD / T0);
+const double q1 = -K * (1 + 2 * TD / T0 - T0 / T);
+const double q2 = K * TD / T0;
 
 
 class func {
