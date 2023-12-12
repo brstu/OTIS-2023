@@ -202,7 +202,10 @@ class ViewController: UIViewController {
     }
     // создание нижнего scrollView
     func createScroll() {
+        // This function is currently empty as its implementation has not been provided yet.
+        // It may be intended for future use or awaiting further development.
     }
+
     // создание view для scrolView
     func createButtonBarView() {
         buttonBarView = UIView(frame: CGRect(x: 13.0,
