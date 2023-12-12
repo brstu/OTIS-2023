@@ -100,8 +100,8 @@ class Edge:
         graph.remove_edge(self.nodik1.name, self.nodik2.name)
 
 
-def create_vertex(entry_name, window):
-    name = entry_name.get()
+def create_vertex(entry_of_name, window):
+    name = entry_of_name.get()
     nodes.append(Node(name))
     window.destroy()
 
@@ -120,21 +120,21 @@ def menu_add_vertex():
     add_window.wm_attributes('-topmost', 3)
     add_window.resizable(False, False)
     label = Label(add_window, text="Введите имя вершины")
-    entry_name = Entry(add_window)
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_name, add_window))
-    color_lable = Label(add_window, width=2, bg="white")
+    entry_of_name = Entry(add_window)
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_of_lable))
+    color_of_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_of_name, add_window))
+    color_of_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
-    entry_name.grid(row=1, column=0, sticky="ewns")
+    entry_of_name.grid(row=1, column=0, sticky="ewns")
     add_button.grid(row=2, column=0, sticky="ewns")
-    color_button.grid(row=3, column=0, sticky="ewns")
-    color_lable.grid(row=1, column=1)
+    color_of_button.grid(row=3, column=0, sticky="ewns")
+    color_of_lable.grid(row=1, column=1)
     add_window.mainloop()
 
 
 def create_edge(entry_weight, entry_node1, entry_node2, window):
     try:
-        weight = int(entry_weight.get())
+        wes = int(entry_weight.get())
     except ValueError:
         messagebox.showerror("Ошибка", "Вес ребра должен быть числом")
     else:
@@ -145,7 +145,7 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
                 node1 = vertex
             if vertex.name == node2:
                 node2 = vertex
-        edges.append(Edge(node1, node2, weight))
+        edges.append(Edge(node1, node2, wes))
         window.destroy()
 
 
@@ -166,10 +166,10 @@ def menu_add_edge():
     entry_node2 = Entry(add_window, textvariable=entry_node2_text)
     entry_node2_text.set("Введите имя второй вершины")
 
-    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1,
+    add_button = Button(add_window, text="Выбрать цвет", command=lambda: chose_color(color_of_lable))
+    color_of_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1,
                                                                                          entry_node2, add_window))
-    color_lable = Label(add_window, width=2, bg="white")
+    color_of_lable = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_weight.grid(row=1, column=0, sticky="ewns")
     label2.grid(row=2, column=0, sticky="ew")
@@ -177,8 +177,8 @@ def menu_add_edge():
     label3.grid(row=4, column=0, sticky="ew")
     entry_node2.grid(row=5, column=0, sticky="ewns")
     add_button.grid(row=6, column=0, sticky="ewns")
-    color_button.grid(row=7, column=0, sticky="ewns")
-    color_lable.grid(row=1, column=1)
+    color_of_button.grid(row=7, column=0, sticky="ewns")
+    color_of_lable.grid(row=1, column=1)
     add_window.mainloop()
 
 
