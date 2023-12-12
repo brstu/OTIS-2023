@@ -3,19 +3,13 @@
 
 class LinearModel {
 public:
-    LinearModel() {
+    LinearModel() : yT(1), uT(0.5), time(15), a(1.2), b(0.7) {
         std::cout << "Linear Model" << std::endl;
-        yT = 1;
-        uT = 0.5;
-        time = 15;
-        a = 1.2;
-        b = 0.7;
     }
 
     void simulate() {
         for (int i = 0; i < time; i++) {
             yT = a * yT + b * uT;
-
             std::cout << yT << std::endl;
         }
     }
@@ -30,16 +24,8 @@ private:
 
 class NonLinearModel {
 public:
-    NonLinearModel() {
+    NonLinearModel() : yT(1.5), uT(0.5), prevYT(0), time(15), a(1.2), b(0.7), c(-0.32), d(0.53) {
         std::cout << "Non-Linear Model" << std::endl;
-        yT = 1.5;
-        uT = 0.5;
-        prevYT = 0;
-        time = 15;
-        a = 1.2;
-        b = 0.7;
-        c = -0.32;
-        d = 0.53;
     }
 
     void simulate() {
