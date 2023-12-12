@@ -237,6 +237,12 @@ def delete(event):
 
 def shortest_path():
     enter = []
+
+    def func():
+        enter.extend([entry1.get(), entry2.get()])
+        win.destroy()
+        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, enter[0], enter[1]))
+
     win = Tk()
     win.title("Выбор вершин")
     win.geometry("200x120+1050+250")
@@ -249,15 +255,13 @@ def shortest_path():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(win)
     entry2.grid(row=3, column=0, sticky="ewns")
-    button = Button(win, text="Выбрать", command=lambda: func(enter, win))
+    button = Button(win, text="Выбрать", command=func)
     button.grid(row=4, column=0, sticky="ewns")
 
-    def func(arr, win):
-        arr += [entry1.get(), entry2.get()]
-        win.destroy()
-        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, arr[0], arr[1]))
     win.mainloop()
     return enter[0], enter[1]
+
+
 
 def display_props(title, props):
     string = ''
