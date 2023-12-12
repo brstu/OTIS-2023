@@ -36,6 +36,10 @@ docker compose up --no-build
   ```localhost:8000```
 
   ```localhost:3033```
+  
 # Работа
+
+NIKA is an Intelligent Knowledge-driven Assistant. Это программа является примером интеллектуальной справочной системы на базе технологии OSTIS.
+
 ![](Image1.png)
 ![](image2.png)
