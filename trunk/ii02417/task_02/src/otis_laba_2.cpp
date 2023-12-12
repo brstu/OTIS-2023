@@ -6,21 +6,6 @@
 class ModelSimulation {
 public:
     ModelSimulation() {
-        a = 0.5;
-        b = 0.6;
-        c = 0.6;
-        d = 0.4;
-        e = 0.9;
-        f0 = 1.2;
-        fD = 1.1;
-        g = 1.1;
-        u = 1.0;
-        u1 = 1.0;
-        w = 60;
-        F0 = 0.0;
-        F1 = 0.0;
-        F2 = 0.0;
-        y = 10.0;
     }
 
     void simulate() {
@@ -48,21 +33,21 @@ public:
     }
 
 private:
-    double a;
-    double b;
-    double c;
-    double d;
-    double e;
-    double f0;
-    double fD;
-    double g;
-    double u;
-    double u1;
-    double w;
-    double F0;
-    double F1;
-    double F2;
-    double y;
+    double a = 0.5;
+    double b = 0.6;
+    double c = 0.6;
+    double d = 0.4;
+    double e = 0.9;
+    double f0 = 1.2;
+    double fD = 1.1;
+    double g = 1.1;
+    double u = 1.0;
+    double u1 = 1.0;
+    double w = 60;
+    double F0 = 0.0;
+    double F1 = 0.0;
+    double F2 = 0.0;
+    double y = 10.0;
 };
 
 int main()
