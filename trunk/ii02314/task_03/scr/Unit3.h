@@ -16,26 +16,26 @@ bool checkVertexExisting(std::string name);
 class TForm3 : public TForm
 {
 __published:	// IDE-managed Components
-	TLabel *Label1;
-	TLabel *Label2;
-	TLabel *Label3;
-	TLabel *Label4;
-	TEdit *Edit1;
-	TEdit *Edit2;
-	TEdit *Edit3;
+	TLabel *Name1;
+	TLabel *Name2;
+	TLabel *Weight;
+	TLabel *Color;
+	TEdit *FirstName;
+	TEdit *SecondName;
+	TEdit *EditWeight;
 
 	TEdit *Edit4;
 	TEdit *Edit5;
 	TEdit *Edit6;
 	TCheckBox *CheckBox1;
 	TButton *Button1;
-	TButton *Button2;
-	void __fastcall Edit1Exit(TObject *Sender);
-	void __fastcall Edit2Exit(TObject *Sender);
+	TButton *ExitButton;
+	void __fastcall FirstNameExit(TObject *Sender);
+	void __fastcall SecondNameExit(TObject *Sender);
 	void __fastcall Button1Click(TObject *Sender);
-	void __fastcall Button2Click(TObject *Sender);
-private:	// User declarations
-public:		// User declarations
+	void __fastcall ExitButtonClick(TObject *Sender);
+private:
+public:
 	__fastcall TForm3(TComponent* Owner);
 };
 //---------------------------------------------------------------------------

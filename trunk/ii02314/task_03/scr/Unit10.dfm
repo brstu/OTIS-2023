@@ -2,8 +2,8 @@ object Form10: TForm10
   Left = 0
   Top = 0
   Caption = 'Form10'
-  ClientHeight = 247
-  ClientWidth = 253
+  ClientHeight = 256
+  ClientWidth = 259
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,7 +11,7 @@ object Form10: TForm10
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Memo1: TMemo
+  object Place: TMemo
     Left = 0
     Top = 8
     Width = 249

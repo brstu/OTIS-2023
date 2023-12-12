@@ -11,15 +11,13 @@
 class TForm10 : public TForm
 {
 __published:	// IDE-managed Components
-	TMemo *Memo1;
+	TMemo *Place;
 	//TMemo *Memo1;
-private:
-	// User declarations
 public:
 		// User declarations
 	__fastcall TForm10(TComponent* Owner);
+private:
+	// User declarations
 };
-//---------------------------------------------------------------------------
 extern PACKAGE TForm10 *Form10;
-//---------------------------------------------------------------------------
 #endif

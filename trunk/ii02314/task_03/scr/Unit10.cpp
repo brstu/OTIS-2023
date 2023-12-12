@@ -20,12 +20,10 @@
 #pragma resource "*.dfm"
 
 TForm10 *Form10;
-
-//---------------------------------------------------------------------------
 __fastcall TForm10::TForm10(TComponent* Owner)
 	: TForm(Owner)
 {
-	Memo1->Clear();
+	Place->Clear();
 
 	std::vector<std::vector<int>> matrix(vertexes.size(), std::vector<int>(vertexes.size(), 0));
 
@@ -40,7 +38,7 @@ __fastcall TForm10::TForm10(TComponent* Owner)
 		for (int j = 0; j < matrix.size(); ++j) {
 			ss << matrix[i][j] << "\t";
 		}
-		Memo1->Lines->Add(ss.str().c_str());
+		Place->Lines->Add(ss.str().c_str());
 	}
 
 	adjMatrix = matrix;

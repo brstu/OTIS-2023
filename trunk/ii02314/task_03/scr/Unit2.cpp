@@ -31,9 +31,9 @@ void __fastcall TForm2::Button1Click(TObject *Sender)
 {
 	vertex newVertex;
 
-	AnsiString text1 = Edit2->Text;
-	AnsiString text2 = Edit3->Text;
-	AnsiString text3 = Edit4->Text;
+	AnsiString text1 = RValue->Text;
+	AnsiString text2 = GValue->Text;
+	AnsiString text3 = BValue->Text;
 
 	int r = StrToIntDef(text1, 0);
 	int g = StrToIntDef(text2, 0);
@@ -47,7 +47,7 @@ void __fastcall TForm2::Button1Click(TObject *Sender)
 	newVertex.g = g;
     newVertex.b = b;
 
-	AnsiString tempName = Edit1->Text;
+	AnsiString tempName = NameColumn->Text;
 	newVertex.name = tempName.c_str();
 
 	newVertex.x = XX;
@@ -64,14 +64,14 @@ void __fastcall TForm2::Button1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm2::Edit1Exit(TObject *Sender)
+void __fastcall TForm2::NameColumnExit(TObject *Sender)
 {
-	AnsiString EditName = Edit1->Text;
+	AnsiString EditName = NameColumn->Text;
 	std::string tempName = EditName.c_str();
 	for(int i = 0; i < vertexes.size(); i++){
 		if(vertexes[i].name == tempName || tempName.empty()){
 			ShowMessage("Имя не должно повторяться или быть пустым.");
-			Edit1->SetFocus();
+			NameColumn->SetFocus();
 		}
 	}
 	Button1->Enabled = true;

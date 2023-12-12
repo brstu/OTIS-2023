@@ -52,9 +52,9 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 	bool isExisting2 = false;
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm3::Edit1Exit(TObject *Sender)
+void __fastcall TForm3::FirstNameExit(TObject *Sender)
 {
-	AnsiString EditName = Edit1->Text;
+	AnsiString EditName = FirstName->Text;
 	std::string tempName = EditName.c_str();
 	isExisting1 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
@@ -62,13 +62,13 @@ void __fastcall TForm3::Edit1Exit(TObject *Sender)
 	}
 	else if(!isExisting1){
 	ShowMessage("Вершина с таким именем не найдена");
-	Edit2->SetFocus();
+	FirstName->SetFocus();
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm3::Edit2Exit(TObject *Sender)
+void __fastcall TForm3::SecondNameExit(TObject *Sender)
 {
-	AnsiString EditName = Edit2->Text;
+	AnsiString EditName = SecondName->Text;
 	std::string tempName = EditName.c_str();
 	isExisting2 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
@@ -76,23 +76,23 @@ void __fastcall TForm3::Edit2Exit(TObject *Sender)
 	}
 	else if(!isExisting2){
 	ShowMessage("Вершина с таким именем не найдена");
-	Edit2->SetFocus();
+	SecondName->SetFocus();
 	}
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm3::Button1Click(TObject *Sender)
 {
-	AnsiString tempName = Edit1->Text;
+	AnsiString tempName = FirstName->Text;
 	std::string name = tempName.c_str();
 	int id1 = findVertexByName(name);
-	tempName = Edit2->Text;
+	tempName = SecondName->Text;
 	name = tempName.c_str();
 	int id2 = findVertexByName(name);
 
 	//bool duplicate = findEdgeByIDS(id1, id2);
 	if(findEdgeByIDS(id1,id2) > -1 || findEdgeByIDS(id2,id1) > -1){
-		 Edit1->Clear();
-		 Edit2->Clear();
+		 FirstName->Clear();
+		 SecondName->Clear();
 		 isExisting2 = false;
 		 isExisting1 = false;
 		 Button1->Enabled = false;
@@ -121,7 +121,7 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 	newEdge.g = g;
 	newEdge.b = b;
 
-	AnsiString tempWeight = Edit3->Text;
+	AnsiString tempWeight = EditWeight->Text;
 	int weight = StrToIntDef(tempWeight, 0);
 	newEdge.weight = weight;
 
@@ -149,7 +149,7 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm3::Button2Click(TObject *Sender)
+void __fastcall TForm3::ExitButtonClick(TObject *Sender)
 {
     Close();
 }

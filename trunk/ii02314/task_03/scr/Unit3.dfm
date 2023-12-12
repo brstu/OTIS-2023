@@ -2,8 +2,8 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'MakeEdge'
-  ClientHeight = 242
-  ClientWidth = 286
+  ClientHeight = 251
+  ClientWidth = 292
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,55 +11,58 @@ object Form3: TForm3
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Label1: TLabel
+  object Name1: TLabel
     Left = 8
     Top = 16
     Width = 126
     Height = 15
     Caption = 'Name of the First Vertex'
   end
-  object Label2: TLabel
+  object Name2: TLabel
     Left = 8
     Top = 45
     Width = 143
     Height = 15
     Caption = 'Name of the Second Vertex'
   end
-  object Label3: TLabel
+  object Weight: TLabel
     Left = 8
     Top = 74
     Width = 38
     Height = 15
     Caption = 'Weight'
   end
-  object Label4: TLabel
+  object Color: TLabel
     Left = 8
     Top = 111
     Width = 22
     Height = 15
     Caption = 'RGB'
   end
-  object Edit1: TEdit
+  object FirstName: TEdit
     Left = 152
     Top = 13
     Width = 121
     Height = 23
+    ImeName = 'Russian'
     TabOrder = 0
-    OnExit = Edit1Exit
+    OnExit = FirstNameExit
   end
-  object Edit2: TEdit
+  object SecondName: TEdit
     Left = 152
     Top = 42
     Width = 121
     Height = 23
+    ImeName = 'Russian'
     TabOrder = 1
-    OnExit = Edit2Exit
+    OnExit = SecondNameExit
   end
-  object Edit3: TEdit
+  object EditWeight: TEdit
     Left = 152
     Top = 71
     Width = 121
     Height = 23
+    ImeName = 'Russian'
     NumbersOnly = True
     TabOrder = 2
     Text = '0'
@@ -109,13 +112,13 @@ object Form3: TForm3
     TabOrder = 7
     OnClick = Button1Click
   end
-  object Button2: TButton
+  object ExitButton: TButton
     Left = 160
     Top = 200
     Width = 75
     Height = 25
     Caption = 'OK'
     TabOrder = 8
-    OnClick = Button2Click
+    OnClick = ExitButtonClick
   end
 end
