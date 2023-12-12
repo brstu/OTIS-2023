@@ -55,39 +55,37 @@ class UIIntroductionView: UIView {
     }
     // удаление ребра
     func deleteEdge(edge: [Int]) {
-        var edges = [Int]()
-        edges.append(edge[0] - 1)
-        edges.append(edge[1] - 1)
-        if allPeaks.contains(edges[0]) && allPeaks.contains(edges[1]) {
-            for (index, element) in allPeaks.enumerated() {
-                if element == edges[1] && allPeaks.index(before: index) == edges[0] {
-                    allPeaks.remove(at: index)
-                    allPeaks.remove(at: index - 1)
-                    break
-                } else if element == edges[0] {
-                    if allPeaks.indices.contains(index + 1) {
-                        if allPeaks[index + 1] == edges[1] {
-                            allPeaks.remove(at: index)
-                            allPeaks.remove(at: index)
-                            break
-                        } else if allPeaks[index - 1] == edges[1] {
-                            allPeaks.remove(at: index)
-                            allPeaks.remove(at: index - 1)
-                            break
-                        }
-                    } else {
-                        if allPeaks[index - 1] == edges[1] {
-                            allPeaks.remove(at: index)
-                            allPeaks.remove(at: index - 1)
-                            break
-                        }
+        var edges = [edge[0] - 1, edge[1] - 1]
+
+        guard allPeaks.contains(edges[0]) && allPeaks.contains(edges[1]) else {
+            return
+        }
+
+        for (index, element) in allPeaks.enumerated() {
+            if element == edges[1] && allPeaks.index(before: index) == edges[0] {
+                allPeaks.remove(at: index - 1...index)
+                break
+            } else if element == edges[0] {
+                if allPeaks.indices.contains(index + 1) {
+                    let nextElement = allPeaks[index + 1]
+
+                    if nextElement == edges[1] {
+                        allPeaks.remove(at: index...index + 1)
+                        break
+                    } else if allPeaks[index - 1] == edges[1] {
+                        allPeaks.remove(at: index - 1...index)
+                        break
                     }
+                } else if allPeaks[index - 1] == edges[1] {
+                    allPeaks.remove(at: index - 1...index)
+                    break
                 }
             }
         }
+
         setNeedsDisplay()
     }
-    // удаление вершины
+        // удаление вершины
     func deleteDrawPeak(tag: Int) {
         var tag = tag
         tag -= 1
@@ -112,7 +110,7 @@ class UIIntroductionView: UIView {
             }
             count += 1
         }
-        count = 0
+    
         setNeedsDisplay()
     }
     // передвижение вершины

@@ -85,7 +85,7 @@ class StartViewController: UIViewController {
         for symbol in dataTextView.text {
             if symbol != " " && symbol != "\n" {
                 number += String(symbol)
-                continue
+    
             } else {
                 peaks.insert(number)
                 allPeaks.append(Int(number)! - 1)
