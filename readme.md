@@ -26,7 +26,7 @@
 | 7  | Кононов Алексей                                      |[ii02309](trunk/ii02309) | ✅ | ✅ |    |    |    |    |    |    |        6|
 | 8  | [Копач Александр](https://github.com/AtticaQQ)       |[ii02308](trunk/ii02308) | ✅ | ✅ |    |    |    |    |    |    |        8|
 | 9  | Кунц Александр                                       |                         |    |     |    |    |    |    |    |    |        6|
-| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ |  ✅ | ✅ |    | ✅ |    |    |    |        8|
+| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ |  ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 11 | [Привезенцев Михаил](https://github.com/MishanyPrivezentsev)|                         |    |     |    |    |    |    |    |    |        6|
 | 12 | [Ежевский Егор](https://github.com/pinkgrasss)       |[ii02312](trunk/ii02312) | ✅ | ✅ | ✅ |    | ✅ |    |    |    |        8|
 | 13 | Макаревич Кирилл                                     |                         |    |     |    |    |    |    |    |    |        6|
