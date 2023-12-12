@@ -1,10 +1,10 @@
-#ifndef EULER_H
-#define EULER_H
+#ifndef ALGORITM_H
+#define ALGORITM_H
 #include <iostream>
 #include <list>
 #include <fstream>
 #include <vector>
-#include "mainwindow.h"
+#include "window.h"
 #include "Qstring"
 
 using namespace std;
@@ -98,4 +98,4 @@ void Graph::showcycle()
     }
     else cout << "error";
 }
-#endif // EULER_H
+#endif // ALGORITM_H

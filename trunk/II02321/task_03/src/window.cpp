@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "window.h"
 #include "ui_mainwindow.h"
 #include <QPushButton>
 #include <QFormLayout>
@@ -16,7 +16,7 @@
 #include <QComboBox>
 #include "edge.h"
 #include "vertex.h"
-#include "euler.h"
+#include "algoritm.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {

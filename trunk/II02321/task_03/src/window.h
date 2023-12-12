@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -55,4 +55,4 @@ private:
     QList<Vertex*> vertices;
     QList<Edge*> edges;
 };
-#endif // MAINWINDOW_H
+#endif // WINDOW_H

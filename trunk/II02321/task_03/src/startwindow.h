@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QMdiArea>
-#include "mainwindow.h"
+#include "window.h"
 
 namespace Ui {
 class StartWindow;

@@ -1,6 +1,6 @@
 #ifndef VERTEX_H
 #define VERTEX_H
-#include "mainwindow.h"
+#include "window.h"
 #include <QPainter>
 #include <QGraphicsView>
 class Vertex : public QGraphicsItem
