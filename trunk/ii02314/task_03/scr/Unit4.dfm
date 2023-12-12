@@ -1,9 +1,9 @@
-object Form5: TForm5
+object Form4: TForm4
   Left = 0
   Top = 0
-  Caption = 'Form5'
-  ClientHeight = 156
-  ClientWidth = 210
+  Caption = 'Form4'
+  ClientHeight = 187
+  ClientWidth = 204
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -46,10 +46,18 @@ object Form5: TForm5
     Top = 104
     Width = 75
     Height = 25
-    Cancel = True
-    Caption = 'Edit'
+    Caption = 'Delete'
     Enabled = False
     TabOrder = 2
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 64
+    Top = 152
+    Width = 75
+    Height = 25
+    Caption = 'OK'
+    TabOrder = 3
+    OnClick = Button2Click
   end
 end

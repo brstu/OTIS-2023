@@ -1,9 +1,9 @@
-object Form11: TForm11
+object Form10: TForm10
   Left = 0
   Top = 0
-  Caption = 'Form11'
-  ClientHeight = 214
-  ClientWidth = 213
+  Caption = 'Form10'
+  ClientHeight = 247
+  ClientWidth = 253
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object Form11: TForm11
   object Memo1: TMemo
     Left = 0
     Top = 8
-    Width = 209
-    Height = 201
+    Width = 249
+    Height = 233
     Lines.Strings = (
       'Memo1')
     TabOrder = 0

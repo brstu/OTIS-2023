@@ -1,16 +1,15 @@
-object Form2: TForm2
+object Form8: TForm8
   Left = 0
   Top = 0
-  Caption = 'MakeVertex'
-  ClientHeight = 200
-  ClientWidth = 201
+  Caption = 'Form8'
+  ClientHeight = 199
+  ClientWidth = 203
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poScreenCenter
   TextHeight = 15
   object Label1: TLabel
     Left = 8
@@ -32,7 +31,6 @@ object Form2: TForm2
     Width = 121
     Height = 23
     TabOrder = 0
-    OnExit = Edit1Exit
   end
   object Edit2: TEdit
     Left = 57
