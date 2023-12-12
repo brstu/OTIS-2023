@@ -22,48 +22,48 @@
 
 
 # Task: #
-1. Разработать и реализовать программный продукт, позволяющий
-редактировать графовые конструкции различных видов и производить над
-ними различные действия. Язык программирования - **любой**.
+1. Develop and implement a software product that allows to
+edit graph constructions of various types and perform various actions on them.
+various actions over them. Programming language - **any**.
 
-2. Редактор должен позволять:
-  - одновременно работать с несколькими графами (MDI);
- - задавать имена графам;
-  - сохранять и восстанавливать граф во внутреннем формате программы;
-  - экспортировать и импортировать граф в текстовый формат (описание
-см. ниже);
-  - создавать, удалять, именовать, переименовывать, перемещать узлы;
-  - создавать ориентированные и неориентированные дуги, удалять дуги;
- - добавлять, удалять и редактировать содержимое узла (содержимое в
-виде текста и ссылки на файл);
- - задавать цвет дуги и узла, образ узла;
+2. The editor should allow:
+  - work with several graphs simultaneously (MDI);
+ - set names for graphs;
+  - save and restore a graph in the internal program format;
+  - export and import a graph to text format (see below for description); export and import a graph to text format (see below); export and import a graph to text format (see below for description); and
+see below);
+  - create, delete, name, rename, move nodes;
+  - create oriented and non-oriented arcs, delete arcs;
+ - add, delete, and edit node content (content in
+as text and a link to a file);
+ - set arc and node color, node image;
 
-3. Программный продукт должен позволять выполнять следующие операции:
-  a) выводить информацию о графе:
+3. The software product shall allow to perform the following operations:
+  (a) output information about the graph:
 
- + количество вершин, дуг;
- + степени для всех вершин и для выбранной вершины;
- + матрицу инцидентности;
- + матрицу смежности;
- + является ли он деревом, полным, связанным, эйлеровым, **[\*]** планарным;
+ + number of vertices, arcs;
+ + degrees for all nodes and for the selected node;
+ + incident matrix;
+ + adjacency matrix;
+ + whether it is a tree, complete, connected, Eulerian, **[\*]**planar;
 
-  b) поиск всех путей (маршрутов) между двумя узлами и кратчайших;
-  c) вычисление расстояния между двумя узлами;
-  d) вычисление диаметра, радиуса, центра графа;
-  g) нахождения эйлеровых, [*] гамильтоновых циклов;
+  (b) Finding all paths (routes) between two nodes and the shortest paths;
+  (c) Calculating the distance between two nodes;
+  (d) Calculating the diameter, radius, center of a graph;
+  g) finding Eulerian, [*] Hamiltonian cycles;
 
 # Functionality: #
 
-- MOUSE LEFT CLICK - создание вершины;
-- MOUSE RIGHT CLICK - соединение вершин;
-- MOUSE WHEEL CLICK - удаление вершины;
-- HOLD MOUSE LEFT CLICK - перемещение вершин;
-- В окне  "Weight" можно указать вес ребра, если требуется, и только потом соединять вершины;
-- Clear Graph - очистить полностью поле графа;
-- Expot Graph - экспортировать граф;
-- Import Graph - импортировать граф;
-- Export Matricies - матрица смежности;
-- В рамках надо полями графов выведена информация о графах;
+- MOUSE LEFT CLICK - create a vertex;
+- MOUSE RIGHT CLICK - join vertices;
+- MOUSE WHEEL CLICK - deleting a vertex;
+- HOLD MOUSE LEFT CLICK - move vertices;
+- In the "Weight" window you can specify the weight of an edge, if required, and only then connect vertices;
+- Clear Graph - clear the graph field completely;
+- Expot Graph - export the graph;
+- Import Graph - import graph;
+- Export Matricies - adjacency matrix;
+- The information about graphs is displayed within the graph fields;
 # Result: #
 
 Fullscreen:
