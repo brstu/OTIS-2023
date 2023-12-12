@@ -219,7 +219,7 @@ class UIIntroductionView: UIView {
     }
     // получение информации
     func getInfo() -> (Int, (Int, [Int])) {
-        let countOfPeaks = peaks
+        let countOfPeaks1 = peaks
         let countOfEdges = allPeaks.count / 2
         var peaksMultiplicity: [Int] = []
         var count = 0
