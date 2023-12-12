@@ -22,6 +22,7 @@
 # Задание
 
 Изучить следующие открытые проекты:
+
 1.1. The OSTIS Technology project;
 
 1.2. The OSTIS Applications;
@@ -39,7 +40,7 @@
 
 
 ```localhost:3033```:
-![Выполнение:](screen.jpg)
+![Выполнение:](1.jpg)
 
 ---
 # Вывод 
