@@ -59,25 +59,28 @@ class ViewController: UIViewController {
                 if self.isFirstCall {
                     self.pseudoNames.append(String(element))
                 }
-                let button = UIButton(frame: CGRect(x: paths[count] - 10,
-                                                    y: paths[count + 1] - 10,
-                                                    width: 20, height: 20))
-                button.setTitle(self.pseudoNames[element - 1], for: .normal)
-                button.setTitleColor(.magenta, for: .normal)
+                
+                // Rename "button" to avoid the naming conflict with the field declared at line 12
+                let newButton = UIButton(frame: CGRect(x: paths[count] - 10,
+                                                       y: paths[count + 1] - 10,
+                                                       width: 20, height: 20))
+                newButton.setTitle(self.pseudoNames[element - 1], for: .normal)
+                newButton.setTitleColor(.magenta, for: .normal)
                 let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.renamePeak(param:)))
                 doubleTap.numberOfTapsRequired = 2
                 let drag = UIPanGestureRecognizer(target: self, action: #selector(self.movePeak(param:)))
-                button.addTarget(self, action: #selector(self.forButton(param:)), for: .touchUpInside)
-                button.addGestureRecognizer(drag)
-                button.addGestureRecognizer(doubleTap)
-                button.tag = element
-                self.drawingView.addSubview(button)
-                self.buttonsForPeaks.append(button)
+                newButton.addTarget(self, action: #selector(self.forButton(param:)), for: .touchUpInside)
+                newButton.addGestureRecognizer(drag)
+                newButton.addGestureRecognizer(doubleTap)
+                newButton.tag = element
+                self.drawingView.addSubview(newButton)
+                self.buttonsForPeaks.append(newButton)
                 count += 2
             }
             self.isFirstCall = false
         }
     }
+
     // переименование вершины
     @objc func renamePeak(param: UITapGestureRecognizer) {
         let tag = param.view?.tag
@@ -112,31 +115,31 @@ class ViewController: UIViewController {
     }
     // кнопки для pageScrollView
     func makeButtonsForPages() {
-        let button = UIButton()
+        let newButton = UIButton()
         nameOfGraph = UserDefaults.standard.string(forKey: "nameOfGraph\(countOfGraphs)")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(nameOfGraph, for: .normal)
-        button.backgroundColor = .darkGray
-        button.tag = countOfGraphs
+        newButton.translatesAutoresizingMaskIntoConstraints = false
+        newButton.setTitle(nameOfGraph, for: .normal)
+        newButton.backgroundColor = .darkGray
+        newButton.tag = countOfGraphs
 
-        // Merge the common branch for button.backgroundColor
-        if button.tag == 1 || (isAdd && button.tag != 1) {
-            button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        // Merge the common branch for newButton.backgroundColor
+        if newButton.tag == 1 || (isAdd && newButton.tag != 1) {
+            newButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         }
 
-        button.setTitleColor(.black, for: .normal)
+        newButton.setTitleColor(.black, for: .normal)
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(renamePage(param:)))
         doubleTap.numberOfTapsRequired = 2
-        button.addGestureRecognizer(doubleTap)
-        button.addTarget(self, action: #selector(changeGraph(param:)), for: .touchUpInside)
-        pageScrollView.addSubview(button)
+        newButton.addGestureRecognizer(doubleTap)
+        newButton.addTarget(self, action: #selector(changeGraph(param:)), for: .touchUpInside)
+        pageScrollView.addSubview(newButton)
 
         NSLayoutConstraint.activate([
-            button.leftAnchor.constraint(equalTo: pageScrollView.leftAnchor,
+            newButton.leftAnchor.constraint(equalTo: pageScrollView.leftAnchor,
                                          constant: CGFloat(150 * buttonsForPages.count)),
-            button.topAnchor.constraint(equalTo: pageScrollView.topAnchor),
-            button.bottomAnchor.constraint(equalTo: pageScrollView.bottomAnchor),
-            button.widthAnchor.constraint(equalToConstant: 150)
+            newButton.topAnchor.constraint(equalTo: pageScrollView.topAnchor),
+            newButton.bottomAnchor.constraint(equalTo: pageScrollView.bottomAnchor),
+            newButton.widthAnchor.constraint(equalToConstant: 150)
         ])
 
         totalWidthForPagesButtons += 150
@@ -145,8 +148,9 @@ class ViewController: UIViewController {
             pageScrollView.contentInset.right = totalWidthForPagesButtons
         }
 
-        buttonsForPages.append(button)
+        buttonsForPages.append(newButton)
     }
+
 
     // переименование страницы
     @objc func renamePage(param: UITapGestureRecognizer) {
