@@ -1,5 +1,4 @@
 #include "startwindow.h"
-#include <QLabel>
 #include <QApplication>
 
 int main(int ac, char *av[])

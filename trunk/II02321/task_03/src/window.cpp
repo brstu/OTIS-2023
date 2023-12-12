@@ -59,7 +59,7 @@ void MainWindow::on_rVB()
             // Удаление связанных ребер
             for (int i = e.length() - 1; i >= 0; --i) {
                 Edge* edge = e.at(i);
-                if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
+                if (edge->gSV() == vertex || edge->gDV() == vertex) {
                     s->removeItem(edge);
                     e.removeAt(i);
                     delete edge;
@@ -76,9 +76,9 @@ void MainWindow::on_rVB()
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 QTextStream out(&file);
                 for (const Edge* edge : e) {
-                    int sourceIndex = v.indexOf(edge->getSourceVertex());
-                    int destinationIndex = v.indexOf(edge->getDestinationVertex());
-                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
+                    int sourceIndex = v.indexOf(edge->gSV());
+                    int destinationIndex = v.indexOf(edge->gDV());
+                    out << sourceIndex << "\t" << destinationIndex << "\t" << edge->gWE() << "\n";
                 }
                 file.close();
             }
@@ -154,8 +154,8 @@ bool MainWindow::iGC()
 
         // Перебираем ребра, инцидентные текущей вершине
         foreach (Edge* edge, e) {
-            if (edge->getSourceVertex() == current || edge->getDestinationVertex() == current) {
-                Vertex* adjacent = (edge->getSourceVertex() == current) ? edge->getDestinationVertex() : edge->getSourceVertex();
+            if (edge->gSV() == current || edge->gDV() == current) {
+                Vertex* adjacent = (edge->gSV() == current) ? edge->gDV() : edge->gSV();
                 int adjacentIdx = v.indexOf(adjacent);
                 if (!visited[adjacentIdx]) {
                     stack.push(adjacent);
@@ -178,8 +178,8 @@ QString MainWindow::gEC() {
     QString eulerCycle;
     Gr g(v.length());
     for (Edge* edge : e) {
-        int src = v.indexOf(edge->getSourceVertex());
-        int dest = v.indexOf(edge->getDestinationVertex());
+        int src = v.indexOf(edge->gSV());
+        int dest = v.indexOf(edge->gDV());
         g.aE(src, dest);
     }
     vector<int> eulerPath;
@@ -219,7 +219,7 @@ QString degreesText = "Степени вершин:\n";
     foreach (Vertex* vertex, v) {
         int degree = 0;
         foreach (Edge* edge, e) {
-            if (edge->getSourceVertex() == vertex || edge->getDestinationVertex() == vertex) {
+            if (edge->gSV() == vertex || edge->gDV() == vertex) {
                 degree++;
             }
         }
@@ -232,7 +232,7 @@ QString degreesText = "Степени вершин:\n";
     QString incidenceMatrixText = "Матрица инцидентности:\n";
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numEdges; j++) {
-            if (e[j]->getSourceVertex() == v[i] || e[j]->getDestinationVertex() == v[i]) {
+            if (e[j]->getSourceVertex() == v[i] || e[j]->gDV() == v[i]) {
                 incidenceMatrixText += "1 ";
             } else {
                 incidenceMatrixText += "0 ";
@@ -247,8 +247,8 @@ QString degreesText = "Степени вершин:\n";
         for (int j = 0; j < numVertices; j++) {
             bool isAdjacent = false;
             foreach (Edge* edge, e) {
-                if ((edge->getSourceVertex() == v[i] && edge->getDestinationVertex() == v[j]) ||
-                    (edge->getSourceVertex() == v[j] && edge->getDestinationVertex() == v[i])) {
+                if ((edge->gSV() == v[i] && edge->gDV() == v[j]) ||
+                    (edge->gSV() == v[j] && edge->gDV() == v[i])) {
                     isAdjacent = true;
                     break;
                 }
@@ -272,7 +272,7 @@ QString degreesText = "Степени вершин:\n";
 
     for (int i = 0; i < numEdges; i++) {
         int sourceIndex = gV(e[i]->getSourceVertex()->getNameVertex());
-        int destinationIndex = gV(e[i]->getDestinationVertex()->getNameVertex());
+        int destinationIndex = gV(e[i]->gDV()->getNameVertex());
         int weight = e[i]->getWeightEdge();
 
         distances[sourceIndex][destinationIndex] = weight;
@@ -305,7 +305,6 @@ QString degreesText = "Степени вершин:\n";
     } else {
             connected = "Граф не является связным";
     };
-    // Формирование окна с информацией о графе
     QString tree;
     if(iGC() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
@@ -366,8 +365,8 @@ void MainWindow::eTTF(const QString& fileName)
     for (int i = 0; i < e.length(); ++i)
     {
             Edge* edge = e[i];
-            out << "Edge;" << v.indexOf(edge->getSourceVertex()) << ";" << v.indexOf(edge->getDestinationVertex()) << ";"
-                << edge->getWeightEdge() << ";" << edge->getColorEdge().name() << "\n";
+            out << "Edge;" << v.indexOf(edge->gSV()) << ";" << v.indexOf(edge->gDV()) << ";"
+                << edge->gWE() << ";" << edge->gCE().name() << "\n";
     }
 
     file.close();
@@ -483,7 +482,7 @@ void MainWindow::removeEdge(Vertex* sourceVertex, Vertex* destinationVertex)
 {
     for (int i = 0; i < e.length(); i++) {
         Edge* edge = e.at(i);
-        if (edge->getSourceVertex() == sourceVertex && edge->getDestinationVertex() == destinationVertex) {
+        if (edge->gSV() == sourceVertex && edge->gDV() == destinationVertex) {
             s->removeItem(edge);
             e.removeAt(i);
             delete edge;
@@ -496,9 +495,9 @@ void MainWindow::removeEdge(Vertex* sourceVertex, Vertex* destinationVertex)
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
         for (const Edge* edge : e) {
-            int sourceIndex = v.indexOf(edge->getSourceVertex());
-            int destinationIndex = v.indexOf(edge->getDestinationVertex());
-            out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdge() << "\n";
+            int sourceIndex = v.indexOf(edge->gSV());
+            int destinationIndex = v.indexOf(edge->gDV());
+            out << sourceIndex << "\t" << destinationIndex << "\t" << edge->gWE() << "\n";
         }
         file.close();
     }
