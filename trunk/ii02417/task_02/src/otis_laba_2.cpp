@@ -5,8 +5,7 @@
 
 class ModelSimulation {
 public:
-    ModelSimulation() {
-    }
+    ModelSimulation() = default;
 
     void simulate() {
         // Вычисление коэффициентов
