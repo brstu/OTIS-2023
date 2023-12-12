@@ -36,18 +36,18 @@ void __fastcall TForm6::passIDS(int x1, int x2){
 	else
 		idTemp = Form5idEdge1;
 
-	Edit3->Text = IntToStr(edges[idTemp].weight);
+	NewWeight->Text = IntToStr(edges[idTemp].weight);
 
-	Edit4->Text = IntToStr(edges[idTemp].r);
-	Edit5->Text = IntToStr(edges[idTemp].g);
-	Edit6->Text = IntToStr(edges[idTemp].b);
+	NewR->Text = IntToStr(edges[idTemp].r);
+	NewG->Text = IntToStr(edges[idTemp].g);
+	NewB->Text = IntToStr(edges[idTemp].b);
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm6::Button2Click(TObject *Sender)
+void __fastcall TForm6::EditExitButClick(TObject *Sender)
 {
-	AnsiString text1 = Edit4->Text;
-	AnsiString text2 = Edit5->Text;
-	AnsiString text3 = Edit6->Text;
+	AnsiString text1 = NewR->Text;
+	AnsiString text2 = NewG->Text;
+	AnsiString text3 = NewB->Text;
 	int r = StrToIntDef(text1, 0);
 	int g = StrToIntDef(text2, 0);
 	int b = StrToIntDef(text3, 0);
@@ -55,7 +55,7 @@ void __fastcall TForm6::Button2Click(TObject *Sender)
 	roundRGB(g);
 	roundRGB(b);
 
-	AnsiString tempWeight = Edit3->Text;
+	AnsiString tempWeight = NewWeight->Text;
 	int weight = StrToIntDef(tempWeight, 0);
 
 	if(Form5idEdge1 > -1){

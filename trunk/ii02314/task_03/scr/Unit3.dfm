@@ -102,7 +102,7 @@ object Form3: TForm3
     Caption = 'Oriented'
     TabOrder = 6
   end
-  object Button1: TButton
+  object AddButton: TButton
     Left = 27
     Top = 200
     Width = 75
@@ -110,7 +110,7 @@ object Form3: TForm3
     Caption = 'Add'
     Enabled = False
     TabOrder = 7
-    OnClick = Button1Click
+    OnClick = AddButtonClick
   end
   object ExitButton: TButton
     Left = 160

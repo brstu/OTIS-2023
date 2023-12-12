@@ -2,8 +2,8 @@ object Form4: TForm4
   Left = 0
   Top = 0
   Caption = 'Form4'
-  ClientHeight = 187
-  ClientWidth = 204
+  ClientHeight = 196
+  ClientWidth = 210
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,35 +11,35 @@ object Form4: TForm4
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Label1: TLabel
+  object Vertex1: TLabel
     Left = 24
     Top = 24
     Width = 57
     Height = 15
     Caption = 'First Vertex'
   end
-  object Label2: TLabel
+  object Vertex2: TLabel
     Left = 24
     Top = 59
     Width = 74
     Height = 15
     Caption = 'Second Vertex'
   end
-  object Edit1: TEdit
+  object FName: TEdit
     Left = 104
     Top = 21
     Width = 89
     Height = 23
     TabOrder = 0
-    OnExit = Edit1Exit
+    OnExit = FNameExit
   end
-  object Edit2: TEdit
+  object SName: TEdit
     Left = 104
     Top = 56
     Width = 89
     Height = 23
     TabOrder = 1
-    OnExit = Edit2Exit
+    OnExit = SNameExit
   end
   object Button1: TButton
     Left = 64
@@ -57,6 +57,7 @@ object Form4: TForm4
     Width = 75
     Height = 25
     Caption = 'OK'
+    DisabledImageName = 'ExitBut'
     TabOrder = 3
     OnClick = Button2Click
   end

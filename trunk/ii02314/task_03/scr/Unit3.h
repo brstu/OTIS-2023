@@ -28,11 +28,11 @@ __published:	// IDE-managed Components
 	TEdit *Edit5;
 	TEdit *Edit6;
 	TCheckBox *CheckBox1;
-	TButton *Button1;
+	TButton *AddButton;
 	TButton *ExitButton;
 	void __fastcall FirstNameExit(TObject *Sender);
 	void __fastcall SecondNameExit(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall AddButtonClick(TObject *Sender);
 	void __fastcall ExitButtonClick(TObject *Sender);
 private:
 public:

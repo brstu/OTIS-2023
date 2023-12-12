@@ -58,7 +58,7 @@ void __fastcall TForm3::FirstNameExit(TObject *Sender)
 	std::string tempName = EditName.c_str();
 	isExisting1 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
-		Button1->Enabled = true;
+		AddButton->Enabled = true;
 	}
 	else if(!isExisting1){
 	ShowMessage("¬ершина с таким именем не найдена");
@@ -72,7 +72,7 @@ void __fastcall TForm3::SecondNameExit(TObject *Sender)
 	std::string tempName = EditName.c_str();
 	isExisting2 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
-		Button1->Enabled = true;
+		AddButton->Enabled = true;
 	}
 	else if(!isExisting2){
 	ShowMessage("¬ершина с таким именем не найдена");
@@ -80,7 +80,7 @@ void __fastcall TForm3::SecondNameExit(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm3::Button1Click(TObject *Sender)
+void __fastcall TForm3::AddButtonClick(TObject *Sender)
 {
 	AnsiString tempName = FirstName->Text;
 	std::string name = tempName.c_str();
@@ -95,7 +95,7 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 		 SecondName->Clear();
 		 isExisting2 = false;
 		 isExisting1 = false;
-		 Button1->Enabled = false;
+		 AddButton->Enabled = false;
 		 ShowMessage("–ебро между этими вершинами уже существует.");
 	}
 	else {

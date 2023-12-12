@@ -2,8 +2,8 @@ object Form6: TForm6
   Left = 0
   Top = 0
   Caption = 'Form6'
-  ClientHeight = 148
-  ClientWidth = 304
+  ClientHeight = 157
+  ClientWidth = 310
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,21 +11,21 @@ object Form6: TForm6
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Label3: TLabel
+  object WeightLabel: TLabel
     Left = 16
     Top = 26
     Width = 38
     Height = 15
     Caption = 'Weight'
   end
-  object Label4: TLabel
+  object LevelRGB: TLabel
     Left = 16
     Top = 63
     Width = 22
     Height = 15
     Caption = 'RGB'
   end
-  object Edit3: TEdit
+  object NewWeight: TEdit
     Left = 160
     Top = 23
     Width = 121
@@ -34,16 +34,17 @@ object Form6: TForm6
     TabOrder = 0
     Text = '0'
   end
-  object Edit4: TEdit
+  object NewR: TEdit
     Left = 67
     Top = 60
     Width = 58
     Height = 23
+    ImeName = 'NewR'
     NumbersOnly = True
     TabOrder = 1
     Text = '255'
   end
-  object Edit5: TEdit
+  object NewG: TEdit
     Left = 145
     Top = 60
     Width = 56
@@ -52,7 +53,7 @@ object Form6: TForm6
     TabOrder = 2
     Text = '255'
   end
-  object Edit6: TEdit
+  object NewB: TEdit
     Left = 216
     Top = 60
     Width = 65
@@ -61,13 +62,13 @@ object Form6: TForm6
     TabOrder = 3
     Text = '255'
   end
-  object Button2: TButton
+  object EditExitBut: TButton
     Left = 112
     Top = 104
     Width = 75
     Height = 25
     Caption = 'OK'
     TabOrder = 4
-    OnClick = Button2Click
+    OnClick = EditExitButClick
   end
 end

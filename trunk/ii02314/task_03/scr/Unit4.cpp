@@ -138,8 +138,8 @@ void deleteEdges(int id1, int id2){
 __fastcall TForm4::TForm4(TComponent* Owner)
 	: TForm(Owner)
 {
-bool isExisting1 = false;
-bool isExisting2 = false;
+isExisting1 = false;
+isExisting2 = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm4::Button2Click(TObject *Sender)
@@ -147,9 +147,9 @@ void __fastcall TForm4::Button2Click(TObject *Sender)
 	Form4->Close();
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm4::Edit1Exit(TObject *Sender)
+void __fastcall TForm4::FNameExit(TObject *Sender)
 {
-	AnsiString EditName = Edit1->Text;
+	AnsiString EditName = FName->Text;
 	std::string tempName = EditName.c_str();
 	isExisting1 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
@@ -157,13 +157,13 @@ void __fastcall TForm4::Edit1Exit(TObject *Sender)
 	}
 	else if(!isExisting1){
 	ShowMessage("Вершина с таким именем не найдена");
-	Edit1->SetFocus();
+	FName->SetFocus();
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm4::Edit2Exit(TObject *Sender)
+void __fastcall TForm4::SNameExit(TObject *Sender)
 {
-	AnsiString EditName = Edit2->Text;
+	AnsiString EditName = SName->Text;
 	std::string tempName = EditName.c_str();
 	isExisting2 = checkVertexExisting(tempName);
 	if(isExisting1 && isExisting2){
@@ -171,16 +171,16 @@ void __fastcall TForm4::Edit2Exit(TObject *Sender)
 	}
 	else if(!isExisting2){
 	ShowMessage("Вершина с таким именем не найдена");
-	Edit2->SetFocus();
+	SName->SetFocus();
 	}
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm4::Button1Click(TObject *Sender)
 {
-	AnsiString tempName = Edit1->Text;
+	AnsiString tempName = FName->Text;
 	std::string name = tempName.c_str();
 	int id1 = findVertexByName(name);
-	tempName = Edit2->Text;
+	tempName = SName->Text;
 	name = tempName.c_str();
 	int id2 = findVertexByName(name);
 
