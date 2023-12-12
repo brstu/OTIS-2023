@@ -35,7 +35,7 @@ class Node:
         canvas.coords(self.krug, x-20, y-20, x+20, y+20)
         canvas.coords(self.txt, x, y)
         for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
+            if edge.nodik1 == self or edge.nodik2 == self:
                 edge.move()
 
     def change_color(self, color):
@@ -45,7 +45,7 @@ class Node:
         canvas.delete(self.krug)
         canvas.delete(self.txt)
         for edge in edges:
-            if edge.node1 == self or edge.node2 == self:
+            if edge.nodik1 == self or edge.nodik2 == self:
                 edge.delete()
                 edges.remove(edge)
         graph.remove_node(self.name)
@@ -57,13 +57,13 @@ def create_circle(x, y, r, **kwargs):
 
 class Edge:
     def __init__(self, node1, node2, weight: int):
-        self.weight = weight
-        self.node1 = node1
-        self.node2 = node2
-        self.line = canvas.create_line(line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.wes = weight
+        self.nodik1 = node1
+        self.nodik2 = node2
+        self.line = canvas.create_line(line_intersect_circle(self.nodik1.x, self.nodik1.y, self.nodik2.x, self.nodik2.y),
                                        width=2, fill="black")
         self.txt = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
-                                       text=self.weight, font="Arial 20", fill="white")
+                                       text=self.wes, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
 
     def change(self):
@@ -82,22 +82,22 @@ class Edge:
         win.mainloop()
 
     def change_weight(self, weight):
-        self.weight = int(weight)
+        self.wes = int(weight)
         canvas.itemconfig(self.txt, text=weight)
-        graph.remove_edge(self.node1.name, self.node2.name)
-        graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
+        graph.remove_edge(self.nodik1.name, self.nodik2.name)
+        graph.add_edge(self.nodik1.name, self.nodik2.name, weight=self.wes)
 
     def change_color(self, color):
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        canvas.coords(self.line, line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
-        canvas.coords(self.txt, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
+        canvas.coords(self.line, line_intersect_circle(self.nodik1.x, self.nodik1.y, self.nodik2.x, self.nodik2.y))
+        canvas.coords(self.txt, (self.nodik1.x + self.nodik2.x) / 2, (self.nodik1.y + self.nodik2.y) / 2 - 5)
 
     def delete(self):
         canvas.delete(self.line)
         canvas.delete(self.txt)
-        graph.remove_edge(self.node1.name, self.node2.name)
+        graph.remove_edge(self.nodik1.name, self.nodik2.name)
 
 
 def create_vertex(entry_name, window):
