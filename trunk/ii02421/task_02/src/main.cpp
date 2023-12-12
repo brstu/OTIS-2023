@@ -5,7 +5,7 @@
 
 class Regulator {
 public:
-    Regulator() {}
+    Regulator() = default;
 
     double sum() {
         double result = 0;
@@ -32,14 +32,26 @@ public:
         }
     }
 
-    std::vector<double> getParameterY() {
+    std::vector<double> getParameterY() const {
         return y;
     }
 
 private:
-    double a = 0.8, b = 0.3, c = 0.6, d = 0.04, k = 0.0002, t = 150, t0 = 2, td = 120;
-    double q0 = k * (1 + td / t0), q1 = -k * (1 + 2 * td / t0 - t0 / t), q2 = k * td / t0;
-    std::vector<double> q = {q0, q1, q2}, e = {0, 0, 0}, y = {0, 0, 0}, u = {1, 1};
+    double a = 0.8;
+    double b = 0.3;
+    double c = 0.6;
+    double d = 0.04;
+    double k = 0.0002;
+    double t = 150;
+    double t0 = 2;
+    double td = 120;
+    double q0 = k * (1 + td / t0);
+    double q1 = -k * (1 + 2 * td / t0 - t0 / t);
+    double q2 = k * td / t0;
+    std::vector<double> q = {q0, q1, q2};
+    std::vector<double> e = {0, 0, 0};
+    std::vector<double> y = {0, 0, 0};
+    std::vector<double> u = {1, 1};
 };
 
 int main() {
