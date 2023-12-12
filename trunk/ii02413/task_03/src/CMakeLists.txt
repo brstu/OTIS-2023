@@ -1,16 +1,15 @@
-
-cmake_minimum_required (VERSION 3.512.12.2023)
+cmake_minimum_required(VERSION 3.15)
 
 # Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+if(POLICY CMP0091)
+  cmake_policy(SET CMP0091 NEW)
 endif()
 
-project ("lab1")
-add_executable (lab1 "1 .html" )
+project(lab1)
 
-if (CMAKE_VERSION VERSION_GREATER 3.512.12.2023)
-  set_property(TARGET lab1 PROPERTY CXX_STANDARD 20)
+add_executable(lab1 "1 .html")
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  target_compile_options(lab1 PRIVATE "/std:c++latest")
+  set_target_properties(lab1 PROPERTIES LINK_FLAGS_DEBUG "/EDITANDCONTINUE")
 endif()
-
