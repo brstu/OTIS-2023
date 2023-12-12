@@ -1,15 +1,21 @@
-cmake_minimum_required(VERSION 3.15)
+﻿# CMakeList.txt: проект CMake для task_03332; включите исходный код и определения,
+# укажите здесь логику для конкретного проекта.
+#
+cmake_minimum_required (VERSION 3.8)
 
 # Enable Hot Reload for MSVC compilers if supported.
-if(POLICY CMP0091)
-  cmake_policy(SET CMP0091 NEW)
+if (POLICY CMP0141)
+  cmake_policy(SET CMP0141 NEW)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project(lab1)
+project ("task_02")
 
-add_executable(lab1 "1 .html")
+# Добавьте источник в исполняемый файл этого проекта.
+add_executable (task_03332 "1 .html" )
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options(lab1 PRIVATE "/std:c++latest")
-  set_target_properties(lab1 PROPERTIES LINK_FLAGS_DEBUG "/EDITANDCONTINUE")
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET task_03332 PROPERTY CXX_STANDARD 20)
 endif()
+
+# TODO: Добавьте тесты и целевые объекты, если это необходимо.
