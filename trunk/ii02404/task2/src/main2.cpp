@@ -11,9 +11,8 @@ public:
         integral += error * T0;
         double derivative = (error - prevError) / T0;
         double output = Kp * error + Ki * integral + Kd * derivative;
-        
-        prevError = error;
 
+        prevError = error;
         return output;
     }
 
@@ -22,8 +21,8 @@ private:
     double Ki;      // Integral gain
     double Kd;      // Derivative gain
     double T0;      // Sampling time
-    double prevError;
-    double integral;
+    double prevError = 0.0;  // Initialize member variables in the class
+    double integral = 0.0;
 };
 
 class TemperatureSystem {
@@ -43,8 +42,8 @@ private:
     double b;
     double c;
     double d;
-    double y_prev;
-    double y_prev2;
+    double y_prev = 0.0;  // Initialize member variables in the class
+    double y_prev2 = 0.0;
 };
 
 int main() {
@@ -53,22 +52,18 @@ int main() {
     double Ki = 0.1;
     double Kd = 0.01;
     double T0 = 0.1;  // Произвольное значение шага дискретизации
-
     // Параметры объекта управления
     double a = 0.5;
     double b = -0.1;
     double c = 0.2;
     double d = 0.01;
-
     PIDController pidController(Kp, Ki, Kd, T0);
     TemperatureSystem temperatureSystem(a, b, c, d);
-
     // Моделирование процесса управления
     for (int i = 0; i < 100; ++i) {
         double setpoint = 25.0;  // Желаемая температура
         double measuredTemperature = temperatureSystem.update(pidController.compute(setpoint, temperatureSystem.update(1.0)));
         std::cout << "Time: " << i * T0 << "s, Temperature: " << measuredTemperature << "C" << std::endl;
     }
-
     return 0;
 }
