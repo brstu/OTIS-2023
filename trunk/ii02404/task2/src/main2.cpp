@@ -28,7 +28,7 @@ private:
 class TemperatureSystem {
 public:
     TemperatureSystem(double a, double b, double c, double d)
-        : a(a), b(b), c(c), d(d), y_prev(0.0), y_prev2(0.0) {}
+        : a(a), b(b), c(c), d(d) {}
 
     double update(double u) {
         double y = a * y_prev + b * std::pow(y_prev2, 2) + c * u + d * std::sin(u);
@@ -42,8 +42,8 @@ private:
     double b;
     double c;
     double d;
-    double y_prev = 0.0;  // Initialize member variables in the class
-    double y_prev2 = 0.0;
+    double y_prev{0.0};  // Initialize member variables in the class
+    double y_prev2{0.0};
 };
 
 int main() {
