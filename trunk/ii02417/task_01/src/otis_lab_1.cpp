@@ -3,7 +3,7 @@
 
 class LinearModel {
 public:
-    LinearModel() : yT(1), uT(0.5), time(15), a(1.2), b(0.7) {
+    LinearModel(){
         std::cout << "Linear Model" << std::endl;
     }
 
@@ -15,16 +15,16 @@ public:
     }
 
 private:
-    double yT;
-    double uT;
-    int time;
-    double a;
-    double b;
+    double yT = 1;     
+    double uT = 0.5;   
+    int time = 15;     
+    double a = 1.2;    
+    double b = 0.7;    
 };
 
 class NonLinearModel {
 public:
-    NonLinearModel() : yT(1.5), uT(0.5), prevYT(0), time(15), a(1.2), b(0.7), c(-0.32), d(0.53) {
+    NonLinearModel(){
         std::cout << "Non-Linear Model" << std::endl;
     }
 
@@ -38,14 +38,14 @@ public:
     }
 
 private:
-    double yT;
-    double uT;
-    double prevYT;
-    int time;
-    double a;
-    double b;
-    double c;
-    double d;
+    double yT = 1.5;   
+    double uT = 0.5;   
+    double prevYT = 0; 
+    int time = 15;     
+    double a = 1.2;    
+    double b = 0.7;    
+    double c = -0.32;  
+    double d = 0.53;   
 };
 
 int main() {
