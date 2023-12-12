@@ -4,26 +4,14 @@
 
 using namespace std;
 
-double calculateFunction1(double y, double u) {
-    double coefficientA = 0.6;
-    double coefficientB = 0.5;
-    return coefficientA * y + coefficientB * u;
-}
-
-double calculateFunction2(double y, double u, double y1) {
-    double coefficientA = 0.6;
-    double coefficientB = 0.5;
-    double coefficientC = 0.62;
-    double coefficientD = 1.1;
-    return coefficientA * y - coefficientB * pow(y1, 2) + coefficientC * u + coefficientD * sin(u);
-}
-
 int main() {
-    ofstream outputFile("output.txt");
+    double initialY;
+    double initialU;
 
-    double initialY, initialU;
     cout << "Enter initial values for y and u: ";
     cin >> initialY >> initialU;
+
+    ofstream outputFile("output.txt");
 
     double y1 = initialY;
     double y2 = initialY;
