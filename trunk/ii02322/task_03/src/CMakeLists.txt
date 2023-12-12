@@ -8,7 +8,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_PREFIX_PATH "/usr/bin/qmake")
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
