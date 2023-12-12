@@ -9,6 +9,13 @@
 #include <Vcl.Forms.hpp>
 
 void roundRGB(int& x);
+
+
+
+
+
+
+
 //---------------------------------------------------------------------------
 class TForm2 : public TForm
 {

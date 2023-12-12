@@ -8,6 +8,9 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 //---------------------------------------------------------------------------
+
+
+//int Form7id;
 class TForm8 : public TForm
 {
 __published:	// IDE-managed Components
@@ -27,4 +30,7 @@ public:		// User declarations
 //---------------------------------------------------------------------------
 extern PACKAGE TForm8 *Form8;
 //---------------------------------------------------------------------------
+
+
+
 #endif

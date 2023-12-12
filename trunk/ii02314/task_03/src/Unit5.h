@@ -11,17 +11,21 @@
 //---------------------------------------------------------------------------
 class TForm5 : public TForm
 {
-__published:	// IDE-managed Components
+__published:
 	TLabel *Label1;
+
 	TLabel *Label2;
+
 	TEdit *Edit1;
+
 	TEdit *Edit2;
+
 	TButton *Button1;
 	void __fastcall Edit1Exit(TObject *Sender);
 	void __fastcall Edit2Exit(TObject *Sender);
 	void __fastcall Button1Click(TObject *Sender);
-private:	// User declarations
-public:		// User declarations
+private:
+public:
 	__fastcall TForm5(TComponent* Owner);
 };
 //---------------------------------------------------------------------------

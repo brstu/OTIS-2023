@@ -7,8 +7,10 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
-int Foem5idEdges1;
-int Foem5idEdges2;
+
+
+int Form5idEdges1;
+int Form5idEdges2;
 //---------------------------------------------------------------------------
 class TForm6 : public TForm
 {
