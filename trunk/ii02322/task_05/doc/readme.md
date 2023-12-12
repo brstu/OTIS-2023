@@ -24,6 +24,7 @@
 1. Изучить следующие открытые проекты:
    
 	1.1. The OSTIS Technology project;
+   
 	1.2. The OSTIS Applications;
    
 3. Внести свой вклад в проект (в виде оформления вопросов (issues)):
