@@ -15,6 +15,7 @@
 #include "Unit10.h"
 #include "Unit11.h"
 #include "Unit12.h"
+#include "Unit13.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -175,6 +176,13 @@ void __fastcall TForm1::IncMatrix1Click(TObject *Sender)
 void __fastcall TForm1::IncMatrix2Click(TObject *Sender)
 {
 	 TForm12 *Form = new TForm12(this);
+	  Form->ShowModal();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ShowInfo1Click(TObject *Sender)
+{
+	 TForm13 *Form = new TForm13(this);
 	  Form->ShowModal();
 }
 //---------------------------------------------------------------------------

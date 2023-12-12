@@ -67,7 +67,6 @@ __published:	// IDE-managed Components
 	TMenuItem *Info1;
 	TMenuItem *IncMatrix1;
 	TMenuItem *IncMatrix2;
-	TMenuItem *FindPath1;
 	TMenuItem *ShowInfo1;
 	void __fastcall N4Click(TObject *Sender);
 	void __fastcall FormCreate(TObject *Sender);
@@ -79,6 +78,7 @@ __published:	// IDE-managed Components
 	void __fastcall Algorithm2Click(TObject *Sender);
 	void __fastcall IncMatrix1Click(TObject *Sender);
 	void __fastcall IncMatrix2Click(TObject *Sender);
+	void __fastcall ShowInfo1Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

@@ -76,17 +76,15 @@ object Form1: TForm1
         OnClick = IncMatrix1Click
       end
       object IncMatrix2: TMenuItem
-        Caption = 'Find Distance'
+        Caption = 'Find Distance and Path'
         OnClick = IncMatrix2Click
-      end
-      object FindPath1: TMenuItem
-        Caption = 'Find Path'
       end
     end
     object Info1: TMenuItem
       Caption = 'Info'
       object ShowInfo1: TMenuItem
         Caption = 'Show Info'
+        OnClick = ShowInfo1Click
       end
     end
   end
