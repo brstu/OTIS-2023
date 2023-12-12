@@ -234,6 +234,116 @@ QString degreesText = "Степени вершин:\n";
     layout.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
+void GraphWindow::on_addEdgePushButton_clicked()
+{
+    QGraphicsEllipseItem* selectedVertex1 = getSelectedVertex();
+    if (!selectedVertex1) return;
+    QGraphicsEllipseItem* selectedVertex2 = getSelectedVertex();
+    if (!selectedVertex2) return;
+    bool ok;
+    double weight = QInputDialog::getInt(this, "Введите вес ребра", "Введите вес ребра:", 1, -2147483647, 2147483647, 2, &ok);
+    if (!ok) {
+    return;
+    }
+
+    qreal middleX = (selectedVertex1->scenePos().x() + selectedVertex2->scenePos().x()) / 2.0;
+    qreal middleY = (selectedVertex1->scenePos().y() + selectedVertex2->scenePos().y()) / 2.0;
+
+    // Если выбрана одна и та же вершина, создаем петлю
+    if (selectedVertex1 == selectedVertex2) {
+        QGraphicsEllipseItem* loop = new QGraphicsEllipseItem;
+        //loop->setFlag(QGraphicsItem::ItemIsMovable);
+        loop->setData(0,"loop");
+        loop->setData(1,selectedVertex1->data(1));
+        loop->setFlag(QGraphicsItem::ItemIsSelectable);
+        //loop->setRect();
+        QGraphicsTextItem* weightTextItem = new QGraphicsTextItem(QString::number(weight));
+        weightTextItem->setPos(middleX, middleY);
+        ui->graphicsView->scene()->addItem(weightTextItem);
+
+        // Добавление петли на сцену
+        ui->graphicsView->scene()->addItem(loop);
+
+        Loop loop1;
+        loop1.vertex1 = selectedVertex1;
+        loop1.loop = loop;
+        loop1.weight = weightTextItem;
+        loops.append(loop1);
+
+        connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+            updateLoopPosition(loop, selectedVertex1, weightTextItem);
+        });
+        return;
+    }
+
+    // Создание ребра
+    if (key == "Unorient"){
+    QGraphicsLineItem* edge = new QGraphicsLineItem;
+    //edge->setFlag(QGraphicsItem::ItemIsMovable);
+
+    edge->setFlag(QGraphicsItem::ItemIsSelectable);
+    edge->setLine(selectedVertex1->scenePos().x() + 0, selectedVertex1->scenePos().y() + 0,
+                  selectedVertex2->scenePos().x() + 0, selectedVertex2->scenePos().y() + 0);
+    edge->setData(0,"edge");
+    edge->setData(1,selectedVertex1->data(1));
+    edge->setData(2,selectedVertex2->data(1));
+    // Добавление ребра на сцену
+    QGraphicsTextItem* weightTextItem = new QGraphicsTextItem(QString::number(weight));
+    weightTextItem->setPos(middleX, middleY);
+    ui->graphicsView->scene()->addItem(weightTextItem);
+    ui->graphicsView->scene()->addItem(edge);
+    Edge edge1;
+    edge1.vertex1 = selectedVertex1;
+    edge1.vertex2 = selectedVertex2;
+    edge1.edgeItem = edge;
+    edge1.weight = weightTextItem;
+    edges.append(edge1);
+
+    // Соединение сигнала изменения сцены с обновлением позиции ребра
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateEdgePosition();
+    });
+    } else {
+    // Создание ориентированного ребра
+    QGraphicsLineItem* directedEdge = new QGraphicsLineItem;
+    directedEdge->setFlag(QGraphicsItem::ItemIsSelectable);
+    directedEdge->setData(1,selectedVertex1->data(1));
+    directedEdge->setData(2,selectedVertex2->data(1));
+
+    directedEdge->setLine(selectedVertex1->scenePos().x() + 25, selectedVertex1->scenePos().y() + 25,
+                          selectedVertex2->scenePos().x() + 25, selectedVertex2->scenePos().y() + 25);
+    directedEdge->setData(0,"edge");
+    QGraphicsTextItem* weightTextItem = new QGraphicsTextItem(QString::number(weight));
+    weightTextItem->setPos(middleX, middleY);
+    ui->graphicsView->scene()->addItem(weightTextItem);
+    // Добавление ориентированного ребра на сцену
+    ui->graphicsView->scene()->addItem(directedEdge);
+
+    // Draw an arrowhead at the end of the line
+    double arrowSize = 10.0;
+    double angle = atan2(directedEdge->line().dy(), directedEdge->line().dx());
+    double x1 = directedEdge->line().x2() - arrowSize * cos(angle - M_PI / 6);
+    double y1 = directedEdge->line().y2() - arrowSize * sin(angle - M_PI / 6);
+    double x2 = directedEdge->line().x2() - arrowSize * cos(angle + M_PI / 6);
+    double y2 = directedEdge->line().y2() - arrowSize * sin(angle + M_PI / 6);
+
+    QGraphicsPolygonItem* arrowhead = new QGraphicsPolygonItem(QPolygonF() << directedEdge->line().p2() << QPointF(x1, y1) << QPointF(x2, y2));
+    arrowhead->setBrush(Qt::black);
+    ui->graphicsView->scene()->addItem(arrowhead);
+    OrEdge directedEdge1;
+    directedEdge1.vertex1 = selectedVertex1;
+    directedEdge1.vertex2 = selectedVertex2;
+    directedEdge1.edgeItem = directedEdge;
+    directedEdge1.arrowItem = arrowhead;
+    directedEdge1.weight = weightTextItem;
+    or_edges.append(directedEdge1);
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateOrEdgePosition();
+    });
+    }
+
+}
+
 void MainWindow::on_aIB()
 {
     sGI();
