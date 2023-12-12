@@ -118,17 +118,19 @@ class ViewController: UIViewController {
         button.setTitle(nameOfGraph, for: .normal)
         button.backgroundColor = .darkGray
         button.tag = countOfGraphs
-        if button.tag == 1 {
-            button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        } else if isAdd {
+
+        // Merge the common branch for button.backgroundColor
+        if button.tag == 1 || (isAdd && button.tag != 1) {
             button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         }
+
         button.setTitleColor(.black, for: .normal)
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(renamePage(param:)))
         doubleTap.numberOfTapsRequired = 2
         button.addGestureRecognizer(doubleTap)
         button.addTarget(self, action: #selector(changeGraph(param:)), for: .touchUpInside)
         pageScrollView.addSubview(button)
+
         NSLayoutConstraint.activate([
             button.leftAnchor.constraint(equalTo: pageScrollView.leftAnchor,
                                          constant: CGFloat(150 * buttonsForPages.count)),
@@ -136,12 +138,16 @@ class ViewController: UIViewController {
             button.bottomAnchor.constraint(equalTo: pageScrollView.bottomAnchor),
             button.widthAnchor.constraint(equalToConstant: 150)
         ])
+
         totalWidthForPagesButtons += 150
+
         if totalWidthForPagesButtons > view.bounds.width {
             pageScrollView.contentInset.right = totalWidthForPagesButtons
         }
+
         buttonsForPages.append(button)
     }
+
     // переименование страницы
     @objc func renamePage(param: UITapGestureRecognizer) {
         let tag = param.view?.tag
