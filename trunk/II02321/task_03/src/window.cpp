@@ -683,7 +683,253 @@ void MainWindow::on_addVB()
 }
 
 
+void GraphWindow::setColor(const QColor &color)
+{
+    // Получаем список всех выделенных элементов
+    QList<QGraphicsItem*> selectedItems = scene->selectedItems();
+    // Идентификация и изменение цвета для каждого выделенного элемента
+    for (QGraphicsItem *item : selectedItems) {
+        QString ItemType = item->data(0).toString();
+        // Проверка, является ли элемент вершиной
+        QGraphicsEllipseItem *vertexItem = qgraphicsitem_cast<QGraphicsEllipseItem*>(item);
+        if (vertexItem) {
+            if (ItemType == "vert"){
+                vertexItem->setBrush(QBrush(color));
+            } else if (ItemType == "loop"){
+                vertexItem->setPen(QPen(color, 2));
+            }
+        }
 
+        // Проверка, является ли элемент ребром
+        QGraphicsLineItem *edgeItem = qgraphicsitem_cast<QGraphicsLineItem*>(item);
+        if (edgeItem) {
+            edgeItem->setPen(QPen(color, 2)); // Пример установки цвета для ребра
+        }
+    }
+}
+
+void GraphWindow::on_colorPushButton_clicked()
+{
+QMenu* colorMenu = new QMenu(this);
+
+    // Добавляем цветные квадраты как иконки к действиям
+    addActionWithColor(colorMenu, "Красный", Qt::red);
+    addActionWithColor(colorMenu, "Зеленый", Qt::green);
+    addActionWithColor(colorMenu, "Синий", Qt::blue);
+    addActionWithColor(colorMenu, "Желтый", Qt::yellow);
+    addActionWithColor(colorMenu, "Фиолетовый", Qt::magenta);
+    addActionWithColor(colorMenu, "Голубой", Qt::cyan);
+    addActionWithColor(colorMenu, "Серый", Qt::gray);
+    addActionWithColor(colorMenu, "Черный", Qt::black);
+    addActionWithColor(colorMenu, "Белый", Qt::white);
+
+    // Отображаем меню относительно глобальной позиции кнопки
+    colorMenu->exec(ui->colorPushButton->mapToGlobal(QPoint(0, ui->colorPushButton->height())));
+}
+
+void GraphWindow::addActionWithColor(QMenu* menu, const QString& colorName, const QColor& color)
+{
+    QPixmap colorIcon(20, 20);
+    colorIcon.fill(color);
+    QAction* action = menu->addAction(QIcon(colorIcon), colorName);
+
+    connect(action, &QAction::triggered, this, [this, color]() {
+        setColor(color);
+    });
+}
+
+void GraphWindow::on_comboBox_currentIndexChanged(int index)
+{
+    qreal scaleFactor = ui->comboBox->itemText(index).toDouble();
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);
+    ui->graphicsView->resetTransform();
+    ui->graphicsView->scale(scaleFactor, scaleFactor);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+}
+
+void GraphWindow::copyObjects()
+{
+    copiedVert.clear();
+    copiedEdge.clear();
+    copiedOrEdge.clear();
+    copiedLoops.clear();
+
+
+    // Iterate over selected items and copy them
+    for (QGraphicsItem*& selectedItem : scene->selectedItems()) {
+        //if vert
+
+        if (selectedItem->data(0).toString() == "vert"){
+            for (const Vertice& vert : verts){
+                if (vert.vert == selectedItem){
+                    copiedVert.append(vert);
+                    break;
+                }
+            }
+        }
+        //if edge
+        if (selectedItem->data(0).toString() == "edge"){
+            if (key == "Unorient"){
+                for (const Edge& edge : edges){
+                    if (edge.edgeItem == selectedItem){
+                        copiedEdge.append(edge);
+                        break;
+                    }
+                }
+            } else {
+                for (const OrEdge& edge : or_edges){
+                    if (edge.edgeItem == selectedItem){
+                        copiedOrEdge.append(edge);
+                        break;
+                    }
+                }
+            }
+        }
+        if (selectedItem->data(0).toString() == "loop"){
+            for (const Loop& loop : loops){
+                if (loop.loop == selectedItem){
+                    copiedLoops.append(loop);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void GraphWindow::addEdge(Vertice vert1, Vertice vert2,Edge edge){
+    QGraphicsLineItem* edge1 = new QGraphicsLineItem;
+    //edge->setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsTextItem* weight = new QGraphicsTextItem;
+    ui->graphicsView->scene()->addItem(weight);
+    weight->setPlainText(edge.weight->toPlainText());
+    edge1->setFlag(QGraphicsItem::ItemIsSelectable);
+    //edge->setLine(selectedVertex1->scenePos().x() + 25, selectedVertex1->scenePos().y() + 25,
+    // selectedVertex2->scenePos().x() + 25, selectedVertex2->scenePos().y() + 25);
+    edge1->setData(0,"edge");
+    edge1->setData(1,vert1.vert->data(1));
+    edge1->setData(2,vert2.vert->data(1));
+    // Добавление ребра на сцену
+    ui->graphicsView->scene()->addItem(edge1);
+    Edge edge2;
+    edge2.vertex1 = vert1.vert;
+    edge2.vertex2 = vert2.vert;
+    edge2.edgeItem = edge1;
+    edge2.weight = weight;
+    edges.append(edge2);
+
+    // Соединение сигнала изменения сцены с обновлением позиции ребра
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateEdgePosition();
+    });
+}
+
+void GraphWindow::addOrEdge(Vertice vert1, Vertice vert2,OrEdge edge){
+    QGraphicsLineItem* directedEdge = new QGraphicsLineItem;
+    QGraphicsTextItem* weight = new QGraphicsTextItem;
+    ui->graphicsView->scene()->addItem(weight);
+    weight->setPlainText(edge.weight->toPlainText());
+    directedEdge->setFlag(QGraphicsItem::ItemIsSelectable);
+    directedEdge->setData(1,vert1.vert->data(1));
+    directedEdge->setData(2,vert2.vert->data(1));
+
+
+    directedEdge->setData(0,"edge");
+    // Добавление ориентированного ребра на сцену
+    ui->graphicsView->scene()->addItem(directedEdge);
+
+
+
+    QGraphicsPolygonItem* arrowhead = new QGraphicsPolygonItem(QPolygonF()) ;
+    arrowhead->setBrush(Qt::black);
+    ui->graphicsView->scene()->addItem(arrowhead);
+    OrEdge directedEdge1;
+    directedEdge1.vertex1 = vert1.vert;
+    directedEdge1.vertex2 = vert2.vert;
+    directedEdge1.edgeItem = directedEdge;
+    directedEdge1.arrowItem = arrowhead;
+    directedEdge1.weight = weight;
+    or_edges.append(directedEdge1);
+    connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+        updateOrEdgePosition();
+    });
+}
+
+void GraphWindow::pasteObjects()
+{
+    QList<Vertice> pastedVert;
+    for (const Vertice& vert : copiedVert){
+        QGraphicsEllipseItem* newVertexItem = new QGraphicsEllipseItem(0,0,25,25);
+        QGraphicsTextItem* newTextItem = new QGraphicsTextItem(vert.textvert->toPlainText(), newVertexItem);
+        newVertexItem->setData(0,"vert");
+        newVertexItem->setData(1, verts.count());
+        newVertexItem->setData(2,vert.vert->data(1));
+        newVertexItem->setPos(vert.vert->scenePos().x()+50,vert.vert->scenePos().y()+50); // Пример начальной позиции
+        newVertexItem->setFlag(QGraphicsItem::ItemIsMovable);
+        newVertexItem->setFlag(QGraphicsItem::ItemIsSelectable);
+        newVertexItem->setBrush(QBrush(Qt::white));
+        newVertexItem->setZValue(1);
+        QRectF textRect = vert.textvert->boundingRect();
+
+        // Установить позицию текста в центр вершины
+        qreal xPos = (vert.vert->boundingRect().width() - textRect.width()) / 2.0;
+        qreal yPos = (vert.vert->boundingRect().height() - textRect.height()) / 2.0;
+        newTextItem->setPos(xPos, yPos);
+
+
+        // Добавить вершину на сцену
+        ui->graphicsView->scene()->addItem(newVertexItem);
+        Vertice vert1;
+        vert1.textvert = newTextItem;
+        vert1.vert = newVertexItem;
+        verts.append(vert1);
+        pastedVert.append(vert1);
+    }
+    for (const Loop& loops1: copiedLoops){
+        for (const Vertice& vert : pastedVert){
+            if( loops1.loop->data(1) == vert.vert->data(2)){
+                QGraphicsEllipseItem* loop = new QGraphicsEllipseItem;
+                QGraphicsTextItem* weight = loops1.weight;
+                //loop->setFlag(QGraphicsItem::ItemIsMovable);
+                loop->setData(0,"loop");
+                loop->setData(1,vert.vert->data(1));
+                loop->setFlag(QGraphicsItem::ItemIsSelectable);
+                //loop->setRect();
+
+                // Добавление петли на сцену
+                ui->graphicsView->scene()->addItem(weight);
+                ui->graphicsView->scene()->addItem(loop);
+
+                Loop loop1;
+                loop1.vertex1 = vert.vert;
+                loop1.loop = loop;
+                loop1.weight = weight;
+
+                loops.append(loop1);
+
+                connect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, [=]() {
+                    updateLoopPosition(loop, vert.vert, weight);
+                });
+            }
+        }
+    }
+    for (const Edge& edge : copiedEdge){
+        for (const Vertice& vert1 : pastedVert){
+            for (const Vertice& vert2 : pastedVert){
+                if (edge.edgeItem->data(1) == vert1.vert->data(2) && edge.edgeItem->data(2) == vert2.vert->data(2)){
+                    addEdge(vert1,vert2,edge);
+                }
+            }
+        }
+    }
+
+    for (const OrEdge& edge : copiedOrEdge){
+        for (const Vertice& vert1 : pastedVert){
+            for (const Vertice& vert2 : pastedVert){
+                if (edge.edgeItem->data(1) == vert1.vert->data(2) && edge.edgeItem->data(2) == vert2.vert->data(2)){
+                    addOrEdge(vert1,vert2,edge);
+                }
+            }
+        }
 void MainWindow::on_rEB()
 {
     if (e.isEmpty()) {
@@ -712,7 +958,154 @@ void MainWindow::on_rEB()
         }
         dialog.close();
     });
+    // Матрица смежности
+    QString adjacencyMatrixText = "Матрица смежности:\n";
+    matrix = createAdjacencyMatrix();
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
 
+                    if (matrix[i][j]) {
+                        adjacencyMatrixText += "1 ";
+                    } else {
+                        adjacencyMatrixText += "0 ";
+                    }
+        }
+        adjacencyMatrixText += "\n";
+    }
+
+    QString completeGraph;
+    if((numVertices*(numVertices-1))/2 == numEdges){completeGraph = "Граф является полным";}
+    else {completeGraph = "Граф не является полным";};
+    QString connected;
+    if(complGraph()){
+        connected = "Граф является связным";
+    } else {
+        connected = "Граф не является связным";
+    };
+    // Формирование окна с информацией о графе
+    QString tree;
+    if(isTree(matrix)){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
+    QString eur;
+    alg alg;
+    if(alg.isEulerian(matrix) || alg.isOrEulerian(matrix)){ eur = "Граф является эйлеровым";} else {eur = "Граф не является эйлеровым";};
+    QDialog dialog;
+    QVBoxLayout layout(&dialog);
+    QLabel infoLabel(infoText);
+    QLabel degreesLabel(degreesText);
+    QLabel incidenceMatrixLabel(incidenceMatrixText);
+    QLabel adjacencyMatrixLabel(adjacencyMatrixText);
+    QLabel GraphConnectedLabel(connected);
+    QLabel Tree(tree);
+    QLabel CompleteGraphLabel(completeGraph);
+    QLabel Eur(eur);
+    layout.addWidget(&infoLabel);
+    layout.addWidget(&degreesLabel);
+    layout.addWidget(&incidenceMatrixLabel);
+    layout.addWidget(&adjacencyMatrixLabel);
+    layout.addWidget(&GraphConnectedLabel);
+    layout.addWidget(&Tree);
+    layout.addWidget(&CompleteGraphLabel);
+    layout.addWidget(&Eur);
+    dialog.exec();
+    break;
+}
+    case 2:{
+alg alg;
+VEC2 matrix = createAdjacencyMatrix();
+VEC1 cucle;
+QString cucl;
+if (alg.isEulerian(matrix)){
+    cucle = alg.findEulerianCycle(matrix);
+    for (auto cuc: cucle){
+        cucl =cucl+ QString::number(cuc)+" ";
+    }
+    QDialog dialog;
+    QVBoxLayout layout(&dialog);
+    QLabel Cucl(cucl);
+    layout.addWidget(&Cucl);
+    dialog.exec();
+} else if (alg.isOrEulerian(matrix)){
+    QMessageBox::warning(this,"Простите","Пока этот алгоритм работает только для неориентированного графа");
+} else {
+    QMessageBox::warning(this,"Не существует эйлерового цикла","Не существует эйлерового цикла");
+}
+break;
+    }
+    case 3:{
+alg alg;
+VEC2 matrix = createAdjacencyMatrix();
+queue cucle;
+QString cucl;
+if (alg.hasHamiltonianCycle(matrix)){
+    cucle = alg.findHamiltonianCycle(matrix);
+    while (!cucle.is_empty()){
+        cucl =cucl+ QString::number(cucle.front())+" ";
+        cucle.pop();
+    }
+    QDialog dialog;
+    QVBoxLayout layout(&dialog);
+    QLabel Cucl(cucl);
+    layout.addWidget(&Cucl);
+    dialog.exec();
+} else if (key == "Orient"){
+    QMessageBox::warning(this,"Простите","Пока этот алгоритм работает только для неориентированного графа");
+} else {
+    QMessageBox::warning(this,"Не существует эйлерового цикла","Не существует эйлерового цикла");
+}
+break;
+    }
+    case 4:
+    {
+alg alg;
+VEC2 matrix = createAdjacencyMatrix();
+QString param = QString::fromStdString(alg.calculateGraphParameters(matrix));
+QDialog dialog;
+QVBoxLayout layout(&dialog);
+QLabel Param(param);
+//QLabel Cucl(cucl);
+layout.addWidget(&Param);
+dialog.exec();
+break;
+    }
+    case 5:{
+alg search;
+int start = 0;
+VEC1 distance;
+VEC1 path(verts.length());
+VEC2 matrix = createWeightMatrix();
+distance = search.Dejkstra(matrix, start, path);
+
+VEC1 way;
+
+// Создаем строку с результатами
+QString result;
+QTextStream stream(&result);
+
+for (int i = 0; i < verts.length(); i++) {
+    stream << "\n" << start << "->" << i << " : " << distance[i];
+    stream << "\tPath:";
+
+    search.thisIsTheWay(path, start, i, way);
+    for (int j = 0; j < way.size(); j++) {
+        stream << way[j];
+    }
+    way.clear();
+}
+
+// Создаем и отображаем диалоговое окно
+QDialog dialog;
+QVBoxLayout layout(&dialog);
+QLabel Result(result);
+layout.addWidget(&Result);
+dialog.exec();
+
+break;
+    }
+
+    default:
+break;
+    }
+}
     dialog.exec();
 }
 
