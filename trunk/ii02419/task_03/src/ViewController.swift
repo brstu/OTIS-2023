@@ -59,7 +59,7 @@ class ViewController: UIViewController {
                 if self.isFirstCall {
                     self.pseudoNames.append(String(element))
                 }
-                let button1 = UIButton(frame: CGRect(x: paths[count] - 10,
+                let button = UIButton(frame: CGRect(x: paths[count] - 10,
                                                     y: paths[count + 1] - 10,
                                                     width: 20, height: 20))
                 button.setTitle(self.pseudoNames[element - 1], for: .normal)
@@ -112,7 +112,7 @@ class ViewController: UIViewController {
     }
     // кнопки для pageScrollView
     func makeButtonsForPages() {
-        let button1 = UIButton()
+        let button = UIButton()
         nameOfGraph = UserDefaults.standard.string(forKey: "nameOfGraph\(countOfGraphs)")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(nameOfGraph, for: .normal)
