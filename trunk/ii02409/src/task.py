@@ -3,7 +3,7 @@ from tkinter.colorchooser import askcolor
 from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
-
+CHANGE_NAME_WINDOW_GEOMETRY = "190x120+1050+250"
 def line_intersect_circle(x1, y1, x2, y2):
     main_hypotenuse = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
@@ -34,7 +34,7 @@ class Node:
     def change(self):
         win = Tk()
         win.title("Изменение имени")
-        win.geometry("190x120+1050+250")
+        win.geometry(CHANGE_NAME_WINDOW_GEOMETRY)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новое имя")
@@ -79,7 +79,7 @@ class Edge:
     def change(self):
         win = Tk()
         win.title("Изменение веса")
-        win.geometry("190x120+1050+250")
+        win.geometry(CHANGE_NAME_WINDOW_GEOMETRY)
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         label = Label(win, text="Введите новый вес")
