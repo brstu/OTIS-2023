@@ -228,56 +228,9 @@ QString degreesText = "Степени вершин:\n";
     if(degree > 1){ treetrue = false;}
     }
 
-    // Матрица инцидентности
-    QString incidenceMatrixText = "Матрица инцидентности:\n";
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numEdges; j++) {
-            if (e[j]->getSourceVertex() == v[i] || e[j]->gDV() == v[i]) {
-                incidenceMatrixText += "1 ";
-            } else {
-                incidenceMatrixText += "0 ";
-            }
-        }
-        incidenceMatrixText += "\n";
-    }
-
-    // Матрица смежности
-    QString adjacencyMatrixText = "Матрица смежности:\n";
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numVertices; j++) {
-            bool isAdjacent = false;
-            foreach (Edge* edge, e) {
-                if ((edge->gSV() == v[i] && edge->gDV() == v[j]) ||
-                    (edge->gSV() == v[j] && edge->gDV() == v[i])) {
-                    isAdjacent = true;
-                    break;
-                }
-            }
-            if (isAdjacent) {
-                adjacencyMatrixText += "1 ";
-            } else {
-                adjacencyMatrixText += "0 ";
-            }
-        }
-        adjacencyMatrixText += "\n";
-    }
-    QString eulerCycleText;
-    if (eulertrue && iGC()) {
-        eulerCycleText = gEC();
-    } else {
-        eulerCycleText = "Эйлеровый цикл не существует.";
-    }
 
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
-    for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = gV(e[i]->getSourceVertex()->getNameVertex());
-        int destinationIndex = gV(e[i]->gDV()->getNameVertex());
-        int weight = e[i]->getWeightEdge();
-
-        distances[sourceIndex][destinationIndex] = weight;
-        distances[destinationIndex][sourceIndex] = weight;
-    }
 
     for (int k = 0; k < numVertices; k++) {
         for (int i = 0; i < numVertices; i++) {for (int j = 0; j < numVertices; j++) {
@@ -311,21 +264,15 @@ QString degreesText = "Степени вершин:\n";
     QVBoxLayout layout(&dialog);
     QLabel infoLabel(infoText);
     QLabel degreesLabel(degreesText);
-    QLabel incidenceMatrixLabel(incidenceMatrixText);
-    QLabel adjacencyMatrixLabel(adjacencyMatrixText);
     QLabel GraphConnectedLabel(connected);
     QLabel Tree(tree);
     QLabel CompleteGraphLabel(completeGraph);
-    QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText); // Обновлено
     QLabel shortestPathsLabel(shortestPathsText);
     layout.addWidget(&infoLabel);
     layout.addWidget(&degreesLabel);
-    layout.addWidget(&incidenceMatrixLabel);
-    layout.addWidget(&adjacencyMatrixLabel);
     layout.addWidget(&GraphConnectedLabel);
     layout.addWidget(&Tree);
     layout.addWidget(&CompleteGraphLabel);
-    layout.addWidget(&eulerCycleLabel);
     layout.addWidget(&shortestPathsLabel);
     dialog.exec();
 }

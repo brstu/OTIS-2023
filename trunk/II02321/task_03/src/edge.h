@@ -6,17 +6,17 @@
 class Edge : public QGraphicsItem
 {
 public:
-    QColor getColorEdge() const {
+    QColor gCE() const {
         return colorEdge;
     }
-    double getWeightEdge() const {
+    double gWE() const {
         return weightEdge;
     }
-    Vertex* getSourceVertex() const {
+    Vertex* gSV() const {
         return sourceVertex;
     }
 
-    Vertex* getDestinationVertex() const {
+    Vertex* gDV() const {
         return destinationVertex;
     }
     Edge(Vertex* sourceVertex, Vertex* destination, double weight, const QColor& color);
@@ -59,16 +59,6 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     font.setPixelSize(20);
     painter->setFont(font);
     painter->drawText(textPos, QString::number(weightEdge));
-}
-
-void Edge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsItem::mouseMoveEvent(event);
-    adjust();
-    if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
-        mainWindow->updateEdges();
-    }
-    update();
 }
 
 
