@@ -2,8 +2,8 @@ object Form12: TForm12
   Left = 0
   Top = 0
   Caption = 'Form12'
-  ClientHeight = 548
-  ClientWidth = 407
+  ClientHeight = 557
+  ClientWidth = 413
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,7 +11,7 @@ object Form12: TForm12
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Memo1: TMemo
+  object DeikstraColumn: TMemo
     Left = 148
     Top = 8
     Width = 257

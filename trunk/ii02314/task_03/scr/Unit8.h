@@ -14,12 +14,12 @@
 class TForm8 : public TForm
 {
 __published:	// IDE-managed Components
-	TLabel *Label1;
-	TLabel *Label2;
-	TEdit *Edit1;
-	TEdit *Edit2;
-	TEdit *Edit3;
-	TEdit *Edit4;
+	TLabel *LABEL;
+	TLabel *LABELLABEL;
+	TEdit *NewVertexName;
+	TEdit *RRR;
+	TEdit *GGG;
+	TEdit *BBB;
 	TButton *Button1;
 	void __fastcall Button1Click(TObject *Sender);
 private:	// User declarations

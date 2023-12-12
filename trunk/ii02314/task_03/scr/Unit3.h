@@ -1,21 +1,15 @@
-//---------------------------------------------------------------------------
-
 #ifndef Unit3H
 #define Unit3H
-//---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
-
-//int check;
 int findVertexByName(std::string name);
 int findEdgeByIDS(int id1, int id2);
 bool checkVertexExisting(std::string name);
-//---------------------------------------------------------------------------
 class TForm3 : public TForm
 {
-__published:	// IDE-managed Components
+__published:
 	TLabel *Name1;
 	TLabel *Name2;
 	TLabel *Weight;
@@ -34,15 +28,9 @@ __published:	// IDE-managed Components
 	void __fastcall SecondNameExit(TObject *Sender);
 	void __fastcall AddButtonClick(TObject *Sender);
 	void __fastcall ExitButtonClick(TObject *Sender);
-private:
 public:
 	__fastcall TForm3(TComponent* Owner);
+private:
 };
-//---------------------------------------------------------------------------
 extern PACKAGE TForm3 *Form3;
-//---------------------------------------------------------------------------
-//90999
-//1
-//2
-//3//4//5//6
 #endif

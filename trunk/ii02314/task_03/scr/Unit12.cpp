@@ -72,7 +72,7 @@ void __fastcall TForm12::Edit2Exit(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm12::Button1Click(TObject *Sender)
 {
-		Memo1->Clear();
+		DeikstraColumn->Clear();
 		int numOfVertex = vertexes.size();
 		std::vector<std::vector<int>> matrix = adjMatrix;
 		std::stringstream fout;
@@ -104,12 +104,12 @@ void __fastcall TForm12::Button1Click(TObject *Sender)
         }
 
 		fout << "Vertex\tDist\tPrev" << "\n";
-			Memo1->Lines->Add(fout.str().c_str());
+			DeikstraColumn->Lines->Add(fout.str().c_str());
 		fout.str("");
 		fout.clear();
 		for (int i = 0; i < numOfVertex; i++) {
 			fout << vertexes[i].name << "\t" << distance[i] << "\t" << prev[i] + 1 << "\n";
-			Memo1->Lines->Add(fout.str().c_str());
+			DeikstraColumn->Lines->Add(fout.str().c_str());
 			fout.str("");
             fout.clear();
 		}

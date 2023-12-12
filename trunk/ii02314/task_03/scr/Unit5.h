@@ -1,14 +1,9 @@
-//---------------------------------------------------------------------------
-
 #ifndef Unit5H
 #define Unit5H
-//---------------------------------------------------------------------------
+#include <Vcl.Controls.hpp>
 #include <Vcl.Forms.hpp>
 #include <Vcl.StdCtrls.hpp>
-#include <Vcl.Controls.hpp>
 #include <System.Classes.hpp>
-
-//---------------------------------------------------------------------------
 class TForm5 : public TForm
 {
 __published:
@@ -24,7 +19,6 @@ private:
 public:
 	__fastcall TForm5(TComponent* Owner);
 };
-//---------------------------------------------------------------------------
 extern PACKAGE TForm5 *Form5;
 //---------------------------------------------------------------------------
 #endif

@@ -19,10 +19,10 @@ TForm7 *Form7;
 __fastcall TForm7::TForm7(TComponent* Owner)
 	: TForm(Owner)
 {
-Button1->Enabled = true;
+EditVertexBut->Enabled = true;
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm7::Button1Click(TObject *Sender)
+void __fastcall TForm7::EditVertexButClick(TObject *Sender)
 {
 	AnsiString ansiName = Edit1->Text;
 	std::string temp = ansiName.c_str();

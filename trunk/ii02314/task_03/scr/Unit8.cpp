@@ -27,17 +27,17 @@ void __fastcall TForm8::passID(int x1){
 	Form7id = x1;
 
 	UnicodeString uString = UnicodeString(vertexes[Form7id].name.c_str());
-	Edit1->Text = uString;
-	Edit2->Text = IntToStr(vertexes[Form7id].r);
-	Edit3->Text = IntToStr(vertexes[Form7id].g);
-	Edit4->Text = IntToStr(vertexes[Form7id].b);
+	NewVertexName->Text = uString;
+	RRR->Text = IntToStr(vertexes[Form7id].r);
+	GGG->Text = IntToStr(vertexes[Form7id].g);
+	BBB->Text = IntToStr(vertexes[Form7id].b);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm8::Button1Click(TObject *Sender)
 {
-    AnsiString text1 = Edit2->Text;
-	AnsiString text2 = Edit3->Text;
-	AnsiString text3 = Edit4->Text;
+	AnsiString text1 = RRR->Text;
+	AnsiString text2 = GGG->Text;
+	AnsiString text3 = BBB->Text;
 
 	int r = StrToIntDef(text1, 0);
 	int g = StrToIntDef(text2, 0);
@@ -51,7 +51,7 @@ void __fastcall TForm8::Button1Click(TObject *Sender)
 	vertexes[Form7id].g = g;
 	vertexes[Form7id].b = b;
 
-	AnsiString tempName = Edit1->Text;
+	AnsiString tempName = NewVertexName->Text;
 	vertexes[Form7id].name = tempName.c_str();
 
 	refreshGraph();
