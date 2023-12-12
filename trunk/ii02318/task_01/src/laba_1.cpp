@@ -13,8 +13,7 @@ private:
     double y0 = 0.00;
     double u0 = 0.00;
 public:
-    Model(double a, double b, double c, double d)
-        : a(a), b(b), c(c), d(d) {}
+    Model(double a, double b, double c, double d) : a(a), b(b), c(c), d(d) {}
 
     double lfunc() {
         y = a * y + b * u;
