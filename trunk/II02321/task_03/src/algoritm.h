@@ -9,34 +9,34 @@
 
 using namespace std;
 
-class Graph {
+class Gr {
     int numvert;
     list<int>* adjLists;
     bool* visited;
 
 public:
-    Graph(int V);
-    void addEdge(int src, int dest);
+    Gr(int V);
+    void aE(int src, int dest);
     void DFS(int vertex, bool visited[]);
-    bool is_eularian();
-    void findcycle(int V, vector<int>& way);
-    void showcycle();
+    bool ie();
+    void fc(int V, vector<int>& way);
+    void shc();
 };
 
-Graph::Graph(int V)
+Gr::Gr(int V)
 {
     numvert = V;
     adjLists = new list<int>[V];
     visited = new bool[V];
 }
 
-void Graph::addEdge(int src, int dest)
+void Gr::aE(int src, int dest)
 {
     adjLists[src].push_back(dest);
     adjLists[dest].push_back(src);
 }
 
-void Graph::DFS(int vertex, bool visited[]) // deep search
+void Gr::DFS(int vertex, bool visited[]) // deep search
 {
     visited[vertex] = true;
     list<int>::iterator i;
@@ -45,7 +45,7 @@ void Graph::DFS(int vertex, bool visited[]) // deep search
             DFS(*i, visited);
 }
 
-bool Graph::is_eularian()
+bool Gr::ie()
 {
     int num = 0;
     for (int i = 0; i < numvert; i++) {
@@ -55,7 +55,7 @@ bool Graph::is_eularian()
     if (num == 0) return true; else return false;
 }
 
-void Graph::findcycle(int V, vector<int>& way) {
+void Gr::fc(int V, vector<int>& way) {
     while (!adjLists[V].empty()) {
         int u = adjLists[V].front();
         for (auto i = adjLists[V].begin(); i != adjLists[V].end(); ++i) {
@@ -70,17 +70,17 @@ void Graph::findcycle(int V, vector<int>& way) {
                 break;
             }
         }
-        findcycle(u, way);
+        fc(u, way);
     }
     way.push_back(V);
 }
 
 
-void Graph::showcycle()
+void Gr::shc()
 {
     ifstream inp("graph.txt");
     if (inp.is_open()) {
-        Graph g(0);
+        Gr g(0);
         MainWindow window;
         window.uV();
         window.uE();
@@ -88,12 +88,12 @@ void Graph::showcycle()
         int numV = window.gNOV();
         int numAdj = window.gNOE();
 
-        g = Graph(numV);
+        g = Gr(numV);
 
         for (int i = 0; i < numAdj; i++) {
             int a, b;
             inp >> a >> b;
-            g.addEdge(a, b);
+            g.aE(a, b);
         }
     }
     else cout << "error";

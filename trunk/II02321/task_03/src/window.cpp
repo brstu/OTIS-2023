@@ -176,14 +176,14 @@ bool MainWindow::iGC()
 QString MainWindow::gEC() {
 
     QString eulerCycle;
-    Graph g(v.length());
+    Gr g(v.length());
     for (Edge* edge : e) {
         int src = v.indexOf(edge->getSourceVertex());
         int dest = v.indexOf(edge->getDestinationVertex());
-        g.addEdge(src, dest);
+        g.aE(src, dest);
     }
     vector<int> eulerPath;
-    g.findcycle(0, eulerPath);
+    g.fc(0, eulerPath);
     for (int vertex : eulerPath) {
         eulerCycle += QString::number(vertex) + " ";
     }

@@ -9,13 +9,13 @@ namespace Ui {
 class StartWindow;
 }
 
-class StartWindow : public QWidget
+class SW : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit StartWindow(QWidget *parent = nullptr);
-    ~StartWindow();
+    explicit SW(QWidget *parent = nullptr);
+    ~SW();
 
 private slots:
     void on_newGraph_clicked();

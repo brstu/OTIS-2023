@@ -1,11 +1,11 @@
-#include "creategraph.h"
-
+#include "startwindow.h"
+#include <QLabel>
 #include <QApplication>
 
-int main(int argc, char *argv[])
+int main(int ac, char *av[])
 {
-    QApplication a(argc, argv);
-    CreateGraph w;
-    w.show();
-    return a.exec();
+    QApplication qa(ac, av);
+    SW win;
+    win.show();
+    return qa.exec();
 }
