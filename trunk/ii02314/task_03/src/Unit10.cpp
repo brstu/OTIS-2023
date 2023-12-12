@@ -18,6 +18,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
+
 TForm10 *Form10;
 
 //---------------------------------------------------------------------------
@@ -26,12 +27,6 @@ __fastcall TForm10::TForm10(TComponent* Owner)
 {
 	Memo1->Clear();
 	std::vector<std::vector<int>> matrix(vertexes.size(), std::vector<int>(vertexes.size(), 0));
-
-	/*for(int i = 0; i < vertexes.size(); i++){
-		for(int j = 0; j < vertexes.size();j++){
-		   matrix[i][j] = 0;
-		}
-	}*/
 
 	for(int i = 0; i < graph.size(); i++){
 		for(int j = 0; j < graph[i]. size();j++){

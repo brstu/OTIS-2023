@@ -21,6 +21,7 @@ struct vertex
 	std::string name;
 	int r,g,b;
 };
+
 struct edge
 {
 	int id;

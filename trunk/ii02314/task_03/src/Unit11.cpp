@@ -41,12 +41,13 @@ __fastcall TForm11::TForm11(TComponent* Owner)
 		}
 	}
 
+
     for (int i = 0; i < vertexes.size(); ++i) {
-		std::stringstream ss;
+		std::stringstream fout;
 		for (int j = 0; j < edges.size(); ++j) {
-			ss << matrix[i][j] << "\t";
+			fout << matrix[i][j] << "\t";
 		}
-		Memo1->Lines->Add(ss.str().c_str());
+		Memo1->Lines->Add(fout.str().c_str());
 	}
 }
 //---------------------------------------------------------------------------

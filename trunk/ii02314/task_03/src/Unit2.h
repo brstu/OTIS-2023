@@ -3,19 +3,9 @@
 #ifndef Unit2H
 #define Unit2H
 //---------------------------------------------------------------------------
-#include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
+#include <System.Classes.hpp> #include <Vcl.Controls.hpp> #include <Vcl.StdCtrls.hpp> #include <Vcl.Forms.hpp>
 
 void roundRGB(int& x);
-
-
-
-
-
-
-
 //---------------------------------------------------------------------------
 class TForm2 : public TForm
 {
