@@ -14,6 +14,7 @@
 #include "Unit9.h"
 #include "Unit10.h"
 #include "Unit11.h"
+#include "Unit12.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -128,14 +129,14 @@ void __fastcall TForm1::DeleteEdge1Click(TObject *Sender)
 void __fastcall TForm1::DeleteEdge2Click(TObject *Sender)
 {
 	refreshGraph();
-	for(int i = 0; i < graph.size(); i++){
+	/*for(int i = 0; i < graph.size(); i++){
 		//std::string text = " ";
 		for(int j = 0; j < graph[i].size(); j++){
 			ShowMessage(IntToStr(i) +
 			 ": <" + IntToStr(graph[i][j].first) + ", " + IntToStr(graph[i][j].second) + ">");
 		}
 	}
-
+	 */
 	if(edges.empty())
 		ShowMessage("Недостаточно вершин");
 	else{
@@ -167,6 +168,13 @@ void __fastcall TForm1::Algorithm2Click(TObject *Sender)
 void __fastcall TForm1::IncMatrix1Click(TObject *Sender)
 {
 	  TForm11 *Form = new TForm11(this);
+	  Form->ShowModal();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::IncMatrix2Click(TObject *Sender)
+{
+	 TForm12 *Form = new TForm12(this);
 	  Form->ShowModal();
 }
 //---------------------------------------------------------------------------

@@ -77,6 +77,7 @@ object Form1: TForm1
       end
       object IncMatrix2: TMenuItem
         Caption = 'Find Distance'
+        OnClick = IncMatrix2Click
       end
       object FindPath1: TMenuItem
         Caption = 'Find Path'
