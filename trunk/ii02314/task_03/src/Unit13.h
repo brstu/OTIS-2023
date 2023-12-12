@@ -8,6 +8,14 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 bool checkForOdd();
+
+struct junk{
+int a1;
+int a2;
+int a3  ;
+int a4   ;
+         int a5;
+}                 ;
 class TForm13 : public TForm
 {
 __published:	// IDE-managed Components

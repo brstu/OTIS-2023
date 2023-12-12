@@ -24,8 +24,8 @@ Button1->Enabled = true;
 //---------------------------------------------------------------------------
 void __fastcall TForm7::Button1Click(TObject *Sender)
 {
-    AnsiString EditName = Edit1->Text;
-	std::string temp = EditName.c_str();
+	AnsiString ansiName = Edit1->Text;
+	std::string temp = ansiName.c_str();
 	if(checkVertexExisting(temp)){
 		//Button1->Enabled = true;
 		AnsiString tempName = Edit1->Text;
@@ -38,8 +38,8 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
 	Close();
 	}
 	else {
-	ShowMessage("Вершина с таким именем не найдена");
 	Edit1->SetFocus();
+		ShowMessage("Вершина с таким именем не найдена");
 	}
 }
 //---------------------------------------------------------------------------

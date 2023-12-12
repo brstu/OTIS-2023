@@ -32,7 +32,6 @@ object Form9: TForm9
     Height = 25
     Cancel = True
     Caption = 'Delete'
-    Enabled = False
     TabOrder = 1
     OnClick = Button1Click
   end

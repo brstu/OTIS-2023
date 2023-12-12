@@ -6,6 +6,7 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
+
 int findSmalest(std::vector <int> dist, std::vector <bool> isVisited);
 //---------------------------------------------------------------------------
 class TForm12 : public TForm
