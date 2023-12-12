@@ -25,25 +25,25 @@ class Node:
         self.x = rng_x.integers(0, 636)
         self.y = rng_y.integers(0, 636)
 
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
-        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
+        self.krug = create_circle(self.x, self.y, 25, fill=color_vertex)
+        self.txt = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
 
     def move(self, x, y):
         self.x = x
         self.y = y
-        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
-        canvas.coords(self.text, x, y)
+        canvas.coords(self.krug, x-20, y-20, x+20, y+20)
+        canvas.coords(self.txt, x, y)
         for edge in edges:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
 
     def change_color(self, color):
-        canvas.itemconfig(self.circle, fill=color)
+        canvas.itemconfig(self.krug, fill=color)
 
     def delete(self):
-        canvas.delete(self.circle)
-        canvas.delete(self.text)
+        canvas.delete(self.krug)
+        canvas.delete(self.txt)
         for edge in edges:
             if edge.node1 == self or edge.node2 == self:
                 edge.delete()
@@ -62,7 +62,7 @@ class Edge:
         self.node2 = node2
         self.line = canvas.create_line(line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
                                        width=2, fill="black")
-        self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
+        self.txt = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',
                                        text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
 
@@ -83,7 +83,7 @@ class Edge:
 
     def change_weight(self, weight):
         self.weight = int(weight)
-        canvas.itemconfig(self.text, text=weight)
+        canvas.itemconfig(self.txt, text=weight)
         graph.remove_edge(self.node1.name, self.node2.name)
         graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
 
@@ -92,11 +92,11 @@ class Edge:
 
     def move(self):
         canvas.coords(self.line, line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
-        canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
+        canvas.coords(self.txt, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
 
     def delete(self):
         canvas.delete(self.line)
-        canvas.delete(self.text)
+        canvas.delete(self.txt)
         graph.remove_edge(self.node1.name, self.node2.name)
 
 
