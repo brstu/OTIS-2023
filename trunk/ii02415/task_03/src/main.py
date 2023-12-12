@@ -17,52 +17,7 @@ label = tk.Label(application)  # Создание метки
 label.place(x=370, y=125)  # Расположение метки
 label["text"] = "Имя графа"  # Текст метки
 
-global color_vertices_line  # для хранения цвета вершин и рёбер
-color_vertices_line = 'white'
-global name_vertex  # имя вершины
-name_vertex = ""
-array_name_vertex = []  # массив имен вершин
-all_name_garphs = []  # для имён графа
-global rename_name
-rename_name = ""
 
-data_vertex_id_x_y = dict()  # словарь для хранения ID рёбер их координат и имени
-global ID  # id вершин
-ID = 0
-
-global non_oriented_line  # что-то типо счётчика
-non_oriented_line = 0
-global ID_none_oriented_line  # ID для неоринтированных рёбер
-ID_none_oriented_line = 0
-data_id_unorient_line_x_y = dict()  # словарь для хранения ID неориентированных рёбер и для имён и координат вершин с которыми они соединены
-global count_unoriented_line  # количесвто рёбер
-count_unoriented_line = 0
-
-global oriented_line  # что-то типо счётчика
-oriented_line = 0
-global ID_oriented_line  # ID для оринтированных рёбер
-ID_oriented_line = 0
-data_id_orient_line_x_y = dict()  # словарь для хранения ID ориентированных рёбер и для имён и координат вершин с которыми они соединены
-
-global weight
-weight = 0
-data_weight_line_x_y = dict()  # массив для весов
-global ID_weight
-ID_weight = 0
-
-temp_edges = []  # список ребёр
-global max_node  # максимальная степень вершины
-max_node = 0
-nodes = []  # список всех вершин
-global UNORIN_ORIENT  # булевая переменная для проверки на ориентированность графа
-UNORIN_ORIENT = 0  # если = 0 то граф неориентированный
-
-global result_adjancy_matrix, result_incidency_matrix  # матрица смежности
-result_adjancy_matrix = []
-result_incidency_matrix = []  # матрица инцидентности
-
-global x1, y1, x2, y2  # переменные используемые для хранения координат вершин в функицях
-x1, y1, x2, y2 = 0, 0, 0, 0
 application.update()
 
 
