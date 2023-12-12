@@ -4,6 +4,10 @@
 
 using namespace std;
 
+// Объявления функций
+double calculateFunction1(double y, double u);
+double calculateFunction2(double y, double u, double y1);
+
 int main() {
     double initialY;
     double initialU;
@@ -33,4 +37,21 @@ int main() {
     }
 
     return 0;
+}
+
+// Определения функций
+double calculateFunction1(double y, double u) {
+    // Реализация функции 1
+    double a = 0.6;
+    double b = 0.5;
+    return a * y + b * u;
+}
+
+double calculateFunction2(double y, double u, double y1) {
+    // Реализация функции 2
+    double a = 0.6;
+    double b = 0.5;
+    double c = 0.62;
+    double d = 1.1;
+    return a * y - b * pow(y1, 2) + c * u + d * sin(u);
 }
