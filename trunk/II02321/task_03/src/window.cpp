@@ -1,3 +1,51 @@
+#include "window.h"
+#include "ui_mainwindow.h"
+#include <QPushButton>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QColorDialog>
+#include <QtCore>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+#include <QDoubleSpinBox>
+#include <QIODevice>
+#include <QFileDialog>
+#include <QFile>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QComboBox>
+#include "edge.h"
+#include "vertex.h"
+#include "algoritm.h"
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), u(new Ui::MainWindow)
+{
+    u->setupUi(this);
+    s = new QGraphicsScene(this);
+    u->graphicsView->setScene(s);
+}
+MainWindow::~MainWindow()
+{
+    QFile::remove("graph.txt");
+    delete u;
+}
+void MainWindow::uE()
+{
+    foreach (Edge* edge, e) {
+        edge->adjust();
+        edge->update();
+    }
+}
+
+
+
+void MainWindow::uV()
+{
+    for (Vertex* vertex : v) {
+        vertex->update();
+    }
+}
+
 
 void MainWindow::on_cVB()
 {
@@ -133,6 +181,14 @@ QString degreesText = "Степени вершин:\n";
 
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
+    for (int i = 0; i < numEdges; i++) {
+        int sourceIndex = gV(e[i]->getSourceVertex()->getNameVertex());
+        int destinationIndex = gV(e[i]->gDV()->getNameVertex());
+        int weight = e[i]->getWeightEdge();
+
+        distances[sourceIndex][destinationIndex] = weight;
+        distances[destinationIndex][sourceIndex] = weight;
+    }
 
     for (int k = 0; k < numVertices; k++) {
         for (int i = 0; i < numVertices; i++) {for (int j = 0; j < numVertices; j++) {
@@ -372,37 +428,7 @@ void MainWindow::on_addVB()
     dialog.exec();
 }
 
-void MainWindow::on_addEB()
-{
-    if (v.isEmpty()) {
-        return;
-    }
 
-    QDialog dialog;
-    QFormLayout form(&dialog);
-
-    QLineEdit weightLineEdit;
-    QLineEdit sourceVertexLineEdit;
-    QLineEdit destinationVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(v.length() - 1) + ")");
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(v.length() - 1) + ")");
-    form.addRow("Укажите вес ребра", &weightLineEdit);
-    form.addRow("Начальная вершина", &sourceVertexLineEdit);
-    form.addRow("Конечная вершина", &destinationVertexLineEdit);
-    QPushButton addButton("Добавить ребро");
-    form.addRow(&addButton);
-
-    connect(&addButton, &QPushButton::clicked, [&]()
-    {
-        double weight = weightLineEdit.text().toInt();
-        int sourceIndex = sourceVertexLineEdit.text().toInt();
-        int destinationIndex = destinationVertexLineEdit.text().toInt();
-        addEdge(weight, sourceIndex, destinationIndex);
-        dialog.close();
-    });
-
-    dialog.exec();
-}
 
 void MainWindow::on_rEB()
 {
