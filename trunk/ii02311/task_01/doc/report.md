@@ -19,24 +19,24 @@
 ---
 
 # Общее задание #
-1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента, например **ii02102**).
+1. Написать отчет по выполненной лабораторной работе №1 в .md формате (readme.md) и с помощью запроса на внесение изменений (**pull request**) разместить его в следующем каталоге: **trunk\ii0xxyy\task_01\doc** (где **xx** - номер группы, **yy** - номер студента).
 2. Исходный код написанной программы разместить в каталоге: **trunk\ii0xxyy\task_01\src**.
 
 ## Task 1. Modeling controlled object ##
-Let's get some object to be controlled. We want to control its temperature, which can be described by this differential equation:
+Зададим некоторый объект, который будем контролировать. Мы хотим контролировать его температуру, которая может быть описанна этим дифференциальным уравнением:
 
 $$\Large\frac{dy(\tau)}{d\tau}=\frac{u(\tau)}{C}+\frac{Y_0-y(\tau)}{RC} $$ (1)
 
-where $\tau$ – time; $y(\tau)$ – input temperature; $u(\tau)$ – input warm; $Y_0$ – room temperature; $C,RC$ – some constants.
+где $\tau$ – время; $y(\tau)$ – входная температура; $u(\tau)$ – входное тепло; $Y_0$ – комнатная температура; $C,RC$ – некоторые константы.
 
-After transformation we get these linear (2) and nonlinear (3) models:
+После преобразований, мы получаем эти линейную (2) и нелинейную (3) модели:
 
 $$\Large y_{\tau+1}=ay_{\tau}+bu_{\tau}$$ (2)
 $$\Large y_{\tau+1}=ay_{\tau}-by_{\tau-1}^2+cu_{\tau}+d\sin(u_{\tau-1})$$ (3)
 
-where $\tau$ – time discrete moments ($1,2,3{\dots}n$); $a,b,c,d$ – some constants.
+где $\tau$ – дискретные моменты времени ($1,2,3{\dots}n$); $a,b,c,d$ – некоторые константы.
 
-Task is to write program (**Julia**), which simulates this object temperature.
+Задание представляет из себя написание программы (**C++**), которая симулирует температуру этого объекта.
 
 ---
 
@@ -46,11 +46,14 @@ Task is to write program (**Julia**), which simulates this object temperature.
 ```C++
 #include <iostream>
 #include <fstream>
-
+#include <cmath>
 int main()
 {
 	srand(time(NULL));
-	double a = 0.5, b = 0.5, c = 0.5, d = 0.5;
+	float a = 0.5;
+	float b = 0.5;
+	float c = 0.5;
+	float d = 0.5;
 	int n=100;
 	double* u = new double[n];
 	double* y = new double[n];

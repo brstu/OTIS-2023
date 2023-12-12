@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
-
+#include <cmath>
 int main()
 {
 	srand(time(NULL));
