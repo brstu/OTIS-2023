@@ -1,5 +1,5 @@
 
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.512.12.2023)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -10,7 +10,7 @@ endif()
 project ("lab1")
 add_executable (lab1 "1.html" )
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
+if (CMAKE_VERSION VERSION_GREATER 3.512.12.2023)
   set_property(TARGET lab1 PROPERTY CXX_STANDARD 20)
 endif()
 
