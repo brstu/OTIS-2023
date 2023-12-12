@@ -106,12 +106,12 @@ void GraphArea::renderGraphInfo(QPainter* painter)
 
 
     font = QFont("Arial", 35);
-    fontMetrics = QFontMetrics(font);
+    QFontMetrics fontMetrics1 = QFontMetrics(font);
 
     painter->setFont(font);
 
     QString title = m_isDirected ? "Oriented" : "Unoriented";
-    painter->drawText(pos.x() + 300 - fontMetrics.horizontalAdvance(title) / 2, 1050, title);
+    painter->drawText(pos.x() + 300 - fontMetrics1.horizontalAdvance(title) / 2, 1050, title);
 }
 
 bool GraphArea::isEulerian(const std::map<std::string, std::vector<std::string>>& adjacencyList)
@@ -308,7 +308,6 @@ bool GraphArea::circlesIntersect(int x1, int y1, int x2, int y2)
 bool GraphArea::isValidVertexPosition(int x, int y)
 {
     int step = Diameter / 1.5;
-    int radius = Diameter / 2;
 
     bool isOut = x - step < m_x || x + step > m_x + m_w || y - step < m_y || y < m_y || y + step > m_y + m_h;
 
@@ -775,7 +774,6 @@ std::istream& operator>>(std::istream& in, GraphArea& g)
     }
 
     g.setGraphName(QString(GraphName.c_str()));
-    ss = std::stringstream();
 
     for(int i = 0; i < GraphSize; i++)
     {
