@@ -17,19 +17,19 @@
 #include "edge.h"
 #include "vertex.h"
 #include "algoritm.h"
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), u(new Ui::MainWindow)
+//MainWindow::MainWindow(QWidget *parent)
+//    : QMainWindow(parent), u(new Ui::MainWindow)
 {
     u->setupUi(this);
     s = new QGraphicsScene(this);
     u->graphicsView->setScene(s);
 }
-MainWindow::~MainWindow()
+//MainWindow::~MainWindow()
 {
     QFile::remove("graph.txt");
     delete u;
 }
-void MainWindow::uE()
+//void MainWindow::uE()
 {
     foreach (Edge* edge, e) {
         edge->adjust();
@@ -39,7 +39,7 @@ void MainWindow::uE()
 
 
 
-void MainWindow::uV()
+//void MainWindow::uV()
 {
     for (Vertex* vertex : v) {
         vertex->update();
@@ -85,7 +85,7 @@ void MainWindow::on_cVB()
     dialog.exec();
 
 }
-bool MainWindow::iGC()
+//bool MainWindow::iGC()
 {
 
     if (v.isEmpty()) {
@@ -123,7 +123,7 @@ bool MainWindow::iGC()
 
     return true; // Все вершины достижимы, граф связный
 }
-QString MainWindow::gEC() {
+//QString MainWindow::gEC() {
 
     QString eulerCycle;
     Gr g(v.length());
@@ -139,7 +139,7 @@ QString MainWindow::gEC() {
     }
     return eulerCycle;
 }
-int MainWindow::gV(const QString& vertexName) const {
+//int MainWindow::gV(const QString& vertexName) const {
     for (int i = 0; i < v.length(); i++) {
         if (v[i]->getNameVertex() == vertexName) {
             return i;
@@ -147,13 +147,13 @@ int MainWindow::gV(const QString& vertexName) const {
     }
     return -1; // Вершина не найдена
 }
-bool MainWindow::cG(){
+//bool MainWindow::cG(){
     int numVertices = v.length();
     int numEdges = e.length();
     if(numVertices*(numVertices-1)/2 != numEdges){return false;}else{return true;}
 }
 
-void MainWindow::sGI()
+//void MainWindow::sGI()
 {
     // Количество вершин и ребер
     int numVertices = v.length();
@@ -163,7 +163,7 @@ void MainWindow::sGI()
     QString infoText = QString("Количество вершин: %1\nКоличество ребер: %2\n\n").arg(numVertices).arg(numEdges);
 
     // Строка со степенями вершин
-QString degreesText = "Степени вершин:\n";
+//QString degreesText = "Степени вершин:\n";
     bool eulertrue = true;
     bool treetrue = true;
     foreach (Vertex* vertex, v) {
@@ -234,7 +234,7 @@ QString degreesText = "Степени вершин:\n";
     layout.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
-void GraphWindow::on_addEdgePushButton_clicked()
+//void GraphWindow::on_addEdgePushButton_clicked()
 {
     QGraphicsEllipseItem* selectedVertex1 = getSelectedVertex();
     if (!selectedVertex1) return;
@@ -344,18 +344,18 @@ void GraphWindow::on_addEdgePushButton_clicked()
 
 }
 
-void MainWindow::on_aIB()
+//void MainWindow::on_aIB()
 {
     sGI();
 }
 
-void MainWindow::on_aCB()
+//void MainWindow::on_aCB()
 {
     s->clear();
     v.clear();
     e.clear();
 }
-void MainWindow::eTTF(const QString& fileName)
+//void MainWindow::eTTF(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -387,7 +387,7 @@ void MainWindow::eTTF(const QString& fileName)
     file.close();
 }
 // Функция импорта данных из текстового файла в сцену
-void MainWindow::iFTF(const QString& fileName)
+//void MainWindow::iFTF(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -443,7 +443,7 @@ void MainWindow::iFTF(const QString& fileName)
     file.close();
     s->update();
 }
-void MainWindow::on_export_2_clicked()
+//void MainWindow::on_export_2_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Экспорт в файл");
     if (!fileName.isEmpty())
@@ -452,7 +452,7 @@ void MainWindow::on_export_2_clicked()
     }
 }
 
-void MainWindow::on_import_2_clicked()
+//void MainWindow::on_import_2_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Импорт из файла");
     if (!fileName.isEmpty())
@@ -468,6 +468,150 @@ void MainWindow::addVertex(const QString& name, const QColor& color, double x, d
     vertex->setPos(x, y);
     s->addItem(vertex);
     v.append(vertex);
+}
+void GraphWindow::on_deletePushButton_clicked()
+{
+    // Disconnect signals to avoid unwanted updates during deletion
+    //disconnect(ui->graphicsView->scene(), &QGraphicsScene::changed, this, nullptr);
+
+    // Collect items to be deleted
+    QList<QGraphicsItem *> itemsToDelete;
+
+    QList<QGraphicsItem *> selectedItems = ui->graphicsView->scene()->selectedItems();
+
+    for (QGraphicsItem *item : selectedItems) {
+
+            // Check if the item is an edge (QGraphicsLineItem) and disconnect its update slot
+            if (QGraphicsLineItem* edgeItem = dynamic_cast<QGraphicsLineItem*>(item)) {
+            for (const OrEdge& or_edge : or_edges){
+                if (or_edge.edgeItem == edgeItem){
+                    itemsToDelete.append(or_edge.arrowItem);
+                    itemsToDelete.append(or_edge.weight);
+                }
+            }
+            for (const Edge& edge : edges){
+                if (edge.edgeItem == edgeItem){
+                    itemsToDelete.append(edge.weight);
+                }
+            }
+            edges.erase(std::remove_if(edges.begin(), edges.end(),
+                                       [edgeItem](const Edge& edge) { return edge.edgeItem == edgeItem; }),
+                        edges.end());
+
+            itemsToDelete.append(edgeItem);
+
+
+
+            or_edges.erase(std::remove_if(or_edges.begin(), or_edges.end(),
+                                          [edgeItem](const OrEdge& edge) { return edge.edgeItem == edgeItem; }),
+                           or_edges.end());
+            for (QGraphicsItem *item : itemsToDelete) {
+                delete item;
+            }
+            }
+            // Check if the item is a vertex (QGraphicsEllipseItem)
+            else if (QGraphicsEllipseItem* vertex = dynamic_cast<QGraphicsEllipseItem*>(item)) {
+            if (vertex->data(0).toString() == "loop"){
+                for (const Loop& loop : loops){
+                    if (loop.loop == vertex){
+                        itemsToDelete.append(loop.weight);
+                    }
+                }
+                loops.erase(std::remove_if(loops.begin(), loops.end(),
+                                           [vertex](const Loop& loop) { return loop.loop == vertex; }),
+                            loops.end());
+                ui->graphicsView->scene()->removeItem(vertex);
+                itemsToDelete.append(vertex);
+                for (QGraphicsItem *item : itemsToDelete) {
+                    delete item;
+                }
+            }else if (QGraphicsEllipseItem* vertex = dynamic_cast<QGraphicsEllipseItem*>(item)){
+                // Remove connected edges
+                QList<QGraphicsLineItem*> connectedEdges;
+                for (const Edge& edge : edges) {
+                    if (edge.vertex1 == vertex || edge.vertex2 == vertex) {
+                        connectedEdges.append(edge.edgeItem);
+                    }
+                }
+                // Remove connected edges from the list and the scene
+                for (QGraphicsLineItem* connectedEdge : connectedEdges) {
+                    for (const Edge& edge : edges){
+                        if (edge.edgeItem == connectedEdge){
+                            itemsToDelete.append(edge.weight);
+                        }
+                    }
+                    itemsToDelete.append(connectedEdge);
+                    edges.erase(std::remove_if(edges.begin(), edges.end(),
+                                               [connectedEdge](const Edge& edge) { return edge.edgeItem == connectedEdge; }),
+                                edges.end());
+
+                    ui->graphicsView->scene()->removeItem(connectedEdge);
+
+                }
+
+                // Remove connected directed edges
+                QList<QGraphicsLineItem*> connectedOrEdges;
+                for (const OrEdge& edge : or_edges) {
+                    if (edge.vertex1 == vertex || edge.vertex2 == vertex) {
+                        connectedOrEdges.append(edge.edgeItem);
+                    }
+                }
+
+                // Remove connected edges from the list and the scene
+                for (QGraphicsLineItem*& connectedOrEdge : connectedOrEdges) {
+                    for (const OrEdge& or_edge : or_edges){
+                        if (or_edge.edgeItem == connectedOrEdge){
+                            itemsToDelete.append(or_edge.arrowItem);
+                            itemsToDelete.append(or_edge.weight);
+                        }
+                    }
+                    itemsToDelete.append(connectedOrEdge);
+                    or_edges.erase(std::remove_if(or_edges.begin(), or_edges.end(),
+                                                  [connectedOrEdge](const OrEdge& edge) { return edge.edgeItem == connectedOrEdge; }),
+                                   or_edges.end());
+                    ui->graphicsView->scene()->removeItem(connectedOrEdge);
+                }
+
+                // Remove connected loops
+                QList<QGraphicsEllipseItem*> connectedLoops;
+                for (const Loop& connectedLoop : loops) {
+                    if (connectedLoop.vertex1 == vertex) {
+                        connectedLoops.append(connectedLoop.loop);
+                    }
+                }
+
+                // Remove connected loops from the list and the scene
+                for (QGraphicsEllipseItem* connectedLoop : connectedLoops) {
+                    for (const Loop& loop : loops){
+                        if (loop.loop == connectedLoop){
+                            itemsToDelete.append(loop.weight);
+                        }
+                    }
+                    loops.erase(std::remove_if(loops.begin(), loops.end(),
+                                               [connectedLoop](const Loop& loop) { return loop.loop == connectedLoop; }),
+                                loops.end());
+                    ui->graphicsView->scene()->removeItem(connectedLoop);
+                    itemsToDelete.append(connectedLoop);
+                }
+
+                // Remove the vertex from the list
+                verts.erase(std::remove_if(verts.begin(), verts.end(),
+                                           [vertex](const Vertice& vert) { return vert.vert == vertex; }),
+                            verts.end());
+
+                // Remove the vertex from the scene
+                ui->graphicsView->scene()->removeItem(vertex);
+                itemsToDelete.append(vertex);  // Store the item for deletion
+
+                for (QGraphicsItem *item : itemsToDelete) {
+                    delete item;
+                }
+            }
+            // ... (other item types remain the same)
+            }
+    }
+
+    // Delete items after the iteration
 }
 
 void MainWindow::addEdge(double weight, int sourceIndex, int destinationIndex)
