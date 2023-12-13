@@ -101,4 +101,5 @@ while True:
     print(answer)
 
 # Вывод консоли
+```
 ![img1](img1.png)
