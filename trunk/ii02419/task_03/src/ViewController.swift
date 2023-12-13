@@ -1,4 +1,3 @@
-
 import UIKit
 
 class ViewController: UIViewController {
@@ -59,7 +58,6 @@ class ViewController: UIViewController {
                 if self.isFirstCall {
                     self.pseudoNames.append(String(element))
                 }
-                
                 // Rename "button" to avoid the naming conflict with the field declared at line 12
                 let newButton = UIButton(frame: CGRect(x: paths[count] - 10,
                                                        y: paths[count + 1] - 10,
@@ -150,8 +148,6 @@ class ViewController: UIViewController {
 
         buttonsForPages.append(newButton)
     }
-
-
     // переименование страницы
     @objc func renamePage(param: UITapGestureRecognizer) {
         let tag = param.view?.tag

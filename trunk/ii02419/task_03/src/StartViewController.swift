@@ -1,6 +1,4 @@
-
 // сделать проверку на дурака в textView(проверка на одну вершину и текст)
-
 import UIKit
 
 class StartViewController: UIViewController {
@@ -85,7 +83,6 @@ class StartViewController: UIViewController {
         for symbol in dataTextView.text {
             if symbol != " " && symbol != "\n" {
                 number += String(symbol)
-    
             } else {
                 peaks.insert(number)
                 allPeaks.append(Int(number)! - 1)

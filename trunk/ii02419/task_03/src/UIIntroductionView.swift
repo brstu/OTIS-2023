@@ -1,4 +1,3 @@
-
 import UIKit
 
 @IBDesignable
@@ -77,10 +76,6 @@ class UIIntroductionView: UIView {
             }
         }
     }
-
-    
-    
-
         setNeedsDisplay()
     }
         // удаление вершины
