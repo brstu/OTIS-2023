@@ -72,6 +72,7 @@ sudo docker compose up --no-build
 
 sc-web - доступен по адресу localhost:8000
 Диалоговый web-интерфейс - доступен по адресу localhost:3033
+
 Теперь вы можете начать использовать NIKA
 
 sc-веб:
