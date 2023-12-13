@@ -22,7 +22,7 @@
 #pragma resource "*.dfm"
 TForm12 *Form12;
 
-int findSmalest(std::vector <int> dist, std::vector <bool> isVisited) {
+int findSmalest(const std::vector <int> dist,const std::vector <bool> isVisited) {
         int min = 999999;
         int res = 0;
         for(int i = 0; i < dist.size();i++){
@@ -48,7 +48,7 @@ void __fastcall TForm12::Edit1Exit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else{
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	Edit1->SetFocus();
 	}
 	*/
@@ -64,7 +64,7 @@ void __fastcall TForm12::Edit2Exit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else{
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	Edit2->SetFocus();
 	}
 	*/
