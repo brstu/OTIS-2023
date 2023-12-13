@@ -188,4 +188,4 @@ Result of nonlinear modeling:
 
 Modeling ended.
 ```
-![График:](graphic.png)
+![График:](graphic.jpg)
