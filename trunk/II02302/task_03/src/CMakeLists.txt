@@ -11,4 +11,4 @@ set(HEADERS
     header.h
 )
 
-add_executable(HUIPIDOR ${SOURCES} ${HEADERS})
+add_executable(OTIS_03 ${SOURCES} ${HEADERS})
