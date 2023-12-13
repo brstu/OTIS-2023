@@ -17,7 +17,7 @@ TForm3 *Form3;
 bool isExisting1;
 bool isExisting2;
 
-int findVertexByName(std::string name){
+int findVertexByName(const std::string name){
 	for(int i = 0; i < vertexes.size();i++){
 		if(vertexes[i].name == name){
 			return vertexes[i].id;
@@ -26,7 +26,7 @@ int findVertexByName(std::string name){
     return -1;
 }
 
-bool checkVertexExisting(std::string name){
+bool checkVertexExisting(const std::string name){
 	for(int i = 0; i < vertexes.size(); i++){
 		if(vertexes[i].name == name){
 		return true;
@@ -48,8 +48,8 @@ int findEdgeByIDS(int id1, int id2){
 __fastcall TForm3::TForm3(TComponent* Owner)
 	: TForm(Owner)
 {
-	bool isExisting1 = false;
-	bool isExisting2 = false;
+	isExisting1 = false;
+	isExisting2 = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm3::FirstNameExit(TObject *Sender)
@@ -61,7 +61,7 @@ void __fastcall TForm3::FirstNameExit(TObject *Sender)
 		AddButton->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("Вершина с таким именем не найдена");
+	ShowMessage("Г‚ГҐГ°ГёГЁГ­Г  Г± ГІГ ГЄГЁГ¬ ГЁГ¬ГҐГ­ГҐГ¬ Г­ГҐ Г­Г Г©Г¤ГҐГ­Г ");
 	FirstName->SetFocus();
 	}
 }
@@ -75,7 +75,7 @@ void __fastcall TForm3::SecondNameExit(TObject *Sender)
 		AddButton->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("Вершина с таким именем не найдена");
+	ShowMessage("Г‚ГҐГ°ГёГЁГ­Г  Г± ГІГ ГЄГЁГ¬ ГЁГ¬ГҐГ­ГҐГ¬ Г­ГҐ Г­Г Г©Г¤ГҐГ­Г ");
 	SecondName->SetFocus();
 	}
 }
@@ -96,7 +96,7 @@ void __fastcall TForm3::AddButtonClick(TObject *Sender)
 		 isExisting2 = false;
 		 isExisting1 = false;
 		 AddButton->Enabled = false;
-		 ShowMessage("Ребро между этими вершинами уже существует.");
+		 ShowMessage("ГђГҐГЎГ°Г® Г¬ГҐГ¦Г¤Гі ГЅГІГЁГ¬ГЁ ГўГҐГ°ГёГЁГ­Г Г¬ГЁ ГіГ¦ГҐ Г±ГіГ№ГҐГ±ГІГўГіГҐГІ.");
 	}
 	else {
         edge newEdge;
