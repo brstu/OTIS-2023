@@ -5,12 +5,12 @@ cmake_minimum_required(VERSION 3.12)
 project(task3)
 
 # Настройка вызова Python скрипта внутри CMake
-add_custom_target(run_python_script
+add_custom_target(run_python_script_task3
     COMMAND ${CMAKE_COMMAND} -E env PYTHONPATH=${CMAKE_CURRENT_SOURCE_DIR} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/main.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Добавление цели для сборки и запуска Python скрипта
 add_custom_target(run
-    DEPENDS run_python_script
+    DEPENDS run_python_script_task3
 )
