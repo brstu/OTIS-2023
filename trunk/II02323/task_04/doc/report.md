@@ -39,14 +39,14 @@ docker compose up --no-build
 ![](picture_2.png)
 Происходит запуск двух веб-интерфейсов
 
-sc-web:
-
 ```
 localhost:8000
 ```
 
 ![](picture_3.png)
 Веб-диалог пользовательского интерфейса:
+
+web UI -
 
 ```
 localhost:3033
