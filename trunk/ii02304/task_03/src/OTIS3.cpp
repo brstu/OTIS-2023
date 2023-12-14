@@ -76,12 +76,14 @@ public:
             }
             visited[src] = true;
         }
-        // Uncovered code
-        if (std::ranges::any_of(visited.begin(), visited.end(), { return !v; })) {
-            return false;
+        for (bool v : visited) {
+            if (!v) {
+                return false;
+            }
         }
 
-
+        return true;
+    }
     vector<int> findEulerianCycle() {
         vector<int> cycle;
         if (!isEulerian()) {
