@@ -57,9 +57,12 @@ public:
     }
 
     bool isEulerian() {
-        return std::ranges::none_of(vertices, {
-            return vertex.neighbors.size() % 2 != 0;
-            });
+        for (const auto& vertex : vertices) {
+            if (vertex.neighbors.size() % 2 != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     bool isHamiltonianCycle(const vector<int>& cycle) {
