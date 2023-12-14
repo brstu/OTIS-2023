@@ -3,9 +3,15 @@
 #include <cmath>
 using namespace std;
 
-const double A = 0.5, B = 0.6, C = 0.6, D = 0.6;
-const double K = 0.8, T0 = 1.1, TD = 1.0, T = 1.1, w = 20;
-
+const double A = 0.5;
+const double B = 0.6;
+const double C = 0.6;
+const double D = 0.6;
+const double K = 0.8;
+const double T0 = 1.1;
+const double TD = 1.0;
+const double T = 1.1;
+const double w = 20;
 double calculateQ0() {
     return K * (1 + (TD / T0));
 }
