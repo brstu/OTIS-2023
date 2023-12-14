@@ -14,13 +14,13 @@ int main()
 	int vertexCount, edgesCount;
 	fin >> vertexCount >> edgesCount;
 
-	int** matrix = new int* [vertexCount];//ìàòðèöà
-	for (int i = 0; i < vertexCount; i++)//ìàòðèöà
-		matrix[i] = new int[vertexCount];//ìàòðèöà
+	int** matrix = new int* [vertexCount];
+	for (int i = 0; i < vertexCount; i++)
+		matrix[i] = new int[vertexCount];
 	vector<bool> used(vertexCount);
-	int res;//êîëè÷åñòâî êîìïîíåíò ñâÿçíîñòè 
-	int* path = new int[vertexCount];//ïóòü äëÿ öèêëîâ
-	int* f = new int[vertexCount];//ïîñåù¸ííûå âåðøèíû
+	int res;
+	int* path = new int[vertexCount];
+	int* f = new int[vertexCount];
 			//menu
 	int go;
 	do
@@ -98,12 +98,12 @@ int main()
 				
 			case 6://Euler
 				system("cls");
-				//ïðîâåðêà êîìïîíåíò ñâÿçíîñòè 
+				 
 				if ( res > 1)
 					cout << "Wrong\n";
 				else
 				{
-					//ïðîâåðêà ñòåïåíåé âõîäà
+					
 					int check = 0;
 					int buf;
 					for (int i = 0; i < vertexCount; i++)
@@ -128,12 +128,12 @@ int main()
 					}
 				}
 
-			case 7://Äåéêñòðà
+			case 7:
 				system("cls");
 				Dijkstra(matrix,vertexCount);
 				break;
 
-			case 8://Ôëîéä
+			case 8:
 				system("cls");
 				Floyd(matrix, vertexCount);
 				break;
