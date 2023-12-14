@@ -95,7 +95,7 @@ def on_wasd(event):
 
 def create_matrix_adjacency():
     global vert_name, edges
-    matrix_adjacency = [[0 for i in range(vert_name.__len__())] for i in range(vert_name.__len__())]
+    matrix_adjacency = [[0 for _ in range(vert_name.__len__())] for _ in range(vert_name.__len__())]
     for edge in edges:
         matrix_adjacency[vert_name.index(edge.vertex1.vert_name)][vert_name.index(edge.vertex2.vert_name)] = 1
         matrix_adjacency[vert_name.index(edge.vertex2.vert_name)][vert_name.index(edge.vertex1.vert_name)] = 1
@@ -112,7 +112,7 @@ def create_matrix_adjacency():
 
 def create_matrix_incidence_window():
     global vert_name, edges
-    matrix = [[0 for i in range(len(edges))] for i in range(len(vert_name))]
+    matrix = [[0 for _ in range(len(edges))] for _ in range(len(vert_name))]
     for i in range(edges.__len__()):
         matrix[vert_name.index(edges[i].vertex1.vert_name)][i] = 1
         matrix[vert_name.index(edges[i].vertex2.vert_name)][i] = 1
@@ -140,13 +140,13 @@ def graf_name():
     new_window.title(TITLE_STR_NAME)
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
-    labelGraph = Label(new_window)
-    labelGraph["text"] = "Введите имя графа"
-    labelGraph.grid(row=0, column=0, sticky="ew")
+    labelgraph = Label(new_window)
+    labelgraph["text"] = "Введите имя графа"
+    labelgraph.grid(row=0, column=0, sticky="ew")
     entry = Entry(new_window)
     entry.grid(row=1, column=0)
-    btnGraf = Button(new_window, text="Ввод", command=lambda: change_graf_name(entry.get(), new_window))
-    btnGraf.grid(row=2, column=0, sticky="ew")
+    btngraf = Button(new_window, text="Ввод", command=lambda: change_graf_name(entry.get(), new_window))
+    btngraf.grid(row=2, column=0, sticky="ew")
     if entry.get == label["text"]:
         new_window.destroy()
     new_window.mainloop()
@@ -201,6 +201,7 @@ def unselect_vertex(event):
 
 
 def save_data():
+    #эта функция сохраняет значения вершин, ребер и весов графа
     pass
 
 
@@ -248,10 +249,10 @@ def menu_create_vetrex():
     label = Label(new_window)
     label["text"] = "Введите имя вершины"
     entry = Entry(new_window)
-    btnColor1 = Button(new_window, text="Синий", command=lambda: give_color(1), bg="blue")
-    btnColor2 = Button(new_window, text="Красный", command=lambda: give_color(2), bg="red")
-    btnColor3 = Button(new_window, text="Зелёный", command=lambda: give_color(3), bg="green")
-    btnCreate = Button(new_window, text="Создать\nвершину", command=lambda: create_vertex(new_window, entry))
+    btncolor1 = Button(new_window, text="Синий", command=lambda: give_color(1), bg="blue")
+    btncolor2 = Button(new_window, text="Красный", command=lambda: give_color(2), bg="red")
+    btncolor3 = Button(new_window, text="Зелёный", command=lambda: give_color(3), bg="green")
+    btncreate = Button(new_window, text="Создать\nвершину", command=lambda: create_vertex(new_window, entry))
     label.grid(row=0, column=0, sticky="ew")
     entry.grid(row=1, column=0, sticky="ewns")
     btnColor1.grid(row=0, column=1, sticky="ew")
@@ -338,8 +339,8 @@ def menu_delete_edge():
     entry.grid(row=1, column=0, sticky="ew")
     label2.grid(row=2, column=0, sticky="ew")
     entry2.grid(row=3, column=0, sticky="ew")
-    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
-    btnDel.grid(row=4, column=0, sticky="ew")
+    btndel = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
+    btndel.grid(row=4, column=0, sticky="ew")
 
 
 def rename_vertex(en1, en2, root):
@@ -370,9 +371,9 @@ def menu_rename_vertex():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(new_window)
     entry2.grid(row=3, column=0, sticky="ew")
-    btnRen = Button(new_window, text="Изменить имя",
+    btnren = Button(new_window, text="Изменить имя",
                     command=lambda: rename_vertex(entry1.get(), entry2.get(), new_window))
-    btnRen.grid(row=4, column=0, sticky="ew")
+    btnren.grid(row=4, column=0, sticky="ew")
 
 
 def line_intersect_circle(x1, y1, x2, y2):
@@ -422,14 +423,14 @@ def menu_create_edge():
     label3["text"] = "Введите вес вершины"
     label2["text"] = "Введите имя 2-ой вершины"
     label1.grid(row=0, column=0, sticky="ew")
-    btnVertName = Button(new_window, text="Ввод",
+    btnvertname = Button(new_window, text="Ввод",
                          command=lambda: create_edge(entry1.get(), entry2.get(), entry3.get(), new_window))
     entry1.grid(row=1, column=0, sticky="ew")
     label2.grid(row=2, column=0, sticky="ew")
     entry2.grid(row=3, column=0, sticky="ew")
     label3.grid(row=4, column=0, sticky="ew")
     entry3.grid(row=5, column=0, sticky="ew")
-    btnVertName.grid(row=0, column=1, rowspan=6, sticky="ns")
+    btnvertname.grid(row=0, column=1, rowspan=6, sticky="ns")
 
 
 sel_vert = None
