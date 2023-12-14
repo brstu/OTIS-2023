@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.27.8)
 project(otis_01)
 
-set(SOURCES labb1.cpp)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyExecutable ${SOURCES})
+add_executable(llab labb1.cpp)
