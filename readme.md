@@ -61,7 +61,7 @@
 | 15 | [Рекун Дмитрий](https://github.com/DmitryRekun)    | [ii02415](trunk/ii02415)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ |    |    |    |    |        7|
 | 17 | Супрунович Илья                                    | [ii02417](trunk/ii02417)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
-| 18 | [Сухаревич Дмитрий](https://github.com/SukharevichDmitry)|[ii02418](trunk/ii02418)| ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
+| 18 | [Сухаревич Дмитрий](https://github.com/SukharevichDmitry)|[ii02418](trunk/ii02418)| ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        7|
 | 19 | Терехов Николай                                    | [ii02419](trunk/ii02419)     | ✅ | ❌ | ✅ | ✅ | ✅ |    |    |    |       8|
 | 20 | Турубчук Екатерина                                 | [ii02420](trunk/ii02420)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 21 | [Черник Владислав](https://github.com/fdlbro)      | [ii02421](trunk/ii02421)     | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
