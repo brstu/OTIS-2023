@@ -193,7 +193,7 @@ def adjacency_matrix():
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
 
     for row in matrix:
-adj_matrix_label = tk.Label(adj_matrix, text=str(row))
+        adj_matrix_label = tk.Label(adj_matrix, text=str(row))
         adj_matrix_label.grid(row=k, column=0)
         k += 1
 
