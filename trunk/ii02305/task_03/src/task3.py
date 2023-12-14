@@ -255,10 +255,10 @@ def menu_create_vetrex():
     btncreate = Button(new_window, text="Создать\nвершину", command=lambda: create_vertex(new_window, entry))
     label.grid(row=0, column=0, sticky="ew")
     entry.grid(row=1, column=0, sticky="ewns")
-    btnColor1.grid(row=0, column=1, sticky="ew")
-    btnColor2.grid(row=1, column=1, sticky="ew")
-    btnColor3.grid(row=2, column=1, sticky="ewn")
-    btnCreate.grid(row=2, column=0, sticky="ew")
+    btncolor1.grid(row=0, column=1, sticky="ew")
+    btncolor2.grid(row=1, column=1, sticky="ew")
+    btncolor3.grid(row=2, column=1, sticky="ewn")
+    btncreate.grid(row=2, column=0, sticky="ew")
 
     new_window.mainloop()
 
@@ -301,8 +301,8 @@ def delete_vertex():
     label.grid(row=0, column=0, sticky="ew")
     entry = Entry(new_window)
     entry.grid(row=1, column=0)
-    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
-    btnDel.grid(row=2, column=0, sticky="ew")
+    btndel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
+    btndel.grid(row=2, column=0, sticky="ew")
     if entry.get == label["text"]:
         new_window.destroy()
 
