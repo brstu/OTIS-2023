@@ -93,7 +93,7 @@ using namespace std;
 class Vertex {
 public:
     int id;
-    std::vector<int> neighbors;
+    vector<int> neighbors;
 
     explicit Vertex(int _id) : id(_id) {}
 };
@@ -205,7 +205,7 @@ public:
         return cycle;
     }
 
-    bool findHamiltonianCycleRecursive(int currentVertex, std::vector<int>& cycle, std::vector<bool>& visited) {
+    bool findHamiltonianCycleRecursive(int currentVertex, vector<int>& cycle, vector<bool>& visited) {
         visited[currentVertex] = true;
         cycle.push_back(currentVertex);
 
@@ -236,9 +236,9 @@ public:
 
     Graph constructSpanningTree() {
         Graph spanningTree;
-        spanningTree.nodes = nodes;
+        spanningTree.vertices = vertices;
 
-        vector<bool> visited(nodes.size(), false);
+        vector<bool> visited(vertices.size(), false);
         vector<int> queue;
 
         visited[0] = true;
@@ -248,7 +248,7 @@ public:
             int currentNode = queue.front();
             queue.erase(queue.begin());
 
-            for (int neighbor : nodes[currentNode].neighbors) {
+            for (int neighbor : vertices[currentNode].neighbors) {
                 if (!visited[neighbor]) {
                     spanningTree.addEdge(currentNode, neighbor);
                     visited[neighbor] = true;
@@ -264,11 +264,11 @@ public:
 int main() {
     Graph graph;
 
-    graph.addNode(0);
-    graph.addNode(1);
-    graph.addNode(2);
-    graph.addNode(3);
-    graph.addNode(4);
+    graph.addVertex(0);
+    graph.addVertex(1);
+    graph.addVertex(2);
+    graph.addVertex(3);
+    graph.addVertex(4);
 
     graph.addEdge(0, 1);
     graph.addEdge(1, 2);
@@ -305,6 +305,7 @@ int main() {
     spanningTree.visualize();
     return 0;
 }
+
 ```
 
 
