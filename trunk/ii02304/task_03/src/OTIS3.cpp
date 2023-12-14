@@ -35,8 +35,8 @@ public:
 
     void visualize() {
         ofstream file("graph.dot");
-        if (!file) {
-            cout << "Ошибка при открытии файла." << endl;
+        if (!file.is_open()) {
+            cout << "Error opening file." << endl;
             return;
         }
 
@@ -53,7 +53,7 @@ public:
         file.close();
 
         system("dot -Tpng graph.dot -o graph.png");
-        cout << "Граф визуализирован в файле graph.png" << endl;
+        cout << "Graph visualized in graph.png file." << endl;
     }
 
     bool isEulerian() {
