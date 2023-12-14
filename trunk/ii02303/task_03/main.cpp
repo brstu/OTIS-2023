@@ -2,11 +2,11 @@
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
-    //Это строчка запускает программу
+    //This line starts the program
     QApplication a(argc, argv);
-    //Создаём окно по имени w
+    //Creating a window named w
     MainWindow w;
-    //Показываем окно
+    //Showing the window
     w.show();
 
     return a.exec();
