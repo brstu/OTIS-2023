@@ -57,12 +57,10 @@ public:
     }
 
     bool isEulerian() const {
-        for (const auto& vertex : vertices) {
-            if (vertex.neighbors.size() % 2 != 0) {
-                return false;
-            }
+        if (std::ranges::none_of(vertices, [](const auto& vertex) { return vertex.neighbors.size() % 2 != 0; })) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     bool isHamiltonianCycle(const vector<int>& cycle) {
@@ -76,18 +74,13 @@ public:
             if (int dest = cycle[i + 1]; std::ranges::find(vertices[src].neighbors, dest) == vertices[src].neighbors.end()) {
                 return false;
             }
-
             visited[src] = true;
         }
-
-        for (bool v : visited) {
-            if (!v) {
-                return false;
-            }
+        // Uncovered code
+        if (std::ranges::any_of(visited.begin(), visited.end(), { return !v; })) {
+            return false;
         }
 
-        return true;
-    }
 
     vector<int> findEulerianCycle() {
         vector<int> cycle;
