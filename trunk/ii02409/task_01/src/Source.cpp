@@ -1,69 +1,75 @@
 #include <iostream>
 #include <cmath>
 
-double calculateNextLinearValue(double coeffA, double coeffB, double inputU, const double& outputY) {
-    return coeffA * outputY + coeffB * inputU;
+// Linear Model Functions
+double calculateNextLinearValue(double a, double b, double u, const double& y) {
+    return a * y + b * u;
 }
 
-void updateLinearOutputValue(double& outputY, double nextY) {
-    outputY = nextY;
+void updateLinearOutputValue(double& y, double nextY) {
+    y = nextY;
 }
 
-void printLinearOutputValues(const double& outputY, double coeffA, double coeffB, double inputU, int numIterations) {
+void printLinearOutputValues(const double& y, double a, double b, double u, int numIterations) {
     std::cout << "Linear model" << std::endl;
-    double currentOutputY = outputY;
+    double currentY = y;
     for (int i = 0; i < numIterations; ++i) {
-        std::cout << currentOutputY << std::endl;
-        double nextY = calculateNextLinearValue(coeffA, coeffB, inputU, currentOutputY);
-        updateLinearOutputValue(currentOutputY, nextY);
+        std::cout << currentY << std::endl;
+        double nextY = calculateNextLinearValue(a, b, u, currentY);
+        updateLinearOutputValue(currentY, nextY);
     }
 }
 
-double calculateNextNonlinearValue(double coeffA, double coeffB, double coeffC, double coeffD, double inputU, const double& outputY, const double& prevY) {
+// Nonlinear Model Functions
+double calculateNextNonlinearValue(double a, double b, double c, double d, double u, const double& y, const double& prevY) {
     double nextY;
     if (prevY == 0) {
-        nextY = coeffA * outputY - coeffB * pow(prevY, 2) + coeffC * 1 + coeffD * sin(1);
+        nextY = a * y - b * pow(prevY, 2) + c * 1 + d * sin(1);
     }
     else {
-        nextY = coeffA * outputY - coeffB * pow(prevY, 2) + coeffC * inputU + coeffD * sin(inputU);
+        nextY = a * y - b * pow(prevY, 2) + c * u + d * sin(u);
     }
     return nextY;
 }
 
-void updateNonlinearOutputValues(double& outputY, double& prevY, double nextY) {
-    prevY = outputY;
-    outputY = nextY;
+void updateNonlinearOutputValues(double& y, double& prevY, double nextY) {
+    prevY = y;
+    y = nextY;
 }
 
-void printNonlinearOutputValues(const double& outputY, double coeffA, double coeffB, double coeffC, double coeffD, double inputU, int numIterations) {
+void printNonlinearOutputValues(const double& y, double a, double b, double c, double d, double u, int numIterations) {
     std::cout << "Nonlinear model" << std::endl;
-    double currentOutputY = outputY;
+    double currentY = y;
     double currentPrevY = 0.0;
     for (int i = 0; i < numIterations; ++i) {
-        std::cout << currentOutputY << std::endl;
-        double nextY = calculateNextNonlinearValue(coeffA, coeffB, coeffC, coeffD, inputU, currentOutputY, currentPrevY);
-        updateNonlinearOutputValues(currentOutputY, currentPrevY, nextY);
+        std::cout << currentY << std::endl;
+        double nextY = calculateNextNonlinearValue(a, b, c, d, u, currentY, currentPrevY);
+        updateNonlinearOutputValues(currentY, currentPrevY, nextY);
     }
 }
 
 int main() {
-    const double linearCoeffA = 0.3;
-    const double linearCoeffB = 0.3;
-    const double linearInputU = 1.0;
-    double linearOutputY = 0.0;
+    // Linear Model Parameters
+    const double linearA = 0.3;
+    const double linearB = 0.3;
+    const double linearU = 1.0;
+    double linearY = 0.0;
     const int linearNumIterations = 20;
 
-    printLinearOutputValues(linearOutputY, linearCoeffA, linearCoeffB, linearInputU, linearNumIterations);
+    // Print Linear Model Output Values
+    printLinearOutputValues(linearY, linearA, linearB, linearU, linearNumIterations);
 
-    const double nonlinearCoeffA = 0.3;
-    const double nonlinearCoeffB = 0.3;
-    const double nonlinearCoeffC = 0.2;
-    const double nonlinearCoeffD = 0.4;
-    const double nonlinearInputU = 1.0;
-    double nonlinearOutputY = 0.0;
+    // Nonlinear Model Parameters
+    const double nonlinearA = 0.3;
+    const double nonlinearB = 0.3;
+    const double nonlinearC = 0.2;
+    const double nonlinearD = 0.4;
+    const double nonlinearU = 1.0;
+    double nonlinearY = 0.0;
     const int nonlinearNumIterations = 20;
 
-    printNonlinearOutputValues(nonlinearOutputY, nonlinearCoeffA, nonlinearCoeffB, nonlinearCoeffC, nonlinearCoeffD, nonlinearInputU, nonlinearNumIterations);
+    // Print Nonlinear Model Output Values
+    printNonlinearOutputValues(nonlinearY, nonlinearA, nonlinearB, nonlinearC, nonlinearD, nonlinearU, nonlinearNumIterations);
 
     return 0;
 }
