@@ -2,7 +2,7 @@
 #include <cmath>
 
 const float COEFFICIENT_A = 1;
-const float COEFFICIENT_B = 0.02;
+const double COEFFICIENT_B = 0.02;
 const float COEFFICIENT_C = 1;
 const float COEFFICIENT_D = 1;
 
