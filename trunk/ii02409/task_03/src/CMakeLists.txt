@@ -1,14 +1,10 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.12)
 
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
+project(otis1111)
 
-project ("otis1111")
+find_package(Python COMPONENTS Interpreter)
 
-add_executable (otis1111 "task.py" )
+add_executable(otis1111 main.cpp)
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET otis1111 PROPERTY CXX_STANDARD 20)
-endif()
+target_include_directories(otis1111 PRIVATE ${Python_INCLUDE_DIRS})
+target_link_libraries(otis1111 PRIVATE ${Python_LIBRARIES})
