@@ -14,13 +14,13 @@ int main()
 	int vertexCount, edgesCount;
 	fin >> vertexCount >> edgesCount;
 
-	int** matrix = new int* [vertexCount];//матрица
-	for (int i = 0; i < vertexCount; i++)//матрица
-		matrix[i] = new int[vertexCount];//матрица
+	int** matrix = new int* [vertexCount];
+	for (int i = 0; i < vertexCount; i++)
+		matrix[i] = new int[vertexCount];
 	vector<bool> used(vertexCount);
-	int res;//количество компонент связности 
-	int* path = new int[vertexCount];//путь для циклов
-	int* f = new int[vertexCount];//посещённые вершины
+	int res;
+	int* path = new int[vertexCount];
+	int* f = new int[vertexCount];
 			//menu
 	int go;
 	do
@@ -57,8 +57,6 @@ int main()
 			case 3://bfs
 				system("cls");
 				res = 0;
-				for (auto i : used)
-					i = false;
 				for (int i = 0; i < vertexCount; i++)
 					if (!used[i])
 					{
@@ -71,8 +69,6 @@ int main()
 			case 4://dfs
 				system("cls");
 				res = 0;
-				for (auto i : used)
-					i = false;
 				for (int i = 0; i < vertexCount; i++)
 					if (!used[i])
 					{
@@ -102,12 +98,12 @@ int main()
 				
 			case 6://Euler
 				system("cls");
-				//проверка компонент связности 
+				 
 				if ( res > 1)
 					cout << "Wrong\n";
 				else
 				{
-					//проверка степеней входа
+					
 					int check = 0;
 					int buf;
 					for (int i = 0; i < vertexCount; i++)
@@ -132,12 +128,12 @@ int main()
 					}
 				}
 
-			case 7://Дейкстра
+			case 7:
 				system("cls");
 				Dijkstra(matrix,vertexCount);
 				break;
 
-			case 8://Флойд
+			case 8:
 				system("cls");
 				Floyd(matrix, vertexCount);
 				break;

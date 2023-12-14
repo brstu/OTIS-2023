@@ -10,7 +10,7 @@ using namespace std;
 
 const int inf = 10000;
 
-void dfs(int** matrix, int vertexCount, int v, vector<bool>& used)//в глубину
+void dfs(int** matrix, int vertexCount, int v, vector<bool>& used)//Гў ГЈГ«ГіГЎГЁГ­Гі
 {
     cout << endl;
     stack<int> stack;
@@ -29,7 +29,7 @@ void dfs(int** matrix, int vertexCount, int v, vector<bool>& used)//в глубину
     }
 }
 
-void bfs(int** matrix, int vertexCount, int v, vector<bool>& used)//в ширину
+void bfs(int** matrix, int vertexCount, int v, vector<bool>& used)//Гў ГёГЁГ°ГЁГ­Гі
 {
     cout << endl;
     queue<int> q;
@@ -87,7 +87,7 @@ void Print_Path(int*& path, int vetexCount)
     cout << path[0] + 1;
 }
 
-bool Gamilton(int**& matrix, int*& path,int*& f, int vertexCount, int k, int v0)//начальная вершина
+bool Gamilton(int**& matrix, int*& path,int*& f, int vertexCount, int k, int v0)//Г­Г Г·Г Г«ГјГ­Г Гї ГўГҐГ°ГёГЁГ­Г 
 {
     bool res = false;
     for (int i = 0; i < vertexCount; i++)
@@ -110,7 +110,7 @@ bool Gamilton(int**& matrix, int*& path,int*& f, int vertexCount, int k, int v0)
     return res;
 }
 
-void Euler(int**& matrix, vector<int>& path, int vertexCount)//начальная вершина
+void Euler(int**& matrix, vector<int>& path, int vertexCount)//Г­Г Г·Г Г«ГјГ­Г Гї ГўГҐГ°ГёГЁГ­Г 
 {
     int* degree = new int[vertexCount];
     for (int i = 0; i < vertexCount; i++)
@@ -122,10 +122,9 @@ void Euler(int**& matrix, vector<int>& path, int vertexCount)//начальная вершина
     stack <int> st;
     st.push(0);
     path.push_back(0);
-    int v;
     while (!st.empty())
     {
-        v = st.top();
+        int v = st.top();
         if (degree[v] == NULL)
         {
             st.pop();
@@ -268,14 +267,13 @@ void union_find(int* root, int a, int b)
 
 int Kruskal(pair<int, pair<int,int>>* p, int* root, int**& matrix, int vertexCount, int edgesCount)
 {
-    int a, b;
-    int cost, mincost = NULL;
+    int mincost = NULL;
 
     for (int i = 0; i < edgesCount; i++)
     {
-        a = p[i].second.first;
-        b = p[i].second.second;
-        cost = p[i].first;
+        int a = p[i].second.first;
+        int b = p[i].second.second;
+        int cost = p[i].first;
         if (parent(root, a) != parent(root, b))
         {
             mincost += cost;
@@ -373,7 +371,7 @@ void Permutation(string str)
 
 }
 
-void table_kali(vector<int> mass, int& neutral)
+void table_kali(vector<int>& mass, int& neutral)
 {
     for (int i = 0; i < mass.size(); i++)
     {
@@ -389,7 +387,6 @@ void Kali()
     vector<int> kali(6);
     for (int i = 0; i < 6; i++)
         kali[i] = i + 1;
-    int buf = NULL;
     for (int i = 0; i < 6; i++)
         for (int j = 0; j < 6; j++)
             if (kali[i] * kali[j] % 7 == kali[j])
@@ -493,7 +490,7 @@ void Kali()
 //
 //            if (low[i] >= disc[v])
 //            {
-//                cout << "Новая компонента двусвязности: ";
+//                cout << "ГЌГ®ГўГ Гї ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГ  Г¤ГўГіГ±ГўГїГ§Г­Г®Г±ГІГЁ: ";
 //                while (st.top() != make_pair(v, i))
 //                {
 //                    cout << st.top().first << " -- " << st.top().second << endl;
@@ -527,7 +524,7 @@ void Kali()
 //
 //}
 //
-void transposition(int**& matrix, int vertexcount, vector<vector<int>> transpon)
+void transposition(int**& matrix, int vertexcount, vector<vector<int>>& transpon)
 {
     for (int i = 0; i < vertexcount; i++)
         for (int j = 0; j < vertexcount; j++)
@@ -579,7 +576,7 @@ void StrongConnectedComponents(int**& matrix, int vertexcount)
     }
 }
 
-bool CheckForPath(int**& matrix, int vertexCount, int start, vector<bool> inPath)
+bool CheckForPath(int**& matrix, int vertexCount, int start, vector<bool>& inPath)
 {
     int check = 0;
     for (int i = 0; i < vertexCount; i++)
@@ -644,11 +641,10 @@ void PrintSSCs(int**& matrix, int vertexCount, stack<int>& mainStack)
         if (!isVisited[top])
         {
             isVisited[top] = true;
-            bool check = false;
             stack<int> tempStack;
             tempStack.push(top);
 
-            while (!check && !tempStack.empty())
+            while (!tempStack.empty())
             {
                 int ttop = tempStack.top();
                 tempStack.pop();
