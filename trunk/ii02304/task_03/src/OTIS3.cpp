@@ -33,7 +33,7 @@ public:
         std::erase(destNeighbors, src);
     }
 
-    void const visualize() {
+    void visualize() const {
         ofstream file("graph.dot");
         if (!file) {
             cout << "Ошибка при открытии файла." << endl;
@@ -56,7 +56,7 @@ public:
         cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
-    bool isEulerian() {
+    bool isEulerian() const {
         for (const auto& vertex : vertices) {
             if (vertex.neighbors.size() % 2 != 0) {
                 return false;
@@ -73,9 +73,7 @@ public:
         vector<bool> visited(vertices.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
-            int dest = cycle[i + 1];
-
-            if (std::ranges::find(vertices[src].neighbors, dest) == vertices[src].neighbors.end()) {
+            if (int dest = cycle[i + 1]; std::ranges::find(vertices[src].neighbors, dest) == vertices[src].neighbors.end()) {
                 return false;
             }
 
@@ -191,8 +189,7 @@ int main() {
 
     graph.visualize();
 
-    vector<int> eulerianCycle = graph.findEulerianCycle();
-    if (!eulerianCycle.empty()) {
+    if (vector<int> eulerianCycle = graph.findEulerianCycle(); !eulerianCycle.empty()) {
         cout << "Эйлеров цикл: ";
         for (int vertex : eulerianCycle) {
             cout << vertex << " ";
@@ -204,7 +201,7 @@ int main() {
     }
 
     vector<int> hamiltonianCycle = graph.findHamiltonianCycle();
-    if (vector<int> hamiltonianCycle = graph.findHamiltonianCycle(); !hamiltonianCycle.empty()) {
+    if (vector<int> newHamiltonianCycle = graph.findHamiltonianCycle(); !newHamiltonianCycle.empty()) {
         cout << "Гамильтонов цикл: ";
         for (int vertex : hamiltonianCycle) {
             cout << vertex << " ";
