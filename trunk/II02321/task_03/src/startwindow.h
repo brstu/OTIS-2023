@@ -3,19 +3,19 @@
 
 #include <QWidget>
 #include <QMdiArea>
-#include "window.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class StartWindow;
 }
 
-class SW : public QWidget
+class StartWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SW(QWidget *parent = nullptr);
-    ~SW();
+    explicit StartWindow(QWidget *parent = nullptr);
+    ~StartWindow();
 
 private slots:
     void on_newGraph_clicked();

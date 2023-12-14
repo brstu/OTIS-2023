@@ -1,10 +1,11 @@
 #include "startwindow.h"
+
 #include <QApplication>
 
 int main(int ac, char *av[])
 {
     QApplication qa(ac, av);
-    SW win;
-    win.show();
+    StartWindow window;
+    window.show();
     return qa.exec();
 }

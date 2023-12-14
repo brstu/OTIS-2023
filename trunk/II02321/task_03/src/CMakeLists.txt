@@ -13,19 +13,19 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-    start.cpp
-    window.cpp
-        window.h
-        window.ui
+        main.cpp
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Task
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        algoritm.h
-        edge.h
-        vertex.h
+        euler.h
+        rebro.h
+        vershina.h
         startwindow.h startwindow.cpp startwindow.ui
     )
 # Define target properties for Android with Qt 6 as:
