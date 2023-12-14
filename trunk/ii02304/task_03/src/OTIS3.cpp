@@ -29,14 +29,14 @@ public:
     void removeEdge(int src, int dest) {
         auto& srcNeighbors = vertices[src].neighbors;
         auto& destNeighbors = vertices[dest].neighbors;
-        srcNeighbors.erase(remove(srcNeighbors.begin(), srcNeighbors.end(), dest), srcNeighbors.end());
-        destNeighbors.erase(remove(destNeighbors.begin(), destNeighbors.end(), src), destNeighbors.end());
+        std::erase(srcNeighbors, dest);
+        std::erase(destNeighbors, src);
     }
 
-    void visualize() {
+    void const visualize() {
         ofstream file("graph.dot");
-        if (!file.is_open()) {
-            cout << "Error opening file." << endl;
+        if (!file) {
+            cout << "Ошибка при открытии файла." << endl;
             return;
         }
 
@@ -53,16 +53,13 @@ public:
         file.close();
 
         system("dot -Tpng graph.dot -o graph.png");
-        cout << "Graph visualized in graph.png file." << endl;
+        cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
     bool isEulerian() {
-        for (const auto& vertex : vertices) {
-            if (vertex.neighbors.size() % 2 != 0) {
-                return false;
-            }
-        }
-        return true;
+        return std::ranges::none_of(vertices, {
+            return vertex.neighbors.size() % 2 != 0;
+            });
     }
 
     bool isHamiltonianCycle(const vector<int>& cycle) {
@@ -75,7 +72,7 @@ public:
             int src = cycle[i];
             int dest = cycle[i + 1];
 
-            if (find(vertices[src].neighbors.begin(), vertices[src].neighbors.end(), dest) == vertices[src].neighbors.end()) {
+            if (std::ranges::find(vertices[src].neighbors, dest) == vertices[src].neighbors.end()) {
                 return false;
             }
 
@@ -125,7 +122,7 @@ public:
         cycle.push_back(currentVertex);
 
         if (cycle.size() == vertices.size()) {
-            if (find(vertices[currentVertex].neighbors.begin(), vertices[currentVertex].neighbors.end(), cycle[0]) != vertices[currentVertex].neighbors.end()) {
+            if (std::ranges::find(vertices[currentVertex].neighbors, cycle[0]) != vertices[currentVertex].neighbors.end()) {
                 cycle.push_back(cycle[0]);
                 return true;
             }
@@ -137,10 +134,8 @@ public:
         }
 
         for (int neighbor : vertices[currentVertex].neighbors) {
-            if (!visited[neighbor]) {
-                if (findHamiltonianCycleRecursive(neighbor, cycle, visited)) {
-                    return true;
-                }
+            if (!visited[neighbor] && findHamiltonianCycleRecursive(neighbor, cycle, visited)) {
+                return true;
             }
         }
 
@@ -206,7 +201,7 @@ int main() {
     }
 
     vector<int> hamiltonianCycle = graph.findHamiltonianCycle();
-    if (!hamiltonianCycle.empty()) {
+    if (vector<int> hamiltonianCycle = graph.findHamiltonianCycle(); !hamiltonianCycle.empty()) {
         cout << "Гамильтонов цикл: ";
         for (int vertex : hamiltonianCycle) {
             cout << vertex << " ";
