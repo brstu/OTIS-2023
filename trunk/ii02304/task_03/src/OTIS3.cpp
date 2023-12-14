@@ -77,7 +77,7 @@ public:
             visited[src] = true;
         }
 
-        return all_of(visited.begin(), visited.end(), [](bool v) { return v; });
+        return ranges::all_of(visited, [](bool v) { return v; });
     }
     vector<int> findEulerianCycle() {
         vector<int> cycle;
