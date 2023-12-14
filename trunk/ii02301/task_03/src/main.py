@@ -99,7 +99,7 @@ def delete_canvas(event):
             canvas.delete(cord['id text'][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
             cord['id text'].remove(cord['id text'][cord['id'].index(x)])
- cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
+            cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
             cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
             cord['id'].remove(x)
