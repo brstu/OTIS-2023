@@ -76,13 +76,8 @@ public:
             }
             visited[src] = true;
         }
-        for (bool v : visited) {
-            if (!v) {
-                return false;
-            }
-        }
 
-        return true;
+        return all_of(visited.begin(), visited.end(), [](bool v) { return v; });
     }
     vector<int> findEulerianCycle() {
         vector<int> cycle;
