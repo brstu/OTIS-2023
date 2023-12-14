@@ -1,24 +1,24 @@
 #include <iostream>
 #include <cmath>
 
-const float COEFFICIENT_A = 1;
+const double COEFFICIENT_A = 1;
 const double COEFFICIENT_B = 0.02;
-const float COEFFICIENT_C = 1;
-const float COEFFICIENT_D = 1;
+const double COEFFICIENT_C = 1;
+const double COEFFICIENT_D = 1;
 
 // Calculate the temperature using a linear model
-void linearmod(float y, float j, int tend) {
+void linearmod(double y, double j, int tend) {
     for (int t = 1; t <= tend; ++t) {
-        float y_sld = COEFFICIENT_A * y + COEFFICIENT_B * j;
+        double y_sld = COEFFICIENT_A * y + COEFFICIENT_B * j;
         y = y_sld;
         std::cout << y_sld << "\n";
     }
 }
 
 // Calculate the temperature using a nonlinear model
-void nonlinearmod(float y_pred, float y, float j, int tend) {
+void nonlinearmod(double y_pred, double y, double j, int tend) {
     for (int t = 1; t <= tend; ++t) {
-        float y_sld = COEFFICIENT_A * y - COEFFICIENT_B * pow(y_pred, 2) + COEFFICIENT_C * j + COEFFICIENT_D * sin(j);
+        double y_sld = COEFFICIENT_A * y - COEFFICIENT_B * pow(y_pred, 2) + COEFFICIENT_C * j + COEFFICIENT_D * sin(j);
         y_pred = y;
         y = y_sld;
         std::cout << y_sld << "\n";
@@ -31,8 +31,8 @@ void ans() {
 }
 
 int main() {
-    float initialTemperature;
-    float warm;
+    double initialTemperature;
+    double warm;
     int Tend;
 
     //Setting starting temp
