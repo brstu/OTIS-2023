@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include <cmath>
 using namespace std;
 
 const double A = 0.5, B = 0.6, C = 0.6, D = 0.6;
