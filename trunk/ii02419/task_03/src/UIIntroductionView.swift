@@ -103,7 +103,6 @@ class UIIntroductionView: UIView {
             }
             count += 1
         }
-    
         setNeedsDisplay()
     }
     // передвижение вершины
