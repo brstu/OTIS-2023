@@ -25,36 +25,6 @@
 
 3. Написать отчет по выполненной работе в .md формате (readme.md) и с помощью pull request разместить его в следующем каталоге: trunk\ii0xxyy\task_04\doc.
 
-
----
-
-# Установка #
-
-```
-git clоne -c cоre.lоngpaths=true -c cоre.autоcrlf=true https://github.cоm/оstis-apps/nika
-cd nika
-git submоdule update --init --recursive
-dоcker cоmpоse pull
-```
-В ходе установки возникла ошибка ``` error: unable to create file ... (file too long)```
-
-Решение:
-```
-cd nika
-git config --local core.longpaths true
-```
-Также в ходе выполнения задания требовалось дополнительно установить [Docker](https://docs.docker.com/)(c плагином Compose)
- 
-# Запуск #
-```
-docker compose up --no-build
-```
-Эта команда запустит два веб-интерфейса:
-
-sc-web - ```localhost:8000```
-
-dialogue web UI - ```localhost:3033```
-
 # Результат #
 
 sc-web - ```localhost:8000```:
