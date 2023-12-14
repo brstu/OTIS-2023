@@ -21,6 +21,7 @@
 #include "rebro.h"
 #include "vershina"
 #include "euler.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -35,6 +36,42 @@ MainWindow::~MainWindow()
     QFile::remove("graph.txt");
 }
 
+void MainWindow::addVertex(const QString& name, const QColor& color, double x, double y)
+{
+    Vershina* vertex = new Vershina(name, color);
+    vertex->setPos(x, y);
+    scene->addItem(vertex);
+    vershins.append(vertex);
+}
+
+void MainWindow::addEdge(int sourceIndex, int destinationIndex, double weight, const QColor& color)
+{
+    if (sourceIndex >= 0 && sourceIndex < vershins.length() && destinationIndex >= 0 && destinationIndex < vershins.length())
+    {
+        Vershina* sourceVertex = vershins.at(sourceIndex);
+        Vershina* destinationVertex = vershins.at(destinationIndex);
+        Rebro* edge = new Rebro(sourceVertex, destinationVertex, weight, color);
+        scene->addItem(edge);
+        rebrs.append(edge);
+
+        QFile file("graph.txt");
+        if (file.open(QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream out(&file);
+            out << sourceIndex << "\t" << destinationIndex << "\t" << weight << "\n";
+            file.close();
+        }
+    }
+}
+
+void MainWindow::updateRebro()
+{
+    foreach (Rebro* edge, rebrs) {
+        edge->adjust();
+        edge->update();
+    }
+}
+
 void MainWindow::on_addVertexButton_clicked()
 {
     QDialog dialog;
@@ -47,9 +84,7 @@ void MainWindow::on_addVertexButton_clicked()
     connect(&addButton, &QPushButton::clicked, [&]() {
         QString name = nameLineEdit.text();
         QColor color = QColorDialog::getColor();
-        Vershina* vertex = new Vershina(name, color);
-        scene->addItem(vertex);
-        vershins.append(vertex);
+        addVertex(name, color, 0, 0);
         dialog.close();
         updateRebro();
     });
@@ -64,49 +99,30 @@ void MainWindow::on_addEdgeButton_clicked()
     }
 
     QDialog dialog;
-    QFormLayout form(&dialog);
+    QFormLayout forms(&dialog);
 
     QLineEdit weightLineEdit;
-
     QLineEdit sourceVertexLineEdit;
     QLineEdit destinationVertexLineEdit;
     sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vershins.length() - 1) + ")");
     destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vershins.length() - 1) + ")");
-    form.addRow("Укажите вес ребра", &weightLineEdit);
-    form.addRow("Начальная вершина", &sourceVertexLineEdit);
-    form.addRow("Конечная вершина", &destinationVertexLineEdit);
+    forms.addRow("Укажите вес ребра", &weightLineEdit);
+    forms.addRow("Начальная вершина", &sourceVertexLineEdit);
+    forms.addRow("Конечная вершина", &destinationVertexLineEdit);
     QPushButton addButton("Добавить ребро");
-    form.addRow(&addButton);
-    connect(&addButton, &QPushButton::clicked, [&]()
-    {
+    forms.addRow(&addButton);
+
+    connect(&addButton, &QPushButton::clicked, [&]() {
         double weight = weightLineEdit.text().toInt();
         int sourceIndex = sourceVertexLineEdit.text().toInt();
         int destinationIndex = destinationVertexLineEdit.text().toInt();
-
-        if (sourceIndex >= 0 && sourceIndex < vershins.length() && destinationIndex >= 0 && destinationIndex < vershins.length())
-        {
-            Vershina* sourceVertex = vershins.at(sourceIndex);
-            Vershina* destinationVertex = vershins.at(destinationIndex);
-            Rebro* edge = new Rebro(sourceVertex, destinationVertex, weight, QColorDialog::getColor());
-            scene->addItem(edge);
-            rebrs.append(edge);
-
-            QFile file("graph.txt");
-            if (file.open(QIODevice::Append | QIODevice::Text))
-            {
-                QTextStream out(&file);
-
-                // Записываем информацию о ребре в файл
-                out << sourceIndex << "                 " << destinationIndex << "                 " << weight << "\n";
-
-                file.close();
-            }
-        }
+        addEdge(sourceIndex, destinationIndex, weight, QColorDialog::getColor());
         dialog.close();
     });
 
     dialog.exec();
 }
+/*
 void MainWindow::updateRebro()
 {
     foreach (Rebro* edge, rebrs) {
@@ -114,6 +130,7 @@ void MainWindow::updateRebro()
         edge->update();
     }
 }
+*/
 void MainWindow::updateFile(){
     QFile file("graph.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -133,15 +150,15 @@ void MainWindow::on_removeEdgeButton_clicked()
     }
 
     QDialog dialog;
-    QFormLayout form(&dialog);
+    QFormLayout forms(&dialog);
     QLineEdit sourceVertexLineEdit;
     sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vershins.length() - 1) + ")");
     QLineEdit destinationVertexLineEdit;
     destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vershins.length() - 1) + ")");
-    form.addRow("Начальная вершина", &sourceVertexLineEdit);
-    form.addRow("Конечная вершина", &destinationVertexLineEdit);
+    forms.addRow("Начальная вершина", &sourceVertexLineEdit);
+    forms.addRow("Конечная вершина", &destinationVertexLineEdit);
     QPushButton removeButton("Удалить ребро");
-    form.addRow(&removeButton);
+    forms.addRow(&removeButton);
 
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int sourceIndex = sourceVertexLineEdit.text().toInt();
@@ -178,12 +195,12 @@ void MainWindow::on_removeVertexButton_clicked()
     }
 
     QDialog dialog;
-    QFormLayout form(&dialog);
+    QFormLayout forms(&dialog);
     QLineEdit vertexIndexLineEdit;
     vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vershins.length() - 1) + ")");
-    form.addRow("Индекс вершины", &vertexIndexLineEdit);
+    forms.addRow("Индекс вершины", &vertexIndexLineEdit);
     QPushButton removeButton("Удалить вершину");
-    form.addRow(&removeButton);
+    forms.addRow(&removeButton);
 
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
@@ -229,15 +246,15 @@ void MainWindow::on_changeVertexButton_clicked()
     }
 
     QDialog dialog;
-    QFormLayout form(&dialog);
+    QFormLayout forms(&dialog);
     QLineEdit vertexIndexLineEdit;
     vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vershins.length() - 1) + ")");
     QLineEdit vertexNameLineEdit;
     vertexNameLineEdit.setPlaceholderText("Новое название вершины");
-    form.addRow("Индекс вершины", &vertexIndexLineEdit);
-    form.addRow("Новое название", &vertexNameLineEdit);
+    forms.addRow("Индекс вершины", &vertexIndexLineEdit);
+    forms.addRow("Новое название", &vertexNameLineEdit);
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    form.addRow(&buttonBox);
+    forms.addRow(&buttonBox);
 
     connect(&buttonBox, &QDialogButtonBox::accepted, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
@@ -447,7 +464,7 @@ QString degreesText = "Степени вершин:\n";
     QString tree;
     if(isConnected() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
-    QVBoxLayout layout(&dialog);
+    QVBoxLayout layouts(&dialog);
     QLabel infoLabel(infoText);
     QLabel degreesLabel(degreesText);
     QLabel incidenceMatrixLabel(incidenceMatrixText);
@@ -457,15 +474,15 @@ QString degreesText = "Степени вершин:\n";
     QLabel CompleteGraphLabel(completeGraph);
     QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText); // Обновлено
     QLabel shortestPathsLabel(fullText);
-    layout.addWidget(&infoLabel);
-    layout.addWidget(&degreesLabel);
-    layout.addWidget(&incidenceMatrixLabel);
-    layout.addWidget(&adjacencyMatrixLabel);
-    layout.addWidget(&GraphConnectedLabel);
-    layout.addWidget(&Tree);
-    layout.addWidget(&CompleteGraphLabel);
-    layout.addWidget(&eulerCycleLabel);
-    layout.addWidget(&shortestPathsLabel);
+    layouts.addWidget(&infoLabel);
+    layouts.addWidget(&degreesLabel);
+    layouts.addWidget(&incidenceMatrixLabel);
+    layouts.addWidget(&adjacencyMatrixLabel);
+    layouts.addWidget(&GraphConnectedLabel);
+    layouts.addWidget(&Tree);
+    layouts.addWidget(&CompleteGraphLabel);
+    layouts.addWidget(&eulerCycleLabel);
+    layouts.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
 void MainWindow::on_addInformationButton_clicked()

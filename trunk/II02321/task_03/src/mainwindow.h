@@ -16,6 +16,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    void addEdge(int sourceIndex, int destinationIndex, double weight, const QColor& color);
+    void addVertex(const QString& name, const QColor& color, double x, double y);
     void updateFile();
     bool compleGraph();
     void importFile(const QString& fileName);
