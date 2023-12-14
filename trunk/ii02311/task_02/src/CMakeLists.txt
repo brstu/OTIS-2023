@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.22) 
+cmake_minimum_required(VERSION 3.6)
+project(OTIS2)
 
-project(OTIS2)  
- 
-set(SOURCES main.cpp)
- 
-add_executable(ExecutableName1 ${SOURCES})
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(OTIS2 main.cpp)
