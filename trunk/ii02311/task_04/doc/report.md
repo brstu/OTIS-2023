@@ -31,10 +31,10 @@
 # Установка #
 
 ```
-git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
+git clоne -c cоre.lоngpaths=true -c cоre.autоcrlf=true https://github.cоm/оstis-apps/nika
 cd nika
-git submodule update --init --recursive
-docker compose pull
+git submоdule update --init --recursive
+dоcker cоmpоse pull
 ```
 В ходе установки возникла ошибка ``` error: unable to create file ... (file too long)```
 
