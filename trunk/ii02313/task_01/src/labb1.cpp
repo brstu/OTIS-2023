@@ -7,7 +7,7 @@ const double COEFFICIENT_C = 1;
 const double COEFFICIENT_D = 1;
 
 // Calculate the temperature using a linear model
-void linearmod(double y, double j, int tend) {
+void linod(double y, double j, int tend) {
     for (int t = 1; t <= tend; ++t) {
         double y_ced = COEFFICIENT_A * y + COEFFICIENT_B * j;
         y = y_ced;
@@ -16,7 +16,7 @@ void linearmod(double y, double j, int tend) {
 }
 
 // Calculate the temperature using a nonlinear model
-void nonlinearmod(double y_brv, double y, double j, int tend) {
+void nonlinod(double y_brv, double y, double j, int tend) {
     for (int t = 1; t <= tend; ++t) {
         double y_ced = COEFFICIENT_A * y - COEFFICIENT_B * pow(y_brv, 2) + COEFFICIENT_C * j + COEFFICIENT_D * sin(j);
         y_brv = y;
@@ -26,13 +26,15 @@ void nonlinearmod(double y_brv, double y, double j, int tend) {
 }
 
 // Ending alert output
-void ans() {
+void answer(int Tend, int warm) {
+    if (Tend > warm) {
     std::cout << "\nModeling ended.\n";
+    }
 }
 
 int main() {
-    double initialTemperature;
-    double warm;
+    int initialTemperature;
+    int warm;
     int Tend;
 
     //Setting starting temp
@@ -62,14 +64,14 @@ int main() {
     
     //Output of linear modeling
     std::cout << "\nResults of linear modeling:\n";
-    linearmod(initialTemperature, warm, Tend);
+    linod(initialTemperature, warm, Tend);
 
     //Output of linear modeling
     std::cout << "\nResult of nonlinear modeling:\n";
-    nonlinearmod(0, initialTemperature, warm, Tend);
+    nonlinod(0, initialTemperature, warm, Tend);
 
     // Finishing task
-    ans();
+    answer(Tend, warm);
     
     return 0;
 }
