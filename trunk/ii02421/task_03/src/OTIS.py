@@ -32,25 +32,25 @@ def create_vertex(entry_name, window):
 
 # This class represents a node in a graph.
 class Node:
+    # Initialize a new node with a name and random coordinates
     def __init__(self, name):
-        self.name = name  # The name of the node
-        self.x = rng.integers(0, 700)  # The x-coordinate of the node
-        self.y = rng.integers(0, 600)  # The y-coordinate of the node
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)  # The circle representing the node
-        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")  # The text displaying the node's name
+        self.name = name
+        self.x = rng.integers(0, 700)
+        self.y = rng.integers(0, 600)
+        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)  # Create a circle for the node
+        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")  # Create text for the node
         graph.add_node(name)  # Add the node to the graph
 
+    # Move the node to new coordinates
     def move(self, x, y):
-        self.x = x  # Update the x-coordinate of the node
-        self.y = y  # Update the y-coordinate of the node
-        canvas.coords(self.circle, x - 20, y - 20, x + 20, y + 20)  # Move the circle to the new location
-        canvas.coords(self.text, x, y)  # Move the text to the new location
-        for edge in edges:  # For each edge in the graph
-            if edge.node1 == self or edge.node2 == self:  # If the edge is connected to this node
-                edge.move()  # Move the edge
+        self.x = x
+        self.y = y
+        canvas.coords(self.circle, x - 20, y - 20, x + 20, y + 20)  # Update circle coordinates
+        canvas.coords(self.text, x, y)  # Update text coordinates
+        self.update_edges('move')  # Update edges connected to this node
 
+    # Open a window to change the node's name
     def change(self):
-        # This function opens a new window for changing the name of the node.
         win = Tk()
         win.title("Редактирование имени")
         win.geometry(WINDOW_GEOMETRY)
@@ -64,25 +64,32 @@ class Node:
         button.place(x=10, y=70)
         win.mainloop()
 
+    # Change the node's name
     def change_name(self, name):
-        # This function changes the name of the node.
         graph._adj[name] = graph._adj.pop(self.name)  # Update the adjacency list of the graph
         self.name = name  # Update the name of the node
         canvas.itemconfig(self.text, text=name)  # Update the text displaying the node's name
 
+    # Change the color of the node
     def change_color(self, color):
-        # This function changes the color of the node.
         canvas.itemconfig(self.circle, fill=color)  # Change the color of the circle representing the node
 
+    # Delete the node
     def delete(self):
-        # This function deletes the node.
         canvas.delete(self.circle)  # Delete the circle representing the node
         canvas.delete(self.text)  # Delete the text displaying the node's name
-        for edge in edges:  # For each edge in the graph
-            if edge.node1 == self or edge.node2 == self:  # If the edge is connected to this node
-                edge.delete()  # Delete the edge
-                edges.remove(edge)  # Remove the edge from the list of edges
+        self.update_edges('delete')  # Delete edges connected to this node
         graph.remove_node(self.name)  # Remove the node from the graph
+
+    # Update edges connected to the node
+    def update_edges(self, action):
+        for edge in edges:
+            if edge.node1 == self or edge.node2 == self:  # If the edge is connected to this node
+                if action == 'move':  # If the action is 'move'
+                    edge.move()  # Move the edge
+                elif action == 'delete':  # If the action is 'delete'
+                    edge.delete()  # Delete the edge
+                    edges.remove(edge)  # Remove the edge from the list of edges
 
 class Edge:
     def __init__(self, node1, node2, weight: int):
