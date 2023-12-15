@@ -92,71 +92,99 @@ class Node:
                     edges.remove(edge)  # Remove the edge from the list of edges
 
 class Edge:
-    def __init__(self, node1, node2, weight: int):
-        # Initialize an edge with two connected nodes and a weight.
+    def __init__(self, node1: 'Node', node2: 'Node', weight: int):
+        self._initialize_edge(node1, node2, weight)
+        self._create_line()
+        self._create_text_label()
+        self._add_edge_to_graph()
+
+    def _initialize_edge(self, node1: 'Node', node2: 'Node', weight: int):
         self.weight = weight
-        self.node1 = node1  # The first node of the edge.
-        self.node2 = node2  # The second node of the edge.
-        
-        # Create a line on the canvas connecting the two nodes.
-        self.line = canvas.create_line(connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y),
+        self.node1 = node1
+        self.node2 = node2
+
+    def _create_line(self):
+        self.line = canvas.create_line(self._connecting_line(),
                                        width=2, fill="black")
-        
-        # Create a text label on the canvas displaying the weight of the edge.
-        self.text = canvas.create_text((self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5,
+
+    def _create_text_label(self):
+        self.text = canvas.create_text(self._text_label_position(),
                                        anchor='center', text=self.weight, font="Arial 20", fill="white")
-        
-        # Add the edge to the graph representation.
-        graph.add_edge(node1.name, node2.name, weight=weight)
+
+    def _add_edge_to_graph(self):
+        graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
+
+    @staticmethod
+    def _connecting_line():
+        return self.node1.x, self.node1.y, self.node2.x, self.node2.y
+
+    def _text_label_position(self):
+        return (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5
 
     def change(self):
-        # Open a window for changing the weight of the edge.
+        self._open_change_window()
+
+    def _open_change_window(self):
         win = Tk()
         win.title("Edit Edge Weight")
         win.geometry("190x120+1050+250")
         win.wm_attributes('-topmost', 3)
         win.resizable(False, False)
         
-        # Create GUI elements for entering a new weight.
+        self._create_gui_elements(win)
+        
+        win.mainloop()
+
+    def _create_gui_elements(self, win):
         label = Label(win, text="Enter the new weight")
         label.place(x=10, y=10)
         entry = Entry(win, width=10)
         entry.place(x=10, y=40)
         button = Button(win, text="Edit", command=lambda: self.change_weight(entry.get()))
         button.place(x=10, y=70)
-        
-        win.mainloop()
 
     def change_weight(self, weight):
-        # Change the weight of the edge.
+        self._update_weight(weight)
+        self._update_text_label()
+        self._update_edge_in_graph()
+
+    def _update_weight(self, weight):
         self.weight = int(weight)
-        
-        # Update the text label on the canvas with the new weight.
-        canvas.itemconfig(self.text, text=weight)
-        
-        # Remove the edge from the graph and add it again with the new weight.
+
+    def _update_text_label(self):
+        canvas.itemconfig(self.text, text=self.weight)
+
+    def _update_edge_in_graph(self):
         graph.remove_edge(self.node1.name, self.node2.name)
         graph.add_edge(self.node1.name, self.node2.name, weight=self.weight)
 
     def change_color(self, color):
-        # Change the color of the edge on the canvas.
         canvas.itemconfig(self.line, fill=color)
 
     def move(self):
-        # Move the edge to match the new positions of its connected nodes.
-        canvas.coords(self.line, connecting_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
-        canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
+        self._move_line()
+        self._move_text()
+
+    def _move_line(self):
+        canvas.coords(self.line, self._connecting_line())
+
+    def _move_text(self):
+        canvas.coords(self.text, self._text_label_position())
 
     def delete(self):
-        # Delete the edge from the canvas and the graph.
+        self._delete_from_canvas()
+        self._delete_from_graph()
+
+    def _delete_from_canvas(self):
         canvas.delete(self.line)
         canvas.delete(self.text)
+
+    def _delete_from_graph(self):
         graph.remove_edge(self.node1.name, self.node2.name)
 
 
 
 
-# изменение цвета
 def chose_color(color_lable):
     global color_vertex
     rgb, hx = askcolor()
@@ -164,63 +192,70 @@ def chose_color(color_lable):
     color_vertex = hx
     color_lable.config(bg=color_vertex)
 
+def create_add_vertex_window():
+    add_window = Tk()
+    add_window.title("Add Vertex")
+    add_window.geometry("190x120+1050+250")
+    add_window.wm_attributes('-topmost', 3)
+    add_window.resizable(False, False)
+    return add_window
+
+def create_gui_elements(add_window):
+    label = Label(add_window, text="Enter vertex name")
+    entry_name = Entry(add_window)
+    add_button = Button(add_window, text="Choose Color", command=lambda: chose_color(color_lable))
+    color_button = Button(add_window, text="Add Vertex", command=lambda: create_vertex(entry_name, add_window))
+    color_lable = Label(add_window, width=2, bg="white")
+    return label, entry_name, add_button, color_button, color_lable
+
+def place_gui_elements_on_grid(elements):
+    label, entry_name, add_button, color_button, color_lable = elements
+    label.grid(row=0, column=0, sticky="ew")
+    entry_name.grid(row=1, column=0, sticky="ewns")
+    add_button.grid(row=2, column=0, sticky="ewns")
+    color_button.grid(row=3, column=0, sticky="ewns")
+    color_lable.grid(row=1, column=1)
+
+def start_window_main_loop(add_window):
+    add_window.mainloop()
 
 # добавления вершин
 def menu_add_vertex():
     # Ensure the global color_vertex variable is used within this function.
     global color_vertex
     
-    # Create a new window for adding a vertex.
-    add_window = Tk()
-    add_window.title("Add Vertex")
-    add_window.geometry("190x120+1050+250")
-    add_window.wm_attributes('-topmost', 3)
-    add_window.resizable(False, False)
-    
-    # Create GUI elements for entering vertex information.
-    label = Label(add_window, text="Enter vertex name")
-    entry_name = Entry(add_window)
-    add_button = Button(add_window, text="Choose Color", command=lambda: chose_color(color_lable))
-    color_button = Button(add_window, text="Add Vertex", command=lambda: create_vertex(entry_name, add_window))
-    color_lable = Label(add_window, width=2, bg="white")
-    
-    # Place GUI elements on the window grid.
-    label.grid(row=0, column=0, sticky="ew")
-    entry_name.grid(row=1, column=0, sticky="ewns")
-    add_button.grid(row=2, column=0, sticky="ewns")
-    color_button.grid(row=3, column=0, sticky="ewns")
-    color_lable.grid(row=1, column=1)
-    
-    # Start the window main loop.
-    add_window.mainloop()
+    add_window = create_add_vertex_window()
+    gui_elements = create_gui_elements(add_window)
+    place_gui_elements_on_grid(gui_elements)
+    start_window_main_loop(add_window)
 
 
 
-# создание ребра
-def create_edge(entry_weight, entry_node1, entry_node2, window):
+def get_weight(entry_weight):
     try:
-        # Attempt to convert the entered weight to an integer.
-        weight = int(entry_weight.get())
+        return int(entry_weight.get())
     except ValueError:
-        # Display an error message if the weight is not a valid integer.
         messagebox.showerror("Error", "Edge weight must be a number")
-    else:
-        # Retrieve the names of the nodes from the entry widgets.
-        node1 = entry_node1.get()
-        node2 = entry_node2.get()
-        
-        # Search for the corresponding Node instances in the nodes list.
-        for vertex in nodes:
-            if vertex.name == node1:
-                node1 = vertex
-            if vertex.name == node2:
-                node2 = vertex
-        
-        # Create an Edge instance and add it to the edges list.
-        edges.append(Edge(node1, node2, weight))
-        
-        # Close the window after successfully creating the edge.
-        window.destroy()
+        return None
+
+def get_node(entry_node, nodes):
+    node_name = entry_node.get()
+    for vertex in nodes:
+        if vertex.name == node_name:
+            return vertex
+    return None
+
+def add_edge_to_list(node1, node2, weight, edges):
+    edges.append(Edge(node1, node2, weight))
+
+def create_edge(entry_weight, entry_node1, entry_node2, window):
+    weight = get_weight(entry_weight)
+    if weight is not None:
+        node1 = get_node(entry_node1, nodes)
+        node2 = get_node(entry_node2, nodes)
+        if node1 is not None and node2 is not None:
+            add_edge_to_list(node1, node2, weight, edges)
+            window.destroy()
 
 
 
