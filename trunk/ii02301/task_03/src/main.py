@@ -68,7 +68,7 @@ def draw_canvas2(event):
                 cord_edge['id_vertex1'].append(x)
                 cord_edge2['id_vertex1'].append(x)
                 click_num = 1
-                main_label.configure(text="Выберите вторую вершину для рисования ребра")
+                main_label.configure(text="Выбор второй вершину для рисования ребра графа")
     elif click_num == 1:
         for x in ovals:
             if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
@@ -83,7 +83,7 @@ def draw_canvas2(event):
         id_of_edge += 1
         canvas.tag_lower(line)
         click_num = 0
-        main_label.configure(text="Выберите вершину для рисования ребра")
+        main_label.configure(text="Выберите нужную вершину для рисования ребра")
 
 
 def delete_vertex():
@@ -264,14 +264,17 @@ def bfs():
 
 
 root = tk.Tk()
-root.title("Graph creation")
-main_label = tk.Label(root, text="Выберите действие с графом")
-main_label.pack(side=tk.BOTTOM)
-tk.Tk.geometry(root, "800x600")
-canvas = tk.Canvas(root, width=1920, height=1080)
-canvas.pack()
+root.geometry("800x600")
+
+frame = tk.Frame(root)
+frame.pack(fill=tk.BOTH, expand=True)
+
+canvas = tk.Canvas(frame, width=1920, height=1080)
+canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
 menubar = tk.Menu(root)
 root.config(menu=menubar)
+
 
 graphmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Граф", menu=graphmenu)
