@@ -7,6 +7,8 @@ BUTTON_CONSTANT = "<Button-1>"
 TITLE_STR_NAME = "Задайте имя графа"
 ERROR_STR_CONSTANT = "Ошибка"
 SHOW_ERR_CONSTANT = "Вы ввели неверное имя вершины"
+SIZE_CONSTANT = "400x400+0+0"
+STR_LABEL_CONSTANT = "text"
 tk = Tk()
 tk.title("Graph")
 tk.geometry("890x860+410+10")
@@ -20,7 +22,7 @@ canvas.place(x=0, y=130)
 
 label = Label(tk)
 label.place(x=370, y=100)
-label["text"] = "Имя графа"
+label[STR_LABEL_CONSTANT] = "Имя графа"
 
 
 class Vertex:
@@ -101,7 +103,7 @@ def create_matrix_adjacency():
         matrix_adjacency[vert_name.index(edge.vertex2.vert_name)][vert_name.index(edge.vertex1.vert_name)] = 1
     window = Tk()
     window.title("Матрица смежности")
-    window.geometry("400x400+0+0")
+    window.geometry(SIZE_CONSTANT)
     for i in range(matrix_adjacency.__len__()):
         for j in range(len(matrix_adjacency[0])):
             Label(window, text=matrix_adjacency[i][j], font=(FONT_CONSTANT, 10), width=5, height=2, borderwidth=1,
@@ -118,7 +120,7 @@ def create_matrix_incidence_window():
         matrix[vert_name.index(edges[i].vertex2.vert_name)][i] = 1
     window = Tk()
     window.title("Матрица инцидентности")
-    window.geometry("400x400+0+0")
+    window.geometry(SIZE_CONSTANT)
     for i in range(matrix.__len__()):
         for j in range(len(matrix[0])):
             Label(window, text=matrix[i][j], font=(FONT_CONSTANT, 10), width=5, height=2, borderwidth=1, relief="solid").grid(
@@ -131,7 +133,7 @@ def quitfunc(root):
 
 
 def change_graf_name(name, root):
-    label["text"] = name
+    label[STR_LABEL_CONSTANT] = name
     quitfunc(root)
 
 
@@ -141,13 +143,13 @@ def graf_name():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     labelgraph = Label(new_window)
-    labelgraph["text"] = "Введите имя графа"
+    labelgraph[STR_LABEL_CONSTANT] = "Введите имя графа"
     labelgraph.grid(row=0, column=0, sticky="ew")
     entry = Entry(new_window)
     entry.grid(row=1, column=0)
     btngraf = Button(new_window, text="Ввод", command=lambda: change_graf_name(entry.get(), new_window))
     btngraf.grid(row=2, column=0, sticky="ew")
-    if entry.get == label["text"]:
+    if entry.get == label[STR_LABEL_CONSTANT]:
         new_window.destroy()
     new_window.mainloop()
 
@@ -236,7 +238,6 @@ def create_vertex(root, entry):
 call_count = 0
 
 
-# Меню создания вершины
 def menu_create_vetrex():
     global vert_name, call_count
     call_count = 0
@@ -247,7 +248,7 @@ def menu_create_vetrex():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label = Label(new_window)
-    label["text"] = "Введите имя вершины"
+    label[STR_LABEL_CONSTANT] = "Введите имя вершины"
     entry = Entry(new_window)
     btncolor1 = Button(new_window, text="Синий", command=lambda: give_color(1), bg="blue")
     btncolor2 = Button(new_window, text="Красный", command=lambda: give_color(2), bg="red")
@@ -297,13 +298,13 @@ def delete_vertex():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label = Label(new_window)
-    label["text"] = "Введите имя удаляемой вершины"
+    label[STR_LABEL_CONSTANT] = "Введите имя удаляемой вершины"
     label.grid(row=0, column=0, sticky="ew")
     entry = Entry(new_window)
     entry.grid(row=1, column=0)
     btndel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
     btndel.grid(row=2, column=0, sticky="ew")
-    if entry.get == label["text"]:
+    if entry.get == label[STR_LABEL_CONSTANT]:
         new_window.destroy()
 
 
@@ -330,10 +331,10 @@ def menu_delete_edge():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label = Label(new_window)
-    label["text"] = "Введите имя вершин, между которыми \nудаляется ребро\nПервая вершина"
+    label[STR_LABEL_CONSTANT] = "Введите имя вершин, между которыми \nудаляется ребро\nПервая вершина"
     label.grid(row=0, column=0, sticky="ew")
     label2 = Label(new_window)
-    label2["text"] = "Вторая вершина"
+    label2[STR_LABEL_CONSTANT] = "Вторая вершина"
     entry = Entry(new_window)
     entry2 = Entry(new_window)
     entry.grid(row=1, column=0, sticky="ew")
@@ -362,12 +363,12 @@ def menu_rename_vertex():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label1 = Label(new_window)
-    label1["text"] = "Введите имя изменяемой вершины"
+    label1[STR_LABEL_CONSTANT] = "Введите имя изменяемой вершины"
     label1.grid(row=0, column=0, sticky="ew")
     entry1 = Entry(new_window)
     entry1.grid(row=1, column=0, sticky="ew")
     label2 = Label(new_window)
-    label2["text"] = "Введите новое имя вершины"
+    label2[STR_LABEL_CONSTANT] = "Введите новое имя вершины"
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(new_window)
     entry2.grid(row=3, column=0, sticky="ew")
@@ -413,15 +414,15 @@ def menu_create_edge():
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label1 = Label(new_window)
-    label1["text"] = "Введите имя 1-ой вершины"
+    label1[STR_LABEL_CONSTANT] = "Введите имя 1-ой вершины"
     entry1 = Entry(new_window)
     entry2 = Entry(new_window)
     entry3 = Entry(new_window)
     entry3.insert(0, "0")
     label2 = Label(new_window)
     label3 = Label(new_window)
-    label3["text"] = "Введите вес вершины"
-    label2["text"] = "Введите имя 2-ой вершины"
+    label3[STR_LABEL_CONSTANT] = "Введите вес вершины"
+    label2[STR_LABEL_CONSTANT] = "Введите имя 2-ой вершины"
     label1.grid(row=0, column=0, sticky="ew")
     btnvertname = Button(new_window, text="Ввод",
                          command=lambda: create_edge(entry1.get(), entry2.get(), entry3.get(), new_window))
