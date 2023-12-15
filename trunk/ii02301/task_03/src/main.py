@@ -11,10 +11,14 @@ i = 0
 id_text = 0
 tag = 0
 x1, y1, x2, y2 = 0, 0, 0, 0
+button_1="<Button-1>"
+text_on_vertex='text on vertex'
+id_text='id text'
+num_of_vertex='num of vertex'
 
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
-cord = {'id': [], 'id text': [], 'text on vertex': [], 'textID': [], 'num of vertex': [], 'coordinatesX': [],
+cord = {'id': [], id_text: [], text_on_vertex: [], 'textID': [], num_of_vertex: [], 'coordinatesX': [],
         'coordinatesY': []}
 visited = []
 matrix = []
@@ -23,8 +27,8 @@ matrix = []
 def draw_vertex():
     global canvas
     main_label.configure(text="Выбрано создание вершин, нажмите на пустое для создания вершины")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas1)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, draw_canvas1)
 
 
 def draw_canvas1(event):
@@ -36,7 +40,7 @@ def draw_canvas1(event):
     tag = 'oval' + str(id_text)
     texttag = 'text' + str(id_text)
     cord["num of vertex"].append(id_text)
-    cord['id text'].append(tag)
+    cord[id_text].append(tag)
     cord["coordinatesX"].append(x)
     cord["coordinatesY"].append(y)
     oval_id = canvas.create_oval(x - 15, y - 15, x + 15, y + 15, fill='red', tags=tag)
@@ -44,14 +48,14 @@ def draw_canvas1(event):
     cord['id'].append(oval_id)
     canvas.create_text(x, y, text=itext, font="Arial 13", tags=texttag)
     cord['textID'].append(texttag)
-    cord['text on vertex'].append(itext)
+    cord[text_on_vertex].append(itext)
 
 
 def draw_edge():
     global canvas
     main_label.configure(text="Выбрано создание ребер, нажмите на вершину для создания ребра")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", draw_canvas2)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, draw_canvas2)
 
 
 def draw_canvas2(event):
@@ -85,8 +89,8 @@ def draw_canvas2(event):
 def delete_vertex():
     global canvas
     main_label.configure(text="Выбрано удаление вершины или ребра, нажмите на вершину или ребро для удаления")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", delete_canvas)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, delete_canvas)
 
 
 def delete_canvas(event):
@@ -95,13 +99,13 @@ def delete_canvas(event):
             canvas.delete(x)
             canvas.delete(cord['textID'][cord['id'].index(x)])
             ovals.remove(x)
-            cord['num of vertex'].remove(cord['num of vertex'][cord['id'].index(x)])
-            canvas.delete(cord['id text'][cord['id'].index(x)])
+            cord[num_of_vertex].remove(cord[num_of_vertex][cord['id'].index(x)])
+            canvas.delete(cord[id_text][cord['id'].index(x)])
             cord['textID'].remove(cord['textID'][cord['id'].index(x)])
-            cord['id text'].remove(cord['id text'][cord['id'].index(x)])
+            cord[id_text].remove(cord[id_text][cord['id'].index(x)])
             cord["coordinatesX"].remove(cord['coordinatesX'][cord['id'].index(x)])
             cord["coordinatesY"].remove(cord['coordinatesY'][cord['id'].index(x)])
-            cord['text on vertex'].remove(cord['text on vertex'][cord['id'].index(x)])
+            cord[text_on_vertex].remove(cord[text_on_vertex][cord['id'].index(x)])
             cord['id'].remove(x)
             break
     for y in edges:
@@ -117,8 +121,8 @@ def delete_canvas(event):
 def rename_vertex():
     global canvas
     main_label.configure(text="Выбрано переименование вершины, нажмите на вершину для переименования")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", rename)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, rename)
 
 
 def rename(event):
@@ -128,15 +132,15 @@ def rename(event):
             canvas.delete(cord['textID'][cord['id'].index(x)])
             canvas.create_text(cord['coordinatesX'][cord['id'].index(x)], cord['coordinatesY'][cord['id'].index(x)],
                                text=new_name, font="Arial 13", tags=(cord['textID'][cord['id'].index(x)]))
-            cord['text on vertex'][cord['id'].index(x)] = new_name
+            cord[text_on_vertex][cord['id'].index(x)] = new_name
             break
 
 
 def change_color():
     global canvas
     main_label.configure(text="Вы выбрали изменение цвета вершины, нажмите на вершину для изменения её цвета")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", color)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, color)
 
 
 def color(event):
@@ -151,8 +155,8 @@ def color(event):
 def change_text_color():
     global canvas
     main_label.configure(text="Вы выбрали изменение цвета текста, нажмите на вершину для изменения цвета её текста")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", text_color)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, text_color)
 
 
 def text_color(event):
@@ -167,8 +171,8 @@ def text_color(event):
 def change_edge_color():
     global canvas
     main_label.configure(text="Вы выбрали изменение цвета ребер, нажмите на ребро для изменения его цвета")
-    canvas.unbind("<Button-1>")
-    canvas.bind("<Button-1>", edge_color)
+    canvas.unbind(button_1)
+    canvas.bind(button_1, edge_color)
 
 
 def edge_color(event):
