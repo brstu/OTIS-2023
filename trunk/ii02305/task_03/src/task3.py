@@ -450,30 +450,23 @@ var1.set(False)
 var2 = BooleanVar()
 var2.set(False)
 
-btn1 = Button(tk, text="Задать имя графа", command=graf_name)
-btn2 = Button(tk, text="Сохранить Значения", command=save_data)
-btn4 = Button(tk, text="Создать вершину", command=menu_create_vetrex)
-btn5 = Button(tk, text="Удалить вершину", command=delete_vertex)
-btn6 = Button(tk, text="Переименовать вершину", command=menu_rename_vertex)
-btn7 = Button(tk, text="Создать ребро", command=menu_create_edge)
-btn8 = Button(tk, text="quit", command=exit)
-btn9 = Button(tk, text="Удалить ребро", command=menu_delete_edge)
-c2 = Checkbutton(tk, text="Ориентированность", onvalue=1, offvalue=0, variable=var1, bg="gray")
-c1 = Button(tk, text="Передвижение вершин", command=move_vertex2)
-btn11 = Button(tk, text="Матрица инцендентности", command=create_matrix_incidence_window)
-btn12 = Button(tk, text="Матрица смежности", command=create_matrix_adjacency)
+button_commands = [
+    ("Задать имя графа", graf_name),
+    ("Сохранить Значения", save_data),
+    ("Создать вершину", menu_create_vetrex),
+    ("Удалить вершину", delete_vertex),
+    ("Переименовать вершину", menu_rename_vertex),
+    ("Создать ребро", menu_create_edge),
+    ("quit", exit),
+    ("Удалить ребро", menu_delete_edge),
+    ("Матрица инцендентности", create_matrix_incidence_window),
+    ("Матрица смежности", create_matrix_adjacency)
+]
 
-btn1.grid(row=0, column=0, stick="ew")
-btn2.grid(row=0, column=4, stick="ew")
-btn4.grid(row=0, column=1, stick="ew")
-btn5.grid(row=1, column=1, stick="ew")
-btn6.grid(row=2, column=1, stick="ew")
-btn7.grid(row=0, column=2, stick="ew")
-btn8.grid(row=1, column=5, stick="ew")
-btn9.grid(row=1, column=2, stick="ew")
-c1.grid(row=1, column=0, stick="ew")
-c2.grid(row=2, column=2, stick="ew")
-btn11.grid(row=1, column=3, stick="ew")
-btn12.grid(row=0, column=3, stick="ew")
+for i, (text, command) in enumerate(button_commands):
+    Button(tk, text=text, command=command).grid(row=i//4, column=i%4, stick="ew")
+
+Checkbutton(tk, text="Ориентированность", onvalue=1, offvalue=0, variable=var1, bg="gray").grid(row=2, column=2, stick="ew")
+Button(tk, text="Передвижение вершин", command=move_vertex2).grid(row=1, column=0, stick="ew")
 
 tk.mainloop()
