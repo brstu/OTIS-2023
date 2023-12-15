@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 import tkinter.colorchooser as colorchooser
 
-click_num = 0
-id_of_edge = 0
+click_number = 0
+id_of_the_edge = 0
 oval_id = None
 ovals = []
 edges = []
@@ -59,31 +59,31 @@ def draw_edge():
 
 
 def draw_canvas2(event):
-    global click_num, x1, y1, x2, y2, id_of_edge
-    if click_num == 0:
+    global click_number, x1, y1, x2, y2, id_of_the_edge
+    if click_number == 0:
         for x in ovals:
             if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
                 x1 = cord['coordinatesX'][cord['id'].index(x)]
                 y1 = cord['coordinatesY'][cord['id'].index(x)]
                 cord_edge['id_vertex1'].append(x)
                 cord_edge2['id_vertex1'].append(x)
-                click_num = 1
-                main_label.configure(text="Выбор второй вершину для рисования ребра графа")
-    elif click_num == 1:
+                click_number = 1
+                main_label.configure(text="Выбор второй вершины для рисования ребра графа")
+    elif click_number == 1:
         for x in ovals:
             if canvas.find_overlapping(event.x, event.y, event.x, event.y)[0] == x:
                 x2 = cord['coordinatesX'][cord['id'].index(x)]
                 y2 = cord['coordinatesY'][cord['id'].index(x)]
                 cord_edge['id_vertex2'].append(x)
                 cord_edge2['id_vertex2'].append(x)
-        tag_edge = 'edge' + str(id_of_edge)
+        tag_edge = 'edge' + str(id_of_the_edge)
         line = canvas.create_line(x1, y1, x2, y2, width=4, tags=tag_edge)
-        edges.append(id_of_edge)
+        edges.append(id_of_the_edge)
         cord_edge['id_edge_text'].append(tag_edge)
-        id_of_edge += 1
+        id_of_the_edge += 1
         canvas.tag_lower(line)
         click_num = 0
-        main_label.configure(text="Выберите нужную вершину для рисования ребра")
+        main_label.configure(text="Выберите нужную вершину для рисования ребра графа")
 
 
 def delete_vertex():
