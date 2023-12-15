@@ -1,0 +1,69 @@
+#ifndef VERSHINA_H
+#define VERSHINA_H
+#include "mainwindow.h"
+#include <QPainter>
+#include <QGraphicsView>
+class Vershina : public QGraphicsItem
+{
+public:
+    QColor getColorV() const {
+        return color;
+    }
+    QString getName() const {
+        return nameV;
+    }
+    void setColorV(const QColor& newColor) {
+        color = newColor;
+    }
+    void setName(const QString& newName) {
+        nameV = newName;
+    }
+    Vershina(const QString& name, const QColor& color);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void setTextOffset(const QPointF& offset);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    QString nameV;
+    QColor color;
+    QPointF textOffsetV;
+};
+Vershina::Vershina(const QString& name, const QColor& color) : nameV(name), color(color)
+{
+    setFlag(ItemIsMovable);
+}
+
+QRectF Vershina::boundingRect() const
+{
+    return QRectF(-25, -25, 50, 50);
+}
+
+void Vershina::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    painter->setPen(Qt::black);
+    painter->setBrush(color);
+    painter->drawEllipse(-20, -20, 40, 40);
+    painter->setPen(Qt::green);
+    painter->setFont(QFont("Arial", 12));
+    painter->drawText(QRectF(-20, -20, 40, 40), Qt::AlignCenter, nameV);
+}
+
+void Vershina::setTextOffset(const QPointF &offset)
+{
+    textOffsetV = offset;
+}
+
+void Vershina::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseMoveEvent(event);
+    if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
+        mainWindow->updateRebro();
+    }
+    update();
+}
+#endif // VERSHINA_H
