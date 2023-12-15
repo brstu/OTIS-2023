@@ -4,4 +4,4 @@ project(otis_3)
 
 set(SOURCES main.cs)
 
-add_executable(MExecutable ${SOURCES})
+add_executable(otis_3_executable ${SOURCES})
