@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(otis_3)
 
-# Путь к исполняемому файлу компилятора C#
-set(CSHARP_COMPILER "C:\Program Files\dotnet\sdk\7.0.402\Roslyn\bincore\csc.dll")
+set(CSHARP_COMPILER "C:/Program Files/dotnet/sdk/7.0.402/Roslyn/bincore/csc.dll")
 
 # Список исходных файлов
 set(SOURCES main.cs)
