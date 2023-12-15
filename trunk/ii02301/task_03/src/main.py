@@ -82,7 +82,7 @@ def draw_canvas2(event):
         cord_edge['id_edge_text'].append(tag_edge)
         id_of_the_edge += 1
         canvas.tag_lower(line)
-        click_num = 0
+        click_number = 0
         main_label.configure(text="Выберите нужную вершину для рисования ребра графа")
 
 
