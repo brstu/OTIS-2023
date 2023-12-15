@@ -1,7 +1,10 @@
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 int main()
 {
-    std::system("OTIS.py");
+    std::string command = "python OTIS.py";
+    std::system(command.c_str());
     return 0;
 }
