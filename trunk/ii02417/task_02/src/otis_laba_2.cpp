@@ -16,9 +16,7 @@ public:
         std::vector<double> Yt = { y, y };
         std::vector<double> E = { w - y, w - y };
 
-        int temp = 2;
-        while (std::abs(Yt.back() - w) > 0.1) {
-            temp++;
+        for (int temp = 2; std::abs(Yt.back() - w) > 0.1; temp++) {
             E.push_back(w - Yt.back());
             u = u1 + F0 * E.back() + F1 * E[E.size() - 2] + F2 * E[E.size() - 3];
             Yt.push_back(a * Yt.back() - b * Yt[Yt.size() - 2] + c * u + d * std::sin(u1));
@@ -28,7 +26,7 @@ public:
         // Вывод графика
         std::for_each(Yt.begin(), Yt.end(), [](double value) {
             std::cout << value << std::endl;
-            });
+        });
     }
 
 private:
