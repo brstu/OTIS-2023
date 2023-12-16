@@ -31,7 +31,7 @@ class Vertex:
         self.color = color
         self.x = x_click
         self.y = y_click
-        self.rename()
+        self.rename(self, new_name)
         self.id_vert = canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
         self.id_txt = self.canvas.create_text(self.x, self.y, anchor='center', text=self.vert_name,
                                               font=(FONT_CONSTANT, 10), fill="white")
