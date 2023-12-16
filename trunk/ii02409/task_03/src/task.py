@@ -6,6 +6,8 @@ import networkx as nx
 
 CHANGE_NAME_WINDOW_GEOMETRY = "190x120+1050+250"
 
+# Set the seed for the random number generator
+random_generator = Generator(PCG64(seed=42))
 
 def line_intersect_circle(x1, y1, x2, y2):
     main_hypotenuse = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -15,15 +17,15 @@ def line_intersect_circle(x1, y1, x2, y2):
     dy = (main_hypotenuse - 20) * main_dy / main_hypotenuse
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
-
 class Node:
     def __init__(self, name, canvas, graph):
         self.name = name
-        self.x = Generator(PCG64()).integers(0, 636)
-        self.y = Generator(PCG64()).integers(0, 596)
+        self.x = random_generator.integers(0, 636)
+        self.y = random_generator.integers(0, 596)
         self.circle = create_circle(canvas, self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
+
 
     def move(self, x, y):
         self.x = x
@@ -98,7 +100,7 @@ def create_vertex(entry_name, window, canvas, graph):
     window.destroy()
 
 
-def choose_color(color_label):
+def choose_color():
     global color_vertex
     _, hex_color = askcolor()
     color_vertex = hex_color
