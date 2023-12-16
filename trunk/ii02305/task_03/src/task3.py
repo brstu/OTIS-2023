@@ -2,7 +2,6 @@ from tkinter import Tk, Canvas, Button, Label, Entry, Checkbutton, BooleanVar
 from tkinter import messagebox as mb
 import numpy as np
 
-global x_click, y_click, vert_name, vertex_count, edges, sel_vert, vertex, call_count, edge_count
 FONT_CONSTANT = 'Arial'
 BUTTON_CONSTANT = "<Button-1>"
 TITLE_STR_NAME = "Задайте имя графа"
