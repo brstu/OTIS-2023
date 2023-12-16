@@ -3,7 +3,9 @@ from tkinter.colorchooser import askcolor
 from numpy.random import randint
 from numpy import sqrt
 import networkx as nx
+
 CHANGE_NAME_WINDOW_GEOMETRY = "190x120+1050+250"
+
 def line_intersect_circle(x1, y1, x2, y2):
     main_hypotenuse = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
@@ -13,12 +15,12 @@ def line_intersect_circle(x1, y1, x2, y2):
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
 class Node:
-    def __init__(self, name, generator):
+    def __init__(self, name, canvas, graph):
         self.name = name
-        self.x = generator.integers(0, 636)
-        self.y = generator.integers(0, 596)
+        self.x = randint(0, 636)
+        self.y = randint(0, 596)
 
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
+        self.circle = create_circle(canvas, self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
 
@@ -62,11 +64,11 @@ class Node:
                 edges.remove(edge)
         graph.remove_node(self.name)
 
-def create_circle(x, y, r, **kwargs):
+def create_circle(canvas, x, y, r, **kwargs):
     return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
 
 class Edge:
-    def __init__(self, node1, node2, weight: int):
+    def __init__(self, node1, node2, weight: int, canvas, graph):
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
@@ -109,9 +111,9 @@ class Edge:
         canvas.delete(self.text)
         graph.remove_edge(self.node1.name, self.node2.name)
 
-def create_vertex(entry_name, window):
+def create_vertex(entry_name, window, canvas, graph):
     name = entry_name.get()
-    nodes.append(Node(name))
+    nodes.append(Node(name, canvas, graph))
     window.destroy()
 
 def choose_color(color_label):
@@ -121,7 +123,7 @@ def choose_color(color_label):
     color_vertex = hex_color
     color_label.config(bg=color_vertex)
 
-def menu_add_vertex():
+def menu_add_vertex(canvas, graph):
     global color_vertex
     add_window = Tk()
     add_window.title("Добавление вершины")
@@ -131,7 +133,7 @@ def menu_add_vertex():
     label = Label(add_window, text="Введите имя вершины")
     entry_name = Entry(add_window)
     add_button = Button(add_window, text="Выбрать цвет", command=lambda: choose_color(color_label))
-    color_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_name, add_window))
+    color_button = Button(add_window, text="Добавить вершину", command=lambda: create_vertex(entry_name, add_window, canvas, graph))
     color_label = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_name.grid(row=1, column=0, sticky="ewns")
@@ -140,7 +142,7 @@ def menu_add_vertex():
     color_label.grid(row=1, column=1)
     add_window.mainloop()
 
-def create_edge(entry_weight, entry_node1, entry_node2, window):
+def create_edge(entry_weight, entry_node1, entry_node2, window, canvas, graph):
     try:
         weight = int(entry_weight.get())
     except ValueError:
@@ -153,10 +155,10 @@ def create_edge(entry_weight, entry_node1, entry_node2, window):
                 node1 = vertex
             if vertex.name == node2:
                 node2 = vertex
-        edges.append(Edge(node1, node2, weight))
+        edges.append(Edge(node1, node2, weight, canvas, graph))
         window.destroy()
 
-def menu_add_edge():
+def menu_add_edge(canvas, graph):
     add_window = Tk()
     add_window.title("Добавление ребра")
     add_window.geometry("220x220+1050+250")
@@ -169,7 +171,7 @@ def menu_add_edge():
     label3 = Label(add_window, text="Введите имя второй вершины")
     entry_node2 = Entry(add_window, text="Введите имя второй вершины")
     add_button = Button(add_window, text="Выбрать цвет", command=lambda: choose_color(color_label))
-    color_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window))
+    color_button = Button(add_window, text="Добавить ребро", command=lambda: create_edge(entry_weight, entry_node1, entry_node2, add_window, canvas, graph))
     color_label = Label(add_window, width=2, bg="white")
     label.grid(row=0, column=0, sticky="ew")
     entry_weight.grid(row=1, column=0, sticky="ewns")
@@ -182,13 +184,13 @@ def menu_add_edge():
     color_label.grid(row=1, column=1)
     add_window.mainloop()
 
-def move_node(event):
+def move_node(event, nodes):
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
             node.move(event.x, event.y)
             break
 
-def change_name_or_weight(event):
+def change_name_or_weight(event, edges, nodes):
     x, y = event.x, event.y
     for edge in edges:
         print(2)
@@ -203,7 +205,7 @@ def change_name_or_weight(event):
                 node.change()
                 break
 
-def change_color(event):
+def change_color(event, edges, nodes):
     x, y = event.x, event.y
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
@@ -217,7 +219,7 @@ def change_color(event):
                 edge.change_color(askcolor()[1])
                 break
 
-def delete(event):
+def delete(event, edges, nodes):
     x, y = event.x, event.y
     for node in nodes:
         if node.x - 25 < x < node.x + 25 and node.y - 25 < y < node.y + 25:
@@ -235,7 +237,7 @@ def delete(event):
                 edges.remove(edge)
                 break
 
-def shortest_path():
+def shortest_path(graph):
     enter = []
 
     def func():
@@ -261,44 +263,10 @@ def shortest_path():
     win.mainloop()
     return enter[0], enter[1]
 
-
-
 def display_props(title, props):
     string = ''
     for prop in props:
         string += str(prop) + ' '
     win = Tk()
     win.title(title)
-    win.geometry("500x500")
-    label = Label(win, text=string)
-    label.pack()
-    win.mainloop()
-
-def eulerian_cycle():
-    display_props("Эйлеров цикл", nx.algorithms.eulerian_path(graph))
-
-
-nodes = []  # Список имен вершин
-edges = []  # Список ребер
-color_vertex = "#fff"
-graph = nx.Graph()  # Граф
-root = Tk()
-root.title("Работа с графами")
-root.geometry("800x600+500+150")
-canvas = Canvas(root, width=636, height=596, bg="grey")
-canvas.place(x=160, y=0)
-# главное меню
-button1 = Button(root, text="Добавить вершину", anchor="w", command=menu_add_vertex)
-button2 = Button(root, text="Добавить ребро", anchor="w", command=menu_add_edge)
-button3 = Button(root, text="Эйлеров цикл", anchor="w", command=eulerian_cycle)
-button4 = Button(root, text="Кратчайший путь", anchor="w", command=shortest_path)
-button1.grid(row=0, column=0, stick="ew")
-button2.grid(row=1, column=0, stick="ew")
-button3.grid(row=2, column=0, stick="ew")
-button4.grid(row=3, column=0, stick="ew")
-canvas.bind('<B1-Motion>', move_node)
-canvas.bind('<Button-2>', change_name_or_weight)
-canvas.bind('<Button-3>', change_color)
-root.bind('<B3-Motion>', delete)
-root.mainloop()
 
