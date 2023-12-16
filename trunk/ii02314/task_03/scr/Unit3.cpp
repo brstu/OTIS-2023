@@ -17,7 +17,7 @@ TForm3 *Form3;
 bool isExisting1;
 bool isExisting2;
 
-int findVertexByName(const std::string name){
+int findVertexByName(const std::string& name){
 	for(int i = 0; i < vertexes.size();i++){
 		if(vertexes[i].name == name){
 			return vertexes[i].id;
@@ -26,7 +26,7 @@ int findVertexByName(const std::string name){
     return -1;
 }
 
-bool checkVertexExisting(const std::string name){
+bool checkVertexExisting(const std::string& name){
 	for(int i = 0; i < vertexes.size(); i++){
 		if(vertexes[i].name == name){
 		return true;
