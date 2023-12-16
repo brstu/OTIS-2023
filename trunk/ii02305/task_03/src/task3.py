@@ -31,7 +31,7 @@ class Vertex:
         self.color = color
         self.x = x_click
         self.y = y_click
-        self.rename(self, new_name)
+        self.rename(new_name)
         self.id_vert = canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
         self.id_txt = self.canvas.create_text(self.x, self.y, anchor='center', text=self.vert_name,
                                               font=(FONT_CONSTANT, 10), fill="white")
@@ -74,10 +74,6 @@ class Edge:
         canvas.delete(self.line)
         canvas.delete(self.rect)
         canvas.delete(self.text)
-
-def on_wasd(event):
-    x_click = event.x
-    y_click = event.y
 
 def create_matrix(matrix_type):
     matrix = [[0 for _ in range(len(edges))] for _ in range(len(vert_name))]
@@ -168,7 +164,6 @@ def give_color(numb):
 call_count = 0
 
 def menu_create_vetrex():
-    call_count = 0
     canvas.bind(BUTTON_CONSTANT, on_wasd)
     vert_name.append("")
     new_window = Tk()
@@ -190,7 +185,6 @@ def menu_create_vetrex():
     btncreate.grid(row=2, column=0, sticky="ew")
     new_window.mainloop()
 def find_delete_vertex(entry, root):
-    vertex_count -= 1
     flag = 1
     while flag:
         for j, edge in enumerate(edges):
@@ -199,7 +193,6 @@ def find_delete_vertex(entry, root):
                 canvas.delete(edge.text)
                 canvas.delete(edge.rect)
                 edges.pop(j)
-                edge_count -= 1
         for i, vert in enumerate(vertex):
             if vert.vert_name == entry:
                 canvas.delete(vert.id_vert)
@@ -223,7 +216,6 @@ def find_delete_edge(en1, en2, root):
             canvas.delete(edge.text)
             canvas.delete(edge.rect)
             edges.pop(i)
-            edge_count -= 1
             root.destroy()
             break
     else:
