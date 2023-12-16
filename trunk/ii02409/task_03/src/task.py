@@ -34,8 +34,8 @@ class Node:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
 
-    def change(self):
-        win = create_change_window("Изменение имени", CHANGE_NAME_WINDOW_GEOMETRY, lambda name: self.change_name(name))
+  def change(self):
+    create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, lambda weight: self.change_weight(weight))
 
     def change_name(self, name):
         graph._adj[name] = graph._adj.pop(self.name)
