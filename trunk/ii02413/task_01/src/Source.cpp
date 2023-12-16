@@ -4,9 +4,9 @@
 
 using namespace std;
 
-// Объявления функций
-double calculateFunction1(double y, double u);
-double calculateFunction2(double y, double u, double y1);
+// Function declarations
+double calculateFunction1(double currentY, double currentU);
+double calculateFunction2(double currentY, double currentU, double previousY);
 
 int main() {
     double initialY;
@@ -21,37 +21,37 @@ int main() {
     double y2 = initialY;
     double previousY2 = initialY;
 
-    int i = 0;
-    outputFile << i << " " << y1 << " " << y2 << endl;
+    int iteration = 0;
+    outputFile << iteration << " " << y1 << " " << y2 << endl;
 
     y1 = calculateFunction1(y1, initialU);
     y2 = calculateFunction2(y2, initialU, previousY2);
-    i++;
-    outputFile << i << " " << y1 << " " << y2 << endl;
+    iteration++;
+    outputFile << iteration << " " << y1 << " " << y2 << endl;
 
-    for (i = 2; i < 100; i++) {
+    for (iteration = 2; iteration < 100; iteration++) {
         y1 = calculateFunction1(y1, initialU);
         y2 = calculateFunction2(y2, initialU, previousY2);
         previousY2 = y2;
-        outputFile << i << " " << y1 << " " << y2 << endl;
+        outputFile << iteration << " " << y1 << " " << y2 << endl;
     }
 
     return 0;
 }
 
-// Определения функций
-double calculateFunction1(double y, double u) {
-    // Реализация функции 1
-    double a = 0.6;
-    double b = 0.5;
-    return a * y + b * u;
+// Function definitions
+double calculateFunction1(double currentY, double currentU) {
+    // Implementation of function 1
+    double coefficientA = 0.6;
+    double coefficientB = 0.5;
+    return coefficientA * currentY + coefficientB * currentU;
 }
 
-double calculateFunction2(double y, double u, double y1) {
-    // Реализация функции 2
-    double a = 0.6;
-    double b = 0.5;
-    double c = 0.62;
-    double d = 1.1;
-    return a * y - b * pow(y1, 2) + c * u + d * sin(u);
+double calculateFunction2(double currentY, double currentU, double previousY) {
+    // Implementation of function 2
+    double coefficientA = 0.6;
+    double coefficientB = 0.5;
+    double coefficientC = 0.62;
+    double coefficientD = 1.1;
+    return coefficientA * currentY - coefficientB * pow(previousY, 2) + coefficientC * currentU + coefficientD * sin(currentU);
 }
