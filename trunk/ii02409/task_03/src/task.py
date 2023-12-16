@@ -17,10 +17,10 @@ def line_intersect_circle(x1, y1, x2, y2):
 
 
 class Node:
-    def __init__(self, name, canvas, graph, seed=None):
+    def __init__(self, name, canvas, graph):
         self.name = name
-        self.x = Generator(PCG64(seed=seed)).integers(0, 636)
-        self.y = Generator(PCG64(seed=seed)).integers(0, 596)
+        self.x = Generator(PCG64()).integers(0, 636)
+        self.y = Generator(PCG64()).integers(0, 596)
         self.circle = create_circle(canvas, self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
@@ -30,12 +30,12 @@ class Node:
         self.y = y
         canvas.coords(self.circle, x - 20, y - 20, x + 20, y + 20)
         canvas.coords(self.text, x, y)
-        for edge in edges:
+        for edge in edges.copy():
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
 
-  def change(self):
-    create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, lambda weight: self.change_weight(weight))
+    def change(self):
+        create_change_window("Изменение имени", CHANGE_NAME_WINDOW_GEOMETRY, lambda name: self.change_name(name))
 
     def change_name(self, name):
         graph._adj[name] = graph._adj.pop(self.name)
@@ -48,7 +48,7 @@ class Node:
     def delete(self):
         canvas.delete(self.circle)
         canvas.delete(self.text)
-        for edge in edges:
+        for edge in edges.copy():
             if edge.node1 == self or edge.node2 == self:
                 edge.delete()
                 edges.remove(edge)
@@ -71,7 +71,7 @@ class Edge:
         graph.add_edge(node1.name, node2.name, weight=weight)
 
     def change(self):
-        win = create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, lambda weight: self.change_weight(weight))
+        create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, lambda weight: self.change_weight(weight))
 
     def change_weight(self, weight):
         self.weight = int(weight)
@@ -100,9 +100,8 @@ def create_vertex(entry_name, window, canvas, graph):
 
 def choose_color(color_label):
     global color_vertex
-    rgb, hex_color = askcolor()
+    _, hex_color = askcolor()
     color_vertex = hex_color
-    color_label.config(bg=color_vertex)
 
 
 def create_change_window(title, geometry, command):
@@ -146,7 +145,7 @@ def move_node(event, nodes):
 
 def change_name_or_weight(event, edges, nodes):
     x, y = event.x, event.y
-    for edge in edges:
+    for edge in edges.copy():
         legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
             (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
         hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
@@ -167,7 +166,7 @@ def change_color(event, edges, nodes):
             node.change_color(askcolor()[1])
             break
     else:
-        for edge in edges:
+        for edge in edges.copy():
             legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
                 (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
@@ -178,13 +177,13 @@ def change_color(event, edges, nodes):
 
 def delete(event, edges, nodes):
     x, y = event.x, event.y
-    for node in nodes:
+    for node in nodes.copy():
         if node.x - 25 < x < node.x + 25 and node.y - 25 < y < node.y + 25:
             node.delete()
             nodes.remove(node)
             break
     else:
-        for edge in edges:
+        for edge in edges.copy():
             legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
                 (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
@@ -206,11 +205,11 @@ def shortest_path(graph):
     win.title("Выбор вершин")
     win.geometry("200x120+1050+250")
     win.resizable(False, False)
-    create_entry_label_button(win, "Выберите первую вершину", 0, func, enter)
-    create_entry_label_button(win, "Выберите вторую вершину", 2, func, enter)
+    create_entry_label_button(win, "Выберите первую вершину", 0, func)
+    create_entry_label_button(win, "Выберите вторую вершину", 2, func)
 
 
-def create_entry_label_button(win, label_text, row, func, enter):
+def create_entry_label_button(win, label_text, row, func):
     label = Label(win, text=label_text)
     label.grid(row=row, column=0, sticky="ew")
     entry = Entry(win)
