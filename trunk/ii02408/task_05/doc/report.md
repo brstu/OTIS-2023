@@ -34,11 +34,9 @@
 
 3.  Написать отчет по выполненной работе в .md формате (readme.md) и с помощью pull request разместить его в следующем каталоге: trunk\ii0xxyy\task_05\doc.
 
-# Добавление проблем в The OSTIS Technology project:
+# Добавление проблемы в The OSTIS Technology project:
 Link: https://github.com/ostis-ai/scn-latex-plugin/issues/29
-![](img_1.png)
-Link: https://github.com/ostis-ai/scn-latex-plugin/issues/30
-![](img_2.png)
-# Добавление проблем в The OSTIS Applications:
-Link: https://github.com/ostis-apps/ostis-example-app/issues/45
-![](img_3.png)
+![](img1.png)
+# Создание pull request:
+![](img2.png)
+
