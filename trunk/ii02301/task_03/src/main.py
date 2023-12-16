@@ -16,7 +16,7 @@ text_on_vertex='text on vertex'
 id_text='id text'
 num_of_vertex='num of vertex'
 canvas=none
-
+main_label=main_label(tk) 
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
 cord = {'id': [], id_text: [], text_on_vertex: [], 'textID': [], num_of_vertex: [], 'coordinatesX': [],
