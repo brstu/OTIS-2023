@@ -17,10 +17,10 @@ def line_intersect_circle(x1, y1, x2, y2):
 
 
 class Node:
-    def __init__(self, name, canvas, graph):
+    def __init__(self, name, canvas, graph, seed=None):
         self.name = name
-        self.x = Generator(PCG64()).integers(0, 636)
-        self.y = Generator(PCG64()).integers(0, 596)
+        self.x = Generator(PCG64(seed=seed)).integers(0, 636)
+        self.y = Generator(PCG64(seed=seed)).integers(0, 596)
         self.circle = create_circle(canvas, self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
