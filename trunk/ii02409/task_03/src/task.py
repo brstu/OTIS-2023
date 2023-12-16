@@ -6,6 +6,7 @@ import networkx as nx
 
 CHANGE_NAME_WINDOW_GEOMETRY = "190x120+1050+250"
 
+
 def line_intersect_circle(x1, y1, x2, y2):
     main_hypotenuse = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
@@ -13,6 +14,7 @@ def line_intersect_circle(x1, y1, x2, y2):
     dx = (main_hypotenuse - 20) * main_dx / main_hypotenuse
     dy = (main_hypotenuse - 20) * main_dy / main_hypotenuse
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
+
 
 class Node:
     def __init__(self, name, canvas, graph):
@@ -52,8 +54,10 @@ class Node:
                 edges.remove(edge)
         graph.remove_node(self.name)
 
+
 def create_circle(canvas, x, y, r, **kwargs):
     return canvas.create_oval(x - r, y - r, x + r, y + r, **kwargs)
+
 
 class Edge:
     def __init__(self, node1, node2, weight: int, canvas, graph):
@@ -87,16 +91,19 @@ class Edge:
         canvas.delete(self.text)
         graph.remove_edge(self.node1.name, self.node2.name)
 
+
 def create_vertex(entry_name, window, canvas, graph):
     name = entry_name.get()
     nodes.append(Node(name, canvas, graph))
     window.destroy()
+
 
 def choose_color(color_label):
     global color_vertex
     rgb, hex_color = askcolor()
     color_vertex = hex_color
     color_label.config(bg=color_vertex)
+
 
 def create_change_window(title, geometry, command):
     win = Tk()
@@ -111,6 +118,7 @@ def create_change_window(title, geometry, command):
     button = Button(win, text="Изменить", command=lambda: command(entry.get()))
     button.place(x=10, y=70)
     win.mainloop()
+
 
 def create_edge(entry_weight, entry_node1, entry_node2, window, canvas, graph):
     try:
@@ -128,16 +136,19 @@ def create_edge(entry_weight, entry_node1, entry_node2, window, canvas, graph):
         edges.append(Edge(node1, node2, weight, canvas, graph))
         window.destroy()
 
+
 def move_node(event, nodes):
     for node in nodes:
         if node.x - 25 < event.x < node.x + 25 and node.y - 25 < event.y < node.y + 25:
             node.move(event.x, event.y)
             break
 
+
 def change_name_or_weight(event, edges, nodes):
     x, y = event.x, event.y
     for edge in edges:
-        legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+        legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
+            (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
         hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
         if legs_sum <= hypotenuse:
             edge.change()
@@ -148,6 +159,7 @@ def change_name_or_weight(event, edges, nodes):
                 node.change()
                 break
 
+
 def change_color(event, edges, nodes):
     x, y = event.x, event.y
     for node in nodes:
@@ -156,11 +168,13 @@ def change_color(event, edges, nodes):
             break
     else:
         for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
+                (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
             if legs_sum <= hypotenuse:
                 edge.change_color(askcolor()[1])
                 break
+
 
 def delete(event, edges, nodes):
     x, y = event.x, event.y
@@ -171,12 +185,14 @@ def delete(event, edges, nodes):
             break
     else:
         for edge in edges:
-            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt((x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
+            legs_sum = sqrt((x - edge.node1.x) ** 2 + (y - edge.node1.y) ** 2) + sqrt(
+                (x - edge.node2.x) ** 2 + (y - edge.node2.y) ** 2)
             hypotenuse = sqrt((edge.node2.x - edge.node1.x) ** 2 + (edge.node2.y - edge.node1.y) ** 2) + 10
             if legs_sum <= hypotenuse:
                 edge.delete()
                 edges.remove(edge)
                 break
+
 
 def shortest_path(graph):
     enter = []
@@ -193,6 +209,7 @@ def shortest_path(graph):
     create_entry_label_button(win, "Выберите первую вершину", 0, func, enter)
     create_entry_label_button(win, "Выберите вторую вершину", 2, func, enter)
 
+
 def create_entry_label_button(win, label_text, row, func, enter):
     label = Label(win, text=label_text)
     label.grid(row=row, column=0, sticky="ew")
@@ -201,24 +218,18 @@ def create_entry_label_button(win, label_text, row, func, enter):
     button = Button(win, text="Выбрать", command=func)
     button.grid(row=row + 2, column=0, sticky="ewns")
 
-win.mainloop()
-return enter[0], enter[1]
 
 # Добавьте следующие строки для запуска программы:
 nodes = []
 edges = []
 color_vertex = "white"
 graph = nx.Graph()
-
 canvas = Canvas(Tk(), width=700, height=700, bg="white")
 canvas.pack()
-
 canvas.bind("<Button-1>", lambda event: move_node(event, nodes))
 canvas.bind("<Button-3>", lambda event: change_name_or_weight(event, edges, nodes))
 canvas.bind("<Shift-Button-3>", lambda event: change_color(event, edges, nodes))
 canvas.bind("<Control-Button-3>", lambda event: delete(event, edges, nodes))
-
 menu_add_vertex(canvas, graph)
 menu_add_edge(canvas, graph)
-
 Tk().mainloop()
