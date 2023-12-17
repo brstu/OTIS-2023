@@ -37,7 +37,7 @@ class Node:
                 edge.move()
 
     def change(self):
-        create_change_window("Изменение имени", CHANGE_NAME_WINDOW_GEOMETRY, lambda name: self.change_name(name))
+        create_change_window("Изменение имени", CHANGE_NAME_WINDOW_GEOMETRY, self.change_name)
 
     def change_name(self, name):
         graph._adj[name] = graph._adj.pop(self.name)
@@ -73,7 +73,7 @@ class Edge:
         graph.add_edge(node1.name, node2.name, weight=weight)
 
     def change(self):
-        create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, lambda weight: self.change_weight(weight))
+       create_change_window("Изменение веса", CHANGE_NAME_WINDOW_GEOMETRY, self.change_weight)
 
     def change_weight(self, weight):
         self.weight = int(weight)
@@ -196,12 +196,12 @@ def delete(event, edges, nodes):
 
 
 def shortest_path(graph):
-    enter = []
+    entries = []
 
     def func():
-        enter.extend([entry1.get(), entry2.get()])
+        entries.extend([entry1.get(), entry2.get()])
         win.destroy()
-        display_props("Кратчайший путь", nx.algorithms.shortest_path(graph, enter[0], enter[1]))
+        display_shortest_path(graph, entries[0], entries[1])
 
     win = Tk()
     win.title("Выбор вершин")
@@ -209,7 +209,6 @@ def shortest_path(graph):
     win.resizable(False, False)
     create_entry_label_button(win, "Выберите первую вершину", 0, func)
     create_entry_label_button(win, "Выберите вторую вершину", 2, func)
-
 
 def create_entry_label_button(win, label_text, row, func):
     label = Label(win, text=label_text)
