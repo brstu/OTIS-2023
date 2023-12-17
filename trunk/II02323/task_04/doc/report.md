@@ -18,7 +18,7 @@
 
 ---
 
-# Общее задание
+# Общее задание лабораторной работы
 
 1.  Изучить руководство.
 
@@ -26,18 +26,27 @@
 
 3.  Написать отчет по выполненной работе в .md формате (readme.md) и с помощью pull request разместить его в следующем каталоге: trunk\ii0xxyy\task_04\doc.
 
-# Установка
+# Установка "NIKA" (Intelligent Knowledge-driven Assistant)”
+
+Установка:
 
 ```
-docker compose up --no-build
+git submodule update --init --recursive
 ```
 
 ![ф](picture_1.png)
 
 # Запуск и работа
 
+Команда для запуска:
+
+```
+docker compose up --no-build
+```
+
 ![работа](picture_2.png)
-Происходит запуск двух веб-интерфейсов
+
+Происходит запуск двух веб-интерфейсов:
 
 ```
 localhost:8000
@@ -45,8 +54,6 @@ localhost:8000
 
 ![работа](picture_3.png)
 Веб-диалог пользовательского интерфейса:
-
-web UI -
 
 ```
 localhost:3033
