@@ -20,7 +20,7 @@
 | 1  | Бусень Артём                                         |[ii02301](trunk/ii02301) | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 2  | [Волкогон Никита](https://github.com/VolkogonNikita) |[ii02302](trunk/II02302) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 3  | [Вышинский Артём](https://github.com/arciomwww)      |[ii02303](trunk/ii02303) | ✅ | ✅ | ❌ | ❌ |    | ✅ |    |    |        8|
-| 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |        7|
+| 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        7|
 | 5  | Глухарев Даниил                                      |[ii02305](trunk/ii02305) | ✅ | ✅ | ✅ | ❌ |    |    |    |    |        7|
 | 6  | [Колеснев Антон](https://github.com/Flugel228)       |[ii02307](trunk/ii02307) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
 | 7  | [Кононов Алексей](https://github.com/madebyth00      |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
