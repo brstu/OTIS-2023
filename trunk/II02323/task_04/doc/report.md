@@ -32,18 +32,18 @@
 docker compose up --no-build
 ```
 
-![](picture_1.png)
+![ф](picture_1.png)
 
 # Запуск и работа
 
-![](picture_2.png)
+![работа](picture_2.png)
 Происходит запуск двух веб-интерфейсов
 
 ```
 localhost:8000
 ```
 
-![](picture_3.png)
+![работа](picture_3.png)
 Веб-диалог пользовательского интерфейса:
 
 web UI -
@@ -52,9 +52,5 @@ web UI -
 localhost:3033
 ```
 
-![](picture_4.png)
-![](picture_5.png)
-
-```
-
-```
+![работа](picture_4.png)
+![работа](picture_5.png)
