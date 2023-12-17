@@ -30,16 +30,15 @@ public:
     }
     void nline(int time, double setpoint, double a = 0.5, double b = 0.3, double c = 0.9, double d = 0.7) {
         for (int i = 0; i < time; i++) {
-            e[0] = setpoint - y[y.size() - 1];
-            e[1] = setpoint - y[y.size() - 2];
-            e[2] = setpoint - y[y.size() - 3];
-            u[0] = u[1] + sum();
+            e[0] = setpoint - y[y.size() - 1]; //count e0
+            e[1] = setpoint - y[y.size() - 2]; //count e1
+            e[2] = setpoint - y[y.size() - 3]; //count e2
+            u[0] = u[1] + sum(); //count u
             y.push_back(a * y[y.size() - 1] - b * y[y.size() - 2] * y[y.size() - 2] + c * u[0] + d * sin(u[1]));
             u[1] = u[0];
         }
     }
-
-    vector<double> getY() const{
+    vector<double> getY() const{ 
         return y;
     }
 };
