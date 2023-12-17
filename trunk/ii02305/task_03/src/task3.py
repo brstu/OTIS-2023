@@ -48,11 +48,6 @@ class Edge:
         self.weight = weight
         self.create_edge()
 
-    def on_wasd(event):
-        global x_click, y_click
-        x_click = event.x
-        y_click = event.y
-
     def line_intersect_circle(self, x1, y1, x2, y2):
         main_gipotenuza = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
         main_dx = x2 - x1
@@ -96,6 +91,11 @@ def create_matrix(matrix_type):
             Label(window, text=matrix[i][j], font=(FONT_CONSTANT, 10), width=5, height=2, borderwidth=1, relief="solid").grid(
                 row=i, column=j)
     window.mainloop()
+
+def on_wasd(event):
+    global x_click, y_click
+    x_click = event.x
+    y_click = event.y
 
 def create_matrix_adjacency():
     create_matrix("смежности")
@@ -175,9 +175,9 @@ call_count = 0
 def create_vertex(root, entry):
     global call_count, vertex_count, color, vertex, vert_name
     if '' == entry.get():
-        mb.showerror("Ошибка", "Вы не ввели имя вершины")
+        mb.showerror(ERROR_STR_CONSTANT, "Вы не ввели имя вершины")
     elif entry.get() in [vert.vert_name for vert in vertex]:
-        mb.showerror("Ошибка", "Такая вершина уже существует")
+        mb.showerror(ERROR_STR_CONSTANT, "Такая вершина уже существует")
     elif entry.get() not in [vert.vert_name for vert in vertex]:
         vert_name[vertex_count] = entry.get()
         call_count += 1
@@ -233,7 +233,7 @@ def find_delete_vertex(entry, root):
 
 def delete_vertex():
     new_window = Tk()
-    new_window.title("Задайте имя графа")
+    new_window.title(TITLE_STR_NAME)
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label = Label(new_window)
@@ -241,8 +241,8 @@ def delete_vertex():
     label.grid(row=0, column=0, sticky="ew")
     entry = Entry(new_window)
     entry.grid(row=1, column=0)
-    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
-    btnDel.grid(row=2, column=0, sticky="ew")
+    btndel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
+    btndel.grid(row=2, column=0, sticky="ew")
     if entry.get == label["text"]:
         new_window.destroy()
 
@@ -260,7 +260,7 @@ def find_delete_edge(en1, en2, root):
 
 def menu_delete_edge():
     new_window = Tk()
-    new_window.title("Задайте имя графа")
+    new_window.title(TITLE_STR_NAME)
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label = Label(new_window)
@@ -273,8 +273,8 @@ def menu_delete_edge():
     entry.grid(row=1, column=0, sticky="ew")
     label2.grid(row=2, column=0, sticky="ew")
     entry2.grid(row=3, column=0, sticky="ew")
-    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
-    btnDel.grid(row=4, column=0, sticky="ew")
+    btndel = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
+    btndel.grid(row=4, column=0, sticky="ew")
 
 def rename_vertex(en1, en2, root):
     global vert_name, vertex
@@ -286,11 +286,11 @@ def rename_vertex(en1, en2, root):
             root.destroy()
             break
     else:
-        mb.showerror("Ошибка", "Вы ввели неверное имя вершины")
+        mb.showerror(ERROR_STR_CONSTANT, "Вы ввели неверное имя вершины")
 
 def menu_rename_vertex():
     new_window = Tk()
-    new_window.title("Задайте имя графа")
+    new_window.title(TITLE_STR_NAME)
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label1 = Label(new_window)
@@ -303,9 +303,9 @@ def menu_rename_vertex():
     label2.grid(row=2, column=0, sticky="ew")
     entry2 = Entry(new_window)
     entry2.grid(row=3, column=0, sticky="ew")
-    btnRen = Button(new_window, text="Изменить имя",
+    btnren = Button(new_window, text="Изменить имя",
                     command=lambda: rename_vertex(entry1.get(), entry2.get(), new_window))
-    btnRen.grid(row=4, column=0, sticky="ew")
+    btnren.grid(row=4, column=0, sticky="ew")
 
 def create_edge(en1, en2, weight, root):
     vert1, vert2 = 0, 0
@@ -323,7 +323,6 @@ def create_edge(en1, en2, weight, root):
         mb.showerror(ERROR_STR_CONSTANT, SHOW_ERR_CONSTANT)
     edges.append(Edge(vert1, vert2, weight))
     c2["state"] = "disable"
-    edge_count += 1
     root.destroy()
 
 def menu_create_edge():
