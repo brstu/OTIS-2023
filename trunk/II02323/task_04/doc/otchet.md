@@ -3,11 +3,11 @@
 <p align="center">“Брестский Государственный технический университет”</p>
 <p align="center">Кафедра ИИТ</p>
 <br><br><br><br><br><br><br>
-<p align="center">Лабораторная работа №4</p>
+<b><p align="center">Лабораторная работа №4</p></b>
 <p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
 <p align="center">Тема: “Работа с проектом "NIKA" (Intelligent Knowledge-driven Assistant)”</p>
 <br><br><br><br><br>
-<p align="right">Выполнил:</p>
+<b> <p align="right">Выполнил:</p></b>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
 <p align="right">Швороб В.А.</p>
@@ -18,7 +18,7 @@
 
 ---
 
-# Общее задание лабораторной работы
+# Задание лабораторной работы
 
 1.  Изучить руководство.
 
@@ -28,13 +28,13 @@
 
 # Установка "NIKA" (Intelligent Knowledge-driven Assistant)”
 
-Установка:
+Команда для установки:
 
 ```
 git submodule update --init --recursive
 ```
 
-![ф](setup.png)
+![Команда для установки](setup.png)
 
 # Запуск и работа
 
