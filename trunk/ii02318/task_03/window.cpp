@@ -22,8 +22,8 @@
 #include "Vertexx.h" //a
 #include "algoritm.h" //a
 
-Window::Window(QWidget *parent)
-    : QMainWindow(parent), uiui(new Ui::MainWindow)
+Window::Window(QWidget *parents)
+    : QMainWindow(parents), uiui(new Ui::MainWindow)
 {
     uiui->setupUi(this);
     scen = new QGraphicsScene(this);
@@ -38,58 +38,58 @@ Window::~Window()
 
 void Window::addVertexx(const QString& name, const QColor& color, double x, double y)
 {
-    Vertexx* vertex = new Vertexx(name, color);
-    vertex->setPos(x, y);
-    scen->addItem(vertex);
-    vertexxs.append(vertex);
+    Vertexx* vertexx = new Vertexx(name, color);
+    vertexx->setPos(x, y);
+    scen->addItem(vertexx);
+    vertexxs.append(vertexx);
 }
 
-void Window::addEdgge(int sourceIndex, int destinationIndex, double weight, const QColor& color)
+void Window::addEdgge(int sourceInd, int destinationInd, double weigh, const QColor& col)
 {
-    if (sourceIndex >= 0 && sourceIndex < vertexxs.length() && destinationIndex >= 0 && destinationIndex < vertexxs.length())
+    if (sourceInd >= 0 && sourceInd < vertexxs.length() && destinationInd >= 0 && destinationInd < vertexxs.length())
     {
-        Vertexx* sourceVertex = vertexxs.at(sourceIndex);
-        Vertexx* destinationVertex = vertexxs.at(destinationIndex);
-        Edgge* edge = new Edgge(sourceVertex, destinationVertex, weight, color);
-        scen->addItem(edge);
-        edgges.append(edge);
+        Vertexx* sourceVertexx = vertexxs.at(sourceInd);
+        Vertexx* destinationVertexx = vertexxs.at(destinationInd);
+        Edgge* edgge = new Edgge(sourceVertexx, destinationVertexx, weigh, col);
+        scen->addItem(edgge);
+        edgges.append(edgge);
 
-        QFile file("graph.txt");
-        if (file.open(QIODevice::Append | QIODevice::Text))
+        QFile files("graphh.txt");
+        if (files.open(QIODevice::Append | QIODevice::Text))
         {
-            QTextStream out(&file);
-            out << sourceIndex << "\t" << destinationIndex << "\t" << weight << "\n";
-            file.close();
+            QTextStream outf(&files);
+            outf << sourceInd << "\t" << destinationInd << "\t" << weigh << "\n";
+            files.close();
         }
     }
 }
 
 void Window::updateEdgge()
 {
-    foreach (Edgge* edge, edgges) {
-        edge->adjust();
-        edge->update();
+    foreach (Edgge* edgge, edgges) {
+        edgge->adjust();
+        edgge->update();
     }
 }
 
 void Window::on_addVertexButton_clicked()
 {
-    QDialog dialog;
-    QFormLayout form(&dialog);
+    QDialog dialogs;
+    QFormLayout formss(&dialogs);
     QLineEdit nameLineEdit;
-    form.addRow("Введи имя вершины", &nameLineEdit);
-    QPushButton addButton("Добавить вершину");
-    form.addRow(&addButton);
+    formss.addRow("Введи имя вершины", &nameLineEdit);
+    QPushButton addButtons("Добавить вершину");
+    formss.addRow(&addButtons);
 
-    connect(&addButton, &QPushButton::clicked, [&]() {
-        QString name = nameLineEdit.text();
-        QColor color = QColorDialog::getColor();
-        addVertexx(name, color, 0, 0);
-        dialog.close();
+    connect(&addButtons, &QPushButton::clicked, [&]() {
+        QString names = nameLineEdit.text();
+        QColor col = QColorDialog::getColor();
+        addVertexx(names, col, 0, 0);
+        dialogs.close();
         updateEdgge();
     });
 
-    dialog.exec();
+    dialogs.exec();
 }
 
 void Window::on_addEdgeButton_clicked()
@@ -98,49 +98,40 @@ void Window::on_addEdgeButton_clicked()
         return;
     }
 
-    QDialog dialog;
-    QFormLayout forms(&dialog);
+    QDialog dialogs;
+    QFormLayout formss(&dialogs);
 
-    QLineEdit weightLineEdit;
-    QLineEdit sourceVertexLineEdit;
-    QLineEdit destinationVertexLineEdit;
-    sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
-    destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
-    forms.addRow("Укажите вес ребра", &weightLineEdit);
-    forms.addRow("Начальная вершина", &sourceVertexLineEdit);
-    forms.addRow("Конечная вершина", &destinationVertexLineEdit);
-    QPushButton addButton("Добавить ребро");
-    forms.addRow(&addButton);
+    QLineEdit weightLEdit;
+    QLineEdit sourceVertexxLineEdit;
+    QLineEdit destinationVertexxLineEdit;
+    sourceVertexxLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
+    destinationVertexxLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
+    formss.addRow("Укажите вес ребра", &weightLEdit);
+    formss.addRow("Начальная вершина", &sourceVertexxLineEdit);
+    formss.addRow("Конечная вершина", &destinationVertexxLineEdit);
+    QPushButton addButtons("Добавить ребро");
+    formss.addRow(&addButtons);
 
-    connect(&addButton, &QPushButton::clicked, [&]() {
-        double weight = weightLineEdit.text().toInt();
-        int sourceIndex = sourceVertexLineEdit.text().toInt();
-        int destinationIndex = destinationVertexLineEdit.text().toInt();
-        addEdgge(sourceIndex, destinationIndex, weight, QColorDialog::getColor());
-        dialog.close();
+    connect(&addButtons, &QPushButton::clicked, [&]() {
+        double weigh = weightLEdit.text().toInt();
+        int sourceInd = sourceVertexxLineEdit.text().toInt();
+        int destinationInd = destinationVertexxLineEdit.text().toInt();
+        addEdgge(sourceInd, destinationInd, weigh, QColorDialog::getColor());
+        dialogs.close();
     });
 
-    dialog.exec();
+    dialogs.exec();
 }
-/*
-void MainWindow::updateRebro()
-{
-    foreach (Rebro* edge, rebrs) {
-        edge->adjust();
-        edge->update();
-    }
-}
-*/
 void Window::updateFiles(){
-    QFile file("graph.txt");
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&file);
+    QFile files("graphh.txt");
+    if (files.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&files);
         for (const Edgge* edge : edgges) {
-            int sourceIndex = vertexxs.indexOf(edge->getSourceEdgge());
-            int destinationIndex = vertexxs.indexOf(edge->getDestinationEdgge());
-            out << sourceIndex << "\t" << destinationIndex << "\t" << edge->getWeightEdgge() << "\n";
+            int sourceInd = vertexxs.indexOf(edge->getSourceEdgge());
+            int destinationInd = vertexxs.indexOf(edge->getDestinationEdgge());
+            out << sourceInd << "\t" << destinationInd << "\t" << edge->getWeightEdgge() << "\n";
         }
-        file.close();
+        files.close();
     }
 }
 void Window::on_removeEdgeButton_clicked()
@@ -149,16 +140,16 @@ void Window::on_removeEdgeButton_clicked()
         return;
     }
 
-    QDialog dialog;
-    QFormLayout forms(&dialog);
+    QDialog dialogs;
+    QFormLayout formss(&dialogs);
     QLineEdit sourceVertexLineEdit;
     sourceVertexLineEdit.setPlaceholderText("Начальная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
     QLineEdit destinationVertexLineEdit;
     destinationVertexLineEdit.setPlaceholderText("Конечная вершина (0 - " + QString::number(vertexxs.length() - 1) + ")");
-    forms.addRow("Начальная вершина", &sourceVertexLineEdit);
-    forms.addRow("Конечная вершина", &destinationVertexLineEdit);
+    formss.addRow("Начальная вершина", &sourceVertexLineEdit);
+    formss.addRow("Конечная вершина", &destinationVertexLineEdit);
     QPushButton removeButton("Удалить ребро");
-    forms.addRow(&removeButton);
+    formss.addRow(&removeButton);
 
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int sourceIndex = sourceVertexLineEdit.text().toInt();
@@ -181,10 +172,10 @@ void Window::on_removeEdgeButton_clicked()
             // Обновляем файл без удаленного ребра
             updateFiles();
         }
-        dialog.close();
+        dialogs.close();
     });
 
-    dialog.exec();
+    dialogs.exec();
 }
 
 
@@ -195,12 +186,12 @@ void Window::on_removeVertexButton_clicked()
     }
 
     QDialog dialog;
-    QFormLayout forms(&dialog);
+    QFormLayout formss(&dialog);
     QLineEdit vertexIndexLineEdit;
     vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vertexxs.length() - 1) + ")");
-    forms.addRow("Индекс вершины", &vertexIndexLineEdit);
+    formss.addRow("Индекс вершины", &vertexIndexLineEdit);
     QPushButton removeButton("Удалить вершину");
-    forms.addRow(&removeButton);
+    formss.addRow(&removeButton);
 
     connect(&removeButton, &QPushButton::clicked, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
@@ -245,16 +236,16 @@ void Window::on_changeVertexButton_clicked()
         return;
     }
 
-    QDialog dialog;
-    QFormLayout forms(&dialog);
+    QDialog dialogs;
+    QFormLayout formss(&dialogs);
     QLineEdit vertexIndexLineEdit;
     vertexIndexLineEdit.setPlaceholderText("Индекс вершины (0 - " + QString::number(vertexxs.length() - 1) + ")");
     QLineEdit vertexNameLineEdit;
     vertexNameLineEdit.setPlaceholderText("Новое название вершины");
-    forms.addRow("Индекс вершины", &vertexIndexLineEdit);
-    forms.addRow("Новое название", &vertexNameLineEdit);
+    formss.addRow("Индекс вершины", &vertexIndexLineEdit);
+    formss.addRow("Новое название", &vertexNameLineEdit);
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    forms.addRow(&buttonBox);
+    formss.addRow(&buttonBox);
 
     connect(&buttonBox, &QDialogButtonBox::accepted, [&]() {
         int vertexIndex = vertexIndexLineEdit.text().toInt();
@@ -267,14 +258,14 @@ void Window::on_changeVertexButton_clicked()
             vertex->update();
             updateVertexx();
         }
-        dialog.close();
+        dialogs.close();
     });
 
     connect(&buttonBox, &QDialogButtonBox::rejected, [&]() {
-        dialog.close();
+        dialogs.close();
     });
 
-    dialog.exec();
+    dialogs.exec();
 
 }
 bool Window::isConect()
@@ -295,9 +286,9 @@ bool Window::isConect()
         visited[currentIdx] = true;
 
         // Перебираем ребра, инцидентные текущей вершине
-        foreach (Edgge* edge, edgges) {
-            if (edge->getSourceEdgge() == current || edge->getDestinationEdgge() == current) {
-                Vertexx* adjacent = (edge->getSourceEdgge() == current) ? edge->getDestinationEdgge() : edge->getSourceEdgge();
+        foreach (Edgge* edgge, edgges) {
+            if (edgge->getSourceEdgge() == current || edgge->getDestinationEdgge() == current) {
+                Vertexx* adjacent = (edgge->getSourceEdgge() == current) ? edgge->getDestinationEdgge() : edgge->getSourceEdgge();
                 int adjacentIdx = vertexxs.indexOf(adjacent);
                 if (!visited[adjacentIdx]) {
                     stack.push(adjacent);
@@ -464,7 +455,7 @@ QString degreesText = "Степени вершин:\n";
     QString tree;
     if(isConect() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
-    QVBoxLayout layouts(&dialog);
+    QVBoxLayout layoutss(&dialog);
     QLabel infoLabel(infoText);
     QLabel degreesLabel(degreesText);
     QLabel incidenceMatrixLabel(incidenceMatrixText);
@@ -474,15 +465,15 @@ QString degreesText = "Степени вершин:\n";
     QLabel CompleteGraphLabel(completeGraph);
     QLabel eulerCycleLabel("Эйлеровый цикл:\n" + eulerCycleText); // Обновлено
     QLabel shortestPathsLabel(fullText);
-    layouts.addWidget(&infoLabel);
-    layouts.addWidget(&degreesLabel);
-    layouts.addWidget(&incidenceMatrixLabel);
-    layouts.addWidget(&adjacencyMatrixLabel);
-    layouts.addWidget(&GraphConnectedLabel);
-    layouts.addWidget(&Tree);
-    layouts.addWidget(&CompleteGraphLabel);
-    layouts.addWidget(&eulerCycleLabel);
-    layouts.addWidget(&shortestPathsLabel);
+    layoutss.addWidget(&infoLabel);
+    layoutss.addWidget(&degreesLabel);
+    layoutss.addWidget(&incidenceMatrixLabel);
+    layoutss.addWidget(&adjacencyMatrixLabel);
+    layoutss.addWidget(&GraphConnectedLabel);
+    layoutss.addWidget(&Tree);
+    layoutss.addWidget(&CompleteGraphLabel);
+    layoutss.addWidget(&eulerCycleLabel);
+    layoutss.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
 void Window::on_addInformationButton_clicked()
@@ -531,11 +522,11 @@ void Window::exportFiles(const QString& fileName)
 void Window::importFiles(const QString& fileName)
 {
 
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    QFile files(fileName);
+    if (!files.open(QIODevice::ReadOnly | QIODevice::Text))
     {
 
-            qDebug() << "Не удается открыть файл для чтения: " << file.errorString();
+            qDebug() << "Не удается открыть файл для чтения: " << files.errorString();
             return;
     }
 
@@ -545,7 +536,7 @@ void Window::importFiles(const QString& fileName)
     edgges.clear();
 
 
-    QTextStream in(&file);
+    QTextStream in(&files);
     while (!in.atEnd())
     {
             QString line = in.readLine();
@@ -582,7 +573,7 @@ void Window::importFiles(const QString& fileName)
             }
     }
 
-    file.close();
+    files.close();
 
 
     scen->update();
