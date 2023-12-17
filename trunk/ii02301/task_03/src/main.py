@@ -15,8 +15,11 @@ button_1="<Button-1>"
 text_on_vertex='text on vertex'
 id_text='id text'
 num_of_vertex='num of vertex'
-canvas=none
-main_label=main_label(tk) 
+canvas = None 
+main_label = tk.Label(root)  
+
+ 
+main_label = main_label
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
 cord = {'id': [], id_text: [], text_on_vertex: [], 'textID': [], num_of_vertex: [], 'coordinatesX': [],
@@ -53,7 +56,7 @@ def draw_canvas1(event):
 
 
 def draw_edge():
-    global canvas
+    canvas
     main_label.configure(text="Выбрано создание ребер, нажмите на вершину для создания ребра")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas2)
@@ -193,7 +196,7 @@ def adjacency_matrix():
     adj_matrix.title("Adjacency matrix")
     adj_matrix.geometry("150x150")
     matrix = [[0 for _ in range(len(ovals))] for _ in range(len(ovals))]
-    for index, value in enumerate(cord_edge['id_vertex1']):
+    for index in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][cord['id'].index(cord_edge['id_vertex2'][index])] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][cord['id'].index(cord_edge['id_vertex1'][index])] = 1
 
@@ -210,7 +213,7 @@ def incidence_matrix():
     inc_matrix.title("Incidence matrix")
     inc_matrix.geometry("150x150")
     matrix = [[0 for _ in range(len(edges))] for _ in range(len(ovals))]
-    for index, value in enumerate(cord_edge['id_vertex1']):
+    for index in enumerate(cord_edge['id_vertex1']):
         matrix[cord['id'].index(cord_edge['id_vertex1'][index])][edges.index(cord_edge['id_edge_text'].index(
             cord_edge['id_edge_text'][index]))] = 1
         matrix[cord['id'].index(cord_edge['id_vertex2'][index])][edges.index(cord_edge['id_edge_text'].index(
