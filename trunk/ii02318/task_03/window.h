@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -11,7 +11,7 @@ class Vertexx;
 class Edgge;
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class Window : public QMainWindow
 {
     Q_OBJECT
 
@@ -22,8 +22,8 @@ public:
     bool compleGraphh();
     void importFiles(const QString& fileName);
     void exportFiles(const QString& fileName);
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    Window(QWidget *parent = nullptr);
+    ~Window();
     void updateEdgge();
     void updateVertexx();
     void showGInf();
@@ -61,4 +61,4 @@ private:
     QList<Vertexx*> vertexxs;
     QList<Edgge*> edgges;
 };
-#endif // MAINWINDOW_H
+#endif // WINDOW_H

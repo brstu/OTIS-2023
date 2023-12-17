@@ -3,26 +3,26 @@
 
 #include <QWidget>
 #include <QMdiArea>
-#include "mainwindow.h"
+#include "window.h"
 
 namespace Ui {
-class StartWindow;
+class Start;
 }
 
-class StartWindow : public QWidget
+class Start : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit StartWindow(QWidget *parent = nullptr);
-    ~StartWindow();
+    explicit Start(QWidget *parent = nullptr);
+    ~Start();
 
 private slots:
     void on_newGraph_clicked();
 
 private:
-    Ui::StartWindow *uiui;
-    MainWindow *windows;
+    Ui::Start *uiui;
+    Window *windows;
 };
 
 #endif // START_H

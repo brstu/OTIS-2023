@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "window.h"
 #include "ui_mainwindow.h"
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
@@ -20,9 +20,9 @@
 #include <QComboBox>
 #include "Edgge.h"
 #include "Vertexx.h"
-#include "euler.h"
+#include "algoritm.h"
 
-MainWindow::MainWindow(QWidget *parent)
+Window::Window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -30,13 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
 }
 
-MainWindow::~MainWindow()
+Window::~Window()
 {
     delete ui;
     QFile::remove("graph.txt");
 }
 
-void MainWindow::addVertexx(const QString& name, const QColor& color, double x, double y)
+void Window::addVertexx(const QString& name, const QColor& color, double x, double y)
 {
     Vertexx* vertex = new Vertexx(name, color);
     vertex->setPos(x, y);
@@ -44,7 +44,7 @@ void MainWindow::addVertexx(const QString& name, const QColor& color, double x, 
     vertexxs.append(vertex);
 }
 
-void MainWindow::addEdgge(int sourceIndex, int destinationIndex, double weight, const QColor& color)
+void Window::addEdgge(int sourceIndex, int destinationIndex, double weight, const QColor& color)
 {
     if (sourceIndex >= 0 && sourceIndex < vertexxs.length() && destinationIndex >= 0 && destinationIndex < vertexxs.length())
     {
@@ -64,7 +64,7 @@ void MainWindow::addEdgge(int sourceIndex, int destinationIndex, double weight, 
     }
 }
 
-void MainWindow::updateEdgge()
+void Window::updateEdgge()
 {
     foreach (Edgge* edge, edgges) {
         edge->adjust();
@@ -72,7 +72,7 @@ void MainWindow::updateEdgge()
     }
 }
 
-void MainWindow::on_addVertexButton_clicked()
+void Window::on_addVertexButton_clicked()
 {
     QDialog dialog;
     QFormLayout form(&dialog);
@@ -92,7 +92,7 @@ void MainWindow::on_addVertexButton_clicked()
     dialog.exec();
 }
 
-void MainWindow::on_addEdgeButton_clicked()
+void Window::on_addEdgeButton_clicked()
 {
     if (vertexxs.isEmpty()) {
         return;
@@ -131,7 +131,7 @@ void MainWindow::updateRebro()
     }
 }
 */
-void MainWindow::updateFiles(){
+void Window::updateFiles(){
     QFile file("graph.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
@@ -143,7 +143,7 @@ void MainWindow::updateFiles(){
         file.close();
     }
 }
-void MainWindow::on_removeEdgeButton_clicked()
+void Window::on_removeEdgeButton_clicked()
 {
     if (edgges.isEmpty()) {
         return;
@@ -188,7 +188,7 @@ void MainWindow::on_removeEdgeButton_clicked()
 }
 
 
-void MainWindow::on_removeVertexButton_clicked()
+void Window::on_removeVertexButton_clicked()
 {
     if (vertexxs.isEmpty()) {
         return;
@@ -231,7 +231,7 @@ void MainWindow::on_removeVertexButton_clicked()
     dialog.exec();
 }
 
-void MainWindow::updateVertexx()
+void Window::updateVertexx()
 {
     for (Vertexx* vertex : vertexxs) {
         vertex->update();
@@ -239,7 +239,7 @@ void MainWindow::updateVertexx()
 }
 
 
-void MainWindow::on_changeVertexButton_clicked()
+void Window::on_changeVertexButton_clicked()
 {
     if (vertexxs.isEmpty()) {
         return;
@@ -277,7 +277,7 @@ void MainWindow::on_changeVertexButton_clicked()
     dialog.exec();
 
 }
-bool MainWindow::isConnected()
+bool Window::isConnected()
 {
 
     if (vertexxs.isEmpty()) {
@@ -315,7 +315,7 @@ bool MainWindow::isConnected()
 
     return true; // Все вершины достижимы, граф связный
 }
-QString MainWindow::getECycle() {
+QString Window::getECycle() {
 
     QString eulerCycle;
     Graphh g(vertexxs.length());
@@ -331,7 +331,7 @@ QString MainWindow::getECycle() {
     }
     return eulerCycle;
 }
-int MainWindow::getVIndex(const QString& vertexName) const {
+int Window::getVIndex(const QString& vertexName) const {
     for (int i = 0; i < vertexxs.length(); i++) {
         if (vertexxs[i]->getNameVertexx() == vertexName) {
             return i;
@@ -339,13 +339,13 @@ int MainWindow::getVIndex(const QString& vertexName) const {
     }
     return -1; // Вершина не найдена
 }
-bool MainWindow::compleGraphh(){
+bool Window::compleGraphh(){
     int numVertices = vertexxs.length();
     int numEdges = edgges.length();
     if(numVertices*(numVertices-1)/2 != numEdges){return false;}else{return true;}
 }
 
-void MainWindow::showGInf()
+void Window::showGInf()
 {
     // Количество вершин и ребер
     int numVertices = vertexxs.length();
@@ -485,18 +485,18 @@ QString degreesText = "Степени вершин:\n";
     layouts.addWidget(&shortestPathsLabel);
     dialog.exec();
 }
-void MainWindow::on_addInformationButton_clicked()
+void Window::on_addInformationButton_clicked()
 {
     showGInf();
 }
 
-void MainWindow::on_addClearsceneButton_clicked()
+void Window::on_addClearsceneButton_clicked()
 {
     scene->clear();
     vertexxs.clear();
     edgges.clear();
 }
-void MainWindow::exportFiles(const QString& fileName)
+void Window::exportFiles(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -528,7 +528,7 @@ void MainWindow::exportFiles(const QString& fileName)
     file.close();
 }
 // Функция импорта данных из текстового файла в сцену
-void MainWindow::importFiles(const QString& fileName)
+void Window::importFiles(const QString& fileName)
 {
 
     QFile file(fileName);
@@ -590,7 +590,7 @@ void MainWindow::importFiles(const QString& fileName)
 
 
 
-void MainWindow::on_export_2_clicked()
+void Window::on_export_2_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Экспорт в файл");
     if (!fileName.isEmpty())
@@ -601,7 +601,7 @@ void MainWindow::on_export_2_clicked()
 
 
 
-void MainWindow::on_import_2_clicked()
+void Window::on_import_2_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Импорт из файла");
     if (!fileName.isEmpty())

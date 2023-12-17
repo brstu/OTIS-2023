@@ -14,16 +14,16 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        window.cpp
+        window.h
+        window.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Task3
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        euler.h
+        algoritm.h
         Edgge.h
         Vertexx.h
         start.h start.cpp start.ui

@@ -1,21 +1,21 @@
 #include "start.h"
 #include "ui_start.h"
 
-StartWindow::StartWindow(QWidget *parent) :
-    QWidget(parent),
-    uiui(new Ui::StartWindow)
+Start::Start(QWidget *parents) :
+    QWidget(parents),
+    uiui(new Ui::Start)
 {
     uiui->setupUi(this);
 }
 
-StartWindow::~StartWindow()
+Start::~Start()
 {
     delete uiui;
 }
 
-void StartWindow::on_newGraph_clicked()
+void Start::on_newGraph_clicked()
 {
-    windows = new MainWindow(uiui->mdiArea);
+    windows = new Window(uiui->mdiArea);
     uiui->mdiArea->addSubWindow(windows);
     windows->show();
 }

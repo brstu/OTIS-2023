@@ -61,7 +61,7 @@ void Edgge::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
     adjust(); // обновление позиции ребра
-    if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
+    if (Window* mainWindow = qobject_cast<Window*>(scene()->views().first()->window())) {
         mainWindow->updateEdgge();
     }
     update();

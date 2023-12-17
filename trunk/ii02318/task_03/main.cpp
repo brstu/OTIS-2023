@@ -1,11 +1,11 @@
 #include "start.h"
 
-#include <QApplication>
+#include <QApplication> //a
 
 int main(int c, char *v[])
 {
     QApplication a(c, v);
-    StartWindow windows;
+    Start windows;
     windows.show();
     return a.exec();
 }

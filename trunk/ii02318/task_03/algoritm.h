@@ -1,10 +1,10 @@
-#ifndef EULER_H
-#define EULER_H
+#ifndef ALGORITM_H
+#define ALGORITM_H
 #include <iostream>
 #include <list>
 #include <fstream>
 #include <vector>
-#include "mainwindow.h"
+#include "window.h"
 #include "Qstring"
 
 using namespace std;
@@ -81,7 +81,7 @@ void Graphh::shcycle()
     ifstream inp("graph.txt");
     if (inp.is_open()) {
         Graphh g(0); // Создание объекта класса Graph с временным значением 0 для numV
-        MainWindow window;
+        Window window;
         window.updateVertexx();
         window.updateEdgge();
 
@@ -98,4 +98,4 @@ void Graphh::shcycle()
     }
     else cout << "file not found";
 }
-#endif // EULER_H
+#endif // ALGORITM_H

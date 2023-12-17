@@ -1,6 +1,6 @@
 #ifndef VERTEXX_H
 #define VERTEXX_H
-#include "mainwindow.h"
+#include "window.h"
 #include <QPainter>
 #include <QGraphicsView>
 class Vertexx : public QGraphicsItem
@@ -61,7 +61,7 @@ void Vertexx::setTextOffset(const QPointF &offset)
 void Vertexx::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
-    if (MainWindow* mainWindow = qobject_cast<MainWindow*>(scene()->views().first()->window())) {
+    if (Window* mainWindow = qobject_cast<Window*>(scene()->views().first()->window())) {
         mainWindow->updateEdgge();
     }
     update();
