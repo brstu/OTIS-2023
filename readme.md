@@ -53,8 +53,8 @@
 | 7  | [Крупич Даниил](https://github.com/Duferig)        | [ii02407](trunk/ii02407)     | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        8|
 | 8  | Кураш Александр                                    | [ii02408](trunk/ii02408)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        9|
 | 9  | [Лозейко Максим](https://github.com/Maxim1-Lozeyko1)| [ii02409](trunk/ii02409)    | ✅ | ❌ | ❌ | ❌ | ✅ |    |    |    |        6|
-| 10 | [Лящук Анастасия](https://github.com/anasosia)     | [ii02410](trunk/ii02410)     | ✅ | ❌ | ❌ | ❌ | ✅ |  ✅  |    |    |        6|
-| 11 | [Максимович Алина](https://github.com/vinberoj24)  | [ii02411](trunk/ii02411)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
+| 10 | [Лящук Анастасия](https://github.com/anasosia)     | [ii02410](trunk/ii02410)     | ✅ | ❌ | ❌ | ❌ | ✅ |   |    |    |        6|
+| 11 | [Максимович Алина](https://github.com/vinberoj24)  | [ii02411](trunk/ii02411)     | ✅ | ✅ | ❌ | ❌ | ✅ | ✅   |    |    |        6|
 | 12 | [Мшар Владислав](https://github.com/MsharVladislav)| [ii02412](trunk/ii02412)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 13 | Невдах Влидимир                                    | [ii02413](trunk/ii02413)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
 | 14 | [Поддубный Юрий](https://github.com/Yura-108)      | [ii02414](trunk/ii02414)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       8|
