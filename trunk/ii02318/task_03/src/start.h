@@ -1,5 +1,5 @@
-#ifndef STARTWINDOW_H
-#define STARTWINDOW_H
+#ifndef START_H
+#define START_H
 
 #include <QWidget>
 #include <QMdiArea>
@@ -21,8 +21,8 @@ private slots:
     void on_newGraph_clicked();
 
 private:
-    Ui::StartWindow *ui;
-    MainWindow *window;
+    Ui::StartWindow *uiui;
+    MainWindow *windows;
 };
 
-#endif // STARTWINDOW_H
+#endif // START_H

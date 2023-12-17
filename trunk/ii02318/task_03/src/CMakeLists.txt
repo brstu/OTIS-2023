@@ -26,7 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         euler.h
         Edgge.h
         Vertexx.h
-        startwindow.h startwindow.cpp startwindow.ui
+        start.h start.cpp start.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Task3 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

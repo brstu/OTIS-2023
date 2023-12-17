@@ -1,6 +1,6 @@
 #ifndef EDGGE_H
 #define EDGGE_H
-#include "vershina"
+#include "Vertexx.h"
 #include <QPainter>
 class Edgge : public QGraphicsItem
 {

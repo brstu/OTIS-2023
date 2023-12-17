@@ -15,7 +15,7 @@ public:
     void setColorVertexx(const QColor& newColorVertexx) {
         colorVertexx = newColorVertexx;
     }
-    void setNameV(const QString& newNameVertexx) {
+    void setNameVertexx(const QString& newNameVertexx) {
         nameVertexx = newNameVertexx;
     }
     Vertexx(const QString& name, const QColor& color);

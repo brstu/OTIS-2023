@@ -19,7 +19,7 @@
 #include <QLabel>
 #include <QComboBox>
 #include "Edgge.h"
-#include "vershina"
+#include "Vertexx.h"
 #include "euler.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -261,9 +261,9 @@ void MainWindow::on_changeVertexButton_clicked()
         QString newName = vertexNameLineEdit.text();
         if (vertexIndex >= 0 && vertexIndex < vertexxs.length()) {
             Vertexx* vertex = vertexxs.at(vertexIndex);
-            vertex->setName(newName);
+            vertex->setNameVertexx(newName);
             QColor color = QColorDialog::getColor();
-            vertex->setColorV(color);
+            vertex->setColorVertexx(color);
             vertex->update();
             updateVertexx();
         }
@@ -333,7 +333,7 @@ QString MainWindow::getECycle() {
 }
 int MainWindow::getVIndex(const QString& vertexName) const {
     for (int i = 0; i < vertexxs.length(); i++) {
-        if (vertexxs[i]->getName() == vertexName) {
+        if (vertexxs[i]->getNameVertexx() == vertexName) {
             return i;
         }
     }
@@ -365,7 +365,7 @@ QString degreesText = "Степени вершин:\n";
                 degree++;
             }
         }
-        degreesText += QString("Вершина %1: %2\n").arg(vertex->getName()).arg(degree);
+        degreesText += QString("Вершина %1: %2\n").arg(vertex->getNameVertexx()).arg(degree);
     if(degree % 2 != 0){ eulertrue = false;}
     if(degree > 1){ treetrue = false;}
     }
@@ -416,8 +416,8 @@ QString degreesText = "Степени вершин:\n";
     int radius = INT_MAX; // Инициализация радиуса графа
 
     for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = getVIndex(edgges[i]->getSourceEdgge()->getName());
-        int destinationIndex = getVIndex(edgges[i]->getDestinationEdgge()->getName());
+        int sourceIndex = getVIndex(edgges[i]->getSourceEdgge()->getNameVertexx());
+        int destinationIndex = getVIndex(edgges[i]->getDestinationEdgge()->getNameVertexx());
         int weight = edgges[i]->getWeightEdgge();
 
         distances[sourceIndex][destinationIndex] = weight;
@@ -513,7 +513,7 @@ void MainWindow::exportFiles(const QString& fileName)
     for (int i = 0; i < vertexxs.length(); ++i)
     {
             Vertexx* vertex = vertexxs[i];
-            out << "Vertex;" << vertex->getName() << ";" << vertex->getColorVertexx().name() << ";"
+            out << "Vertex;" << vertex->getNameVertexx() << ";" << vertex->getColorVertexx().name() << ";"
                 << vertex->scenePos().x() << ";" << vertex->scenePos().y() << "\n";
     }
 
