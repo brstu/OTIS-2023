@@ -15,20 +15,18 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_newGraphButton_clicked();
+
 
 private:
     Ui::MainWindow *ui;
 
-    void loadSubWindow(QString graphName,QWidget *widget);
-
-
-
-
+    void newWindow(QWidget *widget);
 };
 #endif // MAINWINDOW_H

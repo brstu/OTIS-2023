@@ -4,11 +4,12 @@
 
 int main(int argc, char *argv[])
 {
-    //create application a
+    //create object of app
     QApplication a(argc, argv);
-    //create window with name w
+    //create main app
     MainWindow w;
-    //show this window
+    //show main window
     w.show();
+    //run app
     return a.exec();
 }

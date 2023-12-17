@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "graphwindow.h"
-#include <QMdiSubWindow>
 #include <QInputDialog>
+#include <QMdiSubWindow>
+#include "graph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,22 +16,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::loadSubWindow(QString graphName, QWidget *widget)
-{
 
-    auto window = ui->mdiArea->addSubWindow(widget);
-    window -> setWindowTitle(graphName);
-    window -> setWindowIcon(widget->windowIcon());
-    window->resize(500,350);
-    window -> show();
+void MainWindow::on_newGraphButton_clicked()
+{
+    newWindow(new graph(this));
 }
 
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::newWindow(QWidget *widget)
 {
-    QString graphName;
-    while (graphName.isEmpty())
-    graphName = QInputDialog::getText(this, "Введите имя графа", "Имя:");
-    loadSubWindow(graphName, new GraphWindow(graphName,this));
+    auto w =  ui->mdiArea->addSubWindow(widget);
+    w -> setWindowIcon(widget->windowIcon());
+    w -> resize(500,350);
+    w -> show();
 }
-

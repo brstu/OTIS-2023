@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>923</width>
-    <height>500</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,24 +15,19 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QMdiArea" name="mdiArea"/>
-    </item>
     <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="newGraphButton">
       <property name="text">
-       <string>new graph</string>
+       <string>New graph</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QMdiArea" name="mdiArea"/>
     </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action">
-   <property name="text">
-    <string>Новый граф</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

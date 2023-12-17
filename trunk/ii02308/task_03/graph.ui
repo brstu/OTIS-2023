@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>graph</class>
+ <widget class="QMainWindow" name="graph">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Для добавления вершины кликните по рабочей области. Правый клик по выделеной вершине для изменения цвета</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGraphicsView" name="graphicsView"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Изменение графа</string>
+    </property>
+    <addaction name="addE"/>
+    <addaction name="renameV"/>
+    <addaction name="separator"/>
+    <addaction name="deleteV"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Алгоритмы</string>
+    </property>
+    <addaction name="information"/>
+    <addaction name="euralian"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="save"/>
+    <addaction name="load"/>
+   </widget>
+   <addaction name="menu_3"/>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="save">
+   <property name="text">
+    <string>сохранить</string>
+   </property>
+  </action>
+  <action name="load">
+   <property name="text">
+    <string>загрузить</string>
+   </property>
+  </action>
+  <action name="addE">
+   <property name="text">
+    <string>добавить ребро</string>
+   </property>
+  </action>
+  <action name="renameV">
+   <property name="text">
+    <string>Переименовать вершину</string>
+   </property>
+  </action>
+  <action name="deleteV">
+   <property name="text">
+    <string>Удалить вершину</string>
+   </property>
+  </action>
+  <action name="information">
+   <property name="text">
+    <string>Информация о графе</string>
+   </property>
+  </action>
+  <action name="euralian">
+   <property name="text">
+    <string>Эйлеров цикл</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
