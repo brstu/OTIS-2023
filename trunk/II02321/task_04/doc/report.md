@@ -1,4 +1,5 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
+    <p align="center"> Министерство образования Республики Беларусь</p>
+
 <p align="center">Учреждение образования</p>
 <p align="center">“Брестский Государственный технический университет”</p>
 <p align="center">Кафедра ИИТ</p>
@@ -18,17 +19,17 @@
 
 ---
 
-# Общее задание #
+# Общее задание
+
 1. Изучить [руководство](https://github.com/ostis-apps/nika).
 
 2. Запустить данный проект на локальной машине (домашний персональный компьютер, ноутбук, рабочая машина в аудитории и т.п.). Продемонстрировать работу проекта преподавателю.
 
 3. Написать отчет по выполненной работе в .md формате (readme.md) и с помощью pull request разместить его в следующем каталоге: trunk\ii0xxyy\task_04\doc.
 
-
 ---
 
-# Установка #
+# Установка
 
 ```
 git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
@@ -36,17 +37,21 @@ cd nika
 git submodule update --init --recursive
 docker compose pull
 ```
-# Запуск #
+
+# Запуск
+
 ```
 docker compose up --no-build
 ```
+
 Эта команда запустит два веб-интерфейса:
 
-sc-web - ```localhost:8000```
+sc-web - `localhost:8000`
 
-dialogue web UI - ```localhost:3033```
+dialogue web UI - `localhost:3033`
 <br/>
-В ходе запуска возникла ошибка 
+В ходе запуска возникла ошибка
+
 ```
 nika-problem-solver  | [07:30:23][Debug]: MessageReplyAgent started
 nika-problem-solver  | [07:30:23][Error]: Message link not found.
