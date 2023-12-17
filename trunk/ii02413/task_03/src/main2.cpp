@@ -25,7 +25,7 @@ std::unordered_map<std::string, std::unordered_map<std::string, int>> adjacencyL
 
 class GraphNode {
 public:
-    GraphNode(const std::string& nodeName) : name(nodeName) {
+    explicit GraphNode(const std::string& nodeName) : name(nodeName) {
         QRandomGenerator generator;
         x = generator.bounded(636);
         y = generator.bounded(596);
