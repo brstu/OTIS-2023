@@ -18,6 +18,8 @@
 
 # Выпoлнeниe зaдaния #
 
+Создал issue на сайте https://github.com/ostis-apps/nika/issues. Добавил скриншоты с предложениями. Описал недочёт и предложил его решение.
+
 ![Screenshot](screen1.png)
 ![Screenshot](screen2.png)
 
