@@ -85,6 +85,7 @@ class GraphEditor:
         except nx.NetworkXError:
             messagebox.showerror("Error", "No Eulerian path found in the graph.")
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = GraphEditor(root)
