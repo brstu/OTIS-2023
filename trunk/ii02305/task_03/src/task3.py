@@ -48,6 +48,19 @@ class Edge:
         self.weight = weight
         self.create_edge()
 
+    def on_wasd(event):
+        global x_click, y_click
+        x_click = event.x
+        y_click = event.y
+
+    def line_intersect_circle(self, x1, y1, x2, y2):
+        main_gipotenuza = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+        main_dx = x2 - x1
+        main_dy = y2 - y1
+        dx = (main_gipotenuza - 20) * main_dx / main_gipotenuza
+        dy = (main_gipotenuza - 20) * main_dy / main_gipotenuza
+        return x2 - dx, y2 - dy, x1 + dx, y1 + dy
+
     def create_edge(self):
         self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2,
                                        arrow="last" if var1.get() else None)
@@ -72,13 +85,13 @@ class Edge:
 
 def create_matrix(matrix_type):
     matrix = [[0 for _ in range(len(edges))] for _ in range(len(vert_name))]
-    for i in range(len(edges)):
+    for i in enumerate(edges):
         matrix[vert_name.index(edges[i].vertex1.vert_name)][i] = 1
         matrix[vert_name.index(edges[i].vertex2.vert_name)][i] = 1
     window = Tk()
     window.title(f"Матрица {matrix_type}")
     window.geometry(SIZE_CONSTANT)
-    for i in range(len(matrix)):
+    for i in enumerate(matrix):
         for j in range(len(matrix[0])):
             Label(window, text=matrix[i][j], font=(FONT_CONSTANT, 10), width=5, height=2, borderwidth=1, relief="solid").grid(
                 row=i, column=j)
@@ -159,6 +172,21 @@ def give_color(numb):
 
 call_count = 0
 
+def create_vertex(root, entry):
+    global call_count, vertex_count, color, vertex, vert_name
+    if '' == entry.get():
+        mb.showerror("Ошибка", "Вы не ввели имя вершины")
+    elif entry.get() in [vert.vert_name for vert in vertex]:
+        mb.showerror("Ошибка", "Такая вершина уже существует")
+    elif entry.get() not in [vert.vert_name for vert in vertex]:
+        vert_name[vertex_count] = entry.get()
+        call_count += 1
+    if call_count != 0:
+        vertex_count += 1
+        vertex.append(Vertex(canvas, color))
+        call_count = 0
+        root.destroy()
+
 def menu_create_vetrex():
     canvas.bind(BUTTON_CONSTANT, on_wasd)
     vert_name.append("")
@@ -180,6 +208,7 @@ def menu_create_vetrex():
     btncolor3.grid(row=2, column=1, sticky="ewn")
     btncreate.grid(row=2, column=0, sticky="ew")
     new_window.mainloop()
+
 def find_delete_vertex(entry, root):
     flag = 1
     while flag:
@@ -203,7 +232,19 @@ def find_delete_vertex(entry, root):
             break
 
 def delete_vertex():
-    create_window("Введите имя удаляемой вершины", find_delete_vertex)
+    new_window = Tk()
+    new_window.title("Задайте имя графа")
+    new_window.wm_attributes('-topmost', 1)
+    new_window.resizable(False, False)
+    label = Label(new_window)
+    label["text"] = "Введите имя удаляемой вершины"
+    label.grid(row=0, column=0, sticky="ew")
+    entry = Entry(new_window)
+    entry.grid(row=1, column=0)
+    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_vertex(entry.get(), new_window))
+    btnDel.grid(row=2, column=0, sticky="ew")
+    if entry.get == label["text"]:
+        new_window.destroy()
 
 def find_delete_edge(en1, en2, root):
     for i, edge in enumerate(edges):
@@ -218,26 +259,97 @@ def find_delete_edge(en1, en2, root):
         mb.showerror(ERROR_STR_CONSTANT, "Такого ребра не существует")
 
 def menu_delete_edge():
-    create_window("Введите имя вершин, между которыми \nудаляется ребро\nПервая вершина", find_delete_edge)
+    new_window = Tk()
+    new_window.title("Задайте имя графа")
+    new_window.wm_attributes('-topmost', 1)
+    new_window.resizable(False, False)
+    label = Label(new_window)
+    label["text"] = "Введите имя вершин, между которыми \nудаляется ребро\nПервая вершина"
+    label.grid(row=0, column=0, sticky="ew")
+    label2 = Label(new_window)
+    label2["text"] = "Вторая вершина"
+    entry = Entry(new_window)
+    entry2 = Entry(new_window)
+    entry.grid(row=1, column=0, sticky="ew")
+    label2.grid(row=2, column=0, sticky="ew")
+    entry2.grid(row=3, column=0, sticky="ew")
+    btnDel = Button(new_window, text="Ввод", command=lambda: find_delete_edge(entry.get(), entry2.get(), new_window))
+    btnDel.grid(row=4, column=0, sticky="ew")
+
+def rename_vertex(en1, en2, root):
+    global vert_name, vertex
+    for vert in vertex:
+        if vert.vert_name == en1 and en2 not in vert_name:
+            vert.vert_name = en1
+            canvas.itemconfigure(vert.id_txt, text=en2)
+            vert_name[vert_name.index(en1)] = en2
+            root.destroy()
+            break
+    else:
+        mb.showerror("Ошибка", "Вы ввели неверное имя вершины")
 
 def menu_rename_vertex():
-    create_vertex_window("Введите имя изменяемой вершины", rename)
+    new_window = Tk()
+    new_window.title("Задайте имя графа")
+    new_window.wm_attributes('-topmost', 1)
+    new_window.resizable(False, False)
+    label1 = Label(new_window)
+    label1["text"] = "Введите имя изменяемой вершины"
+    label1.grid(row=0, column=0, sticky="ew")
+    entry1 = Entry(new_window)
+    entry1.grid(row=1, column=0, sticky="ew")
+    label2 = Label(new_window)
+    label2["text"] = "Введите новое имя вершины"
+    label2.grid(row=2, column=0, sticky="ew")
+    entry2 = Entry(new_window)
+    entry2.grid(row=3, column=0, sticky="ew")
+    btnRen = Button(new_window, text="Изменить имя",
+                    command=lambda: rename_vertex(entry1.get(), entry2.get(), new_window))
+    btnRen.grid(row=4, column=0, sticky="ew")
 
-def create_edge_window(title, command):
+def create_edge(en1, en2, weight, root):
+    vert1, vert2 = 0, 0
+    for vert in vertex:
+        if vert.vert_name == en1:
+            vert1 = vert
+            break
+    else:
+        mb.showerror(ERROR_STR_CONSTANT, SHOW_ERR_CONSTANT)
+    for vert in vertex:
+        if vert.vert_name == en2:
+            vert2 = vert
+            break
+    else:
+        mb.showerror(ERROR_STR_CONSTANT, SHOW_ERR_CONSTANT)
+    edges.append(Edge(vert1, vert2, weight))
+    c2["state"] = "disable"
+    edge_count += 1
+    root.destroy()
+
+def menu_create_edge():
     new_window = Tk()
     new_window.title(TITLE_STR_NAME)
     new_window.wm_attributes('-topmost', 1)
     new_window.resizable(False, False)
     label1 = Label(new_window)
-    label1[STR_LABEL_CONSTANT] = title
-    label1.grid(row=0, column=0, sticky="ew")
+    label1[STR_LABEL_CONSTANT] = "Введите имя 1-ой вершины"
     entry1 = Entry(new_window)
+    entry2 = Entry(new_window)
+    entry3 = Entry(new_window)
+    entry3.insert(0, "0")
+    label2 = Label(new_window)
+    label3 = Label(new_window)
+    label3[STR_LABEL_CONSTANT] = "Введите вес вершины"
+    label2[STR_LABEL_CONSTANT] = "Введите имя 2-ой вершины"
+    label1.grid(row=0, column=0, sticky="ew")
+    btnvertname = Button(new_window, text="Ввод",
+                         command=lambda: create_edge(entry1.get(), entry2.get(), entry3.get(), new_window))
     entry1.grid(row=1, column=0, sticky="ew")
-    btn = Button(new_window, text="Ввод", command=lambda: command(entry1.get(), new_window))
-    btn.grid(row=2, column=0, sticky="ew")
-
-def menu_create_edge():
-    create_edge_window("Введите имя 1-ой вершины", create_edge)
+    label2.grid(row=2, column=0, sticky="ew")
+    entry2.grid(row=3, column=0, sticky="ew")
+    label3.grid(row=4, column=0, sticky="ew")
+    entry3.grid(row=5, column=0, sticky="ew")
+    btnvertname.grid(row=0, column=1, rowspan=6, sticky="ns")
 
 
 sel_vert = None
@@ -274,5 +386,4 @@ for i, (text, command) in enumerate(button_commands):
 
 Checkbutton(tk, text="Ориентированность", onvalue=1, offvalue=0, variable=var1, bg="gray").grid(row=2, column=2, stick="ew")
 Button(tk, text="Передвижение вершин", command=move_vertex2).grid(row=1, column=0, stick="ew")
-
 tk.mainloop()
