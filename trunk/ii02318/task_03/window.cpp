@@ -1,26 +1,26 @@
 #include "window.h"
 #include "ui_mainwindow.h"
-#include <QGraphicsScene>
-#include <QGraphicsTextItem>
-#include <QInputDialog>
-#include <QPushButton>
-#include <QFormLayout>
-#include <QLineEdit>
-#include <QColorDialog>
-#include <QtCore>
-#include <QDebug>
-#include <QGraphicsSceneMouseEvent>
-#include <QPainter>
-#include <QDoubleSpinBox>
-#include <QIODevice>
-#include <QFileDialog>
-#include <QFile>
-#include <QDialogButtonBox>
-#include <QLabel>
-#include <QComboBox>
-#include "Edgge.h"
-#include "Vertexx.h"
-#include "algoritm.h"
+#include <QGraphicsScene> //a
+#include <QGraphicsTextItem> //a
+#include <QInputDialog> //a
+#include <QPushButton> //a
+#include <QFormLayout> //a
+#include <QLineEdit> //a
+#include <QColorDialog> //a
+#include <QtCore> //a
+#include <QDebug> //a
+#include <QGraphicsSceneMouseEvent> //a
+#include <QPainter> //a
+#include <QDoubleSpinBox> //a
+#include <QIODevice> //a
+#include <QFileDialog> //a
+#include <QFile> //a
+#include <QDialogButtonBox> //a
+#include <QLabel> //a
+#include <QComboBox> //a
+#include "Edgge.h" //a
+#include "Vertexx.h" //a
+#include "algoritm.h" //a
 
 Window::Window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
