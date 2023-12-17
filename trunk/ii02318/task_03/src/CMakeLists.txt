@@ -20,16 +20,16 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Task
+    qt_add_executable(Task3
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         euler.h
-        edgge.h
-        vertexx.h
+        Edgge.h
+        Vertexx.h
         start.h start.cpp start.ui
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Task APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET Task3 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
@@ -46,13 +46,13 @@ else()
     endif()
 endif()
 
-target_link_libraries(Task PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Task3 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Task)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Task3)
 endif()
 set_target_properties(Task3 PROPERTIES
     ${BUNDLE_ID_OPTION}
@@ -63,7 +63,7 @@ set_target_properties(Task3 PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS Task
+install(TARGETS Task3
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
