@@ -23,16 +23,16 @@
 #include "algoritm.h" //a
 
 Window::Window(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), uiui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
+    uiui->setupUi(this);
+    scen = new QGraphicsScene(this);
+    uiui->graphicsView->setScene(scen);
 }
 
 Window::~Window()
 {
-    delete ui;
+    delete uiui;
     QFile::remove("graph.txt");
 }
 
@@ -40,7 +40,7 @@ void Window::addVertexx(const QString& name, const QColor& color, double x, doub
 {
     Vertexx* vertex = new Vertexx(name, color);
     vertex->setPos(x, y);
-    scene->addItem(vertex);
+    scen->addItem(vertex);
     vertexxs.append(vertex);
 }
 
@@ -51,7 +51,7 @@ void Window::addEdgge(int sourceIndex, int destinationIndex, double weight, cons
         Vertexx* sourceVertex = vertexxs.at(sourceIndex);
         Vertexx* destinationVertex = vertexxs.at(destinationIndex);
         Edgge* edge = new Edgge(sourceVertex, destinationVertex, weight, color);
-        scene->addItem(edge);
+        scen->addItem(edge);
         edgges.append(edge);
 
         QFile file("graph.txt");
@@ -171,7 +171,7 @@ void Window::on_removeEdgeButton_clicked()
             for (int i = 0; i < edgges.length(); i++) {
                 Edgge* edge = edgges.at(i);
                 if (edge->getSourceEdgge() == sourceVertex && edge->getDestinationEdgge() == destinationVertex) {
-                    scene->removeItem(edge);
+                    scen->removeItem(edge);
                     edgges.removeAt(i);
                     delete edge;
                     break;
@@ -211,14 +211,14 @@ void Window::on_removeVertexButton_clicked()
             for (int i = edgges.length() - 1; i >= 0; --i) {
                 Edgge* edge = edgges.at(i);
                 if (edge->getSourceEdgge() == vertex || edge->getDestinationEdgge() == vertex) {
-                    scene->removeItem(edge);
+                    scen->removeItem(edge);
                     edgges.removeAt(i);
                     delete edge;
                 }
             }
 
 
-            scene->removeItem(vertex);
+            scen->removeItem(vertex);
             vertexxs.removeOne(vertex);
             delete vertex;
 
@@ -277,7 +277,7 @@ void Window::on_changeVertexButton_clicked()
     dialog.exec();
 
 }
-bool Window::isConnected()
+bool Window::isConect()
 {
 
     if (vertexxs.isEmpty()) {
@@ -315,7 +315,7 @@ bool Window::isConnected()
 
     return true; // Все вершины достижимы, граф связный
 }
-QString Window::getECycle() {
+QString Window::getCycle() {
 
     QString eulerCycle;
     Graphh g(vertexxs.length());
@@ -331,7 +331,7 @@ QString Window::getECycle() {
     }
     return eulerCycle;
 }
-int Window::getVIndex(const QString& vertexName) const {
+int Window::getVertexxIndex(const QString& vertexName) const {
     for (int i = 0; i < vertexxs.length(); i++) {
         if (vertexxs[i]->getNameVertexx() == vertexName) {
             return i;
@@ -404,8 +404,8 @@ QString degreesText = "Степени вершин:\n";
         adjacencyMatrixText += "\n";
     }
     QString eulerCycleText;
-    if (eulertrue && isConnected()) {
-        eulerCycleText = getECycle();
+    if (eulertrue && isConect()) {
+        eulerCycleText = getCycle();
     } else {
         eulerCycleText = "Эйлеровый цикл не существует.";
     }
@@ -416,8 +416,8 @@ QString degreesText = "Степени вершин:\n";
     int radius = INT_MAX; // Инициализация радиуса графа
 
     for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = getVIndex(edgges[i]->getSourceEdgge()->getNameVertexx());
-        int destinationIndex = getVIndex(edgges[i]->getDestinationEdgge()->getNameVertexx());
+        int sourceIndex = getVertexxIndex(edgges[i]->getSourceEdgge()->getNameVertexx());
+        int destinationIndex = getVertexxIndex(edgges[i]->getDestinationEdgge()->getNameVertexx());
         int weight = edgges[i]->getWeightEdgge();
 
         distances[sourceIndex][destinationIndex] = weight;
@@ -448,21 +448,21 @@ QString degreesText = "Степени вершин:\n";
 
     QString graphInfoText = QString("Радиус графа: %1\nДиаметр графа: %2\n").arg(radius).arg(diameter);
                                 QString fullText;
-                            if(isConnected()){
+                            if(isConect()){
          fullText = graphInfoText + shortestPathsText;}
                             else{ fullText = shortestPathsText;}
     QString completeGraph;
-                            if(compleGraphh()&& isConnected()){completeGraph = "Граф является полным";}
+                            if(compleGraphh()&& isConect()){completeGraph = "Граф является полным";}
     else {completeGraph = "Граф не является полным";};
     QString connected;
-    if(isConnected()){
+    if(isConect()){
         connected = "Граф является связным";
     } else {
             connected = "Граф не является связным";
     };
     // Формирование окна с информацией о графе
     QString tree;
-    if(isConnected() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
+    if(isConect() && treetrue){ tree = "Граф является деревом";} else {tree = "Граф не является деревом";};
     QDialog dialog;
     QVBoxLayout layouts(&dialog);
     QLabel infoLabel(infoText);
@@ -492,7 +492,7 @@ void Window::on_addInformationButton_clicked()
 
 void Window::on_addClearsceneButton_clicked()
 {
-    scene->clear();
+    scen->clear();
     vertexxs.clear();
     edgges.clear();
 }
@@ -540,7 +540,7 @@ void Window::importFiles(const QString& fileName)
     }
 
 
-    scene->clear();
+    scen->clear();
     vertexxs.clear();
     edgges.clear();
 
@@ -561,7 +561,7 @@ void Window::importFiles(const QString& fileName)
             Vertexx* vertex = new Vertexx(name, color);
             vertex->setPos(x, y);
             vertexxs.append(vertex);
-            scene->addItem(vertex);
+            scen->addItem(vertex);
             }
             else if (parts[0] == "Edge")
             {
@@ -577,7 +577,7 @@ void Window::importFiles(const QString& fileName)
                 Vertexx* destVertex = vertexxs[destVertexIndex];
                 Edgge* edge = new Edgge(sourceVertex, destVertex, weight, color);
                 edgges.append(edge);
-                scene->addItem(edge);
+                scen->addItem(edge);
             }
             }
     }
@@ -585,7 +585,7 @@ void Window::importFiles(const QString& fileName)
     file.close();
 
 
-    scene->update();
+    scen->update();
 }
 
 

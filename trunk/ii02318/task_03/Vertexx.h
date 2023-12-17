@@ -20,14 +20,14 @@ public:
     }
     Vertexx(const QString& name, const QColor& color);
     QRectF boundingRect() const override;
-    void paint(QPainter *painterVertexx, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    void setTextOffset(const QPointF& offset);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void paint(QPainter *painterVertexx, const QStyleOptionGraphicsItem *op, QWidget *wid) override;
+    void setTextOffset(const QPointF& ofset);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *even) override;
 
 private:
     QString nameVertexx;
     QColor colorVertexx;
-    QPointF textOffsetV;
+    QPointF textOffsetVertexx;
 };
 Vertexx::Vertexx(const QString& nameV, const QColor& colorV) : nameVertexx(nameV), colorVertexx(colorV)
 {
@@ -39,11 +39,11 @@ QRectF Vertexx::boundingRect() const
     return QRectF(-25, -25, 50, 50);
 }
 
-void Vertexx::paint(QPainter *painterVertexx, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Vertexx::paint(QPainter *painterVertexx, const QStyleOptionGraphicsItem *op, QWidget *wid)
 {
 
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
+    Q_UNUSED(op);
+    Q_UNUSED(wid);
 
     painterVertexx->setPen(Qt::black);
     painterVertexx->setBrush(colorVertexx);
@@ -53,16 +53,16 @@ void Vertexx::paint(QPainter *painterVertexx, const QStyleOptionGraphicsItem *op
     painterVertexx->drawText(QRectF(-20, -20, 40, 40), Qt::AlignCenter, nameVertexx);
 }
 
-void Vertexx::setTextOffset(const QPointF &offset)
+void Vertexx::setTextOffset(const QPointF &ofset)
 {
-    textOffsetV = offset;
+    textOffsetVertexx = ofset;
 }
 
-void Vertexx::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void Vertexx::mouseMoveEvent(QGraphicsSceneMouseEvent *even)
 {
-    QGraphicsItem::mouseMoveEvent(event);
-    if (Window* mainWindow = qobject_cast<Window*>(scene()->views().first()->window())) {
-        mainWindow->updateEdgge();
+    QGraphicsItem::mouseMoveEvent(even);
+    if (Window* Window = qobject_cast<Window*>(scene()->views().first()->window())) {
+        Window->updateEdgge();
     }
     update();
 }

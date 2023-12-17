@@ -34,9 +34,9 @@ public:
     int getNumOfEdgges() {
         return edgges.length();
     }
-    QString getECycle();
-    bool isConnected();
-    int getVIndex(const QString& vertexName) const;
+    QString getCycle();
+    bool isConect();
+    int getVertexxIndex(const QString& vertexName) const;
 private slots:
     void on_addVertexButton_clicked();
     void on_addEdgeButton_clicked();
@@ -56,8 +56,8 @@ private slots:
     void on_import_2_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    Ui::MainWindow *uiui;
+    QGraphicsScene *scen;
     QList<Vertexx*> vertexxs;
     QList<Edgge*> edgges;
 };
