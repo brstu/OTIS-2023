@@ -34,7 +34,7 @@
 git submodule update --init --recursive
 ```
 
-![ф](picture_1.png)
+![ф](setup.png)
 
 # Запуск и работа
 
@@ -44,7 +44,7 @@ git submodule update --init --recursive
 docker compose up --no-build
 ```
 
-![работа](picture_2.png)
+![работа](run.png)
 
 Происходит запуск двух веб-интерфейсов:
 
@@ -52,12 +52,12 @@ docker compose up --no-build
 localhost:8000
 ```
 
-![работа](picture_3.png)
+![работа](back.png)
 Веб-диалог пользовательского интерфейса:
 
 ```
 localhost:3033
 ```
 
-![работа](picture_4.png)
-![работа](picture_5.png)
+![работа](web.png)
+![работа](webw.png)
