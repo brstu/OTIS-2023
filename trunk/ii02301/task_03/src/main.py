@@ -53,7 +53,7 @@ def draw_canvas1(event):
 
 
 def draw_edge():
-    canvas
+    global canvas
     main_label.configure(text="Выбрано создание ребер, нажмите на вершину для создания ребра")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas2)
