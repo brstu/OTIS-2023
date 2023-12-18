@@ -57,3 +57,4 @@ nika-problem-solver  | [07:30:23][Error]: Message link not found.
 [Issues](https://github.com/ostis-apps/nika/issues/291)
 
 И дополнил его
+![Issues:](Issues.png)
