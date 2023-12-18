@@ -20,6 +20,8 @@ void deleteEdges(int id1, int id2){
 	int idEdge1 = findEdgeByIDS(id1,id2);
    int idEdge2 = findEdgeByIDS(id2,id1);
    //ShowMessage(IntToStr(idEdge1) + " " + IntToStr(idEdge2));
+	
+	bool isChanged = false;
 
    	if(idEdge1 > idEdge2 && idEdge2 != -1 && idEdge1 != -1){
 		if(idEdge1 == edges.size() - 1){
@@ -54,7 +56,7 @@ void deleteEdges(int id1, int id2){
    }
 
    else if(idEdge1 == idEdge2){
-		ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
+		ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
 		//return;
    }
 
@@ -78,9 +80,8 @@ void deleteEdges(int id1, int id2){
 		edges[i].id = i;
    }
 
-	bool isChanged = false;
 	if(idEdge1 == -1 && idEdge2 == -1){
-		 ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
+		 ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
 		 //return;
    }
    else if(idEdge1 > -1){
@@ -106,7 +107,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-   else if(idEdge2 > -1){
+if(idEdge2 > -1){
    //idEdge--;
 		if(isChanged)
 			idEdge2--;
@@ -156,7 +157,7 @@ void __fastcall TForm4::FNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	FName->SetFocus();
 	}
 }
@@ -170,7 +171,7 @@ void __fastcall TForm4::SNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	SName->SetFocus();
 	}
 }

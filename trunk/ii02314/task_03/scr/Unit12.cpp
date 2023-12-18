@@ -22,7 +22,7 @@
 #pragma resource "*.dfm"
 TForm12 *Form12;
 
-int findSmalest(const std::vector <int> dist,const std::vector <bool> isVisited) {
+int findSmalest(const std::vector <int>& dist,const std::vector <bool>& isVisited) {
         int min = 999999;
         int res = 0;
         for(int i = 0; i < dist.size();i++){
