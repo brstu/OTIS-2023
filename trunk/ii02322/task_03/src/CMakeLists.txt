@@ -16,39 +16,39 @@ include_directories(.)
 add_executable(simple_graph_tool
         EdgeGraphicsItem.cpp
         EdgeGraphicsItem.h
-        basis/sources/Graph.cpp
-        basis/headers/Graph.h
-        graphics/sources/GraphGraphicsScene.cpp
-        graphics/headers/GraphGraphicsScene.h
-        graphics/sources/GraphGraphicsView.cpp
-        graphics/headers/GraphGraphicsView.h
-        widgets/sources/AdjacencyMatrixTable.cpp
-        widgets/headers/AdjacencyMatrixTable.h
-        basis/sources/GraphUtils.cpp
-        basis/headers/GraphUtils.h
-        widgets/sources/MultiLineInputDialog.cpp
-        widgets/headers/MultiLineInputDialog.h
+        Graph.cpp
+        Graph.h
+        GraphGraphicsScene.cpp
+        GraphGraphicsScene.h
+        GraphGraphicsView.cpp
+        GraphGraphicsView.h
+        AdjacencyMatrixTable.cpp
+        AdjacencyMatrixTable.h
+        GraphUtils.cpp
+        GraphUtils.h
+        MultiLineInputDialog.cpp
+        MultiLineInputDialog.h
         main.cpp
         mainwindow.cpp
         mainwindow.h
-        basis/sources/Node.cpp
-        basis/headers/Node.h
-        graphics/sources/NodeGraphicsItem.cpp
-        graphics/headers/NodeGraphicsItem.h
-        utils/qdebugstream.h
-        utils/random.h
-        widgets/sources/ElementPropertiesTable.cpp
-        widgets/headers/ElementPropertiesTable.h
-        widgets/sources/GraphPropertiesTable.cpp
-        widgets/headers/GraphPropertiesTable.h
-        basis/headers/Matrix.h
-        basis/headers/Edge.h
-        widgets/headers/GraphOptionDialog.h
-        widgets/sources/GraphOptionDialog.cpp
-        widgets/headers/IncidenceMatrixTable.h
-        widgets/sources/IncidenceMatrixTable.cpp
-        widgets/sources/MultiComboboxDialog.cpp
-        widgets/headers/MultiComboboxDialog.h)
+        Node.cpp
+        Node.h
+        NodeGraphicsItem.cpp
+        NodeGraphicsItem.h
+        qdebugstream.h
+        random.h
+        ElementPropertiesTable.cpp
+        ElementPropertiesTable.h
+        GraphPropertiesTable.cpp
+        GraphPropertiesTable.h
+        Matrix.h
+        Edge.h
+        GraphOptionDialog.h
+        GraphOptionDialog.cpp
+        IncidenceMatrixTable.h
+        IncidenceMatrixTable.cpp
+        MultiComboboxDialog.cpp
+        MultiComboboxDialog.h)
 
 target_link_libraries(simple_graph_tool Qt5::Core)
 target_link_libraries(simple_graph_tool Qt5::Widgets)
