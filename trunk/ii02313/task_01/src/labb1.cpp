@@ -1,4 +1,4 @@
-#include <iostream>
+щ#include <iostream>
 #include <cmath>
 
 const double COEFFICIENT_A = 1;
@@ -20,10 +20,9 @@ void linod(double y, double j, int t, int tend) {
 void nonlinod(double y_brv, double y, double j, int t, int tend) {
     if (t <= tend) {
         double y_ced = COEFFICIENT_A * y - COEFFICIENT_B * pow(y_brv, 2) + COEFFICIENT_C * j + COEFFICIENT_D * sin(j);
-        y_brv = y;
-        y = y_ced;
+        double y_next = y_ced;
         std::cout << y_ced << "\n";
-        nonlinod(y, y_ced, j, t + 1, tend);
+        nonlinod(y, y_next, j, t + 1, tend);
     }
 }
 
