@@ -32,6 +32,6 @@
 
 # Выполнение задания #
 
-Предложил исправления в 2-х проектах : https://github.com/ostis-ai/sc-component-manager/issues/62 и https://github.com/ostis-apps/nika/issues/308
+Предложил исправления в 2-х проектах : https://github.com/ostis-ai/sc-machine/issues/343 и https://github.com/ostis-apps/nika/issues/333
 ![issue](1.png)
 ![issue](2.png)
