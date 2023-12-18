@@ -43,28 +43,28 @@ __fastcall TForm13::TForm13(TComponent* Owner)
 {
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm13::Button1Click(TObject *Sender)
+void __fastcall TForm13::showButtonClick(TObject *Sender)
 {
-		 Memo1->Clear();
+		 informationMemo->Clear();
 		std::stringstream fout;
 		fout << "Number of vertexes: " << vertexes.size() << "\n";
-		Memo1->Lines->Add(fout.str().c_str());
+		informationMemo->Lines->Add(fout.str().c_str());
 		fout.str("");
 		fout.clear();
 		fout << "Number of edges: " << edges.size() << "\n";
-		Memo1->Lines->Add(fout.str().c_str());
+		informationMemo->Lines->Add(fout.str().c_str());
 		fout.str("");
 		fout.clear();
 		for(int i = 0; i < graph.size(); i++){
 			fout << "Degree of  " << vertexes[i].name << "\t : " << graph[i].size()<<"\n";
-			Memo1->Lines->Add(fout.str().c_str());
+			informationMemo->Lines->Add(fout.str().c_str());
 			fout.str("");
 			fout.clear();
 		}
 		if(checkForOdd()){
 			fout << "Eyler cycle: exist\n";
 		} else fout << "Eyler cycle: don't exist\n";
-        Memo1->Lines->Add(fout.str().c_str());
+        informationMemo->Lines->Add(fout.str().c_str());
 			fout.str("");
 			fout.clear();
 }

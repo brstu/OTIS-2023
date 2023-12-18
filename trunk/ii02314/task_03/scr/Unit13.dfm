@@ -11,7 +11,7 @@ object Form13: TForm13
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Memo1: TMemo
+  object informationMemo: TMemo
     Left = 8
     Top = 48
     Width = 289
@@ -20,7 +20,7 @@ object Form13: TForm13
       'Memo1')
     TabOrder = 0
   end
-  object Button1: TButton
+  object showButton: TButton
     Left = 112
     Top = 8
     Width = 75
@@ -28,6 +28,6 @@ object Form13: TForm13
     Cancel = True
     Caption = 'Show'
     TabOrder = 1
-    OnClick = Button1Click
+    OnClick = showButtonClick
   end
 end
