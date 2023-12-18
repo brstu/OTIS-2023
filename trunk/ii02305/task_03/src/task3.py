@@ -48,14 +48,6 @@ class Edge:
         self.weight = weight
         self.create_edge()
 
-    def line_intersect_circle(self, x1, y1, x2, y2):
-        main_gipotenuza = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        main_dx = x2 - x1
-        main_dy = y2 - y1
-        dx = (main_gipotenuza - 20) * main_dx / main_gipotenuza
-        dy = (main_gipotenuza - 20) * main_dy / main_gipotenuza
-        return x2 - dx, y2 - dy, x1 + dx, y1 + dy
-
     def create_edge(self):
         self.line = canvas.create_line(line_intersect_circle(self.x1, self.y1, self.x2, self.y2), width=2,
                                        arrow="last" if var1.get() else None)
@@ -91,6 +83,15 @@ def create_matrix(matrix_type):
             Label(window, text=matrix[i][j], font=(FONT_CONSTANT, 10), width=5, height=2, borderwidth=1, relief="solid").grid(
                 row=i, column=j)
     window.mainloop()
+
+def line_intersect_circle(x1, y1, x2, y2):
+    main_gipotenuza = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    main_dx = x2 - x1
+    main_dy = y2 - y1
+    dx = (main_gipotenuza - 20) * main_dx / main_gipotenuza
+    dy = (main_gipotenuza - 20) * main_dy / main_gipotenuza
+
+    return x2 - dx, y2 - dy, x1 + dx, y1 + dy
 
 def on_wasd(event):
     global x_click, y_click
@@ -173,7 +174,7 @@ def give_color(numb):
 call_count = 0
 
 def create_vertex(root, entry):
-    global call_count, vertex_count, color, vertex, vert_name
+    global call_count, vertex_count, vertex, vert_name
     if '' == entry.get():
         mb.showerror(ERROR_STR_CONSTANT, "Вы не ввели имя вершины")
     elif entry.get() in [vert.vert_name for vert in vertex]:
@@ -277,7 +278,7 @@ def menu_delete_edge():
     btndel.grid(row=4, column=0, sticky="ew")
 
 def rename_vertex(en1, en2, root):
-    global vert_name, vertex
+    global vertex
     for vert in vertex:
         if vert.vert_name == en1 and en2 not in vert_name:
             vert.vert_name = en1
@@ -322,7 +323,6 @@ def create_edge(en1, en2, weight, root):
     else:
         mb.showerror(ERROR_STR_CONSTANT, SHOW_ERR_CONSTANT)
     edges.append(Edge(vert1, vert2, weight))
-    c2["state"] = "disable"
     root.destroy()
 
 def menu_create_edge():
