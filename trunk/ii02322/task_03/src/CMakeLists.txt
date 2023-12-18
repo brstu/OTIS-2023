@@ -14,8 +14,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(.)
 
 add_executable(simple_graph_tool
-        /EdgeGraphicsItem.cpp
-        graphics/headers/EdgeGraphicsItem.h
+        EdgeGraphicsItem.cpp
+        EdgeGraphicsItem.h
         basis/sources/Graph.cpp
         basis/headers/Graph.h
         graphics/sources/GraphGraphicsScene.cpp
