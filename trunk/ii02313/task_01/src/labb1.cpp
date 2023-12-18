@@ -1,4 +1,4 @@
-щ#include <iostream>
+#include <iostream>
 #include <cmath>
 
 const double COEFFICIENT_A = 1;
