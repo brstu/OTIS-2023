@@ -2,8 +2,8 @@ object Form9: TForm9
   Left = 0
   Top = 0
   Caption = 'Form9'
-  ClientHeight = 145
-  ClientWidth = 215
+  ClientHeight = 136
+  ClientWidth = 209
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

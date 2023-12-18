@@ -1,21 +1,17 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 
+#include "Unit10.h"
 #include "Unit1.h"
-#include "Unit2.h"
 #include "Unit3.h"
+#include "Unit2.h"
 #include "Unit4.h"
 #include "Unit5.h"
 #include "Unit6.h"
 #include "Unit7.h"
 #include "Unit8.h"
 #include "Unit9.h"
-#include "Unit10.h"
-#include <vector>
 #include <sstream>
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
@@ -33,6 +29,8 @@ __fastcall TForm10::TForm10(TComponent* Owner)
 		}
 	}
 
+	adjMatrix = matrix;
+
 	for (int i = 0; i < matrix.size(); ++i) {
 		std::stringstream ss;
 		for (int j = 0; j < matrix.size(); ++j) {
@@ -41,6 +39,4 @@ __fastcall TForm10::TForm10(TComponent* Owner)
 		Place->Lines->Add(ss.str().c_str());
 	}
 
-	adjMatrix = matrix;
 }
-//---------------------------------------------------------------------------
