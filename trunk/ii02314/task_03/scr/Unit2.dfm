@@ -2,8 +2,8 @@ object Form2: TForm2
   Left = 0
   Top = 0
   Caption = 'MakeVertex'
-  ClientHeight = 200
-  ClientWidth = 201
+  ClientHeight = 191
+  ClientWidth = 195
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

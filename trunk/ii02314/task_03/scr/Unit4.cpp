@@ -1,5 +1,3 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 
@@ -9,7 +7,6 @@
 #include "Unit3.h"
 #include "Unit5.h"
 #include "Unit6.h"
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm4 *Form4;
@@ -19,8 +16,7 @@ bool isExisting2;
 void deleteEdges(int id1, int id2){
 	int idEdge1 = findEdgeByIDS(id1,id2);
    int idEdge2 = findEdgeByIDS(id2,id1);
-   //ShowMessage(IntToStr(idEdge1) + " " + IntToStr(idEdge2));
-	
+
 	bool isChanged = false;
 
    	if(idEdge1 > idEdge2 && idEdge2 != -1 && idEdge1 != -1){
@@ -56,8 +52,7 @@ void deleteEdges(int id1, int id2){
    }
 
    else if(idEdge1 == idEdge2){
-		ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
-		//return;
+		ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
    }
 
    else {
@@ -81,11 +76,9 @@ void deleteEdges(int id1, int id2){
    }
 
 	if(idEdge1 == -1 && idEdge2 == -1){
-		 ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
-		 //return;
+		 ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
    }
    else if(idEdge1 > -1){
-   //idEdge--;
 		bool flag = false;
 		for(int i = 0; i < graph[id1].size() - 1; i++){
 			if(graph[id1][i].first == id2){
@@ -107,8 +100,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-if(idEdge2 > -1){
-   //idEdge--;
+   else if(idEdge2 > -1){
 		if(isChanged)
 			idEdge2--;
 
@@ -135,19 +127,16 @@ if(idEdge2 > -1){
    }
 }
 
-//---------------------------------------------------------------------------
 __fastcall TForm4::TForm4(TComponent* Owner)
 	: TForm(Owner)
 {
 isExisting1 = false;
 isExisting2 = false;
 }
-//---------------------------------------------------------------------------
 void __fastcall TForm4::Button2Click(TObject *Sender)
 {
 	Form4->Close();
 }
-//---------------------------------------------------------------------------
 void __fastcall TForm4::FNameExit(TObject *Sender)
 {
 	AnsiString EditName = FName->Text;
@@ -157,11 +146,10 @@ void __fastcall TForm4::FNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
+	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
 	FName->SetFocus();
 	}
 }
-//---------------------------------------------------------------------------
 void __fastcall TForm4::SNameExit(TObject *Sender)
 {
 	AnsiString EditName = SName->Text;
@@ -171,11 +159,10 @@ void __fastcall TForm4::SNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
+	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
 	SName->SetFocus();
 	}
 }
-//---------------------------------------------------------------------------
 void __fastcall TForm4::Button1Click(TObject *Sender)
 {
 	AnsiString tempName = FName->Text;
@@ -189,4 +176,3 @@ void __fastcall TForm4::Button1Click(TObject *Sender)
 	ShowMessage("Succes");
 	refreshGraph();
 }
-//---------------------------------------------------------------------------

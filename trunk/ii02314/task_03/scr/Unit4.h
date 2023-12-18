@@ -1,4 +1,3 @@
-//---------------------------------------------------------------------------
 #ifndef Unit4H
 #define Unit4H
 #include <System.Classes.hpp>
@@ -7,10 +6,9 @@
 #include <Vcl.Forms.hpp>
 
 void deleteEdges(int id1, int id2);
-//---------------------------------------------------------------------------
 class TForm4 : public TForm
 {
-__published:	// IDE-managed Components
+__published:
 	TLabel *Vertex1;
 	TLabel *Vertex2;
 	TEdit *FName;
@@ -24,10 +22,8 @@ __published:	// IDE-managed Components
 	void __fastcall SNameExit(TObject *Sender);
 	void __fastcall Button1Click(TObject *Sender);
 private:
-public:		// User declarations
+public:
 	__fastcall TForm4(TComponent* Owner);
 };
-//---------------------------------------------------------------------------
 extern PACKAGE TForm4 *Form4;
-//---------------------------------------------------------------------------
 #endif
