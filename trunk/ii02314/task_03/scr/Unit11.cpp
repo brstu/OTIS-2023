@@ -25,7 +25,7 @@ __fastcall TForm11::TForm11(TComponent* Owner)
 	: TForm(Owner)
 {
 	std::vector<std::vector<int>> matrix(vertexes.size(), std::vector<int>(edges.size(), 0));
-	Memo1->Clear();
+	inscMemo->Clear();
 
 	for(int i = 0; i < graph.size(); i++){
 		for(int j = 0; j < graph[i]. size();j++){
@@ -46,7 +46,7 @@ __fastcall TForm11::TForm11(TComponent* Owner)
 		std::stringstream fout;
 		for (int j = 0; j < edges.size(); ++j)
 			fout << matrix[i][j] << " \t";
-		Memo1->Lines->Add(fout.str().c_str());
+		inscMemo->Lines->Add(fout.str().c_str());
 	}
 }
 //---------------------------------------------------------------------------

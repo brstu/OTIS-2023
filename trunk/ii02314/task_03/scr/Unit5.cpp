@@ -43,7 +43,7 @@ void __fastcall TForm5::Check1Exit(TObject *Sender)
 		EditButton->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("Вершина с таким именем не найдена");
+	ShowMessage("Vertex does not exist");
 	Check1->SetFocus();
 	}
 }
@@ -57,7 +57,7 @@ void __fastcall TForm5::Check2Exit(TObject *Sender)
 		EditButton->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("Вершина с таким именем не найдена");
+	ShowMessage("Vertex does not exist");
 	Check2->SetFocus();
 	}
 }

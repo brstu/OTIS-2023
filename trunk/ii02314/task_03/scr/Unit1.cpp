@@ -1,4 +1,3 @@
-//---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
@@ -16,7 +15,6 @@
 #include "Unit11.h"
 #include "Unit12.h"
 #include "Unit13.h"
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
@@ -61,7 +59,6 @@ void refreshGraph(){
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
-	//FormStyle = fsStayOnTop;
 	idVertex = 0;
 	idEdge = 0;
 
@@ -73,7 +70,6 @@ void __fastcall TForm1::N4Click(TObject *Sender)
 	POINT cursorPos;
 	while (true)
 	{
-		//Application->ProcessMessages();
 			 if (GetCursorPos(&cursorPos)){
 				XX = cursorPos.x;
 				YY = cursorPos.y;
@@ -96,7 +92,7 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
 void __fastcall TForm1::N6Click(TObject *Sender)
 {
 	if(vertexes.size() < 2)
-		ShowMessage("Недостаточно вершин");
+		ShowMessage("Not enough vertexes");
 	else{
 		TForm3 *Form = new TForm3(this);
 		Form->ShowModal();
@@ -108,7 +104,7 @@ void __fastcall TForm1::N6Click(TObject *Sender)
 void __fastcall TForm1::DeleteVertex1Click(TObject *Sender)
 {
 	if(vertexes.empty())
-		ShowMessage("Недостаточно вершин");
+		ShowMessage("Not enough vertexes");
 	else{
 		TForm9 *Form = new TForm9(this);
 		Form->ShowModal();
@@ -119,7 +115,7 @@ void __fastcall TForm1::DeleteVertex1Click(TObject *Sender)
 void __fastcall TForm1::DeleteEdge1Click(TObject *Sender)
 {
 	if(edges.empty())
-		ShowMessage("Недостаточно ребер");
+		ShowMessage("Not enough edges");
 	else{
 		TForm4 *Form = new TForm4(this);
 		Form->ShowModal();
@@ -130,16 +126,8 @@ void __fastcall TForm1::DeleteEdge1Click(TObject *Sender)
 void __fastcall TForm1::DeleteEdge2Click(TObject *Sender)
 {
 	refreshGraph();
-	/*for(int i = 0; i < graph.size(); i++){
-		//std::string text = " ";
-		for(int j = 0; j < graph[i].size(); j++){
-			ShowMessage(IntToStr(i) +
-			 ": <" + IntToStr(graph[i][j].first) + ", " + IntToStr(graph[i][j].second) + ">");
-		}
-	}
-	 */
 	if(edges.empty())
-		ShowMessage("Недостаточно вершин");
+		ShowMessage("Not enough vertexes");
 	else{
 		TForm5 *Form = new TForm5(this);
 		Form->ShowModal();
@@ -150,7 +138,7 @@ void __fastcall TForm1::DeleteEdge2Click(TObject *Sender)
 void __fastcall TForm1::DeleteVertex2Click(TObject *Sender)
 {
 	 if(vertexes.empty())
-		ShowMessage("Недостаточно вершин");
+		ShowMessage("Not enough vertexes");
 	else{
 		TForm7 *Form = new TForm7(this);
 		Form->ShowModal();

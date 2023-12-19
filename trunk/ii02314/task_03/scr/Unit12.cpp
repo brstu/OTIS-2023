@@ -17,12 +17,11 @@
 #include "Unit12.h"
 #include <vector>
 #include <sstream>
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm12 *Form12;
 
-int findSmalest(const std::vector <int>& dist,const std::vector <bool>& isVisited) {
+int findSmalest(std::vector <int> dist, std::vector <bool> isVisited) {
         int min = 999999;
         int res = 0;
         for(int i = 0; i < dist.size();i++){
@@ -48,7 +47,7 @@ void __fastcall TForm12::Edit1Exit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else{
-	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
+	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
 	Edit1->SetFocus();
 	}
 	*/
@@ -64,7 +63,7 @@ void __fastcall TForm12::Edit2Exit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else{
-	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
+	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
 	Edit2->SetFocus();
 	}
 	*/

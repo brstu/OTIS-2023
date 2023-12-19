@@ -63,7 +63,7 @@ void __fastcall TForm2::NameColumnExit(TObject *Sender)
 	std::string tempName = EditName.c_str();
 	for(int i = 0; i < vertexes.size(); i++){
 		if(vertexes[i].name == tempName || tempName.empty()){
-			ShowMessage("Имя не должно повторяться или быть пустым.");
+			ShowMessage("Name can not be empty ot doubled");
 			NameColumn->SetFocus();
 		}
 	}

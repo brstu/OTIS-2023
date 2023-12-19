@@ -1,8 +1,6 @@
-//---------------------------------------------------------------------------
 
 #ifndef Unit10H
 #define Unit10H
-//---------------------------------------------------------------------------
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 
@@ -12,7 +10,6 @@ class TForm10 : public TForm
 {
 __published:	// IDE-managed Components
 	TMemo *Place;
-	//TMemo *Memo1;
 public:
 		// User declarations
 	__fastcall TForm10(TComponent* Owner);

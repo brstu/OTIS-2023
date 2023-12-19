@@ -51,6 +51,6 @@ void __fastcall TForm9::Button1Click(TObject *Sender)
 	}
 	else {
 	Edit1->SetFocus();
-	ShowMessage("Вершина с таким именем не найдена");
+	ShowMessage("Vertex does not exist");
 	}
 }

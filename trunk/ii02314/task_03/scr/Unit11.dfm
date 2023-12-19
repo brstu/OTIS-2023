@@ -2,8 +2,8 @@ object Form11: TForm11
   Left = 0
   Top = 0
   Caption = 'Form11'
-  ClientHeight = 205
-  ClientWidth = 207
+  ClientHeight = 279
+  ClientWidth = 280
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,11 +11,11 @@ object Form11: TForm11
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Memo1: TMemo
+  object inscMemo: TMemo
     Left = 0
     Top = 8
-    Width = 209
-    Height = 201
+    Width = 281
+    Height = 273
     Lines.Strings = (
       'Memo1')
     TabOrder = 0

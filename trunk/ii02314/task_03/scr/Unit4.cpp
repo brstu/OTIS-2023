@@ -52,7 +52,7 @@ void deleteEdges(int id1, int id2){
    }
 
    else if(idEdge1 == idEdge2){
-		ShowMessage("–ебро между этими вершинами не существует.");
+		ShowMessage("Edge does not exist");
    }
 
    else {
@@ -76,7 +76,7 @@ void deleteEdges(int id1, int id2){
    }
 
 	if(idEdge1 == -1 && idEdge2 == -1){
-		 ShowMessage("–ебро между этими вершинами не существует.");
+		 ShowMessage("Edge does not exist");
    }
    else if(idEdge1 > -1){
 		bool flag = false;
@@ -100,7 +100,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-   else if(idEdge2 > -1){
+   if(idEdge2 > -1){
 		if(isChanged)
 			idEdge2--;
 
@@ -146,7 +146,7 @@ void __fastcall TForm4::FNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("¬ершина с таким именем не найдена");
+	ShowMessage("Vertex does not exist");
 	FName->SetFocus();
 	}
 }
@@ -159,7 +159,7 @@ void __fastcall TForm4::SNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("¬ершина с таким именем не найдена");
+	ShowMessage("Vertex does not exist");
 	SName->SetFocus();
 	}
 }
