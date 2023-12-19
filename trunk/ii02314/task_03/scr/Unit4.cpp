@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "Unit4.h"
-#include "Unit1.h"
-#include "Unit2.h"
+#include "MainUnit.h"
+#include "MakeVertex.h"
 #include "Unit3.h"
 #include "Unit5.h"
 #include "Unit6.h"
@@ -100,7 +100,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-    if(idEdge2 > -1){
+   if(idEdge2 > -1){
 		if(isChanged)
 			idEdge2--;
 

@@ -4,8 +4,8 @@
 #pragma hdrstop
 
 #include "Unit5.h"
-#include "Unit1.h"
-#include "Unit2.h"
+#include "MainUnit.h"
+#include "MakeVertex.h"
 #include "Unit3.h"
 #include "Unit4.h"
 #include "Unit6.h"

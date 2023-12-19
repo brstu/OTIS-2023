@@ -2,9 +2,9 @@
 #pragma hdrstop
 
 #include "Unit10.h"
-#include "Unit1.h"
+#include "MainUnit.h"
 #include "Unit3.h"
-#include "Unit2.h"
+#include "MakeVertex.h"
 #include "Unit4.h"
 #include "Unit5.h"
 #include "Unit6.h"
