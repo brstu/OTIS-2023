@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.348,C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.071,C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.672,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit3.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.915,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit4.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.958,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.906,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit5.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.424,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit6.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.775,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit3.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.482,C:\Users\Rud\Documents\Embarcadero\Studio\Projects\New1.txt=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\test.txt</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.911,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.744,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit7.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.758,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\New1.txt</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.074,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.272,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.137,=C:\Users\Rud\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Project1.cpp"/>
+    <File Path="Project1PCH1.h"/>
+    <File Path="Unit1.cpp"/>
+    <File Path="Unit1.cpp"/>
+    <File Path="Unit1.dfm"/>
+    <File Path="Unit1.h"/>
+    <File Path="Unit2.cpp"/>
+    <File Path="Unit2.cpp"/>
+    <File Path="Unit2.dfm"/>
+    <File Path="Unit2.h"/>
+    <File Path="Unit3.cpp"/>
+    <File Path="Unit3.cpp"/>
+    <File Path="Unit3.h"/>
+    <File Path="Unit4.cpp"/>
+    <File Path="Unit4.cpp"/>
+    <File Path="Unit4.dfm"/>
+    <File Path="Unit4.h"/>
+    <File Path="Unit5.cpp"/>
+    <File Path="Unit5.cpp"/>
+    <File Path="Unit5.dfm"/>
+    <File Path="Unit5.h"/>
+    <File Path="Unit6.cpp"/>
+    <File Path="Unit6.cpp"/>
+    <File Path="Unit6.dfm"/>
+    <File Path="Unit6.h"/>
+    <File Path="Unit7.cpp"/>
+    <File Path="Unit7.cpp"/>
+    <File Path="Unit7.dfm"/>
+    <File Path="Unit7.h"/>
+  </ProjectSortOrder>
+</BorlandProject>
