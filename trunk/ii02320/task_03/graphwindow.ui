@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GraphWindow</class>
+ <widget class="QWidget" name="GraphWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>503</width>
+    <height>387</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QComboBox" name="comboBox"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item row="1" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="addVertPushButton">
+       <property name="text">
+        <string>Добавить вершину</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addEdgePushButton">
+       <property name="text">
+        <string>Добавить ребро</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="colorPushButton">
+       <property name="text">
+        <string>Изменить цвет</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="renamePushButton">
+       <property name="text">
+        <string>Переименовать вершину</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string> Алгоритмы</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Алгоритмы</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Информация о графе</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Эйлеров цикл</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Гамильтонов цикл</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Параметры графа</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Нахождение кратчайших путей</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="savePushButton">
+       <property name="text">
+        <string>Сохранить граф</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadPushButton">
+       <property name="text">
+        <string>Восстановить граф</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deletePushButton">
+       <property name="text">
+        <string>Удалить элемент</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
