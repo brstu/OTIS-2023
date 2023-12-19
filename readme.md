@@ -20,7 +20,7 @@
 | 1  | [Бусень Артём](https:github.com/hudshiy1)            |[ii02301](trunk/ii02301) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        6|
 | 2  | [Волкогон Никита](https://github.com/VolkogonNikita) |[ii02302](trunk/II02302) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 3  | [Вышинский Артём](https://github.com/arciomwww)      |[ii02303](trunk/ii02303) | ✅ | ✅ | ❌ | ❌ |    | ✅ |    |    |        8|
-| 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |        7|
+| 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        7|
 | 5  | Глухарев Даниил                                      |[ii02305](trunk/ii02305) | ✅ | ✅ | ✅ | ❌ |    |    |    |    |        7|
 | 6  | [Колеснев Антон](https://github.com/Flugel228)       |[ii02307](trunk/ii02307) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
 | 7  | [Кононов Алексей](https://github.com/madebyth00      |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
@@ -59,7 +59,7 @@
 | 13 | Невдах Влидимир                                    | [ii02413](trunk/ii02413)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
 | 14 | [Поддубный Юрий](https://github.com/Yura-108)      | [ii02414](trunk/ii02414)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       8|
 | 15 | [Рекун Дмитрий](https://github.com/DmitryRekun)    | [ii02415](trunk/ii02415)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
-| 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        9|
+| 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 17 | Супрунович Илья                                    | [ii02417](trunk/ii02417)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
 | 18 | [Сухаревич Дмитрий](https://github.com/SukharevichDmitry)|[ii02418](trunk/ii02418)| ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        7|
 | 19 | Терехов Николай                                    | [ii02419](trunk/ii02419)     | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |       7|
