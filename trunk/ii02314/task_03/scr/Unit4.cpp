@@ -100,7 +100,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-   if(idEdge2 > -1){
+    if(idEdge2 > -1){
 		if(isChanged)
 			idEdge2--;
 
