@@ -52,7 +52,7 @@ void deleteEdges(int id1, int id2){
    }
 
    else if(idEdge1 == idEdge2){
-		ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
+		ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
    }
 
    else {
@@ -76,7 +76,7 @@ void deleteEdges(int id1, int id2){
    }
 
 	if(idEdge1 == -1 && idEdge2 == -1){
-		 ShowMessage("Ðåáðî ìåæäó ýòèìè âåðøèíàìè íå ñóùåñòâóåò.");
+		 ShowMessage("ÃÃ¥Ã¡Ã°Ã® Ã¬Ã¥Ã¦Ã¤Ã³ Ã½Ã²Ã¨Ã¬Ã¨ Ã¢Ã¥Ã°Ã¸Ã¨Ã­Ã Ã¬Ã¨ Ã­Ã¥ Ã±Ã³Ã¹Ã¥Ã±Ã²Ã¢Ã³Ã¥Ã².");
    }
    else if(idEdge1 > -1){
 		bool flag = false;
@@ -100,7 +100,7 @@ void deleteEdges(int id1, int id2){
 			}
 		}
    }
-   else if(idEdge2 > -1){
+    if(idEdge2 > -1){
 		if(isChanged)
 			idEdge2--;
 
@@ -146,7 +146,7 @@ void __fastcall TForm4::FNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting1){
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	FName->SetFocus();
 	}
 }
@@ -159,7 +159,7 @@ void __fastcall TForm4::SNameExit(TObject *Sender)
 		Button1->Enabled = true;
 	}
 	else if(!isExisting2){
-	ShowMessage("Âåðøèíà ñ òàêèì èìåíåì íå íàéäåíà");
+	ShowMessage("Ã‚Ã¥Ã°Ã¸Ã¨Ã­Ã  Ã± Ã²Ã ÃªÃ¨Ã¬ Ã¨Ã¬Ã¥Ã­Ã¥Ã¬ Ã­Ã¥ Ã­Ã Ã©Ã¤Ã¥Ã­Ã ");
 	SName->SetFocus();
 	}
 }
