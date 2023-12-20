@@ -174,7 +174,6 @@ def give_color(numb):
 call_count = 0
 
 def create_vertex(root, entry):
-    global call_count, vertex_count, vertex, vert_name
     if '' == entry.get():
         mb.showerror(ERROR_STR_CONSTANT, "Вы не ввели имя вершины")
     elif entry.get() in [vert.vert_name for vert in vertex]:
@@ -278,7 +277,6 @@ def menu_delete_edge():
     btndel.grid(row=4, column=0, sticky="ew")
 
 def rename_vertex(en1, en2, root):
-    global vertex
     for vert in vertex:
         if vert.vert_name == en1 and en2 not in vert_name:
             vert.vert_name = en1
