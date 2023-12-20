@@ -15,8 +15,8 @@ button_1="<Button-1>"
 text_on_vertex='text on vertex'
 id_text='id text'
 num_of_vertex='num of vertex'
-canvas=None 
-main_label = tk.Label()  
+canvas=None
+main_label = tk.Label()
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
 cord = {'id': [], id_text: [], text_on_vertex: [], 'textID': [], num_of_vertex: [], 'coordinatesX': [],
@@ -26,7 +26,7 @@ matrix = []
 
 
 def draw_vertex():
-    global canvas
+    global canvas=None
     main_label.configure(text="Выбрано создание вершин, нажмите на пустое для создания вершины")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas1)
