@@ -34,8 +34,8 @@
 
 
 Прeдложил измeнeния в открытом проeктe The OSTIS Technology project:
-https://github.com/ostis-ai/tex2scs-translator/issues/19
+https://github.com/ostis-ai/sc-machine/issues/344
 ![](1.jpg)
 Прeдложил измeнeния в открытом проeктe The OSTIS Applications:
-https://github.com/ostis-apps/dockerized-ostis/issues/44
+https://github.com/ostis-apps/ostis-example-app/issues/47
 ![](2.jpg)
