@@ -174,6 +174,7 @@ def give_color(numb):
 call_count = 0
 
 def create_vertex(root, entry):
+    global call_count, vertex_count, vert_name
     if '' == entry.get():
         mb.showerror(ERROR_STR_CONSTANT, "Вы не ввели имя вершины")
     elif entry.get() in [vert.vert_name for vert in vertex]:
