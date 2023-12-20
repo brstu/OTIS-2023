@@ -1,4 +1,5 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
+  <p align="center"> Министерство образования Республики Беларусь</p>
+
 <p align="center">Учреждение образования</p>
 <p align="center">“Брестский Государственный технический университет”</p>
 <p align="center">Кафедра ИИТ</p>
@@ -18,7 +19,7 @@
 
 ---
 
-# Общее задание #
+# Общее задание
 1. Изучить [руководство](https://github.com/ostis-apps/nika).
 
 2. Запустить данный проект на локальной машине (домашний персональный компьютер, ноутбук, рабочая машина в аудитории и т.п.). Продемонстрировать работу проекта преподавателю.
@@ -28,7 +29,7 @@
 
 ---
 
-# Установка #
+# Установка
 
 ```
 git clone -c core.longpaths=true -c core.autocrlf=true https://github.com/ostis-apps/nika
@@ -36,7 +37,7 @@ cd nika
 git submodule update --init --recursive
 docker compose pull
 ```
-# Запуск #
+# Запуск
 ```
 docker compose up --no-build
 ```
