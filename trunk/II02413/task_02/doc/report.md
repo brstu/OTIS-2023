@@ -5,7 +5,7 @@
 <br><br><br><br><br><br><br>
 <p align="center">Лабораторная работа №2</p>
 <p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
-<p align="center">Тема: “PID-регулятор”</p>
+<p align="center">Тема: “PID-регулятор ”</p>
 <br><br><br><br><br>
 <p align="right">Выполнил:</p>
 <p align="right">Студент 2 курса</p>
