@@ -4,4 +4,5 @@ project(dasfsad)
 
 set(SOURCES main.cpp)
 
-add_executable(MExecutable ${SOURCES})
+# Choose a unique target name, for example, "MyExecutable"
+add_executable(MyExecutable ${SOURCES})
