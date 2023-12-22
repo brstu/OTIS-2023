@@ -4,7 +4,7 @@ from tkinter import messagebox, Canvas, Label, Button, Entry, Tk
 from tkinter.colorchooser import askcolor
 
 # numpy imports
-from numpy.random import randint
+from numpy import random as np_random
 from numpy import sqrt
 
 # networkx imports
@@ -23,8 +23,8 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = np.random.default_rng().integers(0, 636)
-        self.y = np.random.default_rng().integers(0, 596)
+        self.x = np_random.default_rng().integers(0, 636)
+        self.y = np_random.default_rng().integers(0, 596)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
