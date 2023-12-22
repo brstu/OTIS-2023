@@ -8,14 +8,14 @@ private:
     double b;
     double c;
     double d;
-    std::vector<double> q;
-    std::vector<double> e;
-    std::vector<double> y;
-    std::vector<double> u;
+    std::vector<double> q{ 0.0, 0.0, 0.0 };
+    std::vector<double> e{ 0.0, 0.0, 0.0 };
+    std::vector<double> y{ 0.0, 0.0, 0.0 };
+    std::vector<double> u{ 1.0, 1.0 };
 
 public:
     NonlinearModel(double a = 0.5, double b = 0.3, double c = 0.9, double d = 0.7)
-        : a(a), b(b), c(c), d(d), q({ 0.0, 0.0, 0.0 }), e({ 0.0, 0.0, 0.0 }), y({ 0.0, 0.0, 0.0 }), u({ 1.0, 1.0 }) {
+        : a(a), b(b), c(c), d(d) {
         double K = 0.0001;
         double T = 100;
         double T_D = 100;
