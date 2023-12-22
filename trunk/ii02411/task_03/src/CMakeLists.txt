@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.6)
+# Установите минимальную версию CMake
+cmake_minimum_required(VERSION 3.12)
 
-project(dasfsad)
+# Название вашего проекта
+project(OTIS_3)
 
-# Set the relative path to main.cpp from the CMakeLists.txt file
-set(SOURCES src/main.cpp)
+# Настройка вызова Python скрипта внутри CMake
+add_custom_target(run_python_script
+    COMMAND ${CMAKE_COMMAND} -E env PYTHONPATH=${CMAKE_CURRENT_SOURCE_DIR} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/main.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-# Choose a unique target name, for example, "MyExecutable"
-add_executable(MyExecutable ${SOURCES})
+# Добавление цели для сборки и запуска Python скрипта
+add_custom_target(run
+    DEPENDS run_python_script
+)
