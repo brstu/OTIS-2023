@@ -10,7 +10,6 @@ from numpy import sqrt
 # networkx imports
 import networkx as nx
 
-# import AppInterface
 from AppInterface import create_buttons
 from AppInterface import bind_canvas
 def line_intersect_circle(x1, y1, x2, y2):
@@ -24,8 +23,8 @@ def line_intersect_circle(x1, y1, x2, y2):
 class Node:
     def __init__(self, name):
         self.name = name
-        self.x = randint(0, 636)
-        self.y = randint(0, 596)
+        self.x = np.random.default_rng().integers(0, 636)
+        self.y = np.random.default_rng().integers(0, 596)
 
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
