@@ -427,29 +427,29 @@ QString MainWindow::getEulerCycle() {
     vector<int> eulerPath;
     g.findEulerCycle(eulerPath);
 
-    for (int vertex : eulerPath) {
-        eulerCycle += QString::number(vertex) + " ";
-    }
-
-    return eulerCycle;
-}
-
-int MainWindow::getVertexIndex(const QString& vertexName) const {
-    for (int i = 0; i < vertices.length(); i++) {
-        if (vertices[i]->getName() == vertexName) {
-            return i;
+    QString MainWindow::formatEulerCycle(const vector<int>& eulerPath) {
+        QString eulerCycle;
+        for (int vertex : eulerPath) {
+            eulerCycle += QString::number(vertex) + " ";
         }
+        return eulerCycle;
     }
 
-    return -1;
-}
+    int MainWindow::getVertexIndex(const QString& vertexName) const {
+        for (int i = 0; i < vertices.length(); i++) {
+            if (vertices[i]->getName() == vertexName) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-bool MainWindow::complGraph() {
-    int numVertices = vertices.length();
-    int numEdges = edges.length();
-
-    return (numVertices * (numVertices - 1) / 2 == numEdges);
-}
+    bool MainWindow::isCompleteGraph() const {
+        int numVertices = vertices.length();
+        int numEdges = edges.length();
+        return (numVertices * (numVertices - 1) / 2 == numEdges);
+    }
+        
 void MainWindow::showGraphInfo() {
     int numVertices = vertices.length();
     int numEdges = edges.length();
@@ -489,14 +489,16 @@ void MainWindow::showGraphInfo() {
 
     QVector<QVector<int>> distances(numVertices, QVector<int>(numVertices, INT_MAX));
 
-    for (int i = 0; i < numEdges; i++) {
-        int sourceIndex = getVertexIndex(edges[i]->getSource()->getName());
-        int destinationIndex = getVertexIndex(edges[i]->getDestination()->getName());
-        int weight = edges[i]->getWeight();
+    // Заполнение матрицы расстояний
+    for (const auto& edge : edges) {
+        int sourceIndex = getVertexIndex(edge->getSource()->getName());
+        int destinationIndex = getVertexIndex(edge->getDestination()->getName());
+        int weight = edge->getWeight();
         distances[sourceIndex][destinationIndex] = weight;
         distances[destinationIndex][sourceIndex] = weight;
     }
 
+    // Алгоритм Флойда-Уоршелла для поиска кратчайших путей
     for (int k = 0; k < numVertices; k++) {
         for (int i = 0; i < numVertices; i++) {
             for (int j = 0; j < numVertices; j++) {
@@ -507,6 +509,7 @@ void MainWindow::showGraphInfo() {
         }
     }
 
+    // Формирование текста кратчайших путей
     QString shortestPathsText = "Кратчайшие пути:\n";
     int diameter = 0;
     int radius = INT_MAX;
@@ -523,6 +526,7 @@ void MainWindow::showGraphInfo() {
 
     QString graphInfoText = QString("Радиус графа: %1\nДиаметр графа: %2\n").arg(radius).arg(diameter);
     QString fullText;
+
 
     if (isGraphConnected()) {
         fullText = graphInfoText + shortestPathsText;
