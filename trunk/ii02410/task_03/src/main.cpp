@@ -13,9 +13,9 @@ public:
     void addEdge();
     void removeNode();
     void removeEdge();
-    void changeNodeColor();
-    void changeNodeLabel();
-    void inputEdgeWeight();
+    void changeNodeColor();  // Not implemented for console version
+    void changeNodeLabel();  // Not implemented for console version
+    void inputEdgeWeight();  // Not implemented for console version
     void findEulerianCycle();
     void findHamiltonianCycle();
 
@@ -124,7 +124,10 @@ std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjace
         if (!adjacencyList.at(current).empty()) {
             int next = adjacencyList.at(current).back();
             stack.push(next);
-            adjacencyList[current].pop_back();
+
+            // Avoid modifying the adjacencyList since it's a const reference
+            std::vector<int> temp = adjacencyList.at(current);
+            temp.pop_back();
             usedEdges[current].insert(next);
         }
         else {
@@ -143,29 +146,102 @@ std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjace
     return eulerCycle;
 }
 
-bool findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle) {
-    // Implement findHamiltonianCycle for console-based version
+bool isCyclicUtil(int v, std::vector<bool>& visited, std::vector<int>& path, const std::map<int, std::vector<int>>& adjacencyList) {
+    int vertices = adjacencyList.size();
+
+    // Base case: if all vertices are visited, return true
+    if (path.size() == vertices) {
+        // Check if the last vertex is connected to the first
+        if (std::find(adjacencyList.at(path.back()).begin(), adjacencyList.at(path.back()).end(), path.front()) != adjacencyList.at(path.back()).end()) {
+            return true;
+        }
+        return false;
+    }
+
+    for (int i = 0; i < vertices; ++i) {
+        if (std::find(adjacencyList.at(v).begin(), adjacencyList.at(v).end(), i) != adjacencyList.at(v).end() && !visited[i]) {
+            visited[i] = true;
+            path.push_back(i);
+
+            if (isCyclicUtil(i, visited, path, adjacencyList)) {
+                return true;
+            }
+
+            visited[i] = false;
+            path.pop_back();
+        }
+    }
+
     return false;
+}
+
+bool findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle) {
+    int vertices = adjacencyList.size();
+    std::vector<bool> visited(vertices, false);
+    cycle.clear();
+
+    // Hamiltonian cycle starts from the first node
+    visited[0] = true;
+    cycle.push_back(0);
+
+    if (isCyclicUtil(0, visited, cycle, adjacencyList)) {
+        return true;
+    }
+
+    cycle.clear();
+    return false;
+}
+
+void GraphManager::findEulerianCycle() {
+    std::vector<int> eulerCycle = findEulerianCycle(adjacencyList);
+
+    if (eulerCycle.empty()) {
+        std::cout << "No Eulerian cycle found.\n";
+    }
+    else {
+        std::cout << "Eulerian cycle: ";
+        for (int node : eulerCycle) {
+            std::cout << node << " ";
+        }
+        std::cout << "\n";
+    }
+}
+
+void GraphManager::findHamiltonianCycle() {
+    std::vector<int> hamiltonianCycle;
+    if (findHamiltonianCycle(adjacencyList, hamiltonianCycle)) {
+        std::cout << "Hamiltonian cycle: ";
+        for (int node : hamiltonianCycle) {
+            std::cout << node << " ";
+        }
+        std::cout << "\n";
+    }
+    else {
+        std::cout << "No Hamiltonian cycle found.\n";
+    }
 }
 
 int main() {
     GraphManager graphManager;
 
     while (true) {
-        std::cout << "\nOptions:\n";
+        std::cout << "\nMenu:\n";
         std::cout << "1. Add Node\n";
         std::cout << "2. Add Edge\n";
         std::cout << "3. Remove Node\n";
         std::cout << "4. Remove Edge\n";
-        std::cout << "5. Find Eulerian Cycle\n";
-        std::cout << "6. Find Hamiltonian Cycle\n";
-        std::cout << "7. Exit\n";
-        std::cout << "Enter option: ";
+        std::cout << "5. Change Node Color (Not implemented)\n";
+        std::cout << "6. Change Node Label (Not implemented)\n";
+        std::cout << "7. Input Edge Weight (Not implemented)\n";
+        std::cout << "8. Find Eulerian Cycle\n";
+        std::cout << "9. Find Hamiltonian Cycle\n";
+        std::cout << "10. Exit\n";
 
-        int option;
-        std::cin >> option;
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
 
-        switch (option) {
+        switch (choice) {
             case 1:
                 graphManager.addNode();
                 break;
@@ -179,15 +255,24 @@ int main() {
                 graphManager.removeEdge();
                 break;
             case 5:
-                graphManager.findEulerianCycle();
+                graphManager.changeNodeColor();
                 break;
             case 6:
-                graphManager.findHamiltonianCycle();
+                graphManager.changeNodeLabel();
                 break;
             case 7:
+                graphManager.inputEdgeWeight();
+                break;
+            case 8:
+                graphManager.findEulerianCycle();
+                break;
+            case 9:
+                graphManager.findHamiltonianCycle();
+                break;
+            case 10:
                 return 0;
             default:
-                std::cout << "Invalid option. Try again.\n";
+                std::cout << "Invalid option. Please try again.\n";
         }
     }
 
