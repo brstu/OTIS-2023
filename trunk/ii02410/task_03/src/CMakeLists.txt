@@ -2,21 +2,17 @@ cmake_minimum_required(VERSION 3.6)
 
 project(dasfsad)
 
-# Добавим флаги компиляции C++11
+# Set C++ standard and required features
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Добавим флаги для Qt
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-# Найдем необходимые пакеты для Qt
+# Find Qt5 package
+set(CMAKE_PREFIX_PATH /path/to/Qt5)
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 set(SOURCES main.cpp)
 
 add_executable(MExecutable ${SOURCES})
 
-# Связываем Qt библиотеки с нашим проектом
+# Link Qt5 libraries
 target_link_libraries(MExecutable Qt5::Core Qt5::Widgets)
