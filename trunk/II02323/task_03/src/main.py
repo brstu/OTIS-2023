@@ -331,6 +331,6 @@ root.geometry("800x600+500+150")
 canvas = Canvas(root, width=690, height=600, bg="light blue")
 canvas.place(x=135, y=0)
 #главное меню
-create_buttons(root, canvas, menu_add_vertex, menu_add_edge, eulerian_cycle_search_function, shortest_path)
+create_buttons(root, menu_add_vertex, menu_add_edge, eulerian_cycle_search_function, shortest_path)
 bind_canvas(root, canvas, node_movement_function, change_name_weight_function, color_change_function, delete)
 root.mainloop()
