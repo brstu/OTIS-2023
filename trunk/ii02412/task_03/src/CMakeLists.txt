@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 
-project(LAB_03)
+project(dasfsad)
 
 set(SOURCES lab3.cpp)
 
-add_executable(MyExecut__ ${SOURCES})
+# fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffChoose a unique target name, for example, "MyExecutable"
+add_executable(MyExecutable ${SOURCES})
