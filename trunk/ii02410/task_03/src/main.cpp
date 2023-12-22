@@ -1,11 +1,4 @@
 
-#include <QWidget>
-#include <QPushButton>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsEllipseItem>
-#include <QGraphicsLineItem>
-#include <QInputDialog>
 #include <vector>
 #include <set>
 #include <algorithm>
