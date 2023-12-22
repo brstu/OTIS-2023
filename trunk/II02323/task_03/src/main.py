@@ -23,10 +23,9 @@ def calculate_circle_intersection(x1, y1, x2, y2):
 class GraphNode:
     def __init__(self, name):
         seed_value = 42
-        np_random.seed(seed_value)
+        np.random.seed(seed_value)
         self.name = name
-        x = np_random.default_rng().integers(0, 636)
-        y = np_random.default_rng().integers(0, 596)
+        self.x = np.random.default_rng(seed=seed_value).integers(0, 636)
         #self method
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', font="Arial 9",  text=name, fill="black")
