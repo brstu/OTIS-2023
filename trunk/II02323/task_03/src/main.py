@@ -257,17 +257,19 @@ def remove(event):
             print(1)
             break
     else:
-        for edge in edges:
-            print(2)
+        for edge in edges.copy():  # Create a copy to avoid modifying the original list during iteration
             legs_sum = sqrt((x - edge.node1.x)**2 + (y - edge.node1.y)**2) + sqrt((x - edge.node2.x)**2 + (y - edge.node2.y)**2)
-            gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2)+10
+            gipotenusa = sqrt((edge.node2.x - edge.node1.x)**2 + (edge.node2.y - edge.node1.y)**2) + 10
             if legs_sum <= gipotenusa:
-                edge.delete()
-                edges.remove(edge)
-                break
+                edges_to_remove.append(edge)
+
+        for edge in edges_to_remove:
+            edge.delete()
+            edges.remove(edge)
 
 def shortest_path():
     enter = []
+    #win settings
     win = Tk()
     win.title("Выбор вершин")
     win.geometry("180x150+1050+250")
