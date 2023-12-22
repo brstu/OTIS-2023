@@ -27,15 +27,14 @@ class GraphNode:
         self.name = name
         self.x = np_random.default_rng().integers(0, 636)
         self.y = np_random.default_rng().integers(0, 596)
-
+        #self method
         self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
-        self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
+        self.text = canvas.create_text(self.x, self.y, anchor='center', font="Arial 9",  text=name, fill="black")
         graph.add_node(name)
     def move(self, x, y):
-        self.x = x
-        self.y = y
-        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
+        self.x, self.y = x, y
         canvas.coords(self.text, x, y)  
+        canvas.coords(self.circle, x-20, y-20, x+20, y+20)
         for edge in edges:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
@@ -86,21 +85,6 @@ class Edge:
                                        anchor='center', text=self.weight, font=f"Arial {self.FONT_SIZE}",
                                        fill=self.TEXT_COLOR)
         graph.add_edge(node1.name, node2.name, weight=weight)
-
-    def change(self):
-        win = Tk()
-        win.title("Изменение веса")
-        win.geometry("190x120+1050+250")
-        win.wm_attributes('-topmost', 3)
-        win.resizable(False, False)
-        label = Label(win, text="Введите новый вес")
-        label.place(x=10, y=10)
-        entry = Entry(win, width=10)
-        entry.place(x=10, y=40)
-        print(5)
-        button = Button(win, text="Изменить", command=lambda: self.change_weight(entry.get()))
-        button.place(x=10, y=70)
-        win.mainloop()
     def change_weight(self, weight):
         try:
             new_weight = int(weight)
