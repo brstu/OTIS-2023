@@ -499,11 +499,13 @@ void MainWindow::showGraphInfo() {
     }
 
     // Алгоритм Флойда-Уоршелла для поиска кратчайших путей
-    for (int k = 0; k < numVertices; k++) {
-        for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < numVertices; j++) {
-                if (distances[i][k] != INT_MAX && distances[k][j] != INT_MAX) {
-                    distances[i][j] = qMin(distances[i][j], distances[i][k] + distances[k][j]);
+    for (int intermediate = 0; intermediate < numVertices; intermediate++) {
+        for (int source = 0; source < numVertices; source++) {
+            for (int destination = 0; destination < numVertices; destination++) {
+                if (distances[source][intermediate] != INT_MAX &&
+                    distances[intermediate][destination] != INT_MAX) {
+                    distances[source][destination] = qMin(distances[source][destination],
+                                                            distances[source][intermediate] + distances[intermediate][destination]);
                 }
             }
         }
@@ -514,18 +516,19 @@ void MainWindow::showGraphInfo() {
     int diameter = 0;
     int radius = INT_MAX;
 
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numVertices; j++) {
-            if (i != j && distances[i][j] != INT_MAX) {
-                shortestPathsText += QString("(%1,%2): %3\n").arg(i).arg(j).arg(distances[i][j]);
-                diameter = qMax(diameter, distances[i][j]);
-                radius = qMin(radius, distances[i][j]);
+    for (int source = 0; source < numVertices; source++) {
+        for (int destination = 0; destination < numVertices; destination++) {
+            if (source != destination && distances[source][destination] != INT_MAX) {
+                shortestPathsText += QString("(%1,%2): %3\n").arg(source).arg(destination).arg(distances[source][destination]);
+                diameter = qMax(diameter, distances[source][destination]);
+                radius = qMin(radius, distances[source][destination]);
             }
         }
     }
 
     QString graphInfoText = QString("Радиус графа: %1\nДиаметр графа: %2\n").arg(radius).arg(diameter);
     QString fullText;
+
 
 
     if (isGraphConnected()) {
