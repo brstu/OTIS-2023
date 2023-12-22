@@ -7,6 +7,9 @@
 
 class GraphManager {
 public:
+     std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjacencyList);
+    bool findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle);
+
     GraphManager();
 
     void addNode();
@@ -22,8 +25,7 @@ public:
     const std::map<int, std::vector<int>>& getAdjacencyList() const { return adjacencyList; }
 
 private:
-    std::map<int, std::vector<int>> adjacencyList;
-    std::map<std::pair<int, int>, bool> edges;
+    bool isCyclicUtil(int v, std::vector<bool>& visited, std::vector<int>& path, const std::map<int, std::vector<int>>& adjacencyList);
 };
 
 GraphManager::GraphManager() {}
@@ -106,8 +108,7 @@ void GraphManager::inputEdgeWeight() {
     // Implement inputEdgeWeight for console-based version
     std::cout << "Functionality not implemented for console version.\n";
 }
-
-std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjacencyList) {
+std::vector<int> GraphManager::findEulerianCycle(const std::map<int, std::vector<int>>& adjacencyList) {
     std::vector<int> eulerCycle;
     std::stack<int> stack;
     std::map<int, std::set<int>> usedEdges;
@@ -146,20 +147,38 @@ std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjace
     return eulerCycle;
 }
 
-bool isCyclicUtil(int v, std::vector<bool>& visited, std::vector<int>& path, const std::map<int, std::vector<int>>& adjacencyList) {
+bool GraphManager::findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle) {
+    int vertices = adjacencyList.size();
+    std::vector<bool> visited(vertices, false);
+    cycle.clear();
+
+    // Hamiltonian cycle starts from the first node
+    auto iter = visited.begin();
+    iter->second = true;
+    cycle.push_back(iter->first);
+
+    if (isCyclicUtil(iter->first, visited, cycle, adjacencyList)) {
+        return true;
+    }
+
+    cycle.clear();
+    return false;
+}
+
+bool GraphManager::isCyclicUtil(int v, std::vector<bool>& visited, std::vector<int>& path, const std::map<int, std::vector<int>>& adjacencyList) {
     int vertices = adjacencyList.size();
 
-    // Base case: if all vertices are visited, return true
+    // Base case: if all nodes are visited, return true
     if (path.size() == vertices) {
-        // Check if the last vertex is connected to the first
-        if (std::find(adjacencyList.at(path.back()).begin(), adjacencyList.at(path.back()).end(), path.front()) != adjacencyList.at(path.back()).end()) {
+        // Check if the last node is connected to the first
+        if (adjacencyList.at(path.back()).front() == path.front()) {
             return true;
         }
         return false;
     }
 
     for (int i = 0; i < vertices; ++i) {
-        if (std::find(adjacencyList.at(v).begin(), adjacencyList.at(v).end(), i) != adjacencyList.at(v).end() && !visited[i]) {
+        if (adjacencyList.at(v)[i] == 1 && !visited[i]) {
             visited[i] = true;
             path.push_back(i);
 
@@ -175,77 +194,6 @@ bool isCyclicUtil(int v, std::vector<bool>& visited, std::vector<int>& path, con
     return false;
 }
 
-bool findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle) {
-    int vertices = adjacencyList.size();
-    std::vector<bool> visited(vertices, false);
-    cycle.clear();
-
-    // Hamiltonian cycle starts from the first node
-    visited[0] = true;
-    cycle.push_back(0);
-
-    if (isCyclicUtil(0, visited, cycle, adjacencyList)) {
-        return true;
-    }
-
-    cycle.clear();
-    return false;
-}
-std::vector<int> findEulerianCycle(const std::map<int, std::vector<int>>& adjacencyList) {
-    std::vector<int> eulerCycle;
-    std::stack<int> stack;
-    std::map<int, std::set<int>> usedEdges;
-
-    if (adjacencyList.empty()) {
-        return eulerCycle; // Empty graph, no Eulerian cycle
-    }
-
-    stack.push(adjacencyList.begin()->first); // Start from the first node
-
-    while (!stack.empty()) {
-        int current = stack.top();
-
-        if (!adjacencyList.at(current).empty()) {
-            int next = adjacencyList.at(current).back();
-            stack.push(next);
-
-            // Avoid modifying the adjacencyList since it's a const reference
-            std::vector<int> temp = adjacencyList.at(current);
-            temp.pop_back();
-            usedEdges[current].insert(next);
-        }
-        else {
-            eulerCycle.push_back(current);
-            stack.pop();
-        }
-    }
-
-    // Check if all edges are used
-    for (const auto& entry : adjacencyList) {
-        if (!entry.second.empty()) {
-            return {}; // Not all edges are used, no Eulerian cycle
-        }
-    }
-
-    return eulerCycle;
-}
-
-bool findHamiltonianCycle(const std::map<int, std::vector<int>>& adjacencyList, std::vector<int>& cycle) {
-    int vertices = adjacencyList.size();
-    std::vector<bool> visited(vertices, false);
-    cycle.clear();
-
-    // Hamiltonian cycle starts from the first node
-    visited.begin()->second = true;
-    cycle.push_back(visited.begin()->first);
-
-    if (isCyclicUtil(visited.begin()->first, visited, cycle, adjacencyList)) {
-        return true;
-    }
-
-    cycle.clear();
-    return false;
-}
 
 
 int main() {
