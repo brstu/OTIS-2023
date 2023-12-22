@@ -21,8 +21,8 @@ def create_buttons(root, menu_add_vertex, menu_add_edge_window, eulerian_cycle_s
 
 # Canvas Binds
 
-def bind_canvas(root, canvas, node_movement_function, change_name_weight_function, color_change_function, delete):
+def bind_canvas(root, canvas, node_movement_function, change_name_weight_function, color_change_function, remove):
     canvas.bind('<B1-Motion>', node_movement_function)
     canvas.bind('<Button-2>', change_name_weight_function)
     canvas.bind('<Button-3>', color_change_function)
-    root.bind('<B3-Motion>', delete)
+    root.bind('<B3-Motion>', remove)

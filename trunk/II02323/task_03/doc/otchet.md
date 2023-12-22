@@ -1,17 +1,17 @@
-<p align="center"> Министерство образования Республики Беларусь</p>
+<b><p align="center"> Министерство образования Республики Беларусь</p>
 <p align="center">Учреждение образования</p>
 <p align="center">“Брестский Государственный технический университет”</p>
-<p align="center">Кафедра ИИТ</p>
+<p align="center">Кафедра ИИТ</p> </b>
 <br><br><br><br><br><br><br>
 <p align="center">Лабораторная работа №3</p>
 <p align="center">По дисциплине “Общая теория интеллектуальных систем”</p>
 <p align="center">Тема: “Разработка редакторов графов”</p>
 <br><br><br><br><br>
-<p align="right">Выполнил:</p>
+<b><p align="right">Выполнил:</p></b>
 <p align="right">Студент 2 курса</p>
 <p align="right">Группы ИИ-23</p>
 <p align="right">Швороб В.А.</p>
-<p align="right">Проверил:</p>
+<b><p align="right">Проверил:</p></b>
 <p align="right">Иванюк Д. С.</p>
 <br><br><br><br><br>
 <p align="center">Брест 2023</p>

@@ -12,7 +12,7 @@ import networkx as nx
 
 from AppInterface import create_buttons
 from AppInterface import bind_canvas
-def line_intersect_circle(x1, y1, x2, y2):
+def calculate_circle_intersection(x1, y1, x2, y2):
     '''Returns the coordinates of the intersection points of a line and two circles'''
     main_gipotenusa = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     main_dx = x2 - x1
@@ -20,13 +20,15 @@ def line_intersect_circle(x1, y1, x2, y2):
     dx = (main_gipotenusa - 20) * main_dx / main_gipotenusa
     dy = (main_gipotenusa - 20) * main_dy / main_gipotenusa
     return x2 - dx, y2 - dy, x1 + dx, y1 + dy
-class Node:
+class GraphNode:
     def __init__(self, name):
         self.name = name
+        self.radius = radius
+        self.color = color
         self.x = np_random.default_rng().integers(0, 636)
         self.y = np_random.default_rng().integers(0, 596)
 
-        self.circle = create_circle(self.x, self.y, 20, fill=color_vertex)
+        self.circle = create_circle(self.x, self.y, 20, self.radius, fill=color_vertex)
         self.text = canvas.create_text(self.x, self.y, anchor='center', text=name, font="Arial 10", fill="black")
         graph.add_node(name)
     def move(self, x, y):
@@ -37,6 +39,14 @@ class Node:
         for edge in edges:
             if edge.node1 == self or edge.node2 == self:
                 edge.move()
+    def rename(self, new_name):
+        self.change_name(new_name)
+    def change_name(self, name):
+        graph._adj[name] = graph._adj.pop(self.name)
+        self.name = name
+        canvas.itemconfig(self.text, text=name)
+    def color_change_function(self, color):
+        canvas.itemconfig(self.circle, fill=color)
     def change(self):
         win = Tk()
         win.title("Изменение имени")
@@ -50,13 +60,8 @@ class Node:
         button = Button(win, text="Изменить", command=lambda: self.change_name(entry.get()))
         button.place(x=10, y=70)
         win.mainloop()
-    def change_name(self, name):
-        graph._adj[name] = graph._adj.pop(self.name)
-        self.name = name
-        canvas.itemconfig(self.text, text=name)
-    def color_change_function(self, color):
-        canvas.itemconfig(self.circle, fill=color)
-    def delete(self):
+    
+    def remove(self):
         canvas.delete(self.circle)
         canvas.delete(self.text)
         for edge in edges:
@@ -71,7 +76,7 @@ class Edge:
         self.weight = weight
         self.node1 = node1
         self.node2 = node2
-        self.line = canvas.create_line(line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y),width=2, fill="black")
+        self.line = canvas.create_line(calculate_circle_intersection(self.node1.x, self.node1.y, self.node2.x, self.node2.y),width=2, fill="black")
         self.text = canvas.create_text((node1.x + node2.x) / 2, (node1.y + node2.y) / 2 - 5, anchor='center',text=self.weight, font="Arial 20", fill="white")
         graph.add_edge(node1.name, node2.name, weight=weight)
     def change(self):
@@ -96,16 +101,16 @@ class Edge:
     def color_change_function(self, color):
         canvas.itemconfig(self.line, fill=color)
     def move(self):
-        canvas.coords(self.line, line_intersect_circle(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
+        canvas.coords(self.line, calculate_circle_intersection(self.node1.x, self.node1.y, self.node2.x, self.node2.y))
         canvas.coords(self.text, (self.node1.x + self.node2.x) / 2, (self.node1.y + self.node2.y) / 2 - 5)
-    def delete(self):
+    def remove(self):
         canvas.delete(self.line)
         canvas.delete(self.text)
         graph.remove_edge(self.node1.name, self.node2.name)
 #рисуем вершину
 def create_vertex(entry_name, window):
     name = entry_name.get()
-    vertexs.append(Node(name))
+    vertexs.append(GraphNode(name))
     window.destroy()
 #выбор цвета
 def chose_color(color_lable):
@@ -240,7 +245,7 @@ def color_change_function(event):
             if legs_sum <= gipotenusa:
                 edge.color_change_function(askcolor()[1])
                 break
-def delete(event):
+def remove(event):
     x, y = event.x, event.y
     for node in vertexs:
         if node.x - 25 < x < node.x + 25 and node.y - 25 < y < node.y + 25:
@@ -332,5 +337,5 @@ canvas = Canvas(root, width=690, height=600, bg="light blue")
 canvas.place(x=135, y=0)
 #главное меню
 create_buttons(root, menu_add_vertex, menu_add_edge, eulerian_cycle_search_function, shortest_path)
-bind_canvas(root, canvas, node_movement_function, change_name_weight_function, color_change_function, delete)
+bind_canvas(root, canvas, node_movement_function, change_name_weight_function, color_change_function, remove)
 root.mainloop()
