@@ -8,146 +8,73 @@ class GraphApp:
         self.root.title("Graph")
         self.root.geometry("890x860+410+10")
         self.root.resizable(False, False)
-        self.root.wm_attributes('-topmost', 1)
 
         self.canvas = tk.Canvas(self.root, bg="#888", width=886, height=726)
         self.canvas.place(x=0, y=130)
 
-        self.graph_label = tk.Label(self.root, text="Graph Name")
-        self.graph_label.place(x=370, y=100)
+        self.label = tk.Label(self.root)
+        self.label.place(x=370, y=100)
+        self.label["text"] = "Graph Name"
 
-        self.vertices = []
         self.vertex_names = []
         self.edges = []
-
-        self.click_x, self.click_y = 0, 0
-        self.selected_vertex = None
+        self.vertices = []
         self.vertex_count = 0
         self.edge_count = 0
 
         self.check_var = tk.BooleanVar()
         self.check_var.set(False)
 
-        self.setup_buttons()
+        self.btn_set_graph_name = tk.Button(self.root, text="Set Graph Name", command=self.menu_set_graph_name)
+        self.btn_save_data = tk.Button(self.root, text="Save Data", command=self.save_data)
+        self.btn_create_vertex = tk.Button(self.root, text="Create Vertex", command=self.menu_create_vertex)
+        self.btn_delete_vertex = tk.Button(self.root, text="Delete Vertex", command=self.delete_vertex)
+        self.btn_rename_vertex = tk.Button(self.root, text="Rename Vertex", command=self.menu_rename_vertex)
+        self.btn_create_edge = tk.Button(self.root, text="Create Edge", command=self.menu_create_edge)
+        self.btn_delete_edge = tk.Button(self.root, text="Delete Edge", command=self.menu_delete_edge)
+        self.btn_move_vertices = tk.Button(self.root, text="Move Vertices", command=self.move_vertices)
+        self.btn_create_adjacency_matrix = tk.Button(self.root, text="Adjacency Matrix", command=self.create_adjacency_matrix)
+        self.btn_create_incidence_matrix = tk.Button(self.root, text="Incidence Matrix", command=self.create_incidence_matrix_window)
+
+        self.btn_set_graph_name.grid(row=0, column=0, stick="ew")
+        self.btn_save_data.grid(row=0, column=4, stick="ew")
+        self.btn_create_vertex.grid(row=0, column=1, stick="ew")
+        self.btn_delete_vertex.grid(row=1, column=1, stick="ew")
+        self.btn_rename_vertex.grid(row=2, column=1, stick="ew")
+        self.btn_create_edge.grid(row=0, column=2, stick="ew")
+        self.btn_delete_edge.grid(row=1, column=2, stick="ew")
+        self.btn_move_vertices.grid(row=1, column=0, stick="ew")
+        self.btn_create_adjacency_matrix.grid(row=0, column=3, stick="ew")
+        self.btn_create_incidence_matrix.grid(row=1, column=3, stick="ew")
 
         self.root.mainloop()
 
-    def setup_buttons(self):
-        btn_set_graph_name = tk.Button(self.root, text="Set Graph Name", command=self.set_graph_name)
-        btn_save_data = tk.Button(self.root, text="Save Data", command=self.save_data)
-        btn_create_vertex = tk.Button(self.root, text="Create Vertex", command=self.menu_create_vertex)
-        btn_delete_vertex = tk.Button(self.root, text="Delete Vertex", command=self.delete_vertex)
-        btn_rename_vertex = tk.Button(self.root, text="Rename Vertex", command=self.menu_rename_vertex)
-        btn_create_edge = tk.Button(self.root, text="Create Edge", command=self.menu_create_edge)
-        btn_quit = tk.Button(self.root, text="Quit", command=self.quit_program)
-        btn_delete_edge = tk.Button(self.root, text="Delete Edge", command=self.menu_delete_edge)
-        check_orientation = tk.Checkbutton(self.root, text="Orientation", onvalue=1, offvalue=0,
-                                           variable=self.check_var, bg="gray")
-        btn_move_vertex = tk.Button(self.root, text="Move Vertices", command=self.move_vertex)
-        btn_incidence_matrix = tk.Button(self.root, text="Incidence Matrix", command=self.create_incidence_matrix_window)
-        btn_adjacency_matrix = tk.Button(self.root, text="Adjacency Matrix", command=self.create_adjacency_matrix)
-
-        btn_set_graph_name.grid(row=0, column=0, sticky="ew")
-        btn_save_data.grid(row=0, column=4, sticky="ew")
-        btn_create_vertex.grid(row=0, column=1, sticky="ew")
-        btn_delete_vertex.grid(row=1, column=1, sticky="ew")
-        btn_rename_vertex.grid(row=2, column=1, sticky="ew")
-        btn_create_edge.grid(row=0, column=2, sticky="ew")
-        btn_quit.grid(row=1, column=5, sticky="ew")
-        btn_delete_edge.grid(row=1, column=2, sticky="ew")
-        check_orientation.grid(row=2, column=2, sticky="ew")
-        btn_move_vertex.grid(row=1, column=0, sticky="ew")
-        btn_incidence_matrix.grid(row=1, column=3, sticky="ew")
-        btn_adjacency_matrix.grid(row=0, column=3, sticky="ew")
-
-    def set_graph_name(self):
+    def menu_set_graph_name(self):
         new_window = tk.Tk()
         new_window.title("Set Graph Name")
         new_window.wm_attributes('-topmost', 1)
         new_window.resizable(False, False)
-        label_graph = tk.Label(new_window, text="Enter Graph Name")
-        label_graph.grid(row=0, column=0, sticky="ew")
+
+        label_graph_name = tk.Label(new_window, text="Enter Graph Name")
+        label_graph_name.grid(row=0, column=0, sticky="ew")
+        
         entry = tk.Entry(new_window)
         entry.grid(row=1, column=0)
-        btn_set_graph_name = tk.Button(new_window, text="Set", command=lambda: self.change_graph_name(entry.get(), new_window))
+
+        btn_set_graph_name = tk.Button(new_window, text="Set", command=lambda: self.change_graph_name(entry.get(), new_window.destroy))
         btn_set_graph_name.grid(row=2, column=0, sticky="ew")
-        if entry.get == self.graph_label["text"]:
-            new_window.destroy()
-        new_window.mainloop()
 
-    def change_graph_name(self, name, window):
-        self.graph_label["text"] = name
-        self.quit_program(window)
-
-    def move_vertex(self):
-        self.canvas.bind("<Button-1>", self.select_vertex)
-
-    def select_vertex(self, event):
-        self.click_x, self.click_y = event.x, event.y
-        for vert in self.vertices:
-            if vert.x - 20 <= self.click_x <= vert.x + 20 and vert.y - 20 <= self.click_y <= vert.y + 20:
-                self.selected_vertex = vert
-                self.canvas.bind("<B1-Motion>", self.move_vertex)
-                self.canvas.bind("<ButtonRelease-1>", self.unselect_vertex)
-                break
-
-    def move_vertex(self, event):
-        self.click_x, self.click_y = event.x, event.y
-        self.selected_vertex.x = self.click_x
-        self.selected_vertex.y = self.click_y
-        self.canvas.coords(self.selected_vertex.id_vertex, self.click_x - 20, self.click_y - 20,
-                           self.click_x + 20, self.click_y + 20)
-        self.canvas.coords(self.selected_vertex.id_text, self.click_x, self.click_y)
-        for edge in self.edges:
-            if edge.vertex1 == self.selected_vertex:
-                self.canvas.coords(edge.line, self.line_intersect_circle(self.click_x, self.click_y, edge.vertex2.x, edge.vertex2.y))
-                self.canvas.coords(edge.rect, (self.click_x + edge.vertex2.x) / 2 - 5,
-                                   (self.click_y + edge.vertex2.y) / 2 - 8,
-                                   (self.click_x + edge.vertex2.x) / 2 + 5,
-                                   (self.click_y + edge.vertex2.y) / 2 + 8)
-                self.canvas.coords(edge.text, (self.click_x + edge.vertex2.x) / 2, (self.click_y + edge.vertex2.y) / 2)
-            elif edge.vertex2 == self.selected_vertex:
-                self.canvas.coords(edge.line, self.line_intersect_circle(edge.vertex1.x, edge.vertex1.y, self.click_x, self.click_y))
-                self.canvas.coords(edge.rect, (self.click_x + edge.vertex1.x) / 2 - 5,
-                                   (self.click_y + edge.vertex1.y) / 2 - 8,
-                                   (self.click_x + edge.vertex1.x) / 2 + 5,
-                                   (self.click_y + edge.vertex1.y) / 2 + 8)
-                self.canvas.coords(edge.text, (self.click_x + edge.vertex1.x) / 2, (self.click_y + edge.vertex1.y) / 2)
-
-    def unselect_vertex(self, event):
-        self.canvas.unbind("<B1-Motion>")
-        self.canvas.unbind("<ButtonRelease-1>")
+    def change_graph_name(self, name, window_destroy_func):
+        self.label["text"] = name
+        window_destroy_func()
 
     def save_data(self):
-        pass
-
-    def create_adjacency_matrix(self):
-        adjacency_matrix = [[0 for i in range(len(self.vertex_names))] for i in range(len(self.vertex_names))]
-        for edge in self.edges:
-            vertex1_index = self.vertex_names.index(edge.vertex1.vertex_name)
-            vertex2_index = self.vertex_names.index(edge.vertex2.vertex_name)
-            adjacency_matrix[vertex1_index][vertex2_index] = 1
-            if not self.check_var.get():  # If the graph is not oriented, set symmetric value
-                adjacency_matrix[vertex2_index][vertex1_index] = 1
-        print("Adjacency Matrix:")
-        print(np.array(adjacency_matrix))
-
-    def create_incidence_matrix_window(self):
-        incidence_matrix = self.create_incidence_matrix()
-        incidence_matrix_str = "\n".join([" ".join(map(str, row)) for row in incidence_matrix])
-        mb.showinfo("Incidence Matrix", incidence_matrix_str)
-
-    def create_incidence_matrix(self):
-        incidence_matrix = [[0 for i in range(len(self.edges))] for i in range(len(self.vertices))]
-        for col, edge in enumerate(self.edges):
-            row_vertex1 = self.vertex_names.index(edge.vertex1.vertex_name)
-            row_vertex2 = self.vertex_names.index(edge.vertex2.vertex_name)
-            incidence_matrix[row_vertex1][col] = 1
-            incidence_matrix[row_vertex2][col] = 1
-        return incidence_matrix
-
-    def line_intersect_circle(self, x1, y1, x2, y2):
-        # Your implementation of line-circle intersection
+        """
+        This method is currently empty as the implementation for saving data has not been provided yet.
+        To save graph data, you may consider incorporating file I/O operations or any other suitable method
+        based on the requirements of your application. Once the save functionality is implemented, this method
+        can be updated accordingly.
+        """
         pass
 
     def menu_create_vertex(self):
@@ -155,13 +82,15 @@ class GraphApp:
         new_window.title("Create Vertex")
         new_window.wm_attributes('-topmost', 1)
         new_window.resizable(False, False)
+
         label_vertex_name = tk.Label(new_window, text="Enter Vertex Name")
         label_vertex_name.grid(row=0, column=0, sticky="ew")
+        
         entry = tk.Entry(new_window)
         entry.grid(row=1, column=0)
+
         btn_create_vertex = tk.Button(new_window, text="Create", command=lambda: self.create_vertex(entry, new_window))
         btn_create_vertex.grid(row=2, column=0, sticky="ew")
-        new_window.mainloop()
 
     def create_vertex(self, entry, window):
         if entry.get() == '':
@@ -186,23 +115,66 @@ class GraphApp:
         # Implement edge creation functionality
         pass
 
-    def quit_program(self):
-        self.root.destroy()
+    def menu_delete_edge(self):
+        new_window = tk.Tk()
+        new_window.title("Delete Edge")
+        new_window.wm_attributes('-topmost', 1)
+        new_window.resizable(False, False)
+
+        label_vertex1 = tk.Label(new_window, text="Enter Vertex 1 Name")
+        label_vertex2 = tk.Label(new_window, text="Enter Vertex 2 Name")
+        entry_vertex1 = tk.Entry(new_window)
+        entry_vertex2 = tk.Entry(new_window)
+
+        label_vertex1.grid(row=0, column=0, sticky="ew")
+        entry_vertex1.grid(row=1, column=0)
+        label_vertex2.grid(row=2, column=0, sticky="ew")
+        entry_vertex2.grid(row=3, column=0)
+
+        btn_delete_edge = tk.Button(new_window, text="Delete", command=lambda: self.find_delete_edge(entry_vertex1.get(), entry_vertex2.get(), new_window))
+        btn_delete_edge.grid(row=4, column=0, sticky="ew")
+
+    def find_delete_edge(self, en1, en2, root):
+        for i, edge in enumerate(self.edges):
+            if edge.vertex1.vertex_name == en1 and edge.vertex2.vertex_name == en2:
+                self.canvas.delete(edge.line)
+                # Delete other associated graphical elements
+                self.edges.pop(i)
+                self.edge_count -= 1
+                root.destroy()
+                break
+        else:
+            mb.showerror("Error", "Edge does not exist")
+
+    def move_vertices(self):
+        # Implement vertex movement functionality
+        pass
+
+    def create_adjacency_matrix(self):
+        adjacency_matrix = [[0 for _ in range(len(self.vertex_names))] for _ in range(len(self.vertex_names))]
+        for edge in self.edges:
+            vertex1_index = self.vertex_names.index(edge.vertex1.vertex_name)
+            vertex2_index = self.vertex_names.index(edge.vertex2.vertex_name)
+            adjacency_matrix[vertex1_index][vertex2_index] = 1
+            if not self.check_var.get():  # If the graph is not oriented, set symmetric value
+                adjacency_matrix[vertex2_index][vertex1_index] = 1
+        print("Adjacency Matrix:")
+        print(np.array(adjacency_matrix))
+
+    def create_incidence_matrix_window(self):
+        # Implement incidence matrix creation window
+        pass
 
 class Vertex:
     def __init__(self, canvas, color):
         self.canvas = canvas
         self.color = color
-        # Add other attributes for Vertex as needed
-        # e.g., self.x, self.y, self.id_vertex, self.id_text
+        # Assuming you have a vertex_name attribute
+        self.vertex_name = None  # Set the vertex name accordingly
+        self.x = 0  # Set the x-coordinate accordingly
+        self.y = 0  # Set the y-coordinate accordingly
+        self.id_vert = canvas.create_oval(self.x - 20, self.y - 20, self.x + 20, self.y + 20, fill=color, width=2)
+        self.id_txt = canvas.create_text(self.x, self.y, anchor='center', text=self.vertex_name,
+                                         font="Arial 10", fill="white")
 
-class Edge:
-    def __init__(self, vertex1, vertex2, line, rect, text):
-        self.vertex1 = vertex1
-        self.vertex2 = vertex2
-        self.line = line
-        self.rect = rect
-        self.text = text
-        # Add other attributes for Edge as needed
-
-app = GraphApp()
+GraphApp()
