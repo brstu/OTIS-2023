@@ -26,7 +26,7 @@ matrix = []
 
 
 def draw_vertex():
-    global canvas
+    canvas=tk.canvas() 
     main_label.configure(text="Выбрано создание вершин, нажмите на пустое для создания вершины")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas1)
