@@ -15,8 +15,8 @@ button_1="<Button-1>"
 text_on_vertex='text on vertex'
 id_text='id text'
 num_of_vertex='num of vertex'
-canvas = tk.Canvas(frame, width=1920, height=1080)
-canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+root = tk.Tk()
+canvas=tl.canvas(root)
 main_label =tk.Label()
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
@@ -271,6 +271,8 @@ root.geometry("800x600")
 frame = tk.Frame(root)
 frame.pack(fill=tk.BOTH, expand=True)
 
+canvas = tk.Canvas(frame, width=1920, height=1080)
+canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
 menubar = tk.Menu(root)
 root.config(menu=menubar)
