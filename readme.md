@@ -27,8 +27,8 @@
 | 7  | [Кононов Алексей](https://github.com/madebyth00      |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
 | 8  | [Копач Александр](https://github.com/AtticaQQ)       |[ii02308](trunk/ii02308) | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |    |        6|
 | 9  | Кунц Александр                                       |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
-| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
-| 11 | [Привезенцев Михаил](https://github.com/NecodevEnjoyer)|[ii02311](trunk/ii02311)| ✅ | ✅ | ❌ | ❌ |    |    |    |    |         6|
+| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        8|
+| 11 | [Привезенцев Михаил](https://github.com/NecodevEnjoyer)|                       | ✅ | ✅ | ❌ | ❌ |    |    |    |    |         6|
 | 12 | [Ежевский Егор](https://github.com/pinkgrasss)       |[ii02312](trunk/ii02312) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 13 | Макаревич Кирилл                                     |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 14 | [Макаревич Никита](https://github.com/sosiska52)     |[ii02314](trunk/ii02314) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        7|
