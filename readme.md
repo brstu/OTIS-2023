@@ -18,16 +18,16 @@
 
 | №  | ФИО                                                  | Directory name          | #0 | #1  | #2 | #3 | #4 | #5 | #6 | #7 | Рейтинг |
 |----|------------------------------------------------------|-------------------------|----|-----|----|----|----|----|----|----|---------|
-| 1  | [Бусень Артём](https:github.com/hudshiy1)            |[ii02301](trunk/ii02301) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        6|
+| 1  | [Бусень Артём](https:github.com/hudshiy1)            |[ii02301](trunk/ii02301) | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |        8|
 | 2  | [Волкогон Никита](https://github.com/VolkogonNikita) |[ii02302](trunk/II02302) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 3  | [Вышинский Артём](https://github.com/arciomwww)      |[ii02303](trunk/ii02303) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        8|
 | 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        7|
-| 5  | Глухарев Даниил                                      |[ii02305](trunk/ii02305) | ✅ | ✅ | ✅ | ❌ |    |    |    |    |        7|
+| 5  | [Глухарев Даниил](https://github.com/Gluharev-Danik) |[ii02305](trunk/ii02305) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
 | 6  | [Колеснев Антон](https://github.com/Flugel228)       |[ii02307](trunk/ii02307) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
-| 7  | [Кононов Алексей](https://github.com/madebyth00      |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
+| 7  | [Кононов Алексей](https://github.com/madebyth00)     |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
 | 8  | [Копач Александр](https://github.com/AtticaQQ)       |[ii02308](trunk/ii02308) | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |    |        6|
 | 9  | Кунц Александр                                       |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
-| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
+| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        8|
 | 11 | [Привезенцев Михаил](https://github.com/MishanyPrivezentsev)|                  | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 12 | [Ежевский Егор](https://github.com/pinkgrasss)       |[ii02312](trunk/ii02312) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 13 | Макаревич Кирилл                                     |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
