@@ -16,7 +16,7 @@ text_on_vertex='text on vertex'
 id_text='id text'
 num_of_vertex='num of vertex'
 root = tk.Tk()
-canvas=tl.canvas(root)
+canvas=tk.canvas(root)
 main_label =tk.Label()
 cord_edge2 = {'id_vertex1': [], 'id_vertex2': []}
 cord_edge = {'id_edge_text': [], 'id_vertex1': [], 'id_vertex2': []}
@@ -27,7 +27,6 @@ matrix = []
 
 
 def draw_vertex():
-    global canvas
     main_label.configure(text="Выбрано создание вершин, нажмите на пустое для создания вершины")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas1)
@@ -54,7 +53,6 @@ def draw_canvas1(event):
 
 
 def draw_edge():
-    global canvas
     main_label.configure(text="Выбрано создание ребер, нажмите на вершину для создания ребра")
     canvas.unbind(button_1)
     canvas.bind(button_1, draw_canvas2)
@@ -89,7 +87,6 @@ def draw_canvas2(event):
 
 
 def delete_vertex():
-    global canvas
     main_label.configure(text="Выбрано удаление вершины или ребра, нажмите на вершину или ребро для удаления")
     canvas.unbind(button_1)
     canvas.bind(button_1, delete_canvas)
@@ -121,7 +118,6 @@ def delete_canvas(event):
 
 
 def rename_vertex():
-    global canvas
     main_label.configure(text="Выбрано переименование вершины, нажмите на вершину для переименования")
     canvas.unbind(button_1)
     canvas.bind(button_1, rename)
@@ -139,7 +135,6 @@ def rename(event):
 
 
 def change_color():
-    global canvas
     main_label.configure(text="Вы выбрали изменение цвета вершины, нажмите на вершину для изменения её цвета")
     canvas.unbind(button_1)
     canvas.bind(button_1, color)
@@ -155,7 +150,6 @@ def color(event):
 
 
 def change_text_color():
-    global canvas
     main_label.configure(text="Вы выбрали изменение цвета текста, нажмите на вершину для изменения цвета её текста")
     canvas.unbind(button_1)
     canvas.bind(button_1, text_color)
@@ -171,7 +165,6 @@ def text_color(event):
 
 
 def change_edge_color():
-    global canvas
     main_label.configure(text="Вы выбрали изменение цвета ребер, нажмите на ребро для изменения его цвета")
     canvas.unbind(button_1)
     canvas.bind(button_1, edge_color)
@@ -188,7 +181,6 @@ def edge_color(event):
 
 
 def adjacency_matrix():
-    global canvas
     k = 0
     adj_matrix = tk.Tk()
     adj_matrix.title("Adjacency matrix")
@@ -224,7 +216,6 @@ def incidence_matrix():
 
 
 def dfs():
-    global canvas
     visited = [False] * len(ovals)
 
     def dfs_rec(vert):
@@ -245,7 +236,6 @@ def dfs():
 
 
 def bfs():
-    global canvas
     visited = [False] * len(ovals)
 
     def bfs_rec(vert):
