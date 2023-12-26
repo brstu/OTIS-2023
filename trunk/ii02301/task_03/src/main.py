@@ -197,7 +197,6 @@ def adjacency_matrix():
 
 
 def incidence_matrix():
-    global canvas
     k = 0
     inc_matrix = tk.Tk()
     inc_matrix.title("Incidence matrix")
