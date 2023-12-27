@@ -48,7 +48,7 @@
 | 1  | [Алешко Ангелина](https://github.com/Melivu)       | [ii02401](trunk/ii02401)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 2  | Баранчук Иван                                      | [ii02402](trunk/ii02402)     | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        6|
 | 3  | Бузель Сергей                                      | [ii02403](trunk/ii02403)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
-| 4  | [Капуза Николай](https://github.com/Pozitivchikkk3)| [ii02404](trunk/ii02404)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
+| 4  | [Капуза Николай](https://github.com/Pozitivchikkk3)| [ii02404](trunk/ii02404)     | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        6|
 | 5  | [Коцуба Екатерина](https://github.com/Katty-Bisha) | [ii02405](trunk/ii02405)     | ❌ | ✅ | ✅ | ❌ | ✅ |    |    |    |         |
 | 6  | [Крейдич Артем](https://github.com/TemaKreidic)    | [ii02406](trunk/ii02406)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 7  | [Крупич Даниил](https://github.com/Duferig)        | [ii02407](trunk/ii02407)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
