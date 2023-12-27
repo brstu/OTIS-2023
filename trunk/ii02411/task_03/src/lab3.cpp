@@ -1,6 +1,6 @@
 #include <cstdlib>
 
 int main() {
-    std::system("python lab3.py");
+    std::system("python main.py");
     return 0;
 }
