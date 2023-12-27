@@ -80,13 +80,7 @@ public:
             visited[src] = true;
         }
 
-        bool allVisited = std::all_of(visited.begin(), visited.end(), [](bool v) {
-            return v;
-            });
-
-        if (bool allVisited = std::all_of(visited.begin(), visited.end(), [](bool v) { return v; }); !allVisited) {
-            return false;
-        }
+    
 
         return true;
     }
