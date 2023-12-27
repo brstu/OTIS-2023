@@ -77,7 +77,6 @@ public:
                 return false;
             }
 
-            int dest = cycle[i + 1];
             visited[src] = true;
         }
 
@@ -85,7 +84,7 @@ public:
             return v;
             });
 
-        if (!allVisited) {
+        if (bool allVisited = std::all_of(visited.begin(), visited.end(), [](bool v) { return v; }); !allVisited) {
             return false;
         }
 
