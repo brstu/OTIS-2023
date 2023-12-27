@@ -34,7 +34,7 @@ public:
         destArounds.erase(remove(destArounds.begin(), destArounds.end(), src), destArounds.end());
     }
 
-   const void  vizual() {
+    void  vizual() const {
         ofstream file("graph.dot");
         if (!file) {
             cout << "Ошибка при открытии файла." << endl;
@@ -58,7 +58,7 @@ public:
         cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
-    const bool  isEulerian() {
+    bool  isEulerian() const {
         for (const auto& top : tops) {
             if (top.around.size() % 2 != 0) {
                 return false;
@@ -75,9 +75,9 @@ public:
         vector<bool> visited(tops.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
-            int dest = cycle[i + 1];
+            int dest = cycle[i];
 
-            if (find(tops[src].around.begin(), tops[src].around.end(), dest) == tops[src].around.end()) {
+            if (find(tops[src].around.begin(), tops[src].around.end(), tops[dest].around.begin()) == tops[src].around.end()) {
                 return false;
             }
 
