@@ -2,81 +2,82 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+using namespace std;
 
 // Класс, представляющий вершину графа
-class Vertex {
+class Top {
 public:
     int id;
-    std::vector<int> neighbors;
+    vector<int> around;
 
-    explicit Vertex(int _id) : id(_id) {}
+    explicit Top(int _id) : id(_id) {}
 };
 
 // Класс, представляющий граф
-class Graph {
+class MyGraph {
 public:
-    std::vector<Vertex> vertices;
+    vector<Top> tops;
 
-    void addVertex(int id) {
-        vertices.emplace_back(id);
+    void addTop(int id) {
+        tops.emplace_back(id);
     }
 
     void addEdge(int src, int dest) {
-        vertices[src].neighbors.push_back(dest);
-        vertices[dest].neighbors.push_back(src);
+        tops[src].around.push_back(dest);
+        tops[dest].around.push_back(src);
     }
 
     void removeEdge(int src, int dest) {
-        auto& srcNeighbors = vertices[src].neighbors;
-        auto& destNeighbors = vertices[dest].neighbors;
-        srcNeighbors.erase(std::remove(srcNeighbors.begin(), srcNeighbors.end(), dest), srcNeighbors.end());
-        destNeighbors.erase(std::remove(destNeighbors.begin(), destNeighbors.end(), src), destNeighbors.end());
+        auto& srcArounds = tops[src].around;
+        auto& destArounds = tops[dest].around;
+        srcArounds.erase(remove(srcArounds.begin(), srcArounds.end(), dest), srcArounds.end());
+        destArounds.erase(remove(destArounds.begin(), destArounds.end(), src), destArounds.end());
     }
 
-    void visualize() {
-        std::ofstream file("graph.dot");
+    void vizual() {
+        ofstream file("graph.dot");
         if (!file) {
-            std::cout << "Ошибка при открытии файла." << std::endl;
+            cout << "Ошибка при открытии файла." << endl;
             return;
         }
 
-        file << "graph {" << std::endl;
-        for (const auto& vertex : vertices) {
-            file << "\t" << vertex.id << std::endl;
-            for (int neighbor : vertex.neighbors) {
-                if (vertex.id < neighbor) {
-                    file << "\t" << vertex.id << " -- " << neighbor << std::endl;
+        file << "graph {" << endl;
+        for (const auto& top : tops) {
+            file << "\t" << top.id << endl;
+            for (int arounds : top.around) {
+                if (top.id < arounds) {
+                    file << "\t" << top.id << " -- " << arounds << endl;
                 }
             }
         }
-        file << "}" << std::endl;
+        file << "}" << endl;
         file.close();
 
         // Визуализация графа с помощью Graphviz
         system("dot -Tpng graph.dot -o graph.png");
-        std::cout << "Граф визуализирован в файле graph.png" << std::endl;
+        cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
     bool isEulerian() {
-        for (const auto& vertex : vertices) {
-            if (vertex.neighbors.size() % 2 != 0) {
+        for (const auto& top : tops) {
+            if (top.around.size() % 2 != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    bool isHamiltonianCycle(const std::vector<int>& cycle) {
-        if (cycle.size() != vertices.size() + 1) {
+    bool isHamiltonianCycle(const vector<int>& cycle) {
+        if (cycle.size() != tops.size() + 1) {
             return false;
         }
 
-        std::vector<bool> visited(vertices.size(), false);
+        vector<bool> visited(tops.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
             int dest = cycle[i + 1];
 
-            if (std::find(vertices[src].neighbors.begin(), vertices[src].neighbors.end(), dest) == vertices[src].neighbors.end()) {
+            if (find(tops[src].around.begin(), tops[src].around.end(), dest) == tops[src].around.end()) {
                 return false;
             }
 
@@ -92,70 +93,70 @@ public:
         return true;
     }
 
-    std::vector<int> findEulerianCycle() {
-        std::vector<int> cycle;
+    vector<int> findEulerianCycle() {
+        vector<int> cycle;
         if (!isEulerian()) {
             return cycle;
         }
 
-        std::vector<Vertex> tempVertices = vertices;
-        int startVertex = 0;
-        cycle.push_back(startVertex);
+        vector<Top> tempTops = tops;
+        int startTops = 0;
+        cycle.push_back(startTops);
 
-        while (!tempVertices[startVertex].neighbors.empty()) {
-            int nextVertex = tempVertices[startVertex].neighbors.front();
-            cycle.push_back(nextVertex);
-            removeEdge(startVertex, nextVertex);
-            startVertex = nextVertex;
+        while (!tempTops[startTops].around.empty()) {
+            int nextTops = tempTops[startTops].around.front();
+            cycle.push_back(nextTops);
+            removeEdge(startTops, nextTops);
+            startTops = nextTops;
         }
 
         return cycle;
     }
 
-    std::vector<int> findHamiltonianCycle() {
-        std::vector<int> cycle;
-        std::vector<bool> visited(vertices.size(), false);
+    vector<int> findHamiltonianCycle() {
+        vector<int> cycle;
+        vector<bool> visited(tops.size(), false);
 
         findHamiltonianCycleRecursive(0, cycle, visited);
 
         return cycle;
     }
 
-    bool findHamiltonianCycleRecursive(int currentVertex, std::vector<int>& cycle, std::vector<bool>& visited) {
-        visited[currentVertex] = true;
-        cycle.push_back(currentVertex);
+    bool findHamiltonianCycleRecursive(int currentTops, vector<int>& cycle, vector<bool>& visited) {
+        visited[currentTops] = true;
+        cycle.push_back(currentTops);
 
-        if (cycle.size() == vertices.size()) {
-            if (std::find(vertices[currentVertex].neighbors.begin(), vertices[currentVertex].neighbors.end(), cycle[0]) != vertices[currentVertex].neighbors.end()) {
+        if (cycle.size() == tops.size()) {
+            if (find(tops[currentTops].around.begin(), tops[currentTops].neighbors.end(), cycle[0]) != tops[currentTops].around.end()) {
                 cycle.push_back(cycle[0]);
                 return true;
             }
             else {
-                visited[currentVertex] = false;
+                visited[currentTops] = false;
                 cycle.pop_back();
                 return false;
             }
         }
 
-        for (int neighbor : vertices[currentVertex].neighbors) {
-            if (!visited[neighbor]) {
-                if (findHamiltonianCycleRecursive(neighbor, cycle, visited)) {
+        for (int around : tops[currentTops].around) {
+            if (!visited[around]) {
+                if (findHamiltonianCycleRecursive(around, cycle, visited)) {
                     return true;
                 }
             }
         }
 
-        visited[currentVertex] = false;
+        visited[currentTops] = false;
         cycle.pop_back();
         return false;
     }
 
-    Graph constructSpanningTree() {
-        Graph spanningTree;
+    MyGraph constructSpanningTree() {
+        MyGraph spanningTree;
         spanningTree.nodes = nodes;
 
-        std::vector<bool> visited(nodes.size(), false);
-        std::vector<int> queue;
+        vector<bool> visited(nodes.size(), false);
+        vector<int> queue;
 
         visited[0] = true;
         queue.push_back(0);
@@ -164,7 +165,7 @@ public:
             int currentNode = queue.front();
             queue.erase(queue.begin());
 
-            for (int neighbor : nodes[currentNode].neighbors) {
+            for (int neighbor : nodes[currentNode].around) {
                 if (!visited[neighbor]) {
                     spanningTree.addEdge(currentNode, neighbor);
                     visited[neighbor] = true;
@@ -179,54 +180,54 @@ public:
 
 int main() {
     // Создание графа
-    Graph graph;
+    MyGraph Mygraph;
 
     // Добавление вершин
-    graph.addNode(0);
-    graph.addNode(1);
-    graph.addNode(2);
-    graph.addNode(3);
-    graph.addNode(4);
+    Mygraph.addNode(0);
+    Mygraph.addNode(1);
+    Mygraph.addNode(2);
+    Mygraph.addNode(3);
+    Mygraph.addNode(4);
 
     // Добавление ребер
-    graph.addEdge(0, 1);
-    graph.addEdge(1, 2);
-    graph.addEdge(2, 3);
-    graph.addEdge(3, 4);
-    graph.addEdge(4, 0);
+    Mygraph.addEdge(0, 1);
+    Mygraph.addEdge(1, 2);
+    Mygraph.addEdge(2, 3);
+    Mygraph.addEdge(3, 4);
+    Mygraph.addEdge(4, 0);
 
     // Визуализация графа
-    graph.visualize();
+    Mygraph.vizual();
 
     // Поиск Эйлерова цикла
-    std::vector<int> eulerianCycle = graph.findEulerianCycle();
+    vector<int> eulerianCycle = Mygraph.findEulerianCycle();
     if (!eulerianCycle.empty()) {
-        std::cout << "Эйлеров цикл: ";
+        cout << "Эйлеров цикл: ";
         for (int vertex : eulerianCycle) {
-            std::cout << vertex << " ";
+            cout << vertex << " ";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
     else {
-        std::cout << "Граф не содержит Эйлерова цикла." << std::endl;
+        cout << "Граф не содержит Эйлерова цикла." << endl;
     }
 
     // Поиск Гамильтонова цикла
-    std::vector<int> hamiltonianCycle = graph.findHamiltonianCycle();
+    vector<int> hamiltonianCycle = Mygraph.findHamiltonianCycle();
     if (!hamiltonianCycle.empty()) {
-        std::cout << "Гамильтонов цикл: ";
+        cout << "Гамильтонов цикл: ";
         for (int vertex : hamiltonianCycle) {
-            std::cout << vertex << " ";
+            cout << vertex << " ";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
     else {
-        std::cout << "Граф не содержит Гамильтонова цикла." << std::endl;
+        cout << "Граф не содержит Гамильтонова цикла." << endl;
     }
 
     // Построение остовного дерева
-    Graph spanningTree = graph.constructSpanningTree();
-    spanningTree.visualize();
+    MyGraph spanningTree = Mygraph.constructSpanningTree();
+    spanningTree.vizual();
 
     return 0;
 }
