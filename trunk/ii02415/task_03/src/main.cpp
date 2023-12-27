@@ -75,9 +75,9 @@ public:
         vector<bool> visited(tops.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
-            int dest = cycle[i+1];
+            int dest = cycle[i + 1];
 
-            if (find(tops[src].around.begin(), tops[src].around.end(), dest == tops[src].around.end()) {
+            if (find(tops[src].around.begin(), tops[src].around.end(), dest) == tops[src].around.end()) {
                 return false;
             }
 
