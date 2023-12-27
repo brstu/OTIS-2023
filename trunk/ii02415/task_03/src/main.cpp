@@ -58,13 +58,10 @@ public:
         cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
-    bool  isEulerian() const {
-        for (const auto& top : tops) {
-            if (top.around.size() % 2 != 0) {
-                return false;
-            }
-        }
-        return true;
+    bool isEulerian() const {
+        return std::all_of(tops.begin(), tops.end(), [](const auto& top) {
+            return top.around.size() % 2 == 0;
+            });
     }
 
     bool isHamiltonianCycle(const vector<int>& cycle) {
@@ -75,19 +72,21 @@ public:
         vector<bool> visited(tops.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
-            int dest = cycle[i + 1];
 
-            if (find(tops[src].around.begin(), tops[src].around.end(), dest) == tops[src].around.end()) {
+            if (auto it = find(tops[src].around.begin(), tops[src].around.end(), cycle[i + 1]); it == tops[src].around.end()) {
                 return false;
             }
 
+            int dest = cycle[i + 1];
             visited[src] = true;
         }
 
-        for (bool v : visited) {
-            if (!v) {
-                return false;
-            }
+        bool allVisited = std::all_of(visited.begin(), visited.end(), [](bool v) {
+            return v;
+            });
+
+        if (!allVisited) {
+            return false;
         }
 
         return true;
@@ -139,10 +138,8 @@ public:
         }
 
         for (int around : tops[currentTops].around) {
-            if (!visited[around]) {
-                if (findHamiltonianCycleRecursive(around, cycle, visited)) {
-                    return true;
-                }
+            if (!visited[around] && findHamiltonianCycleRecursive(around, cycle, visited)) {
+                return true;
             }
         }
 
@@ -201,8 +198,7 @@ int main() {
     Mygraph.vizual();
 
     // Поиск Эйлерова цикла
-    vector<int> eulerianCycle = Mygraph.findEulerianCycle();
-    if (!eulerianCycle.empty()) {
+    if (vector<int> eulerianCycle = Mygraph.findEulerianCycle(); !eulerianCycle.empty()) {
         cout << "Эйлеров цикл: ";
         for (int vertex : eulerianCycle) {
             cout << vertex << " ";
@@ -214,8 +210,7 @@ int main() {
     }
 
     // Поиск Гамильтонова цикла
-    vector<int> hamiltonianCycle = Mygraph.findHamiltonianCycle();
-    if (!hamiltonianCycle.empty()) {
+    if (vector<int> hamiltonianCycle = Mygraph.findHamiltonianCycle(); !hamiltonianCycle.empty()) {
         cout << "Гамильтонов цикл: ";
         for (int vertex : hamiltonianCycle) {
             cout << vertex << " ";
@@ -225,7 +220,7 @@ int main() {
     else {
         cout << "Граф не содержит Гамильтонова цикла." << endl;
     }
-
+    W
     // Построение остовного дерева
     MyGraph spanningTree = Mygraph.constructSpanningTree();
     spanningTree.vizual();
