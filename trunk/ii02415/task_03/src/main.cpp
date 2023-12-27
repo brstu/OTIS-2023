@@ -34,7 +34,7 @@ public:
         destArounds.erase(remove(destArounds.begin(), destArounds.end(), src), destArounds.end());
     }
 
-    void vizual() {
+    void const vizual() {
         ofstream file("graph.dot");
         if (!file) {
             cout << "Ошибка при открытии файла." << endl;
@@ -58,7 +58,7 @@ public:
         cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
-    bool isEulerian() {
+    bool const isEulerian() {
         for (const auto& top : tops) {
             if (top.around.size() % 2 != 0) {
                 return false;
