@@ -60,7 +60,7 @@
 | 13 | Невдах Влидимир                                    | [ii02413](trunk/ii02413)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
 | 14 | [Поддубный Юрий](https://github.com/Yura-108)      | [ii02414](trunk/ii02414)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       8|
 | 15 | [Рекун Дмитрий](https://github.com/DmitryRekun)    | [ii02415](trunk/ii02415)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
-| 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ |    |    |    |    |        9|
+| 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
 | 17 | [Супрунович Илья](https://github.com/IlyaSuprunovich)| [ii02417](trunk/ii02417)   | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       7 |
 | 18 | [Сухаревич Дмитрий](https://github.com/SukharevichDmitry)|[ii02418](trunk/ii02418)| ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        7|
 | 19 | Терехов Николай                                    | [ii02419](trunk/ii02419)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       8|
