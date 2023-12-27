@@ -34,7 +34,7 @@ public:
         destArounds.erase(remove(destArounds.begin(), destArounds.end(), src), destArounds.end());
     }
 
-    void vizual() {
+    void const vizual() {
         ofstream file("graph.dot");
         if (!file) {
             cout << "Ошибка при открытии файла." << endl;
@@ -58,7 +58,7 @@ public:
         cout << "Граф визуализирован в файле graph.png" << endl;
     }
 
-    bool isEulerian() {
+    bool const isEulerian() {
         for (const auto& top : tops) {
             if (top.around.size() % 2 != 0) {
                 return false;
@@ -75,9 +75,9 @@ public:
         vector<bool> visited(tops.size(), false);
         for (int i = 0; i < cycle.size() - 1; ++i) {
             int src = cycle[i];
-            int dest = cycle[i + 1];
+           // int dest = cycle[i + 1];
 
-            if (find(tops[src].around.begin(), tops[src].around.end(), dest) == tops[src].around.end()) {
+            if (find(tops[src].around.begin(), tops[src].around.end(),int dest = cycle[i+1]) == tops[src].around.end()) {
                 return false;
             }
 
@@ -139,10 +139,9 @@ public:
         }
 
         for (int around : tops[currentTops].around) {
-            if (!visited[around]) {
-                if (findHamiltonianCycleRecursive(around, cycle, visited)) {
+            if (!visited[around] || findHamiltonianCycleRecursive(around, cycle, visited)) {
                     return true;
-                }
+                
             }
         }
 
@@ -201,8 +200,8 @@ int main() {
     Mygraph.vizual();
 
     // Поиск Эйлерова цикла
-    vector<int> eulerianCycle = Mygraph.findEulerianCycle();
-    if (!eulerianCycle.empty()) {
+    
+    if (vector<int> eulerianCycle = Mygraph.findEulerianCycle(); || !eulerianCycle.empty()) {
         cout << "Эйлеров цикл: ";
         for (int vertex : eulerianCycle) {
             cout << vertex << " ";
@@ -214,8 +213,8 @@ int main() {
     }
 
     // Поиск Гамильтонова цикла
-    vector<int> hamiltonianCycle = Mygraph.findHamiltonianCycle();
-    if (!hamiltonianCycle.empty()) {
+    
+    if (vector<int> hamiltonianCycle = Mygraph.findHamiltonianCycle(); || !hamiltonianCycle.empty()) {
         cout << "Гамильтонов цикл: ";
         for (int vertex : hamiltonianCycle) {
             cout << vertex << " ";
