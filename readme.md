@@ -24,17 +24,17 @@
 | 4  | [Гавришук Владислав](https://github.com/VLadGavrishuk)|[ii02304](trunk/ii02304)| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        7|
 | 5  | [Глухарев Даниил](https://github.com/Gluharev-Danik) |[ii02305](trunk/ii02305) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
 | 6  | [Колеснев Антон](https://github.com/Flugel228)       |[ii02307](trunk/ii02307) | ✅ | ✅ | ✅ | ❌ | ✅ |    |    |    |        7|
-| 7  | [Кононов Алексей](https://github.com/madebyth00      |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ |    |    |    |    |        6|
+| 7  | [Кононов Алексей](https://github.com/madebyth00)     |[ii02309](trunk/ii02309) | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 8  | [Копач Александр](https://github.com/AtticaQQ)       |[ii02308](trunk/ii02308) | ✅ | ✅ | ❌ | ✅ | ✅ |    |    |    |        6|
 | 9  | Кунц Александр                                       |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
-| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
+| 10 | [Лапин Владимир](https://github.com/LapinVladimir)   |[ii02310](trunk/ii02310) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        8|
 | 11 | [Привезенцев Михаил](https://github.com/MishanyPrivezentsev)|                  | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 12 | [Ежевский Егор](https://github.com/pinkgrasss)       |[ii02312](trunk/ii02312) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
 | 13 | Макаревич Кирилл                                     |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 14 | [Макаревич Никита](https://github.com/sosiska52)     |[ii02314](trunk/ii02314) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        7|
 | 15 | Маслакова Ксения                                     |                         | ❌ | ❌ | ❌ | ❌ |    |    |    |    |         |
 | 16 | [Медведь Павел](https://github.com/Dizzers)          |[ii02316](trunk/ii02316) | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |        8|
-| 17 | Новицкая Вероника                                    |[ii02317](trunk/ii02317) | ✅ | ✅ | ❌ | ❌ |    |    |     |   |        6|
+| 17 | Новицкая Вероника                                    |[ii02317](trunk/ii02317) | ✅ | ✅ | ✅ | ❌ | ✅ |    |     |   |        6|
 | 18 | Осипова Алла                                         |                         | ❌ | ❌ | ❌ | ✅ |    |    |    |    |         |
 | 19 | [Палто Елена](https://github.com/AlenaSokol)         |[ii02319](trunk/ii02319) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |(научная работа)       10|
 | 20 | [Романюк Алексей](https://github.com/Gomziakoff)     |[ii02320](trunk/ii02320) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
