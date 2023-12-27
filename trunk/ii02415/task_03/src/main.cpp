@@ -220,7 +220,7 @@ int main() {
     else {
         cout << "Граф не содержит Гамильтонова цикла." << endl;
     }
-    W
+    
     // Построение остовного дерева
     MyGraph spanningTree = Mygraph.constructSpanningTree();
     spanningTree.vizual();
