@@ -127,7 +127,7 @@ public:
         cycle.push_back(currentTops);
 
         if (cycle.size() == tops.size()) {
-            if (find(tops[currentTops].around.begin(), tops[currentTops].neighbors.end(), cycle[0]) != tops[currentTops].around.end()) {
+            if (find(tops[currentTops].around.begin(), tops[currentTops].around.end(), cycle[0]) != tops[currentTops].around.end()) {
                 cycle.push_back(cycle[0]);
                 return true;
             }
@@ -153,9 +153,9 @@ public:
 
     MyGraph constructSpanningTree() {
         MyGraph spanningTree;
-        spanningTree.nodes = nodes;
+        spanningTree.tops = tops;
 
-        vector<bool> visited(nodes.size(), false);
+        vector<bool> visited(tops.size(), false);
         vector<int> queue;
 
         visited[0] = true;
@@ -165,7 +165,7 @@ public:
             int currentNode = queue.front();
             queue.erase(queue.begin());
 
-            for (int neighbor : nodes[currentNode].around) {
+            for (int neighbor : tops[currentNode].around) {
                 if (!visited[neighbor]) {
                     spanningTree.addEdge(currentNode, neighbor);
                     visited[neighbor] = true;
@@ -179,15 +179,16 @@ public:
 };
 
 int main() {
+    setlocale(LC_ALL, "rus");
     // Создание графа
     MyGraph Mygraph;
 
     // Добавление вершин
-    Mygraph.addNode(0);
-    Mygraph.addNode(1);
-    Mygraph.addNode(2);
-    Mygraph.addNode(3);
-    Mygraph.addNode(4);
+    Mygraph.addTop(0);
+    Mygraph.addTop(1);
+    Mygraph.addTop(2);
+    Mygraph.addTop(3);
+    Mygraph.addTop(4);
 
     // Добавление ребер
     Mygraph.addEdge(0, 1);
