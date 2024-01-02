@@ -57,7 +57,7 @@
 | 10 | [Лящук Анастасия](https://github.com/anasosia)     | [ii02410](trunk/ii02410)     | ✅ | ❌ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 11 | [Максимович Алина](https://github.com/vinberoj24)  | [ii02411](trunk/ii02411)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 12 | [Мшар Владислав](https://github.com/MsharVladislav)| [ii02412](trunk/ii02412)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
-| 13 | Невдах Влидимир                                    | [ii02413](trunk/ii02413)     | ❌ | ❌ | ❌ | ❌ |    |    |    |    |        |
+| 13 | Невдах Влидимир                                    | [ii02413](trunk/ii02413)     | ❌ | ❌ | ✅ | ❌ |    |    |    |    |        |
 | 14 | [Поддубный Юрий](https://github.com/Yura-108)      | [ii02414](trunk/ii02414)     | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |    |       8|
 | 15 | [Рекун Дмитрий](https://github.com/DmitryRekun)    | [ii02415](trunk/ii02415)     | ✅ | ✅ | ❌ | ❌ | ✅ |    |    |    |        6|
 | 16 | [Рудецкий Евгений](https://github.com/RuuuuuD3)    | [ii02416](trunk/ii02416)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |    |        9|
